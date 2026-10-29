@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT">
+    <!-- BRME-4862: fired by DITValidationCmp when the staged file has zero validation errors,
+         so the parent DITCmp auto-advances past Preview to Review Errors. -->
+</aura:event>

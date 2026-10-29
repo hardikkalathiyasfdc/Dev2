@@ -49,7 +49,12 @@
     }
 
     if (stage == "unconfirm") {
-      cmp.set("v.stage", "preview");
+      // BRME-4862: when Preview was skipped (clean file), Back returns to Map Columns.
+      if (cmp.get("v.skippedPreview")) {
+        cmp.set("v.stage", "setup");
+      } else {
+        cmp.set("v.stage", "preview");
+      }
     }
     if (stage == "contact") {
       cmp.set("v.stage", "unconfirm");
@@ -139,6 +144,24 @@
   },
   closePreviewError: function (cmp) {
     cmp.set("v.showPreviewError", false);
+  },
+  // BRME-4862: Preview reported zero errors -> skip it and go straight to Review Errors.
+  handleSkipPreview: function (cmp, event, helper) {
+    cmp.set("v.skippedPreview", true);
+    cmp.set("v.isLoading", true);
+    let data = { Id: cmp.get("v.dataLoaderId"), Stage__c: "unconfirm" };
+    helper.util
+      .controllerPromise(cmp, "updateData", { data: data })
+      .then(
+        $A.getCallback(function () {
+          cmp.set("v.isLoading", false);
+          helper.showContact(cmp);
+        })
+      )
+      .catch((errMsg) => {
+        cmp.set("v.isLoading", false);
+        helper.util.showToastError(errMsg);
+      });
   },
   closeDupeModal: function (cmp, event, helper) {
     cmp.set("v.showDupe", false);

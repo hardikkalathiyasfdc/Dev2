@@ -181,7 +181,6 @@ class ColumnMapWorker {
 class ValidateWorker {
   requiredErrors = {};
   validatePreview(rows) {
-    debugger;
     if (!rows || !rows.length) {
       return null;
     }
@@ -225,7 +224,6 @@ class ValidateWorker {
   }
 
   validateSingleCell(cell) {
-    debugger;
     if (!cell) {
       return cell;
     }

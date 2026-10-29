@@ -77,15 +77,46 @@
     if (results.error) {
       throw Exception(results.error);
     }
-      
-        cmp.set("v.oldPreviewData", results.data);
-    cmp.set("v.previewData", results.data);
-   // let myTable = cmp.find("myTable");
-    //if (myTable) {
-    //  myTable.setWidth();
-   // }
-      var  self= this;
+    // BRME-4862: keep the full dataset for persistence, but render only error rows.
+    cmp.set("v.oldPreviewData", results.data);
+    cmp.set("v.allPreviewData", results.data);
+    let errorRows = this.filterErrorRows(results.data);
+    cmp.set("v.errorRowCount", errorRows.length);
+    cmp.set("v.totalRowCount", results.data ? results.data.length : 0);
+    // BRME-4862: no errors -> skip Preview entirely and advance to Review Errors.
+    if (!errorRows.length) {
       cmp.set("v.isLoading", false);
+      let skipEvent = cmp.getEvent("skipPreview");
+      skipEvent.fire();
+      return;
+    }
+    cmp.set("v.previewData", errorRows);
+    cmp.set("v.isLoading", false);
+  },
+  // BRME-4862: a row needs review when any cell carries a requiredError.
+  filterErrorRows: function (data) {
+    let errorRows = [];
+    if (!data || !data.length) {
+      return errorRows;
+    }
+    for (let i = 0; i < data.length; i++) {
+      if (this.hasRowError(data[i])) {
+        errorRows.push(data[i]);
+      }
+    }
+    return errorRows;
+  },
+  hasRowError: function (row) {
+    if (!row || !row.cells) {
+      return false;
+    }
+    for (let j = 0; j < row.cells.length; j++) {
+      let cell = row.cells[j];
+      if (cell && cell.requiredError && cell.requiredError.length) {
+        return true;
+      }
+    }
+    return false;
   },
   loadDataPromise: function (cmp, columns) {
     let self = this;
@@ -218,6 +249,9 @@
     if (!lookup) {
       return;
     }
+    // BRME-4862: capture the edited cell's prior value before overwrite; the display row
+    // index no longer aligns with the full oldPreviewData set once Preview is filtered.
+    let priorValue = cell.value;
     let updateRecords = [];
     let update = {};
     update.Id = dataRow.id;
@@ -233,7 +267,6 @@
           cell.class = "";}
      let myTable = cmp.find("myTable");
     myTable.updateUICell(row, col, cell);
-      let oldPreviewData= cmp.get("v.oldPreviewData");
     if(!cell.hasMultiple || cell.requiredError && cell.requiredError.length>2) 
    for (let i = 0; i < data.length; i++) {
        if(row==i)
@@ -243,7 +276,7 @@
         let myCell = myRow.cells[j];
         if (
           myCell.api == cell.api &&
-          myCell.value== oldPreviewData[row].cells[col].value 
+          myCell.value== priorValue 
             && myCell.requiredError &&  myCell.requiredError.length>2
          // && (!myCell.id || !myCell.id.length)
         ) {
@@ -366,7 +399,6 @@
               return '';
           },  
   saveCell: function (cmp, row, col) {
-    debugger;
     let previewData = cmp.get("v.previewData");
          var rowData = previewData[row]
           let cell = previewData[row].cells[col];
@@ -398,7 +430,6 @@
       .controllerPromise(cmp, "updateDataRecord", { dataRecord: record })
       .then(
         $A.getCallback(function (data) {
-          debugger;
           self.updatedRecord = data;
           if (cell.type == "STRING" || cell.type == "EMAIL") {
             return cell;

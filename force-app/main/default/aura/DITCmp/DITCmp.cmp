@@ -40,6 +40,8 @@
     <aura:attribute name="previewData" type="List" default="[]" />
     <aura:attribute name="previewErrors" type="List" default="[]" />
     <aura:attribute name="showPreviewError" type="Boolean" default="false" />
+    <!-- BRME-4862: true when Preview was skipped because the file had zero errors -->
+    <aura:attribute name="skippedPreview" type="Boolean" default="false" />
 
     <!--Contact data-->
     <aura:attribute name="contactList" type="List" default="[]" />
@@ -163,7 +165,7 @@
                 <c:DITValidationCmp dataLoaderId="{!v.dataLoaderId}" excelColumns="{!v.excelColumns}"
                     uploadData="{!v.uploadData}" dataLoad="{!v.dataLoad}" fileName="{!v.fileName}"
                     isLoading="{!v.isLoading}" uploadColumns="{!v.uploadColumns}" previewColumns="{!v.previewColumns}"
-                    previewData="{!v.previewData}"></c:DITValidationCmp>
+                    previewData="{!v.previewData}" skipPreview="{!c.handleSkipPreview}"></c:DITValidationCmp>
             </aura:if>
 
             <aura:if isTrue="{!v.stage == 'unconfirm'}">

@@ -19,9 +19,15 @@
     <aura:attribute name="previewColumns" type="List" default="[]" />
     <aura:attribute name="previewData" type="List" default="[]" />
     <aura:attribute name="oldPreviewData" type="List" default="[]" />
+    <!-- BRME-4862: full dataset kept for persistence; previewData holds error rows only -->
+    <aura:attribute name="allPreviewData" type="List" default="[]" />
+    <aura:attribute name="errorRowCount" type="Integer" default="0" />
+    <aura:attribute name="totalRowCount" type="Integer" default="0" />
     <ltng:require scripts="{!$Resource.cmputil}" afterScriptsLoaded="{!c.init}" />
     <aura:attribute name="duplicateAccountsColumns" type="List" default="[]" />
     <aura:attribute name="isSignificantOther" type="Boolean" default="false" />
+    <!-- BRME-4862: notify parent to skip Preview when the file has no errors -->
+    <aura:registerEvent name="skipPreview" type="c:DITSkipPreviewEvent" />
     <aura:handler
                   name="changeEvent"
                   event="c:MyTableEvent"
@@ -32,8 +38,11 @@
         <aura:if isTrue="{!v.isLoading2}">
             <lightning:spinner alternativeText="Loading" size="medium" />
         </aura:if>
+        <!-- BRME-4862: only error rows render; show how many of the total need review -->
         <aura:if isTrue="{!not(empty(v.previewData))}">
-
+            <p class="slds-text-color_error slds-m-around_x-small">
+                {!v.errorRowCount + ' of ' + v.totalRowCount + ' row(s) need review. Only rows with errors are shown.'}
+            </p>
            <c:NewMyTable
                        aura:id="myTable"
                        tableId="previewTable"
