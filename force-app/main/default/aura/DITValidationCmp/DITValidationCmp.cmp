@@ -22,7 +22,6 @@
     <!-- BRME-4862: full dataset kept for persistence; previewData holds error rows only -->
     <aura:attribute name="allPreviewData" type="List" default="[]" />
     <aura:attribute name="errorRowCount" type="Integer" default="0" />
-    <aura:attribute name="totalRowCount" type="Integer" default="0" />
     <ltng:require scripts="{!$Resource.cmputil}" afterScriptsLoaded="{!c.init}" />
     <aura:attribute name="duplicateAccountsColumns" type="List" default="[]" />
     <aura:attribute name="isSignificantOther" type="Boolean" default="false" />
@@ -41,7 +40,7 @@
         <!-- BRME-4862: only error rows render; show how many of the total need review -->
         <aura:if isTrue="{!not(empty(v.previewData))}">
             <p class="slds-text-color_error slds-m-around_x-small">
-                {!v.errorRowCount + ' of ' + v.totalRowCount + ' row(s) need review. Only rows with errors are shown.'}
+                {!v.errorRowCount + ' row(s) need review. Only rows with errors are shown.'}
             </p>
            <c:NewMyTable
                        aura:id="myTable"

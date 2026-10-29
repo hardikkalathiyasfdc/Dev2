@@ -77,12 +77,11 @@
     if (results.error) {
       throw Exception(results.error);
     }
-    // BRME-4862: keep the full dataset for persistence, but render only error rows.
+    // BRME-4862: server already returned error rows only; filter again as a safety net.
     cmp.set("v.oldPreviewData", results.data);
     cmp.set("v.allPreviewData", results.data);
     let errorRows = this.filterErrorRows(results.data);
     cmp.set("v.errorRowCount", errorRows.length);
-    cmp.set("v.totalRowCount", results.data ? results.data.length : 0);
     // BRME-4862: no errors -> skip Preview entirely and advance to Review Errors.
     if (!errorRows.length) {
       cmp.set("v.isLoading", false);
@@ -124,7 +123,7 @@
     return new Promise(
       $A.getCallback(function (resolve, reject) {
         self.util
-          .controllerPromise(cmp, "loadPreviewData", params)
+          .controllerPromise(cmp, "loadPreviewErrorData", params)
           .then(
             $A.getCallback(function (result) {
               let previewData = [];

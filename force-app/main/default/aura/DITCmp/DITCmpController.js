@@ -1,7 +1,8 @@
 ({
   init: function (component, event, helper) {
     helper.util = new cmputil();
-    helper.batchSize = 50;
+    // BRME-4862: wider batches so Map Columns -> Next pays fewer round-trips on large files.
+    helper.batchSize = 200;
     helper.columnMap = {
       First_Name__c: "FirstName",
       Last_Name__c: "LastName",

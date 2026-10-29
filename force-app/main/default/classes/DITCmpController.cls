@@ -1732,6 +1732,17 @@ public with sharing class DITCmpController {
 
   @AuraEnabled
   public static Object loadPreviewData(String dataLoadId) {
+    return loadPreviewCore(dataLoadId, false);
+  }
+
+  // BRME-4862: Preview-stage load that returns only rows with validation errors,
+  // so large files don't serialize/render rows that need no action.
+  @AuraEnabled
+  public static Object loadPreviewErrorData(String dataLoadId) {
+    return loadPreviewCore(dataLoadId, true);
+  }
+
+  private static Object loadPreviewCore(String dataLoadId, Boolean errorsOnly) {
     try {
       Map<String, Object> result = new Map<String, Object>();
       Data_Load__c dataLoad = getDataLoad(dataLoadId);
@@ -1740,6 +1751,9 @@ public with sharing class DITCmpController {
       );
       result.put('colMap', colMap);
       List<Data_Load_Record__c> records = getPreviewRecords(colMap, dataLoadId);
+      if (errorsOnly) {
+        records = filterPreviewErrorRecords(records);
+      }
       Map<String, Map<Id, String>> orgMap = new Map<String, Map<Id, String>>();
       result.put('orgs', orgMap);
       Map<String, Map<Id, String>> contactMap = new Map<String, Map<Id, String>>();
@@ -1752,6 +1766,99 @@ public with sharing class DITCmpController {
         new BBApps_ErrorCustomFields(ERR_LOAD_PREVIEW_DATA)
       );
       throw new AuraHandledException(ex.getMessage());
+    }
+  }
+
+  // BRME-4862: mirrors the client-side Preview validation
+  // (DITValidationCmpHelper.getCell + DITWorker.validateCell) so only rows that
+  // would surface an error in Preview are returned.
+  private static List<Data_Load_Record__c> filterPreviewErrorRecords(
+    List<Data_Load_Record__c> records
+  ) {
+    List<Map<String, Object>> columns = (List<Map<String, Object>>) getColumns();
+    List<Data_Load_Record__c> errorRecords = new List<Data_Load_Record__c>();
+    for (Data_Load_Record__c record : records) {
+      if (hasPreviewError(record, columns)) {
+        errorRecords.add(record);
+      }
+    }
+    return errorRecords;
+  }
+
+  private static Boolean hasPreviewError(
+    Data_Load_Record__c record,
+    List<Map<String, Object>> columns
+  ) {
+    Set<String> columnApis = new Set<String>();
+    for (Map<String, Object> col : columns) {
+      columnApis.add((String) col.get('api'));
+    }
+    // Phone-without-country-code rule from DITValidationCmpHelper.getCell.
+    Map<String, String> phoneToCode = new Map<String, String>{
+      'HomePhone__c' => 'HomePhoneCountryCode__c',
+      'Cell__c' => 'Mobile_Phone_Country_Code__c',
+      'Business_Phone__c' => 'Business_Phone_Country_Code__c',
+      'AdditionalPhone__c' => 'AdditionalPhoneCountryCode__c'
+    };
+    for (String phoneApi : phoneToCode.keySet()) {
+      String codeApi = phoneToCode.get(phoneApi);
+      if (
+        columnApis.contains(codeApi) &&
+        String.isNotBlank(safeGetString(record, phoneApi)) &&
+        String.isBlank(safeGetString(record, codeApi))
+      ) {
+        return true;
+      }
+    }
+    for (Map<String, Object> col : columns) {
+      String api = (String) col.get('api');
+      String value = safeGetString(record, api);
+      Boolean isBlank = String.isBlank(value);
+      if (api == 'Last_Name__c' && isBlank) {
+        return true;
+      }
+      Boolean colRequired = (Boolean) col.get('isRequired');
+      if (colRequired == true && isBlank) {
+        return true;
+      }
+      if (isBlank) {
+        continue;
+      }
+      String colType = (String) col.get('type');
+      if (colType == 'PICKLIST' && !picklistContains(col.get('options'), value)) {
+        return true;
+      }
+      if (colType == 'STRING') {
+        Integer maxLen = (Integer) col.get('maxLength');
+        if (maxLen != null && maxLen > 0 && value.length() > maxLen) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  private static Boolean picklistContains(Object optionsObj, String value) {
+    if (optionsObj == null) {
+      return true;
+    }
+    for (Object opt : (List<Object>) optionsObj) {
+      Map<String, Object> option = (Map<String, Object>) opt;
+      String optionValue = (String) option.get('value');
+      // case-sensitive to mirror DITWorker.validatePicklist (opt.value == cell.value)
+      if (optionValue != null && value.equals(optionValue)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private static String safeGetString(SObject record, String api) {
+    try {
+      Object val = record.get(api);
+      return val == null ? null : String.valueOf(val);
+    } catch (Exception ex) {
+      return null; // field not queried / not accessible
     }
   }
 

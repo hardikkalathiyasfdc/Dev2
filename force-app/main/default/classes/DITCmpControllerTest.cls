@@ -850,6 +850,43 @@ public class DITCmpControllerTest {
   }
 
   @isTest
+  static void TestloadPreviewErrorData() {
+    Data_Load__c dataLoad = [
+      SELECT Id, Column_Map__c
+      FROM Data_Load__c
+      WITH SYSTEM_MODE
+      LIMIT 1
+    ];
+    // Row with no Last Name -> must be flagged as a preview error row (BRME-4862).
+    Data_Load_Record__c errRec = new Data_Load_Record__c(
+      Data_Load__c = dataLoad.Id,
+      Status__c = 'In Progress',
+      Row_Index__c = 2,
+      Organization_Name__c = 'Slalom'
+    );
+    insert as system errRec;
+
+    Test.startTest();
+    Map<String, Object> result = (Map<String, Object>) DITCmpController.loadPreviewErrorData(
+      dataLoad.Id
+    );
+    Test.stopTest();
+
+    List<Data_Load_Record__c> records = (List<Data_Load_Record__c>) result.get(
+      'records'
+    );
+    System.assert(records != null, 'records should be returned');
+    Set<Id> returnedIds = new Set<Id>();
+    for (Data_Load_Record__c rec : records) {
+      returnedIds.add(rec.Id);
+    }
+    System.assert(
+      returnedIds.contains(errRec.Id),
+      'row missing Last Name must be returned as an error row'
+    );
+  }
+
+  @isTest
   static void TestgetUpdateContact() {
     Test.startTest();
     Data_Load__c dataLoad = [
