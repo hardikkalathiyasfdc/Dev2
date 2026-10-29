@@ -1,4 +1,25 @@
 ({
+  // BRME-4862: error cells are editable by default; the clicked read-only cell (editKey)
+  // is editable too. Everything else renders as plain text.
+  applyEditState: function (cmp) {
+    let data = cmp.get("v.data");
+    let editKey = cmp.get("v.editKey") || "";
+    if (!data || !data.length) {
+      return;
+    }
+    for (let i = 0; i < data.length; i++) {
+      let row = data[i];
+      if (!row || !row.cells) {
+        continue;
+      }
+      for (let j = 0; j < row.cells.length; j++) {
+        let cell = row.cells[j];
+        let key = i + "-" + j;
+        cell.isEditing =
+          (cell.requiredError && cell.requiredError.length) || key === editKey;
+      }
+    }
+  },
   scroll: function (cmp) {
     let myTableId = cmp.get("v.tableId");
     var header = document.getElementById(myTableId);

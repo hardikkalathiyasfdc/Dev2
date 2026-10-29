@@ -17,8 +17,8 @@
 	<aura:attribute name="tableWidth" type="String" default="1000px" />
 	<aura:attribute name="tableHeight" type="String" default="600px" />
 	<aura:attribute name="hideHeaderCheckbox" type="Boolean" default="true" />
-	<!-- BRME-4862: only the clicked cell renders an input; everything else is plain text.
-	     Key "rowIdx-cellIdx" of the cell currently in edit mode, empty = read-only grid. -->
+	<!-- BRME-4862: error cells render as inputs by default; non-error cells are read-only
+	     until clicked. editKey holds the clicked read-only cell ("rowIdx-cellIdx"). -->
 	<aura:attribute name="editKey" type="String" default="" />
 	<aura:registerEvent name="changeEvent" type="c:MyTableEvent" />
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
@@ -46,8 +46,8 @@
 									id="{!v.tableId+'-'+rowIdx+'-'+cellIdx}" role="gridcell"
 									class="{!cell.requiredError ? 'red':''}">
 									<div class="slds-truncate" title="{!cell.value}">
-										<!-- BRME-4862: edit mode only for the single clicked cell -->
-										<aura:if isTrue="{!v.editKey == (rowIdx + '-' + cellIdx)}">
+										<!-- BRME-4862: inputs for error cells by default, plus the clicked cell -->
+										<aura:if isTrue="{!cell.isEditing}">
 											<aura:if isTrue="{!cell.type == 'PICKLIST'}">
 												<lightning:select name="{!rowIdx+'-'+cellIdx}" variant="label-hidden"
 													class="label-hidden" value="{!cell.value}"

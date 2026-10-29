@@ -1,6 +1,7 @@
 ({
 	doInit: function (cmp, event, helper) {
 		let data = cmp.get("v.data");
+		helper.applyEditState(cmp);
 		cmp.set("v.oldData", data);
 		cmp.set("v.tableData", data);
 		cmp.set("v.isLoading", false);
@@ -26,11 +27,13 @@
 		let key = event.currentTarget.getAttribute("data-cell");
 		if (key) {
 			cmp.set("v.editKey", key);
+			helper.applyEditState(cmp);
 		}
 	},
 	handleInputChange: function (cmp, event, helper) {
-		// BRME-4862: leaving the input returns the grid to read-only.
+		// BRME-4862: leaving the input returns the cell to read-only (unless it still has an error).
 		cmp.set("v.editKey", "");
+		helper.applyEditState(cmp);
 		let name = event.getSource().get("v.name");
 		if (!name) {
 			return;
