@@ -77,19 +77,45 @@
     if (results.error) {
       throw Exception(results.error);
     }
-    // BRME-4862: server (loadPreviewErrorData) already returns error rows only.
     cmp.set("v.oldPreviewData", results.data);
-    let rowCount = results.data ? results.data.length : 0;
-    cmp.set("v.errorRowCount", rowCount);
+    // BRME-4862: show ONLY rows that carry an error. The server pre-filters the known rules;
+    // this catches anything the client validate worker flags on top (lookups, conditional).
+    let errorRows = this.filterErrorRows(results.data);
+    cmp.set("v.errorRowCount", errorRows.length);
     // BRME-4862: no errors -> skip Preview entirely and advance to Review Errors.
-    if (!rowCount) {
+    if (!errorRows.length) {
       cmp.set("v.isLoading", false);
       let skipEvent = cmp.getEvent("skipPreview");
       skipEvent.fire();
       return;
     }
-    cmp.set("v.previewData", results.data);
+    cmp.set("v.previewData", errorRows);
     cmp.set("v.isLoading", false);
+  },
+  // BRME-4862: a row needs review when any cell carries a requiredError.
+  filterErrorRows: function (data) {
+    let errorRows = [];
+    if (!data || !data.length) {
+      return errorRows;
+    }
+    for (let i = 0; i < data.length; i++) {
+      if (this.hasRowError(data[i])) {
+        errorRows.push(data[i]);
+      }
+    }
+    return errorRows;
+  },
+  hasRowError: function (row) {
+    if (!row || !row.cells) {
+      return false;
+    }
+    for (let j = 0; j < row.cells.length; j++) {
+      let cell = row.cells[j];
+      if (cell && cell.requiredError && cell.requiredError.length) {
+        return true;
+      }
+    }
+    return false;
   },
   loadDataPromise: function (cmp, columns) {
     let self = this;
