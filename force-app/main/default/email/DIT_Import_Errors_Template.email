@@ -1,0 +1,12 @@
+Hello {!User.FirstName},
+<br />
+<br />
+Some records could not be added or updated during your recent DIT import.
+<br />
+<br />
+Please review the attached Excel file for details on the errors and any necessary corrections, or reach out to <a href="mailto:bpsalesforceteam@e.bloomberg.org">bpsalesforceteam@e.bloomberg.org</a> for help.
+<br />
+<br />
+Thank you,
+<br />
+BRM Team

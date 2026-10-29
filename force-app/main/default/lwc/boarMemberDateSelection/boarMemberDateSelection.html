@@ -1,0 +1,28 @@
+<template>
+
+	<lightning-card>
+		<div class="slds-m-around_medium">
+			<template if:true={error}>
+				<span class="slds-text-color--error">{error}</span>
+			</template>
+			<div class="slds-grid">
+				<div class="slds-grid slds-size_1-of-4">
+					<lightning-input type="date" name="fromDate" label="From Date" onchange={handleDateSelection} placeholder="Please select from date" required="true" class="slds-m-right_medium slds-size_1-of-2"></lightning-input>
+					<lightning-input type="date" name="toDate" label="To Date" onchange={handleDateSelection} placeholder="Please select to date" required="true" class="slds-size_1-of-2"></lightning-input>
+				</div>
+				<div class="slds-size_1-of-4 slds-m-top_large">
+					<lightning-button variant="brand" label="Generate Board Member Report" onclick={handleGenerateReport} class="slds-m-left_x-small slds-m-left_large "></lightning-button>
+				</div>
+				<div class="slds-size_1-of-4 slds-m-top_large">
+					<lightning-button variant="brand" label="Generate Mayor And City View Interaction Report" onclick={handleGenerateMayorReport} class="slds-m-left_x-small slds-m-left_large "></lightning-button>
+				</div>
+			</div>
+			<template if:true={showIframe}>
+				 <iframe width="100%" height="900" src={fullUrl} class="slds-m-top_medium"></iframe>
+			</template>
+		</div>
+	</lightning-card>
+
+
+
+</template>

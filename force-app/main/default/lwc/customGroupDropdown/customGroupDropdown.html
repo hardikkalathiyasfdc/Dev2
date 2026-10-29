@@ -1,0 +1,45 @@
+<template>
+        <div data-id="dropdown-root" class="dropdown-wrapper">
+        <div class="slds-form-element">
+            <label class="slds-form-element__label">{label}</label>
+            <div class="slds-combobox_container">
+                <div class={comboboxClass} aria-expanded={dropdownOpen} aria-haspopup="listbox" role="combobox">
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" onclick={toggleDropdown}>
+                        <div lwc:if={hasSelections} class="slds-pill_container">
+                            <template for:each={selectedValuesArray} for:item="item">
+                                <lightning-pill key={item.group} label={item.label} onremove={handlePillRemove} name={item.group}
+                                    class="slds-m-right_xx-small">
+                                </lightning-pill>
+                            </template>
+                        </div>
+                        <span lwc:else class="slds-form-element__control slds-input slds-truncate">
+                            {placeholder}
+                        </span>
+                        <lightning-icon icon-name="utility:down" size="xx-small" class="slds-input__icon slds-input__icon_right">
+                        </lightning-icon>
+                    </div>
+                    <template lwc:if={dropdownOpen}>
+                        <div class="slds-dropdown slds-dropdown_fluid dropdown-content">
+                            <div class="dropdown-scrollable">
+                                <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+                                    <template for:each={optionGroups} for:item="group">
+                                        <li key={group.heading} role="presentation" class="slds-listbox__item">
+                                            <div class="slds-text-title_caps slds-m-around_x-small"><b>{group.heading}</b></div>
+                                            <lightning-radio-group name={group.heading} type="radio" options={group.options}
+                                                value={group.value} data-group={group.heading} onchange={handleRadioChange}
+                                                class="slds-m-left_medium slds-m-bottom_small">
+                                            </lightning-radio-group>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                            <div class="done-button-wrapper">
+                                <lightning-button variant="brand" label="Done" onclick={closeDropdown}></lightning-button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

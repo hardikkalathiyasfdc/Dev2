@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This Permission Set provides field level access to 1. Contact-Enable for Solicitor History 2. Org-Bloomberg Internal Organization 3. Tag-Send to Reporting 4. List-Send to Reporting</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Bloomberg_Internal_Organization__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Campaign.Send_to_Reporting__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Enable_for_Solicitor_History__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Tag__c.Send_to_Reporting__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Send to Reporting Checkbox</label>
+</PermissionSet>

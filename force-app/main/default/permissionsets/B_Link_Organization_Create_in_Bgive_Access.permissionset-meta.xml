@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>B_Link_Organization_Create_in_Bgive_Access</name>
+    </customPermissions>
+    <description>Grants access to &quot;Create in Bgive and Link&quot; button within B-Link tab.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>B-Link: Organization Create in Bgive Access</label>
+</PermissionSet>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Co_Funder_Tags</fullName>
+    <columns>NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>NAME</field>
+        <operation>contains</operation>
+        <value>Funder</value>
+    </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Tag__c.Contact,Tag__c.Account</value>
+    </filters>
+    <label>Co-Funder Tags</label>
+    <sharedTo>
+        <group>Data_Team</group>
+    </sharedTo>
+</ListView>

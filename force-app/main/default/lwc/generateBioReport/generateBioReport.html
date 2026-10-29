@@ -1,0 +1,34 @@
+<template>
+	<lightning-card>
+		<div class="slds-m-around_medium">
+			<lightning-tabset>
+				<lightning-tab label="Generate Bio By Contacts">
+					<lightning-input type="checkbox" checked={includeListsEventsOnContactsTab} label="Include Most Recent Events & Interactions" 
+						onchange={handleCheckboxChangeOnContactTab} class="slds-var-p-left_small">
+					</lightning-input>
+					<c-generic-lookup class="slds-var-p-left_small slds-var-p-top_small" onchange={contactSelected}
+					 	label="Please select Contacts to generate bio report:" show-recently-viewed={showRecentlyViewed}
+						object-api-name="Contact" display-fields={contactDisplayFields} icon="standard:contact"
+						search-fields={contactSearchFields} is-multi-select="true" style="width: 99%;"
+						display-field-prefixes={contactDisplayFieldPrefixes} custom-search-class="ContactLookupSearch"
+						allow-new-record={disableNewRecord} placeholder="Search Contacts">
+					</c-generic-lookup>
+				</lightning-tab>
+				<lightning-tab label="Generate Bio By List">
+					<c-list-selection onchecked={handleCheckboxChange} onrsvpchecked={handleRSVPChange} onselected={listSelected}>
+					</c-list-selection>
+				</lightning-tab>
+			</lightning-tabset>
+		</div>
+		<div class="slds-align_absolute-center">
+			<lightning-button variant="neutral" label="Cancel" class="slds-m-right_small" onclick={handleCancel}>
+			</lightning-button>
+			<lightning-button variant="brand" label="Generate Bio Report" onclick={handleSave} disabled={disableSaveButton}>
+			</lightning-button>
+			<template lwc:if={accessShortBio}>
+				<lightning-button variant="brand" label="Generate Short Bio Report" onclick={handleShortBioSave} class="slds-m-left_small">
+				</lightning-button>
+			</template>
+		</div>
+	</lightning-card>
+</template>

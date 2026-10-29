@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Board_Member_Interactions</fullName>
+    <columns>Contact__c</columns>
+    <columns>Interaction_Date__c</columns>
+    <columns>Interaction_Type__c</columns>
+    <columns>NAME</columns>
+    <columns>Background__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CREATEDBY_USER</field>
+        <operation>equals</operation>
+        <value>Diana Meyer</value>
+    </filters>
+    <filters>
+        <field>CREATED_DATE</field>
+        <operation>equals</operation>
+        <value>8/26/2025 12:00 AM</value>
+    </filters>
+    <label>Board Member Interactions</label>
+    <sharedTo>
+        <group>Executive_Team</group>
+    </sharedTo>
+</ListView>

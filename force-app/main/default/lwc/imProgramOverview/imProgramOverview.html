@@ -1,0 +1,82 @@
+<!--
+  @description       : 
+  @author            : Sai Bhargav Thotakura
+  @group             : 
+  @last modified on  : 08-22-2025
+  @last modified by  : Sai Bhargav Thotakura
+-->
+<template>
+	<!-- OUTER DIV -->
+	<div class="outer-div-styling page-container">
+		<br />
+		<div class="slds-p-around_medium">
+			<!-- RECORD SELECTION - FOCUS AREA OR INITIATVE -->
+			<div class="flex-display">
+				<div class="record-picker-styling">
+					<div class="slds-p-around-xx_small">
+						<lightning-record-picker onchange={handleLookupSelection} label={labelText}
+							placeholder={placeholderText} object-api-name={objectName} filter={filter}
+							display-info={displayInfo} value={selectedRecordId}>
+						</lightning-record-picker>
+					</div>
+				</div>
+				<div class="copy-link-icon">
+					<template if:false={showLinkCopiedIcon}>
+						<a onclick={copyLink}><lightning-icon icon-name="utility:copy" size="x-small"
+								class='slds-icon-color' alternative-text="Copy Link"
+								title="Copy Link"></lightning-icon></a>
+					</template>
+					<template if:true={showLinkCopiedIcon}>
+						<lightning-icon class="green-success" icon-name="utility:success" size="x-small"
+							alternative-text="Copied Link" title="Copied Link"></lightning-icon>
+						<label style="margin-left:5px !important;font-size:10px;">Link Copied!</label>
+					</template>
+				</div>
+				<div class="focus-area-display">
+					<lightning-formatted-text class="bold-with-padding" value="Focus Area: ">
+					</lightning-formatted-text>
+					<template lwc:if={focusArea}>
+						<lightning-formatted-text value={focusArea}> </lightning-formatted-text>
+					</template>
+				</div>
+			</div>
+			<br />
+			<!--TABSET-->
+			<lightning-tabset variant="scoped">
+				<!--TAB 1 - Program Overview -->
+				<lightning-tab icon-name="utility:hierarchy" label="Program Overview" class="custom-scroll"
+					onactive={handleOverview}>
+					<br />
+					<template lwc:if={showSpinner}>
+						<lightning-spinner size="medium" variant="brand" alternative-text="Loading"></lightning-spinner>
+					</template>
+					<template lwc:else>
+						<template lwc:if={treeGridData}>
+							<!--SUB COMPONENT 1-->
+							<!--If a selection has been made, display tabular format of Initiatives Data-->
+							<c-im-initiatives-overview tree-grid-data={treeGridData}
+								base-url={baseUrl}></c-im-initiatives-overview>
+						</template>
+					</template>
+					<!-- TAB 2 Communications -->
+				</lightning-tab>
+				<lightning-tab icon-name="utility:announcement" label="Communications" class="custom-scroll"
+					onactive={handleAnnouncements}>
+					<!--SUB COMPONENT 1-->
+					<!-- Announcements Datatable -->
+					<template lwc:if={showSpinner}>
+						<lightning-spinner size="medium" variant="brand" alternative-text="Loading"></lightning-spinner>
+					</template>
+					<template lwc:else>
+						<template lwc:if={announcementRows}>
+							<!--SUB COMPONENT 1-->
+							<!--If a selection has been made, display tabular format of Initiatives Data-->
+							<c-im-comms-overview announcement-rows={announcementRows}></c-im-comms-overview>
+						</template>
+					</template>
+				</lightning-tab>
+			</lightning-tabset>
+		</div>
+		<br />
+	</div>
+</template>

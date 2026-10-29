@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Pledge_Amount__c</fullName>
+    <description>This filed gives the Value of Total pledge amounts related to the Project</description>
+    <label>Total Pledge Amount (USD)</label>
+    <summarizedField>Pledge__c.Report_Amount_USD__c</summarizedField>
+    <summaryFilterItems>
+        <field>Pledge__c.Status__c</field>
+        <operation>equals</operation>
+        <value>Pledged</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Pledge__c.Fundraising_Effort__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

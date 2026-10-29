@@ -1,0 +1,48 @@
+<template>
+    <template lwc:if={isLoading}>
+        <lightning-spinner variant="brand" size="large"></lightning-spinner>
+    </template>
+    <template lwc:else>
+        <div class="slds-col slds-size_1-of-1 slds-m-top_medium box slds-p-around_x-small"
+            style="background-color: white !important; clear: both;">
+            <h3>{title} </h3>
+            <div class="slds-m-bottom_xx-small" style="text-align: right; margin-bottom: 1px; margin-top: -10px">
+                <lightning-button-menu alternative-text="Sort" icon-name="utility:sort" icon-size="xx-small" label=""
+                    class="tiny-button-menu" style="margin-right: 7px;" onselect={handleSortChange}
+                    menu-alignment="right">
+                    <lightning-menu-item label="Most Recent" checked={sortByMostRecent} value="MostRecent"
+                        title="Most Recent shows up to 10">
+                    </lightning-menu-item>
+                    <lightning-menu-item label="All Time" checked={sortByAllTime} value="allTime">
+                    </lightning-menu-item>
+                </lightning-button-menu>
+            </div>
+            <template lwc:if={showData}>
+                <div style={tableStyle} data-id="Highlights">
+                    <table class="slds-table">
+                        <tbody>
+                            <template for:each={rawData} for:item="data">
+                                <tr key={data.Id} class="table-border">
+                                    <td>
+                                        <div class="slds-truncate">
+                                            <b>
+                                                {data.monthName}
+                                            </b>
+                                            <b> {data.FC_Focus_Area__c} </b>
+                                            <div class="wrapped-content">
+                                                {data.Description__c}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </template>
+            <template lwc:else>
+                <p class="slds-p-around_x-small">No highlights</p>
+            </template>
+        </div>
+    </template>
+</template>

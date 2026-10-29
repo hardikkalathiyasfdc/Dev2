@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Required_Fields_For_Include_Projections</fullName>
+    <active>true</active>
+    <description>IM-86: Validation rule for the required fields(Team, Proposed Amount and Start / End Date) when &quot;Include in Projection&quot; is checked</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.IM_Initiative_Validation__c &amp;&amp;
+AND(
+   Include_in_Projections__c = TRUE,
+   OR(ISBLANK(Team__c),
+      ISBLANK(Proposed_Amount__c),
+      ISBLANK( Start_Date__c),
+      ISBLANK( End_Date__c )
+   )
+)</errorConditionFormula>
+    <errorMessage>Please complete these fields to Include Initiative in Projection: Team, Proposed Amount and Start / End Date.</errorMessage>
+</ValidationRule>

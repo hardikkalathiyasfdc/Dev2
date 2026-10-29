@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MRB_Correspondence_w_Type_Blank</fullName>
+    <booleanFilter>1 AND 2 AND (3 OR 4)</booleanFilter>
+    <columns>Interaction_Type__c</columns>
+    <columns>Interaction_Date__c</columns>
+    <columns>NAME</columns>
+    <columns>Description__c</columns>
+    <columns>Background__c</columns>
+    <columns>Contact__c</columns>
+    <columns>CREATEDBY_USER</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>RECORDTYPE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Interaction_Type__c</field>
+        <operation>notEqual</operation>
+        <value>Call,Meeting,Email,Text,Event,Press,Letter</value>
+    </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Interaction__c.X2020,Interaction__c.X2020_HQ_Leadership_Touch_Point,Interaction__c.X2020_Touch_Point,Interaction__c.Touchpoint,Interaction__c.Leadership_Touchpoint,Interaction__c.MRB_Interaction</value>
+    </filters>
+    <filters>
+        <field>Relationship_Owner__c</field>
+        <operation>equals</operation>
+        <value>Patricia E. Harris</value>
+    </filters>
+    <filters>
+        <field>MRB_Present__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>MRB Correspondence w/Type Blank</label>
+    <sharedTo>
+        <role>Power_User</role>
+    </sharedTo>
+</ListView>

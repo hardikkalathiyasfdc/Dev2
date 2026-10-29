@@ -1,0 +1,110 @@
+.event-card {
+    border-radius: 0.4rem;
+    background: #fff;
+    border: 1px solid #dddbda;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.10);
+}
+.section-title {
+    font-size: 1.34rem;
+    font-weight: 700;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: #fff;
+}
+.event-title {
+    font-size: 1.24rem;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #376263;
+}
+.type-badge {
+    background: #cce1de;
+    border-radius: 0.4em;
+}
+.program-managed-badge {
+    background: #3e696a;
+    color: white;
+    border-radius: 0.4em;
+}
+.event-date {
+    font-size: 1rem;
+    color: #444;
+    margin-top: 0.1em;
+}
+.tag-badge {
+    border-radius: 0.4rem;
+    color: #ffffff;
+}
+.tag-mrb { 
+    background: #3b6fd8; 
+    color: #fff; 
+}
+.tag-ph  { 
+    background: #9461cb; 
+    color: #fff; 
+}
+.stat-badge {
+    background: #e9e9e9;
+    border-radius: 0.4rem;
+}
+.stat-badge.yes-badge {
+    background: #dcecff;
+    color: #0c2c7f;
+}
+.stat-badge.no-badge {
+    background: #ffe4e4;
+    color: #8e1911;
+}
+.stat-icon {
+    margin-right: 0.25rem;
+}
+.coordinator-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+.coordinator-label {
+    font-size: 0.75rem;
+    color: #3c3c3c;
+    font-weight: 500;
+}
+.coordinator-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+.coordinator-photo {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.coordinator-icon {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.event-link {
+    color: inherit;
+    text-decoration: none;
+}
+.event-link:hover {
+    text-decoration: underline;
+}
+.button-color-mobile {
+    --slds-c-button-brand-color-border: : #57998a
+}
+:host {
+    --slds-c-button-neutral-color-border: #57998a;
+    --slds-c-button-neutral-text-color: #57998a;
+}
+.page-scroll {
+    height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: white;
+}
+.events-scroll {
+    overflow: visible;
+}

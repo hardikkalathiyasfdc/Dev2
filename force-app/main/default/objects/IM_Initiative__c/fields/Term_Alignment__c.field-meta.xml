@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Term_Alignment__c</fullName>
+    <description>BRME-7039: Auto-check comparing Initiative Term (months, from Start/End Date) to Budget Term (months) on the Current Budget Version. Returns &quot;Yes&quot; when equal; &quot;No&quot; when misaligned or when Start/End Date or Current Budget is missing.</description>
+    <externalId>false</externalId>
+    <formula>IF(OR(ISBLANK(Term__c), ISBLANK(Current_Budget__c)),
+   &quot;No&quot;,
+   IF(Term__c = Current_Budget__r.Budget_Term_months__c, &quot;Yes&quot;, &quot;No&quot;))</formula>
+    <label>Term Alignment</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

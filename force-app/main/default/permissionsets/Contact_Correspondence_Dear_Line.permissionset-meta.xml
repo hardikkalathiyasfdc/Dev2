@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Gives Access to the following fields on Contact record: Correspondence - Dear Line, Annual Report Salutation, and Significant Other Annual Report Salutation</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Annual_Report_Salutation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.CorrespondenceDearLine__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Contact: Correspondence Annual Report Dear Lines</label>
+</PermissionSet>

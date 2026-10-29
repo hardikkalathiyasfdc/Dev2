@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionSubtype>Action</actionSubtype>
+    <description>BRME-7044: This button is used to final Approve the Initiative once all items in the checklist are completed</description>
+    <label>Approve</label>
+    <lightningWebComponent>imApproveInitiative</lightningWebComponent>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>LightningWebComponent</type>
+</QuickAction>

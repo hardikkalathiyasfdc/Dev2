@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Strategic_Locations_Notes_Required</fullName>
+    <active>true</active>
+    <description>BRME-7039: Strategic Locations Aligned Notes is required when Strategic Locations Aligned = No.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.IM_Initiative_Validation__c &amp;&amp;
+TEXT(Strategic_Locations_Aligned__c) = &quot;No&quot; &amp;&amp;
+ISBLANK(Strategic_Locations_Aligned_Notes__c)</errorConditionFormula>
+    <errorDisplayField>Strategic_Locations_Aligned_Notes__c</errorDisplayField>
+    <errorMessage>Strategic Locations Aligned Notes is required when Strategic Locations Aligned is &quot;No&quot;.</errorMessage>
+</ValidationRule>

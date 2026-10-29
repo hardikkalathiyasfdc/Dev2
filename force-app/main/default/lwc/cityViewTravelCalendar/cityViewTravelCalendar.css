@@ -1,0 +1,26 @@
+.custom-container {
+    color: black;
+}
+
+.box {
+    border: 1px solid #98b8f6;
+    border-radius: 15px;
+    padding: 5px;
+    border-color: #ccdbf7;
+    box-shadow: inset -2px -3px 1px 0px #dae2ef;
+    box-shadow: 2px 3px 4px 0px #98b8f6;
+}
+
+.table-border {
+    border-color: rgb(212 239 240) !important;
+    border-right: 1px solid rgb(212 239 240) !important;
+    background-color: white;
+    border: 1px solid;
+}
+
+.wrapped-content {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 600px; /* Adjust width as needed */
+}

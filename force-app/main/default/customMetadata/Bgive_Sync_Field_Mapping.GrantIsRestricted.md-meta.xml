@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>GrantIsRestricted</label>
+    <protected>false</protected>
+    <values>
+        <field>BRM_Field_Type__c</field>
+        <value xsi:type="xsd:string">JSON</value>
+    </values>
+    <values>
+        <field>BRM_Field__c</field>
+        <value xsi:type="xsd:string">is_this_grant_restricted</value>
+    </values>
+    <values>
+        <field>BRM_Object__c</field>
+        <value xsi:type="xsd:string">IM_Grant__c</value>
+    </values>
+    <values>
+        <field>Bgive_Attribute_Name__c</field>
+        <value xsi:type="xsd:string">is_this_grant_restricted</value>
+    </values>
+    <values>
+        <field>Bgive_Object__c</field>
+        <value xsi:type="xsd:string">grant_request</value>
+    </values>
+    <values>
+        <field>Default_Value__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Mapping_Type__c</field>
+        <value xsi:type="xsd:string">Picklist</value>
+    </values>
+    <values>
+        <field>Sync_Mode__c</field>
+        <value xsi:type="xsd:string">BRM To Bgive Initial</value>
+    </values>
+</CustomMetadata>

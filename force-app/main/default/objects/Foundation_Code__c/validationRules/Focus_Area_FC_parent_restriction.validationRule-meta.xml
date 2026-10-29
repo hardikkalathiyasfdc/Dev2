@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Focus_Area_FC_parent_restriction</fullName>
+    <active>true</active>
+    <description>IM-76: Focus Area parent must be of type Initiative Root.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Foundation_Code_Validation__c &amp;&amp;
+AND(
+ISPICKVAL( Type__c ,&apos;Focus Area&apos;),
+NOT(ISBLANK( Parent__c )),
+NOT(ISPICKVAL( Parent__r.Type__c  ,&apos;Initiative Root&apos;))
+)</errorConditionFormula>
+    <errorDisplayField>Parent__c</errorDisplayField>
+    <errorMessage>Focus Area can only have Initiative Root Foundation Code as Parent.</errorMessage>
+</ValidationRule>

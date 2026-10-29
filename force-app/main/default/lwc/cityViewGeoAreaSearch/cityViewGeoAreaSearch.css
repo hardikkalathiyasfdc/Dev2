@@ -1,0 +1,25 @@
+.selectionGroup {
+    display: flex;
+    position: relative;
+    background: #fff;
+    border: 1px solid #dddbda;
+    border-top: 0;
+    border-bottom-left-radius: .25rem;
+    border-bottom-right-radius: .25rem;
+    padding: 1px 2px;
+    height: auto !important;
+}
+
+.scroll-container {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #d8dde6;
+    border-radius: 4px;
+}
+
+.extra-bold {
+    font-weight: 900;
+    /* way thicker than <b> */
+    color: #000;
+    /* pure black for max contrast */
+}

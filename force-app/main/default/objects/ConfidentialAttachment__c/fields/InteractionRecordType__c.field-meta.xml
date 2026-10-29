@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>InteractionRecordType__c</fullName>
+    <label>Interaction Record Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>X2020_Touch_Point</fullName>
+                <default>false</default>
+                <label>2020 Touch Point</label>
+            </value>
+            <value>
+                <fullName>Touchpoint</fullName>
+                <default>false</default>
+                <label>Contact Interaction</label>
+            </value>
+            <value>
+                <fullName>Leadership_Touchpoint</fullName>
+                <default>false</default>
+                <label>BP Leadership Interaction</label>
+            </value>
+            <value>
+                <fullName>X2020</fullName>
+                <default>false</default>
+                <label>Correspondence (2020)</label>
+            </value>
+            <value>
+                <fullName>MRB_Interaction</fullName>
+                <default>false</default>
+                <label>Correspondence (MRB)</label>
+            </value>
+            <value>
+                <fullName>LPContactInteraction</fullName>
+                <default>false</default>
+                <label>LP Leadership Interaction</label>
+            </value>
+            <value>
+                <fullName>LPInteraction</fullName>
+                <default>false</default>
+                <label>LP Leadership Interaction - Retired</label>
+            </value>
+            <value>
+                <fullName>X2020_HQ_Leadership_Touch_Point</fullName>
+                <default>false</default>
+                <label>MB2020 Interaction</label>
+            </value>
+            <value>
+                <fullName>Recent_Engagement</fullName>
+                <default>false</default>
+                <label>Organization Engagement/CityView</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,29 @@
+{"forms":[
+{
+	"Email Address":"andrey@hawkfish.us",
+	"First Name":"Andrey",
+	"Last Name":"Ukhanov",
+	"Can Host Events":"TRUE",
+	"All Data Sources":"committee_for_mike",
+	"Date":"2020-01-13",
+	"Coalition: African American": "TRUE",
+	"Zip Code":"85016",
+	"State":"AZ",
+	"City":"Phoenix",
+	"Mobile Phone Number":"+1 (929) 801-0440"
+},
+{
+	"Email Address":"chera@hawkfish.us",
+	"First Name":"Chera",
+	"Last Name":"Pillai",
+	"Can Host Events":"123",
+	"Date":"2020-01-15",
+	"All Data Sources":"committee_for_mike",
+	"Coalition: Asian American & Pacific Islander":"TRUE",
+	"Coalition: Faith Based":"FALSE",
+	"Zip Code":"55420",
+	"State":"MN",
+	"City":"Minneapolis",
+	"Mobile Phone Number":"6468233545"
+}
+]}

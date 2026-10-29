@@ -1,0 +1,245 @@
+<template>
+	<div class="slds-card">
+		<header class="slds-media slds-media_center slds-has-flexi-truncate">
+	      <template if:false={isInitiativeManagement}>
+		      <div class="slds-no-flex slds-float_right slds-m-around_small">
+		      	<div class="slds-grid">
+						<lightning-button label="Add Permission Sets" onclick={handleAddPermissionSetsCreation}
+							class="slds-m-right_medium"></lightning-button>
+						<lightning-button label="User Clone Permission" onclick={handleUserPermissionClone}
+							class="slds-m-right_medium"></lightning-button>
+						<lightning-button class="slds-m-right_medium" label="Remove Team from Permission Set"
+							onclick={handlePermissionSetTeamUpdate}></lightning-button>
+						<lightning-button label="Delete Selected" variant="destructive" onclick={handleBulkDelete}
+							disabled={isButtonDisabled}>
+						</lightning-button>
+			    </div>
+		      </div>
+	      </template>
+	    </header>
+	    
+	    <template if:true={showCreation}>
+	    	<c-permission-set-selection oncancel={hancelModalCancel}></c-permission-set-selection>
+	    </template>
+	    <template if:true={showUserClone}>
+	    	<c-user-clone-permission oncancel={hancelModalCancel}></c-user-clone-permission>
+	    </template>
+	    <template if:true={showPermisionSetwithTeam}>
+	    	<c-permission-set-team-update oncancel={hancelModalCancel}></c-permission-set-team-update>
+	    </template>
+		
+		<template if:true={isLoading}>
+			<lightning-spinner alternative-text="Loading..."></lightning-spinner>
+		</template>
+
+		<template if:false={isLoading}>
+			<template if:true={permissionSets}>
+				<div class="slds-grid slds-grid_align-end slds-m-bottom_small">
+					<div class="slds-size_2-of-12 slds-m-around_small">
+						<lightning-input type="text" onchange={handleSearch} label="Search" maxlength="70">
+						</lightning-input>
+					</div>
+				</div>
+				<div class="slds-scrollable table-container" >
+					<table class="slds-table slds-table_cell-buffer slds-table_bordered sticky-header-table">
+					<thead>
+						<tr class="slds-line-height_reset">
+						  <th class="" scope="col"  data-id ="userName" onclick={sortName}>
+						   <div class="slds-truncate" title="userName">
+								<a><span class="slds-truncate" title="userName">User Name</span></a>
+							</div>
+						  </th>
+						  <template if:false={isInitiativeManagement}>
+						  <th class="" scope="col" data-id ="profile" onclick={sortProfile}>
+							<div class="slds-truncate" title="Profile">
+								<a><span class="slds-truncate" title="Profile">Profile</span></a>
+							</div>
+						  </th>
+							
+						  <th class="" scope="col" data-id ="userTeam" onclick={sortTeam}>
+							<div class="slds-truncate" title="User Team">
+								<a><span class="slds-truncate" title="UserTeam">User Team</span></a>
+							</div>
+						  </th>
+						   </template>
+						   <th class="" scope="col" data-id ="team" onclick={sortTeam}>
+							<div class="slds-truncate" title="Team">
+								<a><span class="slds-truncate" title="UserTeam">Team</span></a>
+							</div>
+						  </th>
+
+						  <th class="" scope="col" data-id="AssignedPermissionSetGroups">
+							<div class="slds-truncate" title="AssignedPermissionSetGroups">
+								<a><span class="slds-truncate" title="Assigned Permission Set Groups">Assigned Permission Set Groups</span></a>
+							</div>
+						  </th>
+
+						  <th class="" scope="col"  data-id ="AssignedPermissionSets">
+							<div class="slds-truncate" title="AssignedPermissionSets">
+								<a><span class="slds-truncate" title="Assigned Permission Sets">Assigned Permission Sets</span></a>
+							</div>
+						  </th>
+
+						  <th class="" scope="col"  data-id ="AssignedCustomPermissions">
+							<div class="slds-truncate" title="AssignedCustomPermissions">
+								<a><span class="slds-truncate" title="Assigned Custom Permissions">Assigned Custom Permissions</span></a>
+							</div>
+						  </th>
+						  <th class="" scope="col" data-id ="PublicGroups">
+							<div class="slds-truncate" title="PublicGroups">
+								<a><span class="slds-truncate" title="Public Groups">Public Groups</span></a>
+							</div>
+						  </th>
+						  <th class="" scope="col" data-id ="lastLoginDate" onclick={sortLastLoginDate}>
+							<div class="slds-truncate" title="LastLoginDate">
+								<a><span class="slds-truncate" title="Last Login Date">Last Login Date</span></a>
+							</div>
+						  </th>
+					  </tr>
+					</thead>
+					<tbody>
+							<template for:each={permissionSets} for:item="permission" for:index="index">
+							<tr key={permission.key} class="slds-hint-parent">
+								<td class="slds-size_1-of-12" key={permission.idx}>
+									<a href={permission.url}>{permission.userName}</a>
+								</td>
+								<template if:false={isInitiativeManagement}>
+								<td class="slds-size_1-of-12">
+									{permission.profile}
+								</td>
+									
+								<td class="slds-size_1-of-12">
+									{permission.userTeam}
+								</td>
+								</template>
+								<td class="slds-size_1-of-12">
+									{permission.team}
+								</td>
+								<td class="slds-size_1-of-4">
+									<template if:true={permission.permSetGroupAssignments}>
+										<lightning-accordion allow-multiple-sections-open>
+												<template for:each={permission.permSetGroupAssignments}
+													for:item="subGroupAssn">
+													<lightning-accordion-section key={subGroupAssn.groupAssignment.Id}
+														name={subGroupAssn.groupAssignment.Id}
+														label={subGroupAssn.groupAssignment.PermissionSet.Label}>
+													<template if:true={subGroupAssn.permissionSets}>
+															<ul
+																class="slds-list_dotted slds-m-bottom_small slds-m-top_x-small">
+																<template for:each={subGroupAssn.permissionSets}
+																	for:item="ps">
+																	<li key={ps.Id}>{ps.rowIndex}. {ps.Label}</li>
+															</template>
+														</ul>
+													</template>
+														<template if:false={isInitiativeManagement}>
+															<lightning-button-icon icon-name="utility:delete"
+																alternative-text="Delete" title="Remove"
+																variant="destructive"
+																data-id={subGroupAssn.groupAssignment.Id}
+																onclick={handleDelete}>
+															</lightning-button-icon>
+														</template>
+												</lightning-accordion-section>
+											</template>
+										</lightning-accordion>
+									</template>
+								</td>
+
+								<td class="slds-size_1-of-4">
+									<template if:true={permission.allAssignments}>
+										<table>
+											<template for:each={permission.allAssignments} for:item="subPermission">
+												<template if:true={subPermission.isDirect}>
+													<tr key={subPermission.permissionSetId}>
+														<td class="slds-size_1-of-4">
+																{subPermission.rowIndex}.
+															{subPermission.permissionSetLabel}
+														</td>
+														<td>
+															<template if:false={isInitiativeManagement}>
+																	<lightning-input type="checkbox" data-type="ps"
+																		data-id={subPermission.assignmentId}
+																		onchange={handleSelection}>
+																	</lightning-input>
+																	<!--<lightning-button-icon icon-name="utility:delete"
+																		alternative-text="Remove" title="Remove"
+																		variant="destructive"
+																		data-id={subPermission.assignmentId}
+																		onclick={handleDelete}>
+																	</lightning-button-icon>-->
+															</template>
+														</td>
+													</tr>
+												</template>
+												<template if:false={subPermission.isDirect}>
+														<tr key={subPermission.permissionSetId}
+															style="background-color:#E3F2FD;">
+														<td class="slds-size_1-of-4">
+																{subPermission.rowIndex}.
+															{subPermission.permissionSetLabel}
+														</td>
+														<td></td>
+													</tr>
+												</template>
+											</template>
+										</table>
+									</template>
+								</td>
+
+								<td class="slds-size_1-of-4">
+									<template if:true={permission.customPermissions}>
+										<table>
+												<template for:each={permission.customPermissions}
+													for:item="subPermission">
+												<tr key={subPermission.id}>
+													<td class="slds-size_1-of-4">
+															{subPermission.rowIndex}. {subPermission.label}
+													</td>
+												</tr>
+											</template>
+										</table>
+									</template>
+								</td>
+								<td class="slds-size_1-of-4">
+									<template if:true={permission.publicGroups}>
+										<table>
+											<template for:each={permission.publicGroups} for:item="subpublicGroup">
+												<tr key={subpublicGroup.groupId}>
+													<td class="slds-size_1-of-4">
+															{subpublicGroup.rowIndex}. {subpublicGroup.userGroup.Name}
+													</td>
+													<td>
+														<template if:true={subpublicGroup.isDirect}>
+															<template if:false={isInitiativeManagement}>
+																	<lightning-input type="checkbox" data-type="pg"
+																		data-id={subpublicGroup.userIdgroupId}
+																		onchange={handleSelection}>
+																	</lightning-input>
+																	<!--<lightning-button-icon
+																		id={subpublicGroup.userIdgroupId}
+																		icon-name="utility:delete"
+																		alternative-text="Delete" title="Remove"
+																		variant="destructive"
+																		onclick={handleDeleteGroup}>
+																	</lightning-button-icon>-->
+															</template>
+														</template>
+													</td>
+												</tr>
+											</template>
+										</table>
+									</template>
+								</td>
+								<td class="slds-size_1-of-12">
+									{permission.lastLoginDate}
+								</td>
+							</tr>
+						</template>
+					</tbody>
+				</table>
+				</div>
+			</template>
+		</template>
+	</div>
+</template>

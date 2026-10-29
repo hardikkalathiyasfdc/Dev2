@@ -1,0 +1,21 @@
+<template>
+	<table>
+		<template if:true={displayedContacts}>
+			<template for:each={displayedContacts} for:item="cnt">
+				<tr key={cnt.name}>
+					<td><a href={cnt.url} target="_blank">{cnt.name}</a></td>
+				</tr>
+			</template>
+		</template>
+	</table>
+	<template if:true={showViewAll}>
+		<div class="slds-text-align--center">
+			<a onclick={handleViewAll}>View All</a>
+		</div>
+	</template>
+	<template if:true={showLess}>
+		<div class="slds-text-align--center">
+			<a onclick={handleLess}>View Less</a>
+		</div>
+	</template>
+</template>

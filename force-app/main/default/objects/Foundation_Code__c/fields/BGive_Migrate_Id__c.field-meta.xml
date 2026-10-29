@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BGive_Migrate_Id__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>BRME-5261 - This will hold Migrate Id to identify foundation code in Fluxx system.</description>
+    <externalId>true</externalId>
+    <label>BGive Migrate Id</label>
+    <length>255</length>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

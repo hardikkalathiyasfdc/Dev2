@@ -1,0 +1,30 @@
+<apex:page controller="UploadConfidentialFileCtrl" tabStyle="Interaction__c">
+ <apex:sectionHeader title="{!title}" subtitle="Confidential Attachment"/>  
+ <apex:pageBlock >
+  <apex:includeLightning />
+    <div id="lightning" />
+    <script>
+        let recordId = '{!currentRecordId}';
+        $Lightning.use("c:UploadConfidentialFileApp", function() {
+          let attributes = {
+            recordId: recordId,
+            "navigateToList" : navigateToList
+          };
+          $Lightning.createComponent(
+                    "c:interactionConfidentialFile",
+                    attributes,
+                    "lightning",
+                    function(cmp) {
+                       // console.log("Component is created!");
+                    });
+        });
+        function navigateToList(url) {
+          if(typeof sforce != 'undefined' && sforce && sforce.one){
+             sforce.one.navigateToURL(url);
+          } else {
+             window.location.href = url;
+          }
+        }
+    </script> 
+ </apex:pageBlock>
+</apex:page>

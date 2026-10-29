@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Create_CityView_Initiative</fullName>
+    <availability>online</availability>
+    <description>BRME-7048:Creates a CityView (Initiative) Association from this Budgeted Initiative, prefilling Name, Description, Focus Area, Foundation Coding, Active and ShowOrgAssocDates_on_CityView</description>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>Create Initiative</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <url>/lightning/o/Association__c/new?recordTypeId=0124v000001yV3UAAU&amp;defaultFieldValues=Name={!URLENCODE(IM_Initiative__c.Proposed_CityView_Name__c)},Description__c={!URLENCODE(IM_Initiative__c.Proposed_CityView_Description__c)},Focus_Area__c={!URLENCODE(IM_Initiative__c.Focus_AreaId__c)},Foundation_Coding__c={!URLENCODE(IM_Initiative__c.Foundation_CodeId__c)},Show_Org_Assoc_Dates_on_CityView__c=true,Active__c=true&amp;navigationLocation=DETAIL</url>
+</WebLink>

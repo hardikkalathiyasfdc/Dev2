@@ -1,0 +1,98 @@
+<aura:component>
+	<ltng:require scripts="{!join(',',
+    $Resource.jQuery224,
+  $Resource.cmputil,
+  $Resource.ListWorker)}" />
+	<aura:attribute name="tableId" type="String" default="" />
+	<aura:attribute name="isInit" type="Boolean" default="false" />
+	<aura:attribute name="selectedLookup" type="SObject" />
+	<aura:attribute name="isLoading" type="Boolean" default="true" />
+	<aura:attribute name="hideCheckboxColumn" type="Boolean" default="true" />
+	<aura:attribute name="singleRowSelection" type="Boolean" default="false" />
+	<aura:attribute name="showActions" type="Boolean" default="false" />
+	<aura:attribute name="columns" type="List" default="[]" />
+	<aura:attribute name="tableData" type="List" default="[]" />
+	<aura:attribute name="data" type="List" default="[]" />
+	<aura:attribute name="oldData" type="List" default="[]" />
+	<aura:attribute name="tableWidth" type="String" default="1000px" />
+	<aura:attribute name="tableHeight" type="String" default="600px" />
+	<aura:attribute name="hideHeaderCheckbox" type="Boolean" default="true" />
+	<aura:registerEvent name="changeEvent" type="c:MyTableEvent" />
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<div id="myTable" style="overflow-x: auto; overflow-y: auto; height: 100%">
+		<aura:if isTrue="{!v.isLoading}">
+			<lightning:spinner alternativeText="Loading" size="medium" />
+		</aura:if>
+
+		<aura:if isTrue="{!v.isInit}">
+			<table aria-multiselectable="true" class="slds-table slds-table--bordered" role="grid" style="width:100%"
+				aria-label="MyTable">
+				<thead>
+					<tr class="slds-line-height_reset">
+						<aura:iteration items="{!v.columns}" var="col">
+							<th class="" scope="col"> {!col.label}
+							</th>
+						</aura:iteration>
+					</tr>
+				</thead>
+				<tbody>
+					<aura:iteration items="{!v.data}" var="row" indexVar="rowIdx">
+						<tr aria-selected="false" class="slds-hint-parent">
+							<aura:iteration items="{!row.cells}" var="cell" indexVar="cellIdx">
+								<td data-id="{!'td-'+rowIdx+'-'+cellIdx}" style="min-width:250px;"
+									id="{!v.tableId+'-'+rowIdx+'-'+cellIdx}" role="gridcell"
+									class="{!cell.requiredError ? 'red':''}">
+									<div class="slds-truncate" title="{!cell.value}">
+										<aura:if isTrue="{!cell.type == 'STRING'}">
+											<lightning:input aura:id="inputUpdate" class="{!rowIdx+'-'+cellIdx}"
+												name="{!rowIdx+'-'+cellIdx}" value="{!cell.value}"
+												onblur="{!c.handleInputChange}" variant="label-hidden" />
+										</aura:if>
+										<aura:if isTrue="{!cell.type == 'TEXTAREA'}">
+											<lightning:input aura:id="inputUpdate" class="{!rowIdx+'-'+cellIdx}"
+												name="{!rowIdx+'-'+cellIdx}" value="{!cell.value}"
+												onblur="{!c.handleInputChange}" variant="label-hidden" />
+										</aura:if>
+										<aura:if isTrue="{!cell.type == 'PICKLIST'}">
+											<lightning:select name="{!rowIdx+'-'+cellIdx}" variant="label-hidden"
+												class="label-hidden" value="{!cell.value}"
+												onchange="{!c.handleInputChange}">
+												<option value="">choose one...</option>
+												<aura:iteration items="{!cell.options}" var="opt">
+													<option value="{!opt.value}">{!opt.label}</option>
+												</aura:iteration>
+											</lightning:select>
+										</aura:if>
+										<aura:if isTrue="{!cell.type == 'EMAIL'}">
+											<lightning:input aura:id="inputUpdate" type="email"
+												name="{!rowIdx+'-'+cellIdx}" class="{!rowIdx+'-'+cellIdx}"
+												value="{!cell.value}" variant="label-hidden"
+												onblur="{!c.handleInputChange}" />
+										</aura:if>
+										<aura:if isTrue="{!cell.type == 'PHONE'}">
+											<lightning:input type="tel" name="{!rowIdx+'-'+cellIdx}"
+												value="{!cell.value}" variant="label-hidden"
+												onblur="{!c.handleInputChange}" />
+										</aura:if>
+										<aura:if isTrue="{!cell.type == 'LOOKUP'}">
+											<lightning:input aura:id="inputUpdate" class="{!rowIdx+'-'+cellIdx}"
+												name="{!rowIdx+'-'+cellIdx}" value="{!cell.value}"
+												onblur="{!c.handleInputChange}" variant="label-hidden" />
+										</aura:if>
+										<aura:if isTrue="{!cell.requiredError}">
+											<aura:if isTrue="{!cell.type != 'LOOKUP'}">
+												<div style="width: 100%" class="requiredError">
+													{!cell.requiredError}
+												</div>
+											</aura:if>
+										</aura:if>
+									</div>
+								</td>
+							</aura:iteration>
+						</tr>
+					</aura:iteration>
+				</tbody>
+			</table>
+		</aura:if>
+	</div>
+</aura:component>

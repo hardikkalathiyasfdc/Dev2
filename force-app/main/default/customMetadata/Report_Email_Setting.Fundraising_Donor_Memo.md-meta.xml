@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Fundraising Donor Memo</label>
+    <protected>false</protected>
+    <values>
+        <field>Add_Current_Month_To_Report__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Email_Plain_Text_Body__c</field>
+        <value xsi:type="xsd:string">&lt;html&gt;&lt;body&gt;
+ &lt;p&gt;&lt;a href=&quot;https://bbrm.lightning.force.com/lightning/r/Dashboard/01Z4v000001jDdlEAE/view?queryScope=userFolders&quot;&gt;Click here to view data in pie chart format on BRM dashboard.&lt;/a&gt;&lt;/p&gt;</value>
+    </values>
+    <values>
+        <field>File_Name__c</field>
+        <value xsi:type="xsd:string">BRM Monthly Report: Fundraising</value>
+    </values>
+    <values>
+        <field>Sender_Display_Name__c</field>
+        <value xsi:type="xsd:string">Diana Meyer</value>
+    </values>
+    <values>
+        <field>Sender_Email_Address__c</field>
+        <value xsi:type="xsd:string">dianam@bloomberg.org</value>
+    </values>
+    <values>
+        <field>Subject__c</field>
+        <value xsi:type="xsd:string">BRM Monthly Report: Fundraising</value>
+    </values>
+    <values>
+        <field>Title__c</field>
+        <value xsi:type="xsd:string">BRM Monthly Report: Fundraising Donor Memo</value>
+    </values>
+</CustomMetadata>

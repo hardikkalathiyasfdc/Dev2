@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>(BRME-6016) Custom Permission related to the Contacts_Orgs_Restricted_Private_Name_Fields_Access Permission set</description>
+    <isLicensed>false</isLicensed>
+    <label>Private Name Fields</label>
+</CustomPermission>

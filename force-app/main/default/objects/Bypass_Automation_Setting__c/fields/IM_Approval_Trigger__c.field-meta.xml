@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IM_Approval_Trigger__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>IM-95: ByPass automation for Approval object trigger</description>
+    <label>IM Approval Trigger</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

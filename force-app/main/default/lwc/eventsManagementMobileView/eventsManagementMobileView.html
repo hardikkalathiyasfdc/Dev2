@@ -1,0 +1,159 @@
+<template>
+    <div class="slds-var-p-horizontal_small slds-var-p-bottom_small page-scroll">
+        <!-- Buttons Section -->
+        <div class="slds-var-p-top_small filters">
+            <lightning-combobox name="status" label="Event Status" value={eventStatus} variant="label-hidden"
+                placeholder="Select Event Status" options={eventStatusOptions} onchange={handleEventStatusChange}>
+            </lightning-combobox>
+            <lightning-combobox name="fieldName" label="Field Name" value={selectedSearchByFieldName} class="slds-var-p-top_small"
+                options={fieldOptions} onchange={handleSearchByFieldChange} variant="label-hidden">
+            </lightning-combobox>
+            <!-- Input Fields -->
+            <template lwc:if={isNumberField}>
+                <lightning-input type="number" name="input1" variant="label-hidden" onchange={handleInputFieldChange} class="slds-var-p-top_small"
+                    placeholder="Search Guest Count…">
+                </lightning-input>
+            </template>
+            <template lwc:elseif={isPicklist}>
+                <lightning-combobox name="inputFieldName" label="Field Name" value={selectedPicklistValue} placeholder={picklistPlaceholder}
+                    options={dataOptions} onchange={handleInputFieldChange} variant="label-hidden" class="slds-var-p-top_small">
+                </lightning-combobox>
+            </template>
+            <template lwc:elseif={isLookup}>
+                <div class="slds-var-p-top_small">
+                    <lightning-record-picker label="User" placeholder="Search Event Coordinator..." object-api-name="User" variant="label-hidden" 
+                        filter={coordinatorFilter} onchange={handleUserSelected}>
+                    </lightning-record-picker>
+                </div>
+            </template>
+            <template lwc:elseif={isStartDate}>
+                <lightning-input type="date" variant="label-hidden" onchange={handleInputFieldChange} class="slds-var-p-top_small"
+                    placeholder="Search Start Date...">
+                </lightning-input>
+            </template>
+            <template lwc:elseif={isCheckbox}>
+                <lightning-combobox name="Program-Managed" value={selectedProgramic} label="Program-Managed" class="slds-var-p-top_small"
+                    placeholder=" Search Program-Managed" options={dataOptions} onchange={handleInputFieldChange} variant="label-hidden">
+                </lightning-combobox>
+            </template>
+            <template lwc:else>
+                <lightning-input type="text" variant="label-hidden" onchange={handleInputFieldChange} value={selectedKeyValue} class="slds-var-p-top_small"
+                    placeholder="Search Event...">
+                </lightning-input>
+            </template>
+            <template lwc:if={shallShowProgramManagedToggle}>
+                <div class="slds-form-element slds-var-p-top_small">
+                    <label class="slds-checkbox_toggle slds-grid">
+                        <span class="slds-form-element__label slds-m-bottom_none">Include Program-Managed Events</span>
+                            <input type="checkbox" name="checkbox-toggle-18" disabled={disableToggle} value="checkbox-toggle-18" 
+                                aria-describedby="checkbox-toggle-18" onchange={handleProgramToggleChange} checked={isProgramManagedChecked}/>
+                            <span id="checkbox-toggle-18" class="slds-checkbox_faux_container">
+                            <span class="slds-checkbox_faux"></span>
+                            <span class="slds-checkbox_on">Include</span>
+                            <span class="slds-checkbox_off">Exclude</span>
+                        </span>
+                    </label>
+                </div>
+            </template>
+            <template lwc:if={shallShowGalaToggle}>
+            <div class="slds-form-element slds-var-p-top_small">
+                <label class="slds-checkbox_toggle slds-grid">
+                    <span class="slds-form-element__label slds-m-bottom_none">Include Employee Engagement Galas</span>
+                        <input type="checkbox" name="checkbox-toggle-gala" disabled={disableGalaToggle} value="checkbox-toggle-gala"
+                            aria-describedby="checkbox-toggle-gala" onchange={handleGalaToggleChange} checked={isGalaChecked}/>
+                        <span id="checkbox-toggle-gala" class="slds-checkbox_faux_container">
+                        <span class="slds-checkbox_faux"></span>
+                        <span class="slds-checkbox_on">Include</span>
+                        <span class="slds-checkbox_off">Exclude</span>
+                    </span>
+                </label>
+            </div>
+            </template>
+            <div class="slds-var-p-top_small">
+                <lightning-button variant="brand-outline" class="button-color-mobile" stretch label="Reset Filters" onclick={handleClear}></lightning-button>
+            </div>
+        </div>
+        <h2 class="section-title slds-var-p-top_large slds-var-p-bottom_small slds-wrap">{sectionLabel}</h2>
+        <!-- Event List -->
+        <div class="events-scroll">
+            <template lwc:if={shallShowSpinner}>
+                <lightning-spinner alternative-text="Loading..." size="small"></lightning-spinner>
+            </template>
+            <template lwc:else>
+                <template lwc:if={shallShowNoDataFound}>
+                    <div class="slds-text-color_weak slds-m-top_small">No Events found</div>
+                </template>
+                <template lwc:elseif={shallShowEventError}>
+                    <div class="slds-text-color_error slds-m-top_small">Error fetching Events. Please contact the salesforce team for assistance.</div>
+                </template>
+                <template lwc:else for:each={displayEvents} for:item="eventRecord">
+                    <article key={eventRecord.event.Id} class="slds-card event-card slds-var-m-top_small">
+                        <div class="slds-card__body slds-card__body_inner">
+                            <div lwc:if={eventRecord.programatic} class="slds-var-m-bottom_x-small slds-var-m-top_medium">
+                                <span class="slds-var-p-vertical_xx-small slds-var-p-horizontal_x-small program-managed-badge">Program-Managed</span>
+                            </div>
+                            <h2 class="event-title slds-wrap" title={eventRecord.event.Name}>
+                                <a href="javascript:void(0)" class="event-link" data-id={eventRecord.event.Id} onclick={handleSelectEvent}>
+                                    {eventRecord.event.Name}
+                                </a>
+                            </h2>
+                            <div class="slds-var-m-top_x-small">
+                                <span class="slds-var-p-vertical_xx-small slds-var-p-horizontal_x-small type-badge">{eventRecord.event.EventType__c}</span>
+                            </div>
+                            <div class="slds-var-m-top_small slds-grid slds-grid_vertical-align-center">
+                                <span class="slds-var-m-right_x-small">
+                                    <lightning-icon icon-name="utility:event" size="x-small"></lightning-icon>
+                                </span>
+                                <span class="event-date">{eventRecord.dateRange}</span>
+                            </div>
+                            <div class="slds-var-m-top_small">
+                                <template for:each={eventRecord.tags} for:item="t">
+                                    <span key={t.key} class={t.className}>{t.label}</span>
+                                </template>
+                            </div>
+                            <div class="slds-grid slds-wrap" lwc:if={isEventCompleted}>
+                                <span class="slds-var-m-top_x-small slds-var-p-around_xx-small slds-var-m-right_xx-small stat-badge">
+                                    Attended {eventRecord.event.TotalAttend__c}
+                                </span>
+                                <span class="slds-var-m-top_x-small slds-var-p-around_xx-small slds-var-m-right_xx-small stat-badge">
+                                    Not Attended {eventRecord.event.TotalNotAttend__c}
+                                </span>
+                            </div>
+                            <div class="slds-grid slds-wrap">
+                                <span class="slds-var-m-top_x-small slds-var-p-around_xx-small slds-var-m-right_xx-small stat-badge">
+                                    <lightning-icon icon-name="utility:people" size="x-small" class="stat-icon"></lightning-icon>
+                                    Guests {eventRecord.event.TotalGuests__c}
+                                </span>
+                                <span class="slds-var-m-top_x-small slds-var-p-around_xx-small slds-var-m-right_xx-small stat-badge">
+                                    Pend {eventRecord.event.TotalPend__c}
+                                </span>
+                                <span class={eventRecord.yesBadgeClass}>
+                                    Yes {eventRecord.event.TotalYes__c}
+                                </span>
+                                <span class={eventRecord.noBadgeClass}>
+                                    No {eventRecord.event.TotalNo__c}
+                                </span>
+                            </div>
+                            <div class="slds-var-m-top_small slds-grid slds-grid_vertical-align-center">
+                                <template lwc:if={eventRecord.coordinatorPhotoUrl}>
+                                    <img src={eventRecord.coordinatorPhotoUrl} alt="Coordinator" class="coordinator-photo slds-var-m-right_small" />
+                                </template>
+                                <template lwc:else>
+                                    <lightning-icon icon-name="standard:user" size="medium" class="slds-var-m-right_small coordinator-icon"></lightning-icon>
+                                </template>
+                                <div class="coordinator-text slds-truncate">
+                                    <div class="coordinator-label">
+                                        Coordinator
+                                    </div>
+                                    <div class="coordinator-name slds-truncate">
+                                        {eventRecord.coordinatorName}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </template>
+            </template>
+        </div>
+    </div>
+</template>

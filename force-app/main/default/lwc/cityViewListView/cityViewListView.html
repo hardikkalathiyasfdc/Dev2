@@ -1,0 +1,64 @@
+<template>
+    <div class="list-container">
+        <template lwc:if={shallShowSpinner}>
+            <lightning-spinner alternative-text="Loading..." size="large"></lightning-spinner>
+        </template>
+        <template lwc:if={listViewGlobalTitle}>
+            <div class="header-title-section" title="Showing results for this selection">
+                <span class="header-icon">
+                    <lightning-icon icon-name="utility:world" size="small" class="header-globe"></lightning-icon>
+                </span>
+                <h1 class="header-title">
+                    {selectedLevel}: {_listViewGlobalTitle}
+                </h1>
+            </div>
+        </template>
+        <!-- COUNTRY TABLE ON SEARCH -->
+        <template lwc:if={showCountryTableForCountries}>
+            <c-city-view-list-view-table data={processedCountries} table-label="Country Level Work"
+                ongeoareaselected={handleNameClick} is-initiative-search={_searchByInitiative}
+                shall-show-grants={showGrant}>
+            </c-city-view-list-view-table>
+            </br></br></br>
+        </template>
+        <!--  show for state & Country -->
+        <template lwc:if={showForStatesAndCountry}>
+            <c-city-view-list-view-table data={processedStates} table-label="State Level Work"
+                ongeoareaselected={handleNameClick} is-initiative-search={_searchByInitiative}
+                shall-show-grants={showGrant}>
+            </c-city-view-list-view-table>
+            </br></br></br>
+        </template>
+        <!-- CITY TABLE -->
+        <template lwc:if={showCityTable}>
+            <c-city-view-list-view-table data={processedCities} table-label="City Level Work"
+                ongeoareaselected={handleNameClick} is-initiative-search={_searchByInitiative}
+                shall-show-grants={showGrant}>
+            </c-city-view-list-view-table>
+            </br></br></br>
+        </template>
+        <!-- State TABLE -->
+        <template lwc:if={showStatesForCity}>
+            <c-city-view-list-view-table data={processedStates} table-label="State Level Work"
+                ongeoareaselected={handleNameClick} is-initiative-search={_searchByInitiative}
+                shall-show-grants={showGrant}>
+            </c-city-view-list-view-table>
+            </br></br></br>
+        </template>
+        <!-- COUNTRY TABLE -->
+        <template lwc:if={showCountryTable}>
+            <c-city-view-list-view-table data={processedCountries} table-label="Country Level Work"
+                ongeoareaselected={handleNameClick} is-initiative-search={_searchByInitiative}
+                shall-show-grants={showGrant}>
+            </c-city-view-list-view-table>
+            </br></br></br>
+        </template>
+        <template lwc:if={showCityTableForStates}>
+            <c-city-view-list-view-table data={processedCities} table-label="City Level Work"
+                ongeoareaselected={handleNameClick} is-initiative-search={_searchByInitiative}
+                shall-show-grants={showGrant}>
+            </c-city-view-list-view-table>
+            </br></br></br>
+        </template>
+    </div>
+</template>

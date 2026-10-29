@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>IM_Refresh_Grant</name>
+    </customPermissions>
+    <description>IM-551: This permission set is used to give access to refresh IM Grant with details from Bgive Grant</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>IM: Refresh Grant</label>
+</PermissionSet>

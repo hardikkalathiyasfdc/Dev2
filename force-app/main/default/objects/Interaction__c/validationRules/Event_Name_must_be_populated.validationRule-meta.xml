@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Event_Name_must_be_populated</fullName>
+    <active>true</active>
+    <description>Event Name must be populated if the interaction was from an MRB event</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Interaction_Validation__c &amp;&amp; 
+ISPICKVAL(Associated_to_an_MRB_Event__c, &quot;Yes&quot;) &amp;&amp;
+ISBLANK(Event_Name__c)</errorConditionFormula>
+    <errorMessage>If indicating an event, please populate the Event Name information field</errorMessage>
+</ValidationRule>

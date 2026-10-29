@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This custom permission is created to check access for Program-Managed Events for List Object and is assigned on permission set- &quot;Events: Program-Managed Access&quot;. Controls the toggle lock and error pop up for Program-Managed users.</description>
+    <isLicensed>false</isLicensed>
+    <label>Events: Program-Managed Events List Custom Permission</label>
+</CustomPermission>

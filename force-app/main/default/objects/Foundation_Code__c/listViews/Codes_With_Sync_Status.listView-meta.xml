@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Codes_With_Sync_Status</fullName>
+    <columns>NAME</columns>
+    <columns>BGive_Migrate_Id__c</columns>
+    <columns>Sync_Error__c</columns>
+    <columns>Sync_Warning__c</columns>
+    <columns>BGive_ID__c</columns>
+    <filterScope>Mine</filterScope>
+    <label>Codes With Sync Status</label>
+</ListView>

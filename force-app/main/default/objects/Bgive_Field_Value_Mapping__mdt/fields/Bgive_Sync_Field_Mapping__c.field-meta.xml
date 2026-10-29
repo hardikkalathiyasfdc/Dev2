@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bgive_Sync_Field_Mapping__c</fullName>
+    <description>IM-49: Captures the associated Bgive Sync Field mapping record.</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Bgive Sync Field Mapping</label>
+    <referenceTo>Bgive_Sync_Field_Mapping__mdt</referenceTo>
+    <relationshipLabel>Bgive Field Value Mappings</relationshipLabel>
+    <relationshipName>Bgive_Field_Value_Mappings</relationshipName>
+    <required>true</required>
+    <type>MetadataRelationship</type>
+    <unique>false</unique>
+</CustomField>

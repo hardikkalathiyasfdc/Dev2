@@ -1,0 +1,203 @@
+<template>
+    <div class="table-wrapper" lwc:if={shouldShowTable}>
+        <template lwc:if={shallShowSpinner}>
+            <lightning-spinner alternative-text="Loading..." size="large">
+            </lightning-spinner>
+        </template>
+
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered custom-table">
+            <thead>
+                <tr>
+                    <th class="col-city" data-field="name" onclick={handleTableSort}>
+                        <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                            <div class="slds-truncate">
+                                {tableLabel} (Total = {rowCount},&nbsp;Active = {activeRowCount})
+                                <template lwc:if={isSortedByName}>
+                                    <lightning-icon icon-name={sortDirectionIcon} size="xx-small" class="sort-icon">
+                                    </lightning-icon>
+                                </template>
+                            </div>
+                        </div>
+                    </th>
+
+                    <th class="col-bp" data-field="hasActiveInitiative" onclick={handleTableSort}>
+                        <div class="slds-truncate">
+                            Active ({activeRowCount})
+                            <template lwc:if={isSortedByActiveInitiative}>
+                                <lightning-icon icon-name={sortDirectionIcon} size="xx-small" class="sort-icon">
+                                </lightning-icon>
+                            </template>
+                        </div>
+                    </th>
+
+                    <template if:false={_isInitiativeSearch}>
+                        <th class="col-bar" data-field="bpCount" onclick={handleTableSort}>
+                            <div class="slds-truncate">
+                                BP Work (Initiatives, Associations)
+                                <template lwc:if={isSortedByBpCount}>
+                                    <lightning-icon icon-name={sortDirectionIcon} size="xx-small" class="sort-icon">
+                                    </lightning-icon>
+                                </template>
+                            </div>
+                        </th>
+
+                        <th class="col-bp" data-field="highlightCount" onclick={handleTableSort}>
+                            <div class="slds-truncate">
+                                Highlights
+                                <template lwc:if={isSortedByHighlightCount}>
+                                    <lightning-icon icon-name={sortDirectionIcon} size="xx-small" class="sort-icon">
+                                    </lightning-icon>
+                                </template>
+                            </div>
+                        </th>
+
+                        <th class="col-bp" data-field="officeCount" onclick={handleTableSort}>
+                            <div class="slds-truncate">
+                                Offices
+                                <template lwc:if={isSortedByOfficeCount}>
+                                    <lightning-icon icon-name={sortDirectionIcon} size="xx-small" class="sort-icon">
+                                    </lightning-icon>
+                                </template>
+                            </div>
+                        </th>
+
+                        <th class="col-bp" data-field="hasCulturalAccess" onclick={handleTableSort}>
+                            <div class="slds-truncate">
+                                Cultural Access
+                                <template lwc:if={isSortedByCulturalAccess}>
+                                    <lightning-icon icon-name={sortDirectionIcon} size="xx-small" class="sort-icon">
+                                    </lightning-icon>
+                                </template>
+                            </div>
+                        </th>
+                    </template>
+
+                    <template if:true={_isInitiativeSearch}>
+                        <th class="col-bp" data-field="initiativeYear" onclick={handleTableSort}>
+                            <div class="slds-truncate">
+                                Initiative Year Range
+                                <template lwc:if={isSortedByInitiativeYear}>
+                                    <lightning-icon icon-name={sortDirectionIcon} size="xx-small" class="sort-icon">
+                                    </lightning-icon>
+                                </template>
+                            </div>
+                        </th>
+                    </template>
+
+                    <template if:true={showGrantYearRange}>
+                        <th class="col-bp" data-field="grantYear" onclick={handleTableSort}>
+                            <div class="slds-truncate">
+                                Grant Year Range
+                                <template lwc:if={isSortedByGrantYear}>
+                                    <lightning-icon icon-name={sortDirectionIcon} size="xx-small" class="sort-icon">
+                                    </lightning-icon>
+                                </template>
+                            </div>
+                        </th>
+                    </template>
+                </tr>
+            </thead>
+
+            <tbody>
+                <template for:each={rowsToRender} for:item="row">
+                    <tr key={row.geoAreaId} class={row.rowClass}>
+                        <td class="col-city">
+                            <div class="slds-truncate clickable" data-id={row.geoAreaId} onclick={handleNameClick}>
+
+                                <template for:each={row.iconTypeList} for:item="icon">
+                                    <span key={icon.key}>
+                                        <template if:true={shallShowGrants}>
+                                            <lightning-icon if:true={icon.showIcon} icon-name={icon.name}
+                                                title={icon.title} size="x-small" class="slds-m-right_xx-small">
+                                            </lightning-icon>
+                                        </template>
+                                    </span>
+                                </template>
+
+                                <template lwc:if={row.hasActiveInitiative}>
+                                    <strong>
+                                        <span>{row.name}</span>
+                                    </strong>
+                                </template>
+                                <template lwc:else>
+                                    <span>{row.name}</span>
+                                </template>
+                            </div>
+                        </td>
+
+                        <td class="col-bp">
+                            <template lwc:if={row.hasActiveInitiative}>
+                                <span>
+                                    <lightning-icon icon-name="standard:task2" size="x-small"
+                                        class="slds-m-right_xx-small">
+                                    </lightning-icon>
+                                </span>
+                            </template>
+                        </td>
+
+                        <template if:false={_isInitiativeSearch}>
+                            <td class="col-bar">
+                                <div class="bp-bar-wrapper" data-count={row.bpCount}>
+                                    <template lwc:if={row.bpCount}>
+                                        <div class="bp-count-label">
+                                            {row.bpCount}
+                                        </div>
+                                    </template>
+
+                                    <div class="bp-bar hover-scale" style={row.barStyle} data-id={row.geoAreaId}>
+                                        <template for:each={row.bpSegments} for:item="segment">
+                                            <div key={segment.focusArea} class="bp-segment" style={segment.style}
+                                                data-count={segment.count} data-focus={segment.focusArea}
+                                                onmouseenter={handleSegmentHover} onmouseleave={handleSegmentLeave}>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td class="col-bp">
+                                <div class="slds-truncate">
+                                    {row.highlightCount}
+                                </div>
+                            </td>
+
+                            <td class="col-bp">
+                                <div class="slds-truncate">
+                                    {row.officeCount}
+                                </div>
+                            </td>
+
+                            <td class="col-bp">
+                                <template lwc:if={row.hasCulturalAccess}>
+                                    <lightning-icon icon-name="standard:task2" size="x-small">
+                                    </lightning-icon>
+                                </template>
+                            </td>
+                        </template>
+
+                        <template if:true={_isInitiativeSearch}>
+                            <td class="col-bp">
+                                <div class="slds-truncate">
+                                    {row.initiativeMinYear} - {row.initiativeMaxYear}
+                                    <span if:true={row.isNonConsecutive}>  &nbsp;(Non-Consecutive) </span>
+                                </div>
+                            </td>
+                        </template>
+
+                        <template if:true={showGrantYearRange}>
+                            <td class="col-bp">
+                                <div class="slds-truncate">
+                                    {row.grantMinYear} - {row.grantMaxYear}
+                                </div>
+                            </td>
+                        </template>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+
+    <div lwc:if={showTooltip} class="custom-tooltip" style={tooltipStyle}>
+        {tooltipText}
+    </div>
+</template>

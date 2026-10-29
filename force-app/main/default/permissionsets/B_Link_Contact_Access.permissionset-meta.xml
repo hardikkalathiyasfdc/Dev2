@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>BLinkContactService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>BlinkContactController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Contact_B_Link_Access</name>
+    </customPermissions>
+    <description>Grants access to B-Link Button on Contact Page and B-Link Tab. B-Link Button allows user to Link and Unlink Contacts.
+
+IM-19: This is used to grant access for Solicitor History Status and Bgive Id. 
+
+BRME 5845 Permission Set relabeled.</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.Bgive_Contig_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.Bgive_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Solicitor_History_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>B-Link: Contact Access</label>
+    <tabSettings>
+        <tab>B_Link</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

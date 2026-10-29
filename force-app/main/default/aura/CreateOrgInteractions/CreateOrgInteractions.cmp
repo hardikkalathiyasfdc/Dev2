@@ -1,0 +1,80 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId" access="global" controller="CreateInteractionsController">
+	
+	<!--Style-->
+  	<aura:html tag="style">
+	    .slds-modal__container{
+	    height : auto;
+	    width: 90%;
+	    max-width: 90rem;
+	    }
+	    .modal-body{
+	    height : inherit !important;
+	    max-height: inherit !important;
+	    }
+	    .slds-modal__footer{
+	    display: none !important;
+	    }
+  	</aura:html>
+
+  	<aura:handler name="init" value="{!this}" action="{!c.countMem}"/>
+
+  	<aura:attribute name="memCount" type="Integer" default="0"/>
+	<aura:attribute name="recordId" type="String"/>
+	<aura:attribute name="showSpinner" type="Boolean" default="false" />
+	<aura:attribute name="hideCreateButton" type="Boolean" default="false" />
+	<aura:attribute name="showCreationSection" type="Boolean" default="false" />
+	<aura:attribute name="recordTypes" type="List" />
+	<aura:attribute name="value" type="String" />
+	<aura:attribute name="errMsg" type="String" />
+	<aura:attribute name="requiredFields" type="Object" />
+	<aura:attribute name="interactionFields" type="List" />
+	<aura:attribute name="defaultTeamId" type="String" />
+
+	<aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Processing.." variant="brand"/>
+    </aura:if>
+	
+	<aura:if isTrue="{!v.errMsg != null }">
+		<div>
+		  <div class="slds-notify_container slds-is-relative">
+		    <div class="slds-notify slds-notify_toast slds-theme_error" role="status">
+		      <lightning:icon iconName="utility:error" size="small" class="slds-m-right_small"  variant="inverse" />
+		      <div class="slds-notify__content">
+		        <h2 class="slds-text-heading_small ">{!v.errMsg}</h2>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</aura:if>
+	<!-- Use record Edit Form to display page layout by record type Id -->
+	<div style="height: 500px;">
+		<div><span class="slds-text-color_error">{!$Label.c.Org_Engagement_Instruction_Text}</span></div><!-- Add information to explain the usage of the current feature -->
+	    <lightning:recordEditForm aura:id="createInteraction"
+	    	recordTypeId="{!v.value}"
+			objectApiName="Interaction__c"
+			onsubmit="{!c.handleSubmit}"
+	        onsuccess="{!c.handleSuccess}"
+	        class="slds-scrollable_y"
+	        onerror="{!c.handleError}">
+	        <lightning:messages />
+	        <aura:iteration items="{!v.interactionFields}" var="field">
+
+	        <lightning:inputField fieldName="{!field.fieldPath}" required="{!field.required}" value="{!field.value}" />
+
+	        </aura:iteration>
+	        <div class="slds-align_absolute-center slds-m-top_small" style="height: 5rem;">
+		      <lightning:button 
+		        title="{!'It will auto create total '+v.memCount+' Interaction records, one each on all the Campaign Members'}"
+		        type="submit"
+		        variant="success"
+		        disabled="{!v.hideCreateButton}"
+		        label="{! 'Create Interactions ('+v.memCount+')'}"
+		        iconName="action:add_relationship"/>&nbsp;&nbsp;
+		      <lightning:button onclick="{!c.closeAction}"
+		        variant="destructive"
+		        label="Cancel"
+		        iconName="action:close"/>
+		    </div>
+	    </lightning:recordEditForm>
+    </div>
+</aura:component>

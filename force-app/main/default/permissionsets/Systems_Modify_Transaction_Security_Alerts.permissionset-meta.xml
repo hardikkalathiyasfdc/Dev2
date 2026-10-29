@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>(BRME-6713) Permission set assigned to the users who can modify transaction security policies</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Systems: Modify Transaction Security Alerts</label>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ModifyTransactionSecurityPolicies</name>
+    </userPermissions>
+</PermissionSet>

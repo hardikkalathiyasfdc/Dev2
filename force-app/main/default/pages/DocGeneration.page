@@ -1,0 +1,79 @@
+<apex:page controller="DocGenerationCtrl" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" >
+<apex:includeScript value="{!$Resource.JSWord+'/FileSaver.min.js'}"/> <!-- File Save JS Library to save the Content into Word -->
+<apex:includeScript value="{!$Resource.JSWord+'/index.js'}"/> <!-- Dox JS Library to generate Word content into Blob -->
+<apex:includeScript value="{!$Resource.JSWord+'/DocGeneration.js'}"/> <!-- All Word generation methods to generate Different type of docs -->
+<head>
+  <apex:slds />
+</head>
+<div class="slds-scope">
+    <div role="status" class="slds-spinner slds-spinner_large slds-spinner_brand">
+        <span class="slds-assistive-text">Loading</span>
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
+    </div>
+</div>
+<script>
+	//CreateDoc method is the main entry to generate the word file
+	//@params:  createdByUser - the word creator in the word footer
+	//			createdDateTime - the word created time in the word footer
+	//			retURL - return url after word saved
+	//			shortListId - List Id value displayed in the mailing template
+	//			docGenerateType - the doc format indication: MultiBioDoc, MailingTempalteDoc, ContactBioDoc
+    function showToastMessage(message) {
+        console.log('@@@error'+message);
+        /*  sforce.one.showToast({
+            "title": "Warning!.",
+            "message": message,
+            "type": "warning",
+             "mode": "sticky"
+        });*/
+    }
+    let request = {};
+    request.listId = '{!listId}';
+    var s = '{!GETSESSIONID()}';
+    var x = new XMLHttpRequest();
+    let url = '';
+    // Show toast message if current contact is restricted
+    if ('{!isCurrentContactRestricted}' === 'true' && '{!isFromQuickAction}' === 'true') {
+       showToastMessage("The contact you selected is Private.");
+    } else if ({!restrictedContactCount} !== 0 && '{!isFromQuickAction}' === 'true') {
+         showToastMessage("The List you selected has "+"{!restrictedContactCount}"+" Private contacts.");
+    }
+
+
+    // Donor Memo UI Version
+    if('{!docGenerateType}' === 'ContactOrgBioDoc') {
+        url = '/services/apexrest/getDonorMemos?startDate={!startDate}&endDate={!endDate}&selectedFocusAreas={!selectedFocusAreas}&selectedDonorContacts={!selectedDonorContacts}&selectedDonorOrgs={!selectedDonorOrgs}&selectedDonorLists={!selectedDonorLists}&selectedProjects={!selectedProjects}&minAmount={!minAmount}&coverPage={!coverPage}&getActiveDonors={!getActiveDonors}&sortBy={!sortBy}';
+    }
+
+   if('{!listId}') {
+        if('{!docGenerateType}' === 'MultiBioDoc') {
+            url = '/services/apexrest/getContacts?selectedSource={!selectedSource}&listId={!listId}&access={!access}&rsvp={!rsvp}&interaction={!interaction}&event={!event}&shortBio={!shortBio}&actionName={!actionName}';;
+        }
+        if('{!docGenerateType}' === 'MailingTempalteDoc') {
+            url = '/services/apexrest/getContacts?listId={!listId}&access={!access}&interaction=no&image=no';;
+        }
+    }
+
+   if('{!contactIds}') {
+        url = '/services/apexrest/getContacts?selectedSource=' + encodeURIComponent('{!JSENCODE(selectedSource)}') + '&contactIds={!contactIds}&access={!access}&interaction={!interaction}&event={!event}&shortBio={!shortBio}&actionName={!actionName}';
+        if('{!docGenerateType}' === 'ContactBioDoc') {
+            url = '/services/apexrest/getContacts?selectedSource=' + encodeURIComponent('{!JSENCODE(selectedSource)}') + '&contactIds={!contactIds}&access={!access}&interaction={!interaction}&event={!event}&shortBio={!shortBio}&actionName={!actionName}';
+        }
+    }
+    x.open('Get', url);
+    x.setRequestHeader('Authorization', 'Bearer ' + s);
+    x.setRequestHeader('content-type', 'application/json');
+    x.onload = function() {
+        try {
+            createDoc("{!bioHeader}", "{!createdByUser}", "{!createdDateTime}", "{!retURL}", '{!shortListId}', "{!docGenerateType}", "{!listName}", this.response);
+        } catch(err) {
+            if(confirm('{!$Label.Generate_Bio_Too_Many_Contacts_Error} ------- ' + err.message)) {
+            } else {
+                window.location.href = '{!retURL}'
+            }
+        }
+    }
+    x.send(null);
+</script>
+</apex:page>

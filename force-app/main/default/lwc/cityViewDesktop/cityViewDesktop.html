@@ -1,0 +1,99 @@
+<template>
+    <c-city-view-header is-showing-detail-page={showDetail} focus-areas={focusAreas} onfiltersready={handleFiltersReadyFromPopup} filters={filters} 
+        is-initiative-selected={isInitiativeSelected} selected-initiative={selectedInitiative} has-active-filters={hasActiveFilters} onsearchby={handleSearchFilter} 
+        onapplyfilters={handleApplyFiltersFromPopup}>
+    </c-city-view-header>
+    <template lwc:if={isNotLoading}>
+        <div style={mainPageStyles}>
+            <div class="slds-grid slds-wrap slds-p-around_none" style="background-color: white;">
+                <div class="slds-col slds-size_12-of-12 slds-p-around_x-small">
+                    <template lwc:if={isSpinnerVisible}>
+                        <lightning-spinner alternative-text="Loading..." size="large">
+                        </lightning-spinner>
+                    </template>
+                    <template lwc:else>
+                        <div class="map-container">
+                            <div class={splitViewClass}>
+                                <template lwc:if={isMapSpinnerVisible}>
+                                    <lightning-spinner alternative-text="Loading..." size="large">
+                                    </lightning-spinner>
+                                </template>
+                                <template lwc:if={isLoadingMap}>
+                                    <lightning-spinner alternative-text="Loading..." size="large">
+                                    </lightning-spinner>
+                                </template>
+                                <div class="main-panel" lwc:else>
+                                    <div class="floating-toggle">
+                                        <c-custom-toggle option1="Map View" option2="List View" onviewchange={handleViewChange}
+                                            current-view={currentView}>
+                                        </c-custom-toggle>
+                                    </div>
+                                    <template lwc:if={shallShowMapView}>
+                                        <div class="rounded-map">
+                                            <lightning-map map-markers={filteredMapMarkers} options={mapOptions}
+                                                list-view="hidden" selected-marker-value={geoAreaId} center={center}
+                                                zoom-level={zoomLevel} onmarkerselect={handleMarkerSelect}>
+                                            </lightning-map>
+                                            <div class="legend-box">
+                                                <div class="legend-item">
+                                                    <div class="circle-icon"></div>
+                                                    <span>City</span>
+                                                </div>
+                                                <div class="legend-item">
+                                                    <div class="square-icon"></div>
+                                                    <span>State</span>
+                                                </div>
+                                                <div class="legend-item">
+                                                    <div class="triangle-icon"></div>
+                                                    <span>Country</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <template lwc:else>
+                                        <c-city-view-list-view geo-area-id={geoAreaId} city-raw-data={cityRawData}
+                                            country-raw-data={countryRawData} state-raw-data={stateRawData}
+                                            ongeoareaselected={handleSelectFromListView} is-country-selected={searchByCountry}
+                                            is-state-selected={searchByState} is-city-selected={searchByCity}
+                                            is-search-by-initiative={isInitiativeSelected} shall-show-grants={shallShowGrants}
+                                            search-by-initiative={searchByInitiative} selected-initiative={selectedInitiative}
+                                            list-view-global-title={listViewGlobalTitle}>
+                                        </c-city-view-list-view>
+                                    </template>
+                                </div>
+                                <aside class={citySidebarClass} aria-hidden={isCitySidebarHidden}>
+                                    <div class="city-sidebar-body">
+                                        <div class="city-sidebar-actions">
+                                            <button class="city-sidebar-close" type="button" onclick={closeCitySidebar} title="Close">
+                                                <lightning-icon icon-name="utility:close" size="x-small" alternative-text="Close"></lightning-icon>
+                                            </button>
+                                        </div>
+                                        <c-city-view-sidebar is-initiative-selected={isInitiativeSelected} is-country-selected={isCountrySelected}
+                                            is-state-selected={isStateSelected} focus-areas={focusAreas} office-icon-path={officeIconPath}
+                                            disable-filter-css={disableFilterCss} filters={filters} selected-map-marker={selectedMapMarker} show-detail-page={showDetail}
+                                            onsortingvaluechange={handleDropdownValueChange} shall-show-grants={shallShowGrants}
+                                            onsortingvaluechangeoncitywork={handleSortingValueChangeOnCityWork} onsortingvaluechangeonstatework={handleSortingValueChangeOnStateWork}
+                                            selected-group-by-for-state-on-country-level={selectedGroupByForStateOnCountryLevel} 
+                                            selected-group-by-for-city-on-country-level={selectedGroupByForCityOnCountryLevel}>
+                                        </c-city-view-sidebar>
+                                    </div>
+                                </aside>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template lwc:if={showDetail}>
+        <c-city-view-detail-page ondetailclose={handleDetailClose} is-country-selected={isCountrySelected}
+            is-state-selected={isStateSelected} onsortingvaluechange={handleDropdownValueChange} marker-office-icon={markerOfficeIcon}
+            selected-map-marker={selectedMapMarker} geo-area-id={geoAreaId}
+            onhighlightsortingchange={handleHighlightSorting} selected-highlight-sort={selectedHighlightSort}
+            show-detail-page={showDetail} filters={filters} shall-show-grants={shallShowGrants}
+            onsortingvaluechangeoncitywork={handleSortingValueChangeOnCityWork} onsortingvaluechangeonstatework={handleSortingValueChangeOnStateWork}
+            selected-group-by-for-state-on-country-level={selectedGroupByForStateOnCountryLevel} 
+            selected-group-by-for-city-on-country-level={selectedGroupByForCityOnCountryLevel}>
+        </c-city-view-detail-page>
+    </template>
+</template>

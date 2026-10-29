@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Source__c</fullName>
+    <label>Source</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Email_to_BP_Employee</fullName>
+                <default>false</default>
+                <label>Email to BP Employee</label>
+            </value>
+            <value>
+                <fullName>Email to info@bloomberg.org</fullName>
+                <default>false</default>
+                <label>Email to info@bloomberg.org</label>
+            </value>
+            <value>
+                <fullName>Incoming_Call</fullName>
+                <default>false</default>
+                <label>Incoming Call</label>
+            </value>
+            <value>
+                <fullName>Letter</fullName>
+                <default>false</default>
+                <label>Letter</label>
+            </value>
+            <value>
+                <fullName>Social Media</fullName>
+                <default>false</default>
+                <label>Social Media</label>
+            </value>
+            <value>
+                <fullName>Spoke to Staff</fullName>
+                <default>false</default>
+                <label>Spoke to Staff</label>
+            </value>
+            <value>
+                <fullName>Spoke to MRB</fullName>
+                <default>false</default>
+                <label>Spoke to MRB</label>
+            </value>
+            <value>
+                <fullName>Word of Mouth</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Word of Mouth</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

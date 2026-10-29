@@ -1,0 +1,53 @@
+<template>
+	<div data-id="searchRes" class="slds-form-element slds-lookup slds-is-close">
+	        <!--This part is for display search bar for lookup-->  
+	        <div class="slds-form-element__control">
+	            <div class="slds-input-has-icon slds-input-has-icon--right">
+	                <!-- This markup is for when an record is selected -->
+	                <div data-id="lookup-pill" class="slds-pill-container">
+	                    <div onkeyup={handleSearchChange} >
+					        <lightning-input
+					            name="list-search"
+					            label="Search List"
+								autocomplete="off"
+								onclick={handleSearchChange}
+					            type="search"></lightning-input>
+					    </div>
+	                <!--Selected Records Pills Section-->
+	                <template for:each={selectedLists} for:item="selectedList">
+				        <lightning-pill key={selectedList.Id} class="slds-m-around_xx-small" label={selectedList.Name} id={selectedList.Id} onremove={removeSelection}>
+	                        <lightning-icon icon-name="standard:campaign" size="x-small"></lightning-icon>
+	                    </lightning-pill>
+				    </template>
+	                </div>
+	            </div>
+	        </div>
+	 
+	        <!--This part is for Display typehead lookup result List-->
+	        <template if:true={availableLists}> 
+		        <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+		        	<div><lightning-icon icon-name="utility:close" onclick={handleResultClose} class="slds-float_right slds-m-right_medium slds-m-top_small" size="x-small"></lightning-icon></div>
+		            <center> {message}</center>
+		            <template for:each={availableLists} for:item="item">
+		              <li key={item.Id} role="presentation" class="slds-listbox__item" >
+		                <div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+		                  <span class="slds-media__figure slds-listbox__option-icon">
+		                    <span class="slds-icon_container slds-icon-standard-account">
+		                    	<template if:true={item.displayEvent}>
+			                    	<lightning-icon icon-name="standard:campaign" size="small"></lightning-icon>
+			                    </template>
+			                    <template if:false={item.displayEvent}>
+			                    	<lightning-icon icon-name="utility:campaign" size="small" class="my-icon"></lightning-icon>
+			                    </template>
+		                    </span>
+		                  </span>
+		                  <span class="slds-media__body">
+		                    <span class="slds-listbox__option-text slds-listbox__option-text_entity slds-m-top_x-small" id={item.Id} onclick={getSelectedRows}>{item.Name}</span>
+		                  </span>
+		                </div>
+		              </li>
+		          </template>
+		        </ul>
+		    </template>
+	</div>
+</template>

@@ -1,0 +1,54 @@
+<template>
+	<lightning-quick-action-panel header="Export Organization Highlights" style="padding: 10px;">
+		<div class="c-container" style="min-height: 135px; padding: 5px;">
+			<lightning-card>
+				<template lwc:if={fromQuickAction}>
+					<lightning-layout multiple-rows="true">
+						<lightning-layout-item padding="around-small" size={orgSize}>
+							<lightning-combobox name="type" label="Type of Export" placeholder="Select Export" options={options}
+								value={selectedOption} onchange={handleExportType}>
+							</lightning-combobox>
+						</lightning-layout-item>
+						<lightning-layout-item padding="around-small" size="3">
+							<lightning-input type="date" name="input8" label="From " value={fromDate} onchange={handleFromDate}>
+							</lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item padding="around-small" size="3">
+							<lightning-input type="date" name="input8" label="To" value={toDate} onchange={handleToDate} min={fromDateSelected}>
+							</lightning-input>
+						</lightning-layout-item>
+					</lightning-layout>
+					<div slot="footer">
+						<lightning-button class="slds-p-right_small" variant="brand" disabled={buttonDisable} label="Export" 
+							onclick={handleExportSelected}>
+						</lightning-button>
+					</div>
+				</template>
+				<template lwc:else>
+					<lightning-layout multiple-rows="true" style="min-height: 400px">
+						<lightning-layout-item padding="around-small" size="4">
+							<lightning-combobox name="type" label="Type of Export" placeholder="Select Export" options={options}
+								value={selectedOption} onchange={handleExportType}>
+							</lightning-combobox>
+						</lightning-layout-item>
+						<lightning-layout-item padding="around-small" size="3">
+							<lightning-input type="date" name="input8" label="From" value={fromDate} onchange={handleFromDate}>
+							</lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item padding="around-small" size="3">
+							<lightning-input type="date" name="input8" label="To" value={toDate} onchange={handleToDate} min={fromDateSelected}>
+							</lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item padding="around-small" size="2">
+							<div class="slds-m-top_large">
+								<lightning-button class="slds-p-right_small" variant="brand" disabled={buttonDisable} label="Export" 
+									onclick={handleExportSelected}>
+								</lightning-button>
+							</div>
+						</lightning-layout-item>
+					</lightning-layout>
+				</template>
+			</lightning-card>
+		</div>
+	</lightning-quick-action-panel>
+</template>

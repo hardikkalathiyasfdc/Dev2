@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BRM_Field_Required_Except_for_Type_None</fullName>
+    <active>true</active>
+    <description>IM-368: Making BRM Field field required if field type is not None</description>
+    <errorConditionFormula>AND(OR(ISPICKVAL( BRM_Field_Type__c , &apos;Field&apos;),ISPICKVAL( BRM_Field_Type__c , &apos;JSON&apos;),ISPICKVAL( BRM_Field_Type__c , &apos;Object&apos;)), ISBLANK( BRM_Field__c ) )</errorConditionFormula>
+    <errorDisplayField>BRM_Field__c</errorDisplayField>
+    <errorMessage>BRM Field value is required if BRM Field Type is not None</errorMessage>
+</ValidationRule>

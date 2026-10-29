@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Amendment_Future_Amount_Local__c</fullName>
+    <description>IM-126:Amount of an amendment if there is an open grant amendment request.</description>
+    <label>Amendment Future Amount (Local)</label>
+    <precision>15</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

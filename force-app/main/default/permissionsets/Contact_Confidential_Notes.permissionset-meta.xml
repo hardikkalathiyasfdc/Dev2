@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Confidential. Includes fields: Confidential Notes</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Confidential_Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Contact: Confidential Notes</label>
+</PermissionSet>

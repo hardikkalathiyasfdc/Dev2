@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <isExposed>false</isExposed>
+    <description>IM-273: Common utility functions for budget components. Provides shared functionality for Excel manipulation, data processing, and common operations.</description>
+</LightningComponentBundle>

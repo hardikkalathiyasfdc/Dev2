@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>B_Linked__c</fullName>
+    <description>IM-316: True if the Organization BgiveId is present, false if not present.</description>
+    <formula>!ISBLANK( Organization__r.Bgive_Id__c )</formula>
+    <label>B-Linked</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

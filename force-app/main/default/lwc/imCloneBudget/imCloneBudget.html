@@ -1,0 +1,38 @@
+<!--
+  @description       : 
+  @author            : Gauri S
+  @group             : 
+  @last modified on  : 01-26-2026
+  @last modified by  : Paddy
+-->
+<template>
+	<template lwc:if={hasEditAccess}>
+		<lightning-quick-action-panel header="Clone Budget">
+			<lightning-layout multiple-rows="true">
+				<lightning-layout-item padding="around-small" size="6">
+					<lightning-input
+						type="text"
+						label="Cloned Budget Name"
+						value={budgetName}
+						onchange={handleNameChange}
+						required
+						maxlength="75"></lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item padding="around-small" size="6">
+					<lightning-record-picker
+						label="Initiative "
+						placeholder="Search Initiative..."
+						object-api-name="IM_Initiative__c"
+						onchange={handleRecordChange}
+						required
+						filter={filter}>
+					</lightning-record-picker>
+				</lightning-layout-item>
+			</lightning-layout>
+			<div slot="footer">
+				<lightning-button variant="neutral" label="Cancel" onclick={handleCancel}> </lightning-button>
+				<lightning-button class="slds-m-left_x-small" variant="brand" label="Save" onclick={handleSave}> </lightning-button>
+			</div>
+		</lightning-quick-action-panel>
+	</template>
+</template>

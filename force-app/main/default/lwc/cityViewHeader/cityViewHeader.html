@@ -1,0 +1,84 @@
+<template>
+    <!-- Navigation bar container -->
+    <div class="nav-bar">
+        <div class="slds-grid slds-wrap slds-p-around_none">
+            <div class="slds-col slds-size_6-of-8 slds-p-around_none">
+                <video autoplay muted playsinline class="dots-background" src={backgroundVideoUrl}>
+                </video>
+                <div class="video-gradient-overlay"></div>
+            </div>
+            <div class="slds-col slds-size_5-of-8 slds-p-around_none" style="z-index: 2;">
+                <!-- Left section: Displays a static image -->
+                <div class="image-container slds-float_left left-section">
+                    <img src={cityViewImageUrl} class="cityview-logo" onclick={handleImageClick} />
+                </div>
+                <!-- Conditional rendering: Displays selected city name dynamically -->
+                <div lwc:if={isShowingDetailPage}>
+                    <p data-id="OrgName"
+                        style="font-size: 20px; font-weight: bold; padding-left: 5px; padding-top: 13px; color:white">
+                        &nbsp; &nbsp;{selectedGeoAreaFullName}
+                        <template lwc:if={hasClickThruPermission}>
+                            <lightning-icon icon-name="utility:new_window" alternative-text="More Info" size="xx-small"
+                                variant="inverse" class="info-icon" style="margin-left: 8px; cursor: pointer;"
+                                onclick={openOrgDetails} title="Click here to view city details and add Organization Highlights">
+                            </lightning-icon>
+                        </template>
+                    </p>
+                </div>
+            </div>
+            <div class="slds-col slds-size_3-of-8 slds-p-around_none slds-grid" style="z-index: 2;">
+                <div class="slds-col slds-size_1-of-4 slds-p-around_none" style="z-index: 2;">
+                    <div class="slds-p-around_small search-by-row" style="display: flex; height: 100%; width: 100%; margin-top: -8px;">
+                        <div class="search-label">Search by</div>
+                        <lightning-button-menu alternative-text="Search by" label={searchBy} disabled={disableSearchBy} icon-name="utility:down"
+                            style="margin-right: -5px; margin-top: 8px; float:right" onselect={handleTabChange} menu-alignment="right">
+                            <lightning-menu-item value="City" checked={isCitySelected} label="City">
+                            </lightning-menu-item>
+                            <lightning-menu-item value="State" checked={isStateSelected} label="State">
+                            </lightning-menu-item>
+                            <lightning-menu-item value="Country" checked={isCountrySelected} label="Country">
+                            </lightning-menu-item>
+                            <lightning-menu-item value="BP Work" checked={isInitiativeSelected} label="BP Work">
+                            </lightning-menu-item>
+                        </lightning-button-menu>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_3-of-4 slds-p-around_none" style="background: #234349; height: 3.1rem; z-index: 2;">
+                    <!-- Right section: Contains search and filter options -->
+                    <div style="display:flex; height:100%; width:100%">
+                        <div class="search-container" data-id="USearch">
+                            <div style="width: 100% !important;">
+                                <c-city-view-geo-area-search label="" lwc:ref="searchcmp" placeholder={searchPlaceholder}
+                                    object-api-name="Geo_Area__c" field-api-name="Name" sub-field-api-name="Geo_Name__c"
+                                    selected-filter={searchBy} selected-city={selectedCities} sort-field={sortField}
+                                    icon-name="standard:account" onselect={handleSelected}
+                                    onrecordfetched={handleRecordfetched}>
+                                </c-city-view-geo-area-search>
+                            </div>
+                            <div class="header-filters">
+                                <button class={filterIconButtonClass} type="button" onclick={toggleFiltersPopup} disabled={disableFilters} title={filterTitle}>
+                                    <span class="icon-wrap">
+                                        <lightning-icon icon-name="utility:filterList" size="x-small" alternative-text="Filters"></lightning-icon>
+                                        <template lwc:if={hasActiveFilters}>
+                                            <span class="active-indicator" title="Filters applied"></span>
+                                        </template>
+                                    </span>
+                                    <span class="filter-icon-label">Filters</span>
+                                </button>
+                                <template lwc:if={isFiltersPopupOpen}>
+                                    <section class="filters-popup" role="dialog">
+                                        <c-city-view-filters focus-areas={focusAreas} onclose={closeFiltersPopup} filters={filters} 
+                                            selected-map-marker={selectedMapMarker} style={filterStyles} onfiltersready={handleFiltersReadyFromPopup} 
+                                            is-showing-detail-page={isShowingDetailPage} onapplyfilters={handleApplyFiltersFromPopup}>
+                                        </c-city-view-filters>
+                                    </section>
+                                    <div class="filters-backdrop" onclick={closeFiltersPopup}></div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

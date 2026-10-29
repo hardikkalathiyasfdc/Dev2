@@ -1,0 +1,53 @@
+.readOnly{
+    pointer-events: none;
+}
+
+.redColor{
+    --sds-c-icon-color-foreground:red;
+    --sds-c-icon-color-background:white;
+}
+
+.greenColor{
+    --sds-c-icon-color-foreground:green;
+    --sds-c-icon-color-background:white;
+}
+
+.scrollBarHeight{
+    height:14rem;
+    width:56rem;
+}
+
+.pill{
+    background :rgb(148 203 255 / 92%);
+    height: 25px;
+    padding: 0 10px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 21px;
+    vertical-align: middle;
+    padding-top: 5px;
+    margin-bottom : 10px;
+    background :rgb(212 239 240);
+    font-family:monospace;
+    background: rgb(188, 186, 186);
+    color:black;
+    width : 85%;
+
+}
+
+.pill.error{
+    background: #9d1010;
+    color:white;
+}
+
+.pill.success{
+    background: #079307;
+    color:white;
+}
+
+.pill.inprogress{
+    background: #5582d2;
+    color:white;
+}
+
+/*red #9d1010 green #079307*/

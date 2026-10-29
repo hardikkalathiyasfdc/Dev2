@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>BRME-6973: This group is used to give City View Initiative approval access to the Approval Committee</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>IM: CityView Approval Committee</label>
+    <permissionSets>Associations_Organization_Associations_Create_Edit_CityView_Initiative</permissionSets>
+    <permissionSets>IM_Apex_Classes</permissionSets>
+    <permissionSets>IM_IM_Access</permissionSets>
+    <permissionSets>IM_Strategic_Location_Read_Access</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

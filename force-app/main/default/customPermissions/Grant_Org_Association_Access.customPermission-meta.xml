@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>(BRME-6186) Custom permission to view the &apos;Grant&apos; org associations related to the Associations_Organization_Associations_Create_Edit_CityView_Grant permission set</description>
+    <isLicensed>false</isLicensed>
+    <label>Grant Org Association Access</label>
+</CustomPermission>

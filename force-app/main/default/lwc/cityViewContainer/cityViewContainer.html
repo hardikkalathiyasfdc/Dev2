@@ -1,0 +1,17 @@
+<template>
+
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading..." size="large"></lightning-spinner>
+    </template>
+
+    <template if:false={isLoading}>
+        <template lwc:if={isDesktop}>
+            <div>
+                <c-city-view-desktop raw-data={rawData} gcom-geo-areas={gcomGeoAreas}></c-city-view-desktop>
+            </div>
+        </template>
+        <template lwc:elseif={isMobile}>
+            <c-city-view-mobile raw-data={rawData}></c-city-view-mobile>
+        </template>
+    </template>
+</template>

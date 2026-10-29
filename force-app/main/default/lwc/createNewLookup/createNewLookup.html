@@ -1,0 +1,58 @@
+<template>
+	<section class="slds-modal slds-fade-in-open slds-modal_small slds-align_absolute-center">
+		<div class="slds-modal__container">
+			<header class="slds-modal__header">
+				<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{title}</h2>
+			<template if:true={duplidateDone}>	<p>You are creating a duplicate record. We recommend you use an existing record instead.</p></template>
+			</header>
+			<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					<template if:false={duplidateDone}>
+						<template if:true={isaccount}>
+							<div class="slds-card__body slds-card__body_inner">
+								<lightning-input type="text" label="Organization Name" value={name} onchange={handleNameChange} required></lightning-input>
+							</div>
+						</template>
+						<template if:false={isaccount}>
+							<div class="slds-card__body slds-card__body_inner">
+								<lightning-input type="text" name="staffTitle" label="Staff Role" value={staffTitle} onchange={handleInputChnage}></lightning-input>
+								<lightning-input type="text" name="firstname" label="First Name" value={firstname} onchange={handleInputChnage} required></lightning-input>
+								<lightning-input type="text" name="lastname" label="Last Name" value={lastname} onchange={handleInputChnage} required></lightning-input>
+								<lightning-input type="text" name="email" label="Email" value={email} onchange={handleInputChnage}></lightning-input>
+							 
+								<lightning-combobox name="assistantPhoneCode"  label="Assistant Phone (Country Code)" value={assistantPhoneCode}
+									options={phoneCodeValues} onchange={handleChange}>
+								</lightning-combobox>
+						
+								 <lightning-input
+                                     name="AssistentPhone"
+                                     label="Assistant Phone"
+                                     value={AssistentPhone} onchange={handleInputChnage}></lightning-input>
+							</div>
+						</template>
+						<footer class="slds-card__footer">
+							<button class="slds-button slds-button_neutral" onclick={handleCancel} title="Cancel">Cancel</button>
+							<button class="slds-button slds-button_brand" onclick={handleInsertRec} title="Create New" disabled={disablebtn}>Create New</button>
+						</footer>
+					</template>
+					<template if:true={duplidateDone}>
+						 <div style="height: 300px;">
+						<lightning-datatable key-field="id"  data={duplicaterec} columns={columns}
+							 onrowselection={onRowSelection} max-row-selection="1">
+						</lightning-datatable>
+						  </div>
+					</template>
+				
+			</div>
+			<template if:true={duplidateDone}>
+<footer class="slds-modal__footer">
+							<button class="slds-button slds-button_neutral" onclick={handleCancel} title="Cancel">Cancel</button>
+							<button class="slds-button slds-button_brand"  title="Select this organization." disabled={isExitingUse} onclick={handleExistingRecord}>Use Existing</button>
+							<button class="slds-button slds-button_brand" onclick={handleCreateNewRec} title="Create new organization">Ignore and Create New</button>
+						</footer>
+					</template>
+
+		</div>
+	</section>
+	<div class="slds-backdrop slds-backdrop_open"></div>
+
+</template>

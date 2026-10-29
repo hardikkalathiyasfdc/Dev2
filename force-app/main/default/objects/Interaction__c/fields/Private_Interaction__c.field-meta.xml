@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Private_Interaction__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Created by Slalom. Once checked off, make a record private to the record owner. Works with sharing rules.</description>
+    <inlineHelpText>Make this record private to you</inlineHelpText>
+    <label>Private Interaction</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

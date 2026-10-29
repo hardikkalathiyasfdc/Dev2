@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>CityView_With_Clickthrus</name>
+    </customPermissions>
+    <description>Only contains custom permission that shows links on CityView tab. This does NOT give access to the CityView tab.  CityView: Tab Access Only permission set must be applied to user plus this permission set if they need CityView click thru access. BRME-5768</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Has_Cultural_Access__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>CityView: Clickthrough Ability Ad On</label>
+    <tabSettings>
+        <tab>Instructions_to_Add_a_CityView_Highlight</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

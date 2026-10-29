@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IEActivity__c</fullName>
+    <label>IE Activity (Confidential)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Beyond Carbon</fullName>
+                <default>false</default>
+                <label>Beyond Carbon</label>
+            </value>
+            <value>
+                <fullName>Everytown</fullName>
+                <default>false</default>
+                <label>Everytown</label>
+            </value>
+            <value>
+                <fullName>IUSA</fullName>
+                <default>false</default>
+                <label>IUSA</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

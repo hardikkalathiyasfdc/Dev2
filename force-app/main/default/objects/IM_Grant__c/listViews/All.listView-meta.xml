@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>Amount_Term__c</columns>
+    <columns>Bgive_Contig_Id__c</columns>
+    <columns>Bgive_Program_Organization_Id__c</columns>
+    <columns>Bgive_IM_Connection__c</columns>
+    <columns>Start_Date__c</columns>
+    <columns>End_Date__c</columns>
+    <columns>Project_Title_Internal__c</columns>
+    <columns>Partner_Org__c</columns>
+    <columns>Bgive_Amount_Local__c</columns>
+    <columns>Bgive_Status__c</columns>
+    <columns>Currency__c</columns>
+    <columns>Funded_By_Multiple_Initiatives__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CREATEDBY_USER</field>
+        <operation>equals</operation>
+        <value>IM System</value>
+    </filters>
+    <label>All</label>
+</ListView>

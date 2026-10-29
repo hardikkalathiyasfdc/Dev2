@@ -1,0 +1,11 @@
+<template>
+    <template lwc:if={isLocationAvailable}>
+        <div class="box">
+        <div><b>Local Time:</b> {localTime}</div>
+        <div>
+            <b>Weather:</b> {temperature}°F, {weatherDescription} 
+            <img lwc:if={iconUrl} src={iconUrl} class="slds-var-p-left_x-small weather-icon"/>
+        </div>
+        </div>
+    </template>
+</template>

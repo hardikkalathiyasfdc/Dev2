@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>IM-590: Notify users when corresponding Budget is set to Pending Approval</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>IM Initiative Pending Approval Template</name>
+    <style>none</style>
+    <subject>An Initiative or Amendment is Ready for Approval in BIM</subject>
+    <textOnly>{!IM_Initiative__c.LastModifiedBy} has moved a budget for {!IM_Initiative__c.Name} to Ready for Approval. When it is time, please proceed to BIM to record the approval for {!IM_Initiative__c.Name}.</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

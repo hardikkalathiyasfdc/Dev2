@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Grants access to &apos;MB 2020&apos; record type on List</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>List: MB2020 Lists</label>
+    <recordTypeVisibilities>
+        <recordType>Campaign.Team_2020</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

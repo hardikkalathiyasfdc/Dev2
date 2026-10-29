@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Confidential. Access to Grants/Fundraising Notes and Donor Memo Override Name fields located on the Contact record.  Created to allow Dylan and Kara Moore to enter grants/fundraising notes</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Donor_Memo_Override_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Grants_Fundraising_Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Contact: Reporting Grants/Fundraising Notes</label>
+</PermissionSet>

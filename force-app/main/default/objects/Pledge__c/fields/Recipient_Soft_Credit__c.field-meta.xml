@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recipient_Soft_Credit__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>(BRME-6960) Contact designated as the Recipient Soft Credit for this Pledge&apos;s Recipient Organization and Fundraising Project. This field is system managed.</description>
+    <label>Recipient Soft Credit</label>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Recipient Soft Credit Pledges</relationshipLabel>
+    <relationshipName>Pledge_Recipient_Soft_Credits</relationshipName>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

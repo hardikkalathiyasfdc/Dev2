@@ -1,0 +1,28 @@
+<template>
+    <div class="c-container slds-theme_default slds-var-p-horizontal_large slds-var-p-vertical_small">
+        <lightning-tabset>
+            <template lwc:if={isFromContact}>
+                <lightning-tab label="Contact">
+                    <c-blink-contact></c-blink-contact>
+                </lightning-tab>
+            </template>
+            <template lwc:elseif={isFromOrg}>
+                <lightning-tab label="Organization">
+                    <c-blink-organization is-from-org={isFromOrg} record-id={recordId}></c-blink-organization>
+                </lightning-tab>
+            </template>
+            <template lwc:else>
+                <template lwc:if={isOrgBlinkVisible}>
+                    <lightning-tab label="Organization">
+                        <c-blink-organization is-from-org={isFromOrg} record-id={recordId}></c-blink-organization>
+                    </lightning-tab>
+                </template>
+                <template lwc:if={isContactBlinkVisible}>
+                    <lightning-tab label="Contact">
+                        <c-blink-contact></c-blink-contact>
+                    </lightning-tab>
+                </template>
+            </template>
+        </lightning-tabset>
+    </div>
+</template>

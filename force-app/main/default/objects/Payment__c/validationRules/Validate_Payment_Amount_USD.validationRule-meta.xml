@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Payment_Amount_USD</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND (
+!$Setup.Bypass_Automation_Setting__c.Payment_Validation__c,
+NOT(ISPICKVAL(Pledge__r.Pledge_Currency__c, &apos;USD&apos;)),
+ISNULL(Payment_Amount_USD__c)
+)</errorConditionFormula>
+    <errorDisplayField>Payment_Amount_USD__c</errorDisplayField>
+    <errorMessage>Payment Amount (USD) is required when Currency is not USD</errorMessage>
+</ValidationRule>

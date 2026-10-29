@@ -1,0 +1,19 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId">
+	  <!--Style-->
+    <aura:html tag="style">
+        .slds-modal__container{
+        width: 70%;
+        max-width: 70rem;
+        }
+        .modal-body{
+        height : 580px !important;
+        max-height: 580px !important;
+        }
+        
+        .customFooter{
+        display: inline !important;
+        }
+    </aura:html> 
+	<aura:attribute name="recordId" type="String"/>
+	<c:addGuests recordId="{!v.recordId}" oncancel="{!c.closeQA}"></c:addGuests>
+</aura:component>

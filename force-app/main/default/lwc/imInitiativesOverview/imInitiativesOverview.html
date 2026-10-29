@@ -1,0 +1,48 @@
+<!--
+  @description       : 
+  @author            : Sai Bhargav Thotakura
+  @group             : 
+  @last modified on  : 07-21-2025
+  @last modified by  : Sai Bhargav Thotakura
+-->
+<template>
+	<!--For Each gridData, repeat this table-->
+	<template for:each={treeGridData} for:item="gridData">
+		<div key={gridData} class="box">
+			<!--Initiative Name-->
+			<div class="slds-grid">
+				<div class="header">
+					<lightning-formatted-text class="bold-with-padding" value=""> </lightning-formatted-text>
+					<lightning-formatted-text value={gridData.header}> </lightning-formatted-text>
+				</div>
+				<div class="copy-link-icon slds-m-left_x-small">
+					<template if:false={gridData.isLinkCopied}>
+						<a onclick={copyLink}><lightning-icon icon-name="utility:copy" size="xx-small"
+								class='slds-icon-color' alternative-text="Copy Link" title="Copy Link"
+								name={gridData.initiativeId}></lightning-icon></a>
+					</template>
+					<template if:true={gridData.isLinkCopied}>
+						<lightning-icon class="green-success" icon-name="utility:success" size="x-small"
+							alternative-text="Copied Link" title="Copied Link"></lightning-icon>
+						<label style="margin-left:5px !important;font-size:10px;">Link Copied!</label>
+					</template>
+				</div>
+			</div>
+			<div class="slds-table slds-table_col-bordered slds-border_left slds-border_right slds-border_top"
+				data-id="data-tree-container">
+				<!--Tree Grid-->
+				<lightning-tree-grid
+					hide-checkbox-column="true"
+					columns={gridColumns}
+					data={gridData.data}
+					key-field="name"
+					column-widths-mode="auto"
+					expanded-rows={currentExpanded}>
+				</lightning-tree-grid>
+			</div>
+		</div>
+	</template>
+	<template lwc:if={isResultEmpty}>
+		<p>{noDataFound}</p>
+	</template>
+</template>

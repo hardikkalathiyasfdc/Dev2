@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>BRME-6069: Custom Permission to control the &apos;Create in Bgive and Link&apos; button access on the B-Link tab</description>
+    <isLicensed>false</isLicensed>
+    <label>B-Link: Organization Create in Bgive Access</label>
+</CustomPermission>

@@ -1,0 +1,45 @@
+<template>
+    <!--Modal Header-->
+    <lightning-modal-header label='Confirm Budget Amount (Local)'>
+    </lightning-modal-header>
+    <!--Modal Body-->
+    <lightning-modal-body>
+        <div>
+            <p><strong>Budget Amount (Local) has not been updated. Please enter the amount to confirm.</strong></p>
+        </div>
+        <div class="slds-grid">
+            <div class="slds-col slds-size_5-of-12">
+                <div class="slds-form-element_horizontal">
+                    <div class="slds-grid slds-m-top_medium">
+                        <div class="slds-col slds-size_4-of-12">
+                            <p><lightning-formatted-text value="Budget Amount (USD)"
+                                    class="slds-font-style"></lightning-formatted-text></p>
+                        </div>
+                        <div class="slds-col slds-size_5-of-12">
+                            <p>
+                                <lightning-formatted-number value={budgetGrant.Budget_Amount_USD__c}
+                                    format-style="currency" currency-code="USD" currency-display-as="symbol"
+                                    minimum-fraction-digits="2">
+                                </lightning-formatted-number>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="slds-m-top_medium">
+                        <p>
+                            <lightning-input name="BudgetAmountLocal" data-id="BudgetAmountLocal" type="number"
+                                value={localAmount} label="Budget Amount (Local)" step=".01" required
+                                onchange={handleLocalAmountChange}>
+                            </lightning-input>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </lightning-modal-body>
+    <!--Modal Footer-->
+    <lightning-modal-footer>
+        <lightning-button class="slds-button" variant="neutral" label="Cancel" onclick={handleClose}></lightning-button>
+        <lightning-button class="slds-button slds-m-left_x-small" variant="brand" label="Save"
+            onclick={handleSave}></lightning-button>
+    </lightning-modal-footer>
+</template>

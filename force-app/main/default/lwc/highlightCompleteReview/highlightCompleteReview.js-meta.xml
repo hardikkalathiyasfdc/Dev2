@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+	<apiVersion>67.0</apiVersion>
+	<isExposed>true</isExposed>
+	<masterLabel>Complete Review</masterLabel>
+	<description>BRME-7019:Sets Highlight Status to Reviewed when Complete Review is clicked.</description>
+	<targets>
+		<target>lightning__RecordAction</target>
+	</targets>
+	<targetConfigs>
+		<targetConfig targets="lightning__RecordAction">
+			<objects>
+				<object>Highlight_Interaction__c</object>
+			</objects>
+			<actionType>Action</actionType>
+		</targetConfig>
+	</targetConfigs>
+</LightningComponentBundle>

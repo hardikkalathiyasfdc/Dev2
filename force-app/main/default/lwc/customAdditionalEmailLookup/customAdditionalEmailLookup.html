@@ -1,0 +1,50 @@
+<template>
+    <div class="row slds-grid slds-grid_align-spread slds-truncate">
+        <div class="text-wrap slds-var-p-left_small" title={value}>
+            <div class="ellipsis">
+                <lightning-formatted-text value={value}></lightning-formatted-text>
+            </div>
+        </div>
+        <lightning-button-icon icon-name="utility:edit" variant="bare" size="medium"
+            class="edit-btn slds-m-left_x-small" title="Edit" alternative-text="Edit" onclick={openModal}>
+        </lightning-button-icon>
+        <template lwc:if={isModalOpen}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container" style="width: 100%">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Select Value</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1"
+                        style="min-height: 300px;">
+                        <c-custom-multi-item-lookup label="Related Contacts" placeholder="Search related contacts..."
+                            preselected-ids={preselectedIds} icon-name="standard:contact" key-field="id"
+                            primary-field="name" items={contacts} onselectionchange={handleLookupChange} display-fields={displayFields}>
+                        </c-custom-multi-item-lookup>
+                        <div class="slds-m-top_medium slds-var-p-left_x-small">
+                            <lightning-input type="checkbox" label="Add Additional Email(s)" name="addOtherEmails"
+                                checked={addOtherChecked} onchange={handleAdditionalEmailToggle}> 
+                            </lightning-input>
+                        </div>
+                        <div lwc:if={addOtherChecked} class="slds-m-top_small slds-var-p-left_x-small">
+                            <lightning-input type="text" name="otherEmails" label="Additional Email (comma-separated)"
+                                value={otherEmails} onchange={handleOtherEmailsChange} required={addOtherChecked}>
+                            </lightning-input>
+                        </div>
+                        <template lwc:if={otherEmailsError}>
+                            <div class="slds-form-element__help slds-text-color_error slds-var-p-left_x-small">{otherEmailsError}</div>
+                        </template>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <lightning-button label="Cancel" onclick={closeModal} variant="brand-outline">
+                        </lightning-button>
+                        <lightning-button label="Save" onclick={handleSave} variant="brand" disabled={shallDisableSaveButton}
+                            class="slds-var-p-left_medium">
+                        </lightning-button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </div>
+</template>

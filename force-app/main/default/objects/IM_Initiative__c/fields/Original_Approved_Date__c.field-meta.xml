@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Original_Approved_Date__c</fullName>
+    <description>IM-371: This field captures the original approval date, to ensure traceability in cases where an initiative has multiple amendments. (Strictly Read Only)</description>
+    <label>Original Approved Date</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

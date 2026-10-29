@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This Custom permission is introduced to check for permissions on restricted Orgs belongs to the permission set - Restricted Orgs/Contacts.(BRME-5436/5511)</description>
+    <isLicensed>false</isLicensed>
+    <label>Restricted Access</label>
+</CustomPermission>

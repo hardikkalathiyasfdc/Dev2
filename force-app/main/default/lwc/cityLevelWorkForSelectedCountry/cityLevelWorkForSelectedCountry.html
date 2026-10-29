@@ -1,0 +1,155 @@
+<template>
+    <template lwc:if={isLoading}>
+        <lightning-spinner variant="brand" size="large"></lightning-spinner>
+    </template>
+    <div lwc:else class="slds-m-top_small box slds-p-around_x-small" style="background-color: white; clear: both;"
+        id={geoAreaId}>
+        <h3>City Level Work</h3>
+        <div class="slds-m-bottom_xx-small" style="text-align: right; margin-bottom: 1px; margin-top: -10px">
+            <lightning-button-menu alternative-text="Sort" icon-name="utility:sort" icon-size="xx-small" label=""
+                class="tiny-button-menu" style="margin-right: 7px;" onselect={handleSortChange} menu-alignment="right">
+                <lightning-menu-item label="BP Work" checked={sortByAssociation} value="association">
+                </lightning-menu-item>
+                <lightning-menu-item label="City" checked={sortByCity} value="city">
+                </lightning-menu-item>
+            </lightning-button-menu>
+        </div>
+        <div style={tableStyle} data-id="CityLevelWork">
+            <template lwc:if={sortByCity}>
+                <table class="slds-table slds-table_fixed-layout">
+                    <tbody>
+                        <template lwc:if={showCityWork}>
+                            <template for:each={cityWork} for:item="city">
+                                <tr key={city.cityId} class="table-border slds-hint-parent" style="cursor: pointer;">
+                                    <td>
+                                        <div
+                                            class="slds-grid slds-grid_vertical-align-center slds-var-p-vertical_xx-small">
+                                            <a href="javascript:void(0);" onclick={handleCityClick}
+                                                data-id={city.cityId}>
+                                                <b>{city.displayName}</b>
+                                            </a>
+                                            <template lwc:if={isNotMobile}>
+                                                <lightning-icon icon-name="utility:expand_alt"
+                                                    alternative-text="More Info" size="xx-small" class="info-icon"
+                                                    style="margin-left: 8px; cursor: pointer;"
+                                                    onclick={openSelectedCityDetails} data-id={city.cityId}
+                                                    title="Click here to view details for this city">
+                                                </lightning-icon>
+                                            </template>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <template lwc:if={city.showAssociations}>
+                                    <template for:each={city.orgAssociations} for:item="org">
+                                        <tr key={org.Id} style={org.colorStyle} title={org.focusArea}
+                                            class="table-border">
+                                            <td class={org.customCss}>
+                                                <template lwc:if={org.showDate}>
+                                                    <div class="wrapped-content">
+                                                        <a href="javascript:void(0);" data-id={org.orgAssociationId}
+                                                            onclick={handleOrgClick}>
+                                                            <span>{org.associationName} ({org.startDate} -
+                                                                {org.endDate})</span>
+                                                            <span lwc:if={org.nonConsecutive}>
+                                                                &nbsp;(Non-Consecutive)</span>
+                                                        </a>
+                                                    </div>
+                                                </template>
+                                                <template lwc:else>
+                                                    <div class="wrapped-content">
+                                                        <a href="javascript:void(0);" data-id={org.orgAssociationId}
+                                                            onclick={handleOrgClick}>
+                                                            <span>{org.associationName}</span>
+                                                        </a>
+                                                    </div>
+                                                </template>
+                                            </td>
+                                        </tr>
+                                        <template lwc:if={org.showDescription}>
+                                            <tr key={org.orgAssociationId} class="table-border" style={org.colorCode}>
+                                                <td class="wrapped-content">
+                                                    <template lwc:if={org.description}>
+                                                        <lightning-formatted-rich-text value={org.description}>
+                                                        </lightning-formatted-rich-text>
+                                                    </template>
+                                                    <template lwc:else>
+                                                        <p>No Initiative description at this time.</p>
+                                                    </template>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </template>
+                                </template>
+                            </template>
+                        </template>
+                        <template lwc:else>
+                            <tr>
+                                <td>No City Level Work</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+            <template lwc:else>
+                <table class="slds-table slds-table_fixed-layout">
+                    <tbody>
+                        <template lwc:if={showCityWork}>
+                            <template for:each={associationData} for:item="org">
+                                <tr key={org.orgId} style={org.associationData.colorStyle}
+                                    title={org.associationData.focusArea} class="table-border">
+                                    <td class={org.customCss}>
+                                        <div class="wrapped-content">
+                                            <a href="javascript:void(0);" data-id={org.orgId}
+                                                onclick={handleAssociationClick}>
+                                                <span>{org.displayName}</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <template lwc:if={org.showCities}>
+                                    <tr key={org.orgId} class="table-border" style={org.associationData.colorStyle}>
+                                        <td class="wrapped-content">
+                                            <template lwc:if={org.associationData.description}>
+                                                <lightning-formatted-rich-text value={org.associationData.description}>
+                                                </lightning-formatted-rich-text>
+                                            </template>
+                                            <template lwc:else>
+                                                <p>No Initiative description at this time.</p>
+                                            </template>
+                                            <template for:each={org.cities} for:item="city">
+                                                <div key={city.cityId}>
+                                                    <div class="slds-grid slds-grid_vertical-align-center slds-var-p-vertical_xx-small"
+                                                        style="margin-left: 0px;">
+                                                        <span style="margin: 3px;">
+                                                            <span class={city.customCss}>&nbsp;{city.displayName}</span>
+                                                            <span lwc:if={city.nonConsecutive}>
+                                                                &nbsp;(Non-Consecutive)</span>
+                                                        </span>
+                                                        <template lwc:if={isNotMobile}>
+                                                            <lightning-icon icon-name="utility:expand_alt"
+                                                                alternative-text="More Info" size="xx-small"
+                                                                class="info-icon"
+                                                                style="margin-left: 8px; cursor: pointer;"
+                                                                onclick={openSelectedCityDetails} data-id={city.cityId}
+                                                                title="Click here to view details for this city">
+                                                            </lightning-icon>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </template>
+                        </template>
+                        <template lwc:else>
+                            <tr>
+                                <td>No City Level Work</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Data_Team</name>
+    </customPermissions>
+    <description>Grants Users access to Sharing Button on Lists, Tags, My Notes, and Interactions.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>List Sharing Button Access</label>
+</PermissionSet>

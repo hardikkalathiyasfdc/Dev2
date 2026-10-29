@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Budget_Grant__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>IM-126: Related Budget Grant record.</description>
+    <label>Budget Grant</label>
+    <referenceTo>IM_Budget_Grant__c</referenceTo>
+    <relationshipLabel>Budget Grant Periods</relationshipLabel>
+    <relationshipName>Budget_Grant_Periods</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

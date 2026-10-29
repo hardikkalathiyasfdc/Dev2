@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type_of_Work_Req_Pending_Approval</fullName>
+    <active>false</active>
+    <description>BRME-7040: Type of Work is required before a Budget can be moved to Pending Approval status.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.IM_Budget_Validation__c 
+&amp;&amp;
+ISPICKVAL(Status__c , &apos;Pending Approval&apos;)
+&amp;&amp;
+Type_of_Work__c == FALSE</errorConditionFormula>
+    <errorDisplayField>Type_of_Work__c</errorDisplayField>
+    <errorMessage>Type of Work must be added in budget template to proceed further.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enabled_for_Grants_Validation</fullName>
+    <active>true</active>
+    <description>IM-214: &apos;Enabled for Grants&apos; is not allowed for Types: Initiative Root, Non-Initiative Root, or Non-Initiative.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Foundation_Code_Validation__c &amp;&amp;
+Enabled_for_Grants__c = true
+&amp;&amp;
+(ISPICKVAL(Type__c, &apos;Initiative Root&apos;) || ISPICKVAL(Type__c, &apos;Non Initiative Root&apos;) || ISPICKVAL(Type__c, &apos;Non Initiative&apos;) )</errorConditionFormula>
+    <errorDisplayField>Enabled_for_Grants__c</errorDisplayField>
+    <errorMessage>&apos;Enabled for Grants&apos; is not allowed for Types: Initiative Root, Non-Initiative Root, or Non-Initiative.</errorMessage>
+</ValidationRule>

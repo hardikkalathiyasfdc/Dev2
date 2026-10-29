@@ -1,0 +1,5 @@
+<apex:page standardController="Tag_Junction__c" tabStyle="Tag_Junction__c" extensions="TagsReportController" recordSetvar="tags" action="{!redirectToReport}">
+    <h1>You must select a tag to go to report.
+        
+    </h1>
+</apex:page>

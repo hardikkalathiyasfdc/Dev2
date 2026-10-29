@@ -1,0 +1,63 @@
+<apex:page controller="EmployeeDirectoryCtrl" standardStylesheets="false" showHeader="false" renderAs="pdf" readOnly="true" applyBodyTag="false">
+	<head>
+		<style>
+			@page{
+                size: A4;
+            } 
+
+			.head {
+				font-size: 1.5rem !important;
+				font-weight: bold;
+				border-bottom: 2px solid #000000;
+			}
+
+			.table-row {
+				font-size: 1.2rem !important;
+			}
+
+			body {
+                font-family: 'Times';
+            }
+		</style>
+	</head>
+	<body>
+		<div style="text-align: center;">
+			<h1>Employee Directory</h1>
+		</div>
+		<table style="width: 100%; margin: 5px 5px;">
+			<thead>
+				<tr>
+					<th class="head" >Name</th>
+					<th class="head" >Cell</th>
+					<th class="head" >Email</th>
+					<th class="head" >Office</th>
+				</tr>
+			</thead>
+			<tbody>
+				<apex:repeat value="{!officeInfo}" var="office">
+						<tr>
+							<td class="table-row">{!office.OfficeName__c}</td>
+							<td class="table-row">{!office.CellPhone__c}</td>
+							<td class="table-row">{!office.Email__c}</td>
+							<td class="table-row">{!office.OfficePhone__c}</td>
+						</tr>
+				</apex:repeat>
+			</tbody>
+		</table>
+
+		<div style="margin-top: 30px;">
+		</div>
+		<table style="width: 100%; margin: 5px 5px;">
+			<tbody>
+				<apex:repeat value="{!contacts}" var="cnt">
+						<tr>
+							<td class="table-row">{!cnt.FirstName} {!cnt.LastName} {!cnt.Suffix}</td>
+							<td class="table-row">{!cnt.MobilePhone}</td>
+							<td class="table-row">{!cnt.Email}</td>
+							<td class="table-row">{!cnt.Phone}</td>
+						</tr>
+				</apex:repeat>
+			</tbody>
+		</table>
+	</body>
+</apex:page>

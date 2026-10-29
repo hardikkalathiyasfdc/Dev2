@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pending_Approval_Validation</fullName>
+    <active>true</active>
+    <description>Budget Cannot be set to Pending Approval state if it is checked out by a user</description>
+    <errorConditionFormula>AND( NOT(ISBLANK( Checked_Out_By__c )), ISPICKVAL(Status__c  , &apos;Pending Approval&apos;) )</errorConditionFormula>
+    <errorMessage>Budget Status cannot be set to Pending Approval when Budget is Checked out</errorMessage>
+</ValidationRule>

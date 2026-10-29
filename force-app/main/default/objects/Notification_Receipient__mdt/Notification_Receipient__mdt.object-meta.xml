@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>IM-588:Defines To/Cc/Bcc recipient email address for the Notification Config, scoped by environment.</description>
+    <label>Notification Receipient</label>
+    <pluralLabel>Notification Receipients</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

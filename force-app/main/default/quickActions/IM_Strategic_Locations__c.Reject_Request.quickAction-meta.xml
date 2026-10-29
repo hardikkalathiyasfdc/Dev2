@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>(BRME-6823)IM-Strategic Location review process: reject pending Strategic Location requests.</description>
+    <flowDefinition>IM_Reject_Strategic_Location_Request</flowDefinition>
+    <label>Reject</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>

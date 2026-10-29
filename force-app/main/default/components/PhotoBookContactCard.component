@@ -1,0 +1,27 @@
+<apex:component >
+    <apex:attribute name="contact" type="Contact" required="true" description="The contact shown on this card."/>
+    <apex:attribute name="color" type="String" required="true" description="Hex colour for the bottom border, without the leading hash."/>
+    <apex:attribute name="imageUrl" type="String" required="false" description="Resolved bio photo URL, or the mystery person placeholder."/>
+    <apex:attribute name="show" type="Boolean" required="false" default="true" description="False for the padding cells that fill out a short row."/>
+    <apex:attribute name="displayFields" type="SelectOption[]" required="false" description="Fields selected by the user to display on the contact card."/>
+    <apex:outputPanel rendered="{!show}" layout="none">
+        <div style="border-bottom: 10px solid #{!color}" class="containerPerson">
+            <div class="containerPersonTop">
+                <apex:outputPanel layout="none">
+                    <img src="{!imageUrl}" class="profilePicture"/>
+                </apex:outputPanel>
+                <div style="padding-bottom: 5px; margin-left: 110px">
+                    <div class="name">{!contact.FirstName}&nbsp;{!contact.LastName}</div>
+                    <div class="department"><apex:outputField value="{!contact.Department__c}"/></div>
+                    <div>
+                        <apex:repeat value="{!displayFields}" var="field">
+                            <div class="containerField">
+                                <span class="fieldLabel">{!field.label}:</span> {!field.value}
+                            </div>
+                        </apex:repeat>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </apex:outputPanel>
+</apex:component>

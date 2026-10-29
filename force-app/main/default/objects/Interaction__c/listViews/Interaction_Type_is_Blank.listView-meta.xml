@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Interaction_Type_is_Blank</fullName>
+    <booleanFilter>1 AND 2 AND (3 OR 4)</booleanFilter>
+    <columns>Interaction_Type__c</columns>
+    <columns>Interaction_Date__c</columns>
+    <columns>NAME</columns>
+    <columns>Description__c</columns>
+    <columns>Background__c</columns>
+    <columns>Contact__c</columns>
+    <columns>CREATEDBY_USER</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>RECORDTYPE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Interaction_Type__c</field>
+        <operation>notEqual</operation>
+        <value>Call,Meeting,Email,Text,Event,Press,Letter</value>
+    </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Interaction__c.Recent_Engagement</value>
+    </filters>
+    <filters>
+        <field>MRB_Present__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>Relationship_Owner__c</field>
+        <operation>contains</operation>
+        <value>Patricia E. Harris</value>
+    </filters>
+    <label>Interaction Type is Blank</label>
+    <sharedTo>
+        <role>admin</role>
+    </sharedTo>
+</ListView>

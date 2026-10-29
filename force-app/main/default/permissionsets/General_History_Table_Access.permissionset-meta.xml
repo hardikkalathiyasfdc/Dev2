@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>FieldHistoryController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>History_Table_Access</name>
+    </customPermissions>
+    <description>This permission controls access to standard and custom history widgets across all objects except Lists and List Members (coming soon may 2025).(BRME-5433, 5388, 5387, 5449)</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>General: History Table Access</label>
+</PermissionSet>

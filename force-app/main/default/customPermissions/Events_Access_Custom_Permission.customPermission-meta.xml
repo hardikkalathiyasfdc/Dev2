@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Checks for Access to modify and create Events on List &amp; is assigned to Permission Set &quot;Events: List Event Record Type Access&quot;. This custom permission controls edit access to the programmatic toggle on the Events tab.</description>
+    <isLicensed>false</isLicensed>
+    <label>Events Access Custom Permission</label>
+</CustomPermission>

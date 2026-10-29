@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BP_Board_Interactions</fullName>
+    <columns>Contact__c</columns>
+    <columns>NAME</columns>
+    <columns>Interaction_Date__c</columns>
+    <columns>Interaction_Type__c</columns>
+    <columns>Background__c</columns>
+    <filterScope>ScopingRule</filterScope>
+    <filters>
+        <field>CREATEDBY_USER</field>
+        <operation>equals</operation>
+        <value>Diana Meyer</value>
+    </filters>
+    <filters>
+        <field>CREATED_DATE</field>
+        <operation>equals</operation>
+        <value>10/22/2025 12:00 AM</value>
+    </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Interaction__c.Leadership_Touchpoint</value>
+    </filters>
+    <label>TEMP - BP Board Interactions 10-22-2025</label>
+    <sharedTo>
+        <group>Executive_Team</group>
+    </sharedTo>
+</ListView>

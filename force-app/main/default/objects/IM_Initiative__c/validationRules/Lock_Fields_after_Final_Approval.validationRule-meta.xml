@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lock_Fields_after_Final_Approval</fullName>
+    <active>true</active>
+    <description>IM-88: Lock certain fields from being modified after initiative is final approved.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.IM_Initiative_Validation__c &amp;&amp;
+PRIORVALUE(Approved__c)  = TRUE  &amp;&amp;
+Approved__c  = TRUE &amp;&amp;
+AND(  
+NOT(ISNEW()),
+OR(
+ ISCHANGED( Team__c ),
+ ISCHANGED( Segment__c ),
+ ISCHANGED( Proposed_Amount__c )
+)
+)</errorConditionFormula>
+    <errorMessage>Cannot modify Team, Segment, Proposed Amount after Initiative is Final Approved.</errorMessage>
+</ValidationRule>

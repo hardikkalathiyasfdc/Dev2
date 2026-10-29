@@ -1,0 +1,228 @@
+<aura:component controller="DITCmpController">
+    <aura:attribute name="activeSections" type="List" default="['A','C','G']" />
+    <aura:attribute name="activeSectionsMessage" type="String" default="" />
+
+    <aura:attribute name="activeSections2" type="List" default="['D','E','F']" />
+    <aura:attribute name="activeSectionsMessage2" type="String" default="" />
+    <aura:attribute name="contactList" type="List" default="[]" />
+    <aura:attribute name="deleteContactList" type="List" default="[]" />
+    <aura:attribute name="contactModifiedList" type="List" default="[]" />
+
+    <aura:attribute name="listName" type="String" default="" />
+    <ltng:require scripts="{!$Resource.cmputil}" afterScriptsLoaded="{!c.init}" />
+    <aura:attribute name="createList" type="List" default="[]" />
+    <aura:attribute name="updateList" type="List" default="[]" />
+    <aura:attribute name="orgsList" type="List" default="[]" />
+    <aura:attribute name="recordList" type="List" default="[]" />
+
+    <aura:attribute name="doNotContactList" type="List" default="[]" />
+    <aura:attribute name="deceasedContactList" type="List" default="[]" />
+    <aura:attribute name="dataLoaderId" type="String" default="" />
+    <aura:attribute name="columns" type="List" default="[]" />
+    <aura:attribute name="isLoading" type="Boolean" default="false" />
+    <aura:attribute name="accepted" type="Boolean" default="false" />
+    <aura:attribute name="doNotcontactCount" type="Integer" default="0" />
+
+	<aura:attribute name="displayFields" type="List" default="['Name', 'ListMemberCount__c']"/>
+	<aura:attribute name="displayFieldPrefixes" type="List" default="['', 'List Member']"/>
+	<aura:attribute name="searchFields" type="List" default="['Name', 'Converted_List_Name__c']"/>
+    <aura:attribute name="campaignSearchConfig" type="String" default='{"primaryField":"Name","primaryWeight":100,"convertedField":"Converted_List_Name__c","convertedWeight":80}'/>
+
+    <aura:attribute
+                    name="orgColumns"
+                    type="List"
+                    default="[{label: 'Organization Name', fieldName:'Name' }]"/>
+    <aura:attribute
+                    name="createOptions"
+                    type="List"
+                    default="[
+                             {'label': 'Create Contacts and Add to Existing List', 'value': 'existingList'},
+                             {'label': 'Create Contacts and Add to new List', 'value': 'newList'},
+                             {'label': 'Create Contacts Only', 'value': 'createOnly'}
+                             ]"
+                    />
+    <aura:attribute
+                    name="selectedRecord"
+                    type="sObject"
+                    default="{}"
+                    description="Use,for store SELECTED sObject Record"
+                    />
+    <aura:attribute name="createValue" type="String" default="existingList" />
+    <div class="slds-align_absolute-center">
+        <lightning:radioGroup
+                              name="Create Options"
+                              label="Create Options"
+                              options="{! v.createOptions }"
+                              value="{! v.createValue }"
+                              type="radio"
+                              />
+    </div>
+
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="4" padding="around-small">
+
+        </lightning:layoutItem>
+        <lightning:layoutItem size="4" padding="around-small">
+            <aura:if isTrue="{!v.createValue == 'newList'}">
+                <lightning:input label="Enter New List Name" value="{!v.listName}" />
+            </aura:if>
+            <aura:if isTrue="{!v.createValue == 'existingList'}">
+                <c:genericLookup
+                    aura:id="listLookup"
+                    objectApiName="Campaign"
+                    icon="standard:campaign"
+                    displayFields="{!v.displayFields}"
+                    searchFields="{!v.searchFields}"
+                    placeholder="Just start typing..."
+                    displayFieldPrefixes="{!v.displayFieldPrefixes}"
+                    customSearchClass="WeightedFieldLookupSearch"
+                    searchConfig="{!v.campaignSearchConfig}"
+                    showRecentlyViewed="false"
+                    allowNewRecord="false"
+                    onchange="{!c.handleLookupChange}"/>
+            </aura:if>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="4" padding="around-small">
+
+        </lightning:layoutItem>
+    </lightning:layout>
+
+    <aura:if isTrue="{!v.isLoading}">
+        <lightning:spinner alternativeText="Loading" size="medium" />
+    </aura:if>
+    <lightning:card title="">
+        <h3 class="slds-section-title--divider">Data Import Tool Summary - Please Review the Contacts Being Imported Below</h3>
+        <div class="slds-box">
+            <lightning:accordion aura:id="accordion" allowMultipleSectionsOpen="true"
+                                 onsectiontoggle="{!c.handleSectionToggle }"
+                                 activeSectionName="{!v.activeSections }" >
+                <lightning:accordionSection name="A" label="{! 'Contacts to be Created ('+ v.createList.length+')'}">
+
+                    <aura:if isTrue="{!v.createList.length>0}">
+                        <div style="min-height: 100px; width:100%"  class="slds-p-around_small">
+                            <lightning:datatable
+                                                 keyField="Id"
+                                                 data="{!v.createList }"
+                                                 class="slds-table_bordered slds-table_col-bordered slds-table_row-bordered"
+                                                 columns="{!v.columns }"
+                                                 hideCheckboxColumn="true"/>
+                            <aura:set attribute="else">
+                                <center class="slds-p-around_small"> <strong> No Record Found</strong></center>
+                            </aura:set>
+                        </div>
+                    </aura:if>
+
+                </lightning:accordionSection>
+                <lightning:accordionSection name="G" label="{! 'Organizations Created ('+ v.orgsList.length+')'}">
+
+                    <aura:if isTrue="{!not(empty(v.orgsList))}">
+                        <div style="min-height: 100px; width:100%" class="slds-p-around_small">
+                            <lightning:datatable
+                                                 keyField="Id"
+                                                 data="{!v.orgsList }"
+                                                 columns="{!v.orgColumns}"
+                                                 class="slds-table_bordered slds-table_col-bordered slds-table_row-bordered"
+                                                 hideCheckboxColumn="true"/>
+                            <aura:set attribute="else">
+                                <center class="slds-p-around_small"> <strong> No Record Found</strong></center>
+                            </aura:set>
+                        </div>
+                    </aura:if>
+
+                </lightning:accordionSection>
+
+                <lightning:accordionSection name="C" label="{! 'Contacts NOT Being Added  ('+ v.doNotcontactCount+')'}">
+
+                    <lightning:accordion aura:id="accordion2"  allowMultipleSectionsOpen="true"
+                                         onsectiontoggle="{!c.handleSectionToggle2 }"
+                                         activeSectionName="{!v.activeSections2 }">
+                        <lightning:accordionSection name="D" label="{! 'Do Not Contact ('+ v.doNotContactList.length +')'}">
+
+                            <aura:if isTrue="{!v.doNotContactList.length>0}">
+                                <div style="min-height: 100px; width:100%"  class="slds-p-around_small">
+                                    <lightning:datatable
+                                                         keyField="id"
+                                                         data="{!v.doNotContactList }"
+                                                         class="slds-table_bordered slds-table_col-bordered slds-table_row-bordered"
+                                                         columns="{!v.columns }"
+                                                         hideCheckboxColumn="true"/>
+                                    <aura:set attribute="else">
+                                        <center class="slds-p-around_small"> <strong> No Record Found</strong></center>
+                                    </aura:set>
+                                </div>
+                            </aura:if>
+
+                        </lightning:accordionSection>
+                        <lightning:accordionSection name="E" label="{! 'Deceased ('+ v.deceasedContactList.length+')'}">
+
+                            <aura:if isTrue="{!not(empty(v.deceasedContactList))}">
+                                <div style="min-height: 100px; width:100%" class="slds-p-around_small">
+                                    <lightning:datatable
+                                                         keyField="id"
+                                                         data="{!v.deceasedContactList }"
+                                                         columns="{! v.columns }"
+                                                         class="slds-table_bordered slds-table_col-bordered slds-table_row-bordered"
+                                                         hideCheckboxColumn="true"/>
+                                    <aura:set attribute="else">
+                                        <center class="slds-p-around_small"> <strong> No Record Found</strong></center>
+                                    </aura:set>
+                                </div>
+                            </aura:if>
+                        </lightning:accordionSection>
+                        <lightning:accordionSection name="F" label="{! 'Contacts Deleted During DIT ('+ v.deleteContactList.length+')'}">
+
+                            <aura:if isTrue="{!not(empty(v.deleteContactList))}">
+                                <div style="min-height: 100px; width:100%" class="slds-p-around_small">
+                                    <lightning:datatable
+                                                         keyField="id"
+                                                         data="{!v.deleteContactList }"
+                                                         columns="{!v.columns }"
+                                                         class="slds-table_bordered slds-table_col-bordered slds-table_row-bordered"
+                                                         hideCheckboxColumn="true"/>
+                                    <aura:set attribute="else">
+                                        <center class="slds-p-around_small"> <strong> No Record Found</strong></center>
+                                    </aura:set>
+                                </div>
+                            </aura:if>
+
+                        </lightning:accordionSection>
+                    </lightning:accordion>
+                </lightning:accordionSection>
+
+                <lightning:accordionSection name="B" label="{! 'Contacts to be Modified ('+ v.contactModifiedList.length+')'}">
+
+                    <aura:if isTrue="{!not(empty(v.contactModifiedList))}">
+                        <div style="min-height: 100px; width:100%" class="slds-p-around_small">
+                            <lightning:datatable
+                                                 keyField="id"
+                                                 data="{!v.contactModifiedList }"
+                                                 columns="{!v.columns }"
+                                                 class="slds-table_bordered slds-table_col-bordered slds-table_row-bordered"
+                                                 hideCheckboxColumn="true"/>
+                            <aura:set attribute="else">
+                                <center class="slds-p-around_small"> <strong> No Record Found</strong></center>
+                            </aura:set>
+                        </div>
+                    </aura:if>
+                </lightning:accordionSection>
+                <lightning:accordionSection name="H" label="{! 'Contacts with Exact Match to be Added ('+ v.updateList.length+')'}">
+
+                    <aura:if isTrue="{!not(empty(v.updateList))}">
+                        <div style="min-height: 100px; width:100%" class="slds-p-around_small">
+                            <lightning:datatable
+                                                 keyField="id"
+                                                 data="{!v.updateList }"
+                                                 columns="{!v.columns }"
+                                                 class="slds-table_bordered slds-table_col-bordered slds-table_row-bordered"
+                                                 hideCheckboxColumn="true"/>
+                            <aura:set attribute="else">
+                                <center class="slds-p-around_small"> <strong> No Record Found</strong></center>
+                            </aura:set>
+                        </div>
+                    </aura:if>
+
+                </lightning:accordionSection>
+            </lightning:accordion>
+        </div>
+    </lightning:card>
+</aura:component>

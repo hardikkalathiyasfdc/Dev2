@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status_restriction_if_not_approved</fullName>
+    <active>true</active>
+    <description>IM-52: Restrict the status selection to any value except Ongoing and Complete if approved field is unchecked.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.IM_Initiative_Validation__c &amp;&amp;
+AND(
+RecordType.Name == &apos;Budgeted Initiative&apos;,
+Approved__c == FALSE,
+OR(
+ISPICKVAL( Status__c , &apos;Ongoing&apos;),
+ISPICKVAL( Status__c , &apos;Completed&apos;)
+)
+)</errorConditionFormula>
+    <errorMessage>Status can be set to Ongoing or Completed after Initiative Final Approval.</errorMessage>
+</ValidationRule>

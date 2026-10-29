@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>IM_Final_Doc_Tab_Access</name>
+    </customPermissions>
+    <description>IM-287: Permission Set to give read access to Final Docs Tab on the Initiative Record</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>IM: Final Doc Tab Read Access</label>
+</PermissionSet>

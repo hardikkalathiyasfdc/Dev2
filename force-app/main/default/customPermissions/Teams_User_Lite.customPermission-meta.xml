@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>(BRME-5757) Platform License Persona</description>
+    <isLicensed>false</isLicensed>
+    <label>Teams User Lite</label>
+</CustomPermission>

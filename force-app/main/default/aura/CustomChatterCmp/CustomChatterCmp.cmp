@@ -1,0 +1,73 @@
+<aura:component
+  implements="force:appHostable,flexipage:availableForAllPageTypes"
+  controller="CustomChatterFeedController"
+  access="global"
+>
+  <aura:attribute name="list" type="Map" default="{}" />
+  <aura:attribute name="contact" type="Map" default="{}" />
+  <aura:attribute name="isLoading" type="Boolean" default="true" />
+  <aura:attribute name="showNext" type="Boolean" default="false" />
+  <aura:attribute name="showPrev" type="Boolean" default="false" />
+  <aura:attribute name="isInitialized" type="Boolean" default="false" />
+  <aura:attribute name="selectedTab" type="String" default="ListTab" />
+  <ltng:require scripts="{!$Resource.cmputil}" afterScriptsLoaded="{!c.init}" />
+  <lightning:card class="myCard">
+    <aura:set attribute="title">
+      <lightning:icon iconName="action:following" size="small" />
+      What I Follow
+    </aura:set>
+      <lightning:tabset onselect="{!c.tabSelected}" selectedTabId="{!v.selectedTab}">
+        <lightning:tab label="Lists" id="ListTab">
+          <aura:if isTrue="{!v.isLoading}">
+            <div style="height: 50px">
+              <lightning:spinner alternativeText="Loading" size="large" />
+            </div>
+          </aura:if>
+
+          <aura:if isTrue="{!not(v.isLoading)}">
+            <lightning:treeGrid
+              aura:id="listTree"
+              columns="{! v.list.columns }"
+              data="{! v.list.rows }"
+              keyField="feedId"
+              hideCheckboxColumn="true"
+          /></aura:if>
+        </lightning:tab>
+        <lightning:tab
+          label="Contacts"
+          id="ContactTab"
+        >
+          <aura:if isTrue="{!v.isLoading}">
+            <div style="height: 50px">
+              <lightning:spinner alternativeText="Loading" size="large" />
+            </div>
+          </aura:if>
+          <aura:if isTrue="{!not(v.isLoading)}">
+            <lightning:treeGrid
+              aura:id="contactTree"
+              columns="{! v.contact.columns }"
+              data="{! v.contact.rows }"
+              keyField="feedId"
+              hideCheckboxColumn="true"
+          /></aura:if>
+        </lightning:tab>
+      </lightning:tabset>
+    <aura:set attribute="footer">
+      <aura:if isTrue="{!v.showPrev}">
+        <lightning:button
+          label="prev"
+          iconName="utility:left"
+          iconPosition="left"
+          onclick="{!c.prevPage}"
+        />
+      </aura:if>
+      <aura:if isTrue="{!v.showNext}">
+        <lightning:button
+          label="next"
+          iconName="utility:right"
+          onclick="{!c.nextPage}"
+        />
+      </aura:if>
+    </aura:set>
+  </lightning:card>
+</aura:component>

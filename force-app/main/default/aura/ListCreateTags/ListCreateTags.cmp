@@ -1,0 +1,83 @@
+<aura:component
+  implements="force:lightningQuickAction,force:hasRecordId"
+  controller="ListCreateTagsController"
+>
+  <aura:html tag="style">
+    .slds-modal__container { max-width: 70rem !important; width: 0 !important;}
+  </aura:html>
+  <aura:attribute name="isLoading" type="Boolean" default="true" />
+  <aura:attribute name="isConfirm" type="Boolean" default="false" />
+  <aura:attribute name="listName" type="String" default="" />
+  <aura:attribute name="listCount" type="String" default="" />
+  <aura:attribute name="listRecId" type="String" default="" />
+  <aura:attribute name="warnMsg" type="String" default="" />
+  <aura:attribute name="selectedTagId" type="String" default="" />
+  <aura:attribute name="selectedTagName" type="String" default="" />
+  <ltng:require scripts="{!$Resource.cmputil}" afterScriptsLoaded="{!c.init}" />
+
+  <section
+    role="dialog"
+    tabindex="-1"
+    aria-labelledby="modal-heading-01"
+    aria-modal="true"
+    aria-describedby="modal-content-id-1"
+    class="slds-modal slds-fade-in-open"
+  >
+    <aura:if isTrue="{!v.isLoading}">
+      <lightning:spinner alternativeText="Loading" size="large" />
+    </aura:if>
+      <div class="slds-modal__container">
+        <header class="slds-modal__header">
+          <lightning:buttonIcon
+            iconName="utility:close"
+            onclick="{! c.close }"
+            alternativeText="close"
+            variant="bare-inverse"
+            class="slds-modal__close"
+          />
+          <h2
+            id="modal-heading-01"
+            class="slds-text-heading_medium slds-hyphenate"
+          >
+            Add Tags to {!v.listName}
+          </h2>
+        </header>
+        <lightning:recordEditForm
+          objectApiName="Tag_Junction__c"
+          onsubmit="{!c.handleSubmit}"
+          recordTypeId="{!v.listRecId}"
+        >
+          <div
+            class="slds-modal__content slds-p-around_medium"
+            id="modal-content-id-1"
+          >
+            <div class="slds-grid slds-grid_vertical">
+              <div class="slds-col">
+                <ui:message title="" severity="error" closable="false">
+                  {!v.warnMsg}
+                </ui:message>
+              </div>
+              <div class="slds-col">
+                <lightning:inputField fieldName="Tag__c" aura:id="tagField" />
+              </div>
+            </div>
+          </div>
+          <footer class="slds-modal__footer">
+            <lightning:button
+              variant="neutral"
+              label="Cancel"
+              title="Cancel"
+              onclick="{! c.close }"
+            />
+            <lightning:button
+              class="slds-m-top_small myBtn"
+              variant="brand"
+              type="submit"
+              name="Create"
+              label="Create"
+            />
+          </footer>
+        </lightning:recordEditForm>
+      </div>
+  </section>
+</aura:component>

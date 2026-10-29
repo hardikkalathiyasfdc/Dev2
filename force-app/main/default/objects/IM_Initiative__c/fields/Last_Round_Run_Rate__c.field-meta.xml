@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Last_Round_Run_Rate__c</fullName>
+    <description>IM-466:This field indicate the run rate of last phase in case of renewal initiative.</description>
+    <formula>IF(ISPICKVAL(Initiative_Type__c, &apos;New&apos;), 
+      null, 
+      IF(ISBLANK(Renewal_of__c), 
+         null, 
+         Renewal_of__r.Run_Rate__c
+      )
+)</formula>
+    <label>Last Round Run Rate</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

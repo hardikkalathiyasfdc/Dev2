@@ -1,0 +1,79 @@
+<template>
+	<div class="slds-backdrop slds-backdrop_open"></div>
+	<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+		aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+		<template lwc:if={showLoader}>
+			<lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+		</template>
+		<div class="slds-modal__container">
+			<header class="slds-modal__header">
+				<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+					Email Preview - {emailTitle}
+				</h2>
+			</header>
+			<lightning-record-edit-form object-api-name="CampaignMember" record-id={recordId} onsubmit={handleSubmit}
+				onsuccess={handleSuccess} onerror={handleError}>
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					<div class="slds-grid slds-wrap">
+						<div class="slds-col slds-size_1-of-2" style="padding-right: 1%; margin-top: 1%;">
+							<label for="fromField">From Email</label>
+							<lightning-input-field id="fromField" label="From Email" field-name="Event_From_Email__c" readonly="true" 
+								variant="label-hidden">
+							</lightning-input-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2" style="padding-left: 1%; margin-top: 1%;">
+							<label for="toField">To Email</label>
+							<lightning-input-field id="toField" label="To Email" field-name="Guest_Email__c" class="myBtn" variant="label-hidden">
+							</lightning-input-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2" style="padding-right: 1%; margin-top: 1%;">
+							<template lwc:if={showCCField}>
+								<label for="ccField">CC Email</label>
+								<lightning-input-field id="ccField" field-name="CC_Addresses__c" variant="label-hidden" disabled>
+								</lightning-input-field>
+							</template>
+						</div>
+						<div class="slds-col slds-size_1-of-2" style="padding-left: 1%; margin-top: 1%;">
+							<template lwc:if={showBCCField}>
+								<label for="bccField">BCC Email</label>
+								<lightning-input-field id="bccField" field-name="BCC_Addresses__c" variant="label-hidden" disabled>
+								</lightning-input-field>
+							</template>
+						</div>
+						<div class="slds-col slds-size_2-of-2" style="margin-top:1%;">
+							<label for="subjectField">Email Subject</label>
+							<lightning-input-field id="subjectField" field-name={emailSubjectField} value={subjectValue} variant="label-hidden" class="myBtn">
+							</lightning-input-field>
+						</div>
+						<div class="slds-col slds-size_2-of-2 slds-align_absolute-center" style="overflow-y: auto; margin-top: 2%;">
+							<lightning-input-rich-text value={emailBody} disabled="true" onclick={handleClick}>
+							</lightning-input-rich-text>
+						</div>
+						<div class="slds-col slds-size_1-of-2" style="margin-top: 2%;">
+							<label for="statusField">Status:</label>
+							<lightning-output-field id="statusField" field-name={emailStatus} variant="label-hidden" class="myBtn">
+							</lightning-output-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2" style="padding-left: 1%; margin-top: 2%;">
+							<label for="sentField">Date Sent:</label>
+							<lightning-output-field id="sentField" field-name={emailSent} variant="label-hidden" class="myBtn">
+							</lightning-output-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2" style="margin-top: 2%;"></div>
+						<div class="slds-col slds-size_1-of-2" style="padding-left: 1%; margin-top: 2%;">
+							<label for="lastModifiedField">{emailTitle} Last Modified:</label>
+							<lightning-output-field id="lastModifiedField" field-name={emailTemplateLastModified} variant="label-hidden" class="myBtn">
+							</lightning-output-field>
+						</div>
+					</div>
+				</div>
+				<footer class="slds-modal__footer">
+					<lightning-button variant="neutral" label="Cancel" title="Cancel" onclick={closeEmail}>
+					</lightning-button>
+					<lightning-button class="slds-m-top_small myBtn" variant="brand" type="submit" name="Save" label="Save">
+					</lightning-button>
+				</footer>
+			</lightning-record-edit-form>
+		</div>
+	</section>
+</template>

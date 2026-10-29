@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FC_Focus_Area_Should_Match_Association</fullName>
+    <active>true</active>
+    <description>BRME-6964: The Focus Area of the Foundation Code selected on the Association should match the Association&apos;s Focus Area</description>
+    <errorConditionFormula>AND(
+NOT(ISBLANK( Foundation_Coding__c )),
+NOT(ISBLANK( Focus_Area__c )),
+NOT(  ISNULL(Foundation_Coding__r.Level_1__c) ) ,
+Foundation_Coding__r.Level_1__c &lt;&gt; Focus_Area__r.Name
+)</errorConditionFormula>
+    <errorMessage>Foundation Code&apos;s Focus Area should match the Focus Area selected on Association</errorMessage>
+</ValidationRule>

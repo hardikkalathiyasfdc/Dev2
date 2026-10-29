@@ -1,0 +1,53 @@
+<template>
+	<lightning-card title={cardTitle} icon-name={cardIcon}>
+		<lightning-button label={addRowButtonName} icon-name="utility:add" slot="actions" onclick={addRow}>
+		</lightning-button>
+
+		<table class="slds-table slds-table_cell-buffer slds-table_bordered">
+			<thead>
+				<tr class="">
+					<template if:true={fileds} for:each={fileds} for:item="field" for:index="index">
+						<th key={field} class="slds-size_3-of-10" scope="col">
+							<div class="slds-truncate" title="Name">
+								<template if:true={field.required}> <abbr class="slds-required"
+										title="required">*</abbr> </template>
+								{field.label}
+							</div>
+						</th>
+					</template>
+				</tr>
+			</thead>
+			<tbody>
+				<template if:true={tempRecords} for:each={tempRecords} for:item="rec" for:index="indexVar">
+					<tr key={rec.key} class="slds-hint-parent">
+
+						<td data-keyid={rec.key} data-fieldname="Organization__c">
+							<c-generic-lookup allow-new-record={disableNewRecord} object-api-name="Account" icon="standard:account" custom-search-class="OrganizationLookupSearch"
+								display-fields={orgDisplayFields} search-fields={orgSearchFields}
+								onchange={lookupReciRecord} show-recently-viewed default-selected-ids={rec.orgIds}
+								placeholder="Search Organizations..." required={orgRequired}>
+							</c-generic-lookup>
+							<template if:true={rec.orgError}>
+								<div class="slds-text-color_error slds-text-body_small">
+									{rec.orgError}
+								</div>
+							</template>
+						</td>
+
+						<td data-keyid={rec.key} data-fieldname="Recipient_Soft_Credit__c">
+							<c-generic-lookup allow-new-record={disableNewRecord} object-api-name="Contact" icon="standard:contact" custom-search-class="ContactLookupSearch"
+								display-fields={contactDisplayFields} search-fields={contactSearchFields}
+								onchange={lookupReciRecord} show-recently-viewed default-selected-ids={rec.contactIds}
+								placeholder="Search Contacts..." >
+							</c-generic-lookup>
+						</td>
+						<td class="slds-size_1-of-10" data-label="Prospecting">
+							<lightning-button-icon icon-name="utility:delete" id={rec.Id} name={indexVar}
+								data-id={rec.key} slot="actions" onclick={removeRow1}></lightning-button-icon>
+						</td>
+					</tr>
+				</template>
+			</tbody>
+		</table>
+	</lightning-card>
+</template>

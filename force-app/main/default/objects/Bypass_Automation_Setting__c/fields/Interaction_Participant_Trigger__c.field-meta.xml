@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Interaction_Participant_Trigger__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>BRME-6950:ByPass automation for Interaction Participant object trigger</description>
+    <label>Interaction Participant Trigger</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Highlight_Interaction__c</fullName>
+    <description>BRME-6951: Lookup to the parent Highlight/Interaction this value was reported under.</description>
+    <label>Highlight/Interaction</label>
+    <referenceTo>Highlight_Interaction__c</referenceTo>
+    <relationshipLabel>Metric Values</relationshipLabel>
+    <relationshipName>Metric_Values</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

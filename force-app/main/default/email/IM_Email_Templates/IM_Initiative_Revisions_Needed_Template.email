@@ -1,0 +1,14 @@
+Hello,
+<br />
+<br />
+<a href={!IM_Initiative__c.Link} target="_blank" rel="noopener noreferrer">{!IM_Initiative__c.Name}</a> was moved back to In Development because revisions were requested. Please see the notes for additional details.
+<br />
+<br />
+<b>Revisions Reason:</b> {!IM_Initiative__c.Revisions_Reason__c}
+<br />
+<br />
+Link to initiative: <a href={!IM_Initiative__c.Link} target="_blank" rel="noopener noreferrer">{!IM_Initiative__c.Name}</a>
+<br />
+<br />
+Regards, <br />
+BIM System

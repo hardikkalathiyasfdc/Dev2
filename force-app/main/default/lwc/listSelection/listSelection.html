@@ -1,0 +1,15 @@
+<template>
+    <lightning-input type="checkbox" checked={includeRSVPMembers} label="For Events Only, filter on guests who RSVP'd Yes" name="input2" onchange={handleRSVPChange}></lightning-input>
+    <lightning-input type="checkbox" checked={includeListsEvents} label="Include Most Recent Events and Interactions" name="input1" onchange={handleCheckboxChange}></lightning-input>
+    <template lwc:if={showSpinner}>
+        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+    </template>
+    <div class="slds-card slds-p-around_medium">
+        <c-generic-lookup object-api-name="Campaign" icon="standard:campaign"
+            placeholder="Select List to generate bio report" label="Available List:" display-fields={listDisplayFields}
+            display-field-prefixes={listDisplayFieldPrefixes} custom-search-class="WeightedFieldLookupSearch"
+            filter-clause={filterClause}
+            search-config={listSearchConfig} required onchange={handleLookupChange}>
+        </c-generic-lookup>
+    </div>
+</template>

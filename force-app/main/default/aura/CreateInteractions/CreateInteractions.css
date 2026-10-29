@@ -1,0 +1,30 @@
+/* --- Record Type Selection Structure --- */
+.THIS .recordTypeStepLayout {
+    background-color: #ffffff;
+}
+
+.THIS .typeStepContainer {
+    padding: 2rem 3rem;
+    min-height: 250px;
+    display: flex;
+    justify-content: center;
+}
+
+.THIS .typeStepPanel {
+    width: 100%;
+    max-width: 400px;
+}
+
+.THIS .recordTypeLabelRow {
+    margin-bottom: 1rem;
+}
+
+.THIS .recordTypeLabelRow .slds-form-element__label {
+    font-size: 0.875rem;
+    color: #3e3e3c;
+    font-weight: 400;
+}
+
+.THIS .recordTypeRadioGroup .slds-radio {
+    margin-bottom: 0.75rem; 
+}

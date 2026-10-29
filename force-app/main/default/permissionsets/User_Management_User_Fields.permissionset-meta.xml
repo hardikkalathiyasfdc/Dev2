@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Ability to see fields within the User record to perform user management and permissions assignments. Specifically User Team Field. Typically all of these fields are visible to Sys Admin profiles only. (BRME-5553)</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.BP_Team__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>User Management: User Fields</label>
+</PermissionSet>

@@ -1,0 +1,148 @@
+<apex:page controller="PhotoBookController" renderAs="pdf" readOnly="true" showHeader="false" sidebar="false" title="HR Photo Book" applyBodyTag="false">
+<!--<apex:stylesheet value="{!$Resource.PhotoBook}"/>-->
+    <!--head>
+        <style>
+            @page{
+                size: A4 landscape;
+            }
+            body {
+                font-family: 'Arial Unicode MS';
+            }
+            table { page-break-inside:auto }
+            tr    { page-break-inside:avoid; page-break-after:auto; padding:5px 10px 10px 2px; margin:5px 10px 10px 2px;}
+            thead { display:table-header-group }
+            tfoot { display:table-footer-group }
+            .profilePicture {
+                float:left;
+                width:100px;
+                height:100px;
+                padding-right:10px;
+            }
+            .containerPerson {
+                border:2px solid #777777;
+                overflow:hidden;
+                margin:2px 10px 10px 2px;
+                height:2.10in;
+
+            }
+            .containerPersonTop {
+                height:110px;
+                margin:5px;
+            }
+            .containerField {
+                padding-bottom:10px;
+                font-size:85%;
+            }
+            .fieldLabel {
+                text-decoration: underline;
+            }
+            .name {
+                font-size:120%
+            }
+            .department {
+                font-size:90%;
+                padding-bottom:10px;
+            }
+            .column {
+                width:2.75in;
+            }
+            .table {
+                table-layout: fixed;
+                width: 10.5in;
+            }
+
+            .bold {
+                font-weight: bold;
+                font-family: sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+    <div style="position:relative;width:10in;height:7in;background-color:#000000;color:white;padding-left:0.5in;page-break-after:always">
+        <div style="font-size: 400%;">
+            Willett
+        </div>
+        <div style="font-size: 400%;padding-bottom:100px;margin-top:-0.25in">
+            Advisors
+        </div>
+        <div style="font-size: 1000%;border-top:5px solid white;width:7in">
+            Welcome
+        </div>
+        <div style="position:absolute;bottom:0px;right:0px;padding-bottom:0.25in;padding-right:0.25in">
+            “People are our most important asset.” – Mike Bloomberg
+        </div>
+    </div>
+    <div style="position:relative;width:10in;height:7in;background-color:#000000;color:white;padding-left:0.5in">
+        <div style="margin-top:0.5in;margin-right:0.5in;border-top:5px solid white">
+            <div style="font-size: 300%;line-height:0.95em;width:5in;padding-bottom:1in">
+                You can look up your colleagues’ contact information in the following ways:
+            </div>
+            <ul>
+                <li>On your cell phone (Go to contacts <span style="font-size: 200%">&#8594;</span> Groups (upper left corner) <span style="font-size: 200%">&#8594;</span> Bloomberg.org Global Address list</li>
+                <li>Outlook email search</li>
+                <li>FON&lt;GO&gt; on the Bloomberg Terminal</li>
+            </ul>
+        </div>
+    </div>
+    <div style="position:relative;width:10in;height:7in;">
+        <table class="table">
+            <apex:repeat value="{!departmentWillett}" var="dept">
+            <tr>
+                <td style="width: 33%;background-color: #{!dept[0].color}; ">
+                    <span style="color:#FFFFFF;"><apex:outputField value="{!dept[0].c.Department__c}" /></span>
+                </td>
+                <td style="width: 33%;background-color: #{!dept[1].color};">
+                    <span style=" color:#FFFFFF;"><apex:outputField value="{!dept[1].c.Department__c}" /></span>
+                </td>
+                <td style="width: 33%;background-color: #{!dept[2].color};">
+                    <span style=" color:#FFFFFF;"><apex:outputField value="{!dept[2].c.Department__c}" /></span>
+                </td>
+            </tr>
+            </apex:repeat>
+        </table>
+    </div>
+    <table styleClass="table">
+        <apex:repeat value="{!contacts}" var="cRow" id="theRepeat">
+        <tr>
+            <td>
+                <div style="border-bottom:10px solid #{!cRow[0].color}" class="containerPerson">
+                    <div class="containerPersonTop">
+                        <img src="{!cRow[0].imageUrl}" class="profilePicture"/>
+                        <div style="padding-bottom:5px;margin-left:110px">
+                            <div class="name">{!cRow[0].c.FirstName}&nbsp;{!cRow[0].c.LastName}</div>
+                            <div class="department"><apex:outputField value="{!cRow[0].c.Department__c}" /></div>
+                            <div>
+                                <apex:outputPanel rendered="{!cRow[0].c.Key_Projects__c!=null}" layout="block" styleClass="containerField"><span class="fieldLabel">Key Projects:</span> {!cRow[0].c.Key_Projects__c}</apex:outputPanel>
+                                <apex:outputPanel rendered="{!cRow[0].c.Key_Contact__c!=null}" layout="block" styleClass="containerField">Key Contact for: {!cRow[0].c.Key_Contact__r.Name}</apex:outputPanel>
+                                <apex:outputPanel rendered="{!cRow[0].c.Started_In__c!=null}" layout="block" styleClass="containerField"><span class="fieldLabel">Started in:</span> {!cRow[0].c.Started_In__c}</apex:outputPanel>
+                                <apex:outputPanel rendered="{!cRow[0].c.Came_From__c!=null}" layout="block" styleClass="containerField"><span class="fieldLabel">Came from:</span> {!cRow[0].c.Came_From__c}</apex:outputPanel>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <apex:outputPanel rendered="{!cRow[1].imageUrl!=null}">
+                    <div style="border-bottom:10px solid #{!cRow[1].color};" class="containerPerson">
+                        <div class="containerPersonTop">
+                            <img src="{!cRow[1].imageUrl}" class="profilePicture"/>
+                            <div style="padding-bottom:5px;margin-left:110px">
+                                <div class="name">{!cRow[1].c.FirstName}&nbsp;{!cRow[1].c.LastName}</div>
+                                <div class="department"><apex:outputField value="{!cRow[1].c.Department__c}" /></div>
+                                <div>
+                                    <apex:outputPanel rendered="{!cRow[1].c.Key_Projects__c!=null}" layout="block" styleClass="containerField"><span class="fieldLabel">Key Projects:</span> {!cRow[1].c.Key_Projects__c}</apex:outputPanel>
+                                    <apex:outputPanel rendered="{!cRow[1].c.Key_Contact__c!=null}" layout="block" styleClass="containerField">Key Contact for: {!cRow[1].c.Key_Contact__r.Name}</apex:outputPanel>
+                                    <apex:outputPanel rendered="{!cRow[1].c.Started_In__c!=null}" layout="block" styleClass="containerField"><span class="fieldLabel">Started in:</span> {!cRow[1].c.Started_In__c}</apex:outputPanel>
+                                    <apex:outputPanel rendered="{!cRow[1].c.Came_From__c!=null}" layout="block" styleClass="containerField"><span class="fieldLabel">Came from:</span> {!cRow[1].c.Came_From__c}</apex:outputPanel>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </apex:outputPanel>
+            </td>
+        </tr>
+        </apex:repeat>
+    </table>
+    </body-->
+</apex:page>

@@ -1,0 +1,63 @@
+<!--
+  @description       : 
+  @author            : Gauri S
+  @group             : 
+  @last modified on  : 09-08-2025
+  @last modified by  : Sai Bhargav Thotakura
+-->
+<template>
+	<div class="slds-grid">
+		<div class="slds-col slds-size_6-of-12">
+			<div class="slds-form-element_horizontal">
+				<lightning-input
+					type="text"
+					label="Sheet name"
+					placeholder="Enter sheet name"
+					class="tab1Name"
+					onchange={handleTabNameChange}
+					max-length="30"
+					message-when-too-long="Tab Name must be unique and alpha numeric and cannot exceed 30 characters">
+				</lightning-input>
+			</div>
+			<div class="slds-form-element_horizontal">
+				<lightning-combobox
+					name="column1"
+					label="Column 1"
+					placeholder="Choose column 1"
+					value={value}
+					onchange={handleColumn1Change}
+					options={columnOptions}
+					class="col1 slds-m-top_small"
+					required>
+				</lightning-combobox>
+				<lightning-combobox
+					name="column2"
+					label="Column 2"
+					placeholder="Choose column 2"
+					value={value}
+					onchange={handleColumn2Change}
+					options={columnOptions}
+					class="slds-m-top_small">
+				</lightning-combobox>
+				<lightning-combobox
+					name="column3"
+					label="Column 3"
+					placeholder="Choose column 3"
+					value={value}
+					onchange={handleColumn3Change}
+					options={columnOptions}
+					class="slds-m-top_small">
+				</lightning-combobox>
+				<lightning-combobox
+					name="column4"
+					label="Column 4"
+					placeholder="Choose column 4"
+					value={value}
+					onchange={handleColumn4Change}
+					options={columnOptions}
+					class="slds-m-top_small">
+				</lightning-combobox>
+			</div>
+		</div>
+	</div>
+</template>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Focus_Other</fullName>
+    <active>true</active>
+    <description>If Other is selected for Primary focus, the free text field must be populated.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Interaction_Validation__c &amp;&amp; 
+ISPICKVAL( Primary_Focus__c , &quot;Other&quot;) &amp;&amp; 
+ISBLANK( Other_Primary_Focus_Specified__c )</errorConditionFormula>
+    <errorDisplayField>Other_Primary_Focus_Specified__c</errorDisplayField>
+    <errorMessage>If &quot;Other&quot; for Primary Focus is selected, please specify in the free text field.</errorMessage>
+</ValidationRule>

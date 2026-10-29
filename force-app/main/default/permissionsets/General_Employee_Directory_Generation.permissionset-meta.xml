@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>BPOfficeInfo__mdt</name>
+    </customMetadataTypeAccesses>
+    <description>Gives Access to HR, Workplace Operations and Executive teams to be able to generate the Employee Directory - this report lives on Dashboard(s)</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Generate: Employee Directory</label>
+    <pageAccesses>
+        <apexPage>EmployeeDirectory</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>EmployeeDirectoryWillett</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+</PermissionSet>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Only_Parent_As_Parent_For_Non_Budgeted</fullName>
+    <active>true</active>
+    <description>IM-97: Non Budgeted Type Foundation Code can only have Parent Type Code as Parent</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Foundation_Code_Validation__c &amp;&amp;
+AND(
+ISPICKVAL(Type__c, &apos;Miscellaneous Initiative&apos;) ,
+NOT(ISPICKVAL(Parent__r.Type__c, &apos;Parent Initiative&apos;))
+)</errorConditionFormula>
+    <errorDisplayField>Parent__c</errorDisplayField>
+    <errorMessage>&quot;Miscellaneous Initiative&quot; code can only have parent of type &quot;Parent&quot;.</errorMessage>
+</ValidationRule>

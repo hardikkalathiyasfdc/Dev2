@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>GenerateBioReportAuraCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Access_Short_Bio</name>
+    </customPermissions>
+    <description>Access to the new ad hoc/custom tab AND Short Bio field on Contact. Per Kim to Spresa 7/2023, Ok for events to see this field.</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.BoardBioNotes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Generate: Bio Report (Short) and Contact Short Bio Field</label>
+    <pageAccesses>
+        <apexPage>DocGeneration</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <tabSettings>
+        <tab>Generate_Bio_Report</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

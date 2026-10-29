@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BRME-5632: Notify the importing user that a DIT import had errors and to review the
+        attached error report. Sent to the importing user only (no CC/BCC) from the org-wide BP
+        Salesforce Team address, with the generated .xlsx report attached.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>DIT Import Errors Detected</name>
+    <style>none</style>
+    <subject>Action Required: DIT Import Errors Detected</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

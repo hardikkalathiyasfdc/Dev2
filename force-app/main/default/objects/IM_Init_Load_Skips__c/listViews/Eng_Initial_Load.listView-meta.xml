@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Eng_Initial_Load</fullName>
+    <columns>NAME</columns>
+    <columns>Ref_Id__c</columns>
+    <columns>Skip_Code__c</columns>
+    <columns>Skip_Code_Category__c</columns>
+    <columns>Skip_Description__c</columns>
+    <columns>IM_Entity__c</columns>
+    <columns>IM_Entity_Name__c</columns>
+    <columns>IM_Entity_Link__c</columns>
+    <columns>BGive_Entity__c</columns>
+    <columns>Bgive_Name__c</columns>
+    <columns>BGive_Id__c</columns>
+    <columns>BGive_Contig_Id__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>Related_Info__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>Eng Initial Load</label>
+</ListView>

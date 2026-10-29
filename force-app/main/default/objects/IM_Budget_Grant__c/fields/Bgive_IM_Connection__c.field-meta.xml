@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bgive_IM_Connection__c</fullName>
+    <description>IM-126: This field indicates if Grant is IM managed or Bgive Managed or does not exist in Bgive.</description>
+    <externalId>false</externalId>
+    <formula>TEXT(IM_Grant__r.Bgive_IM_Connection__c)</formula>
+    <label>Bgive IM Connection</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

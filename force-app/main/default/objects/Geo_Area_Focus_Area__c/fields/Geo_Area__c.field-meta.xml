@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Geo_Area__c</fullName>
+    <description>Master Detail to Geo Area</description>
+    <label>Geo Area</label>
+    <referenceTo>Geo_Area__c</referenceTo>
+    <relationshipLabel>Geo Area Focus Areas</relationshipLabel>
+    <relationshipName>Geo_Area_Focus_Areas</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

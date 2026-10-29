@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>BRME-6981:Specialized navigation access for select Data &amp; Reporting users and Developers.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Highlights &amp; Metrics: Interaction Participant &amp; Metric Value Tab Access</label>
+    <tabSettings>
+        <tab>Interaction_Participant__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Metric_Value__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

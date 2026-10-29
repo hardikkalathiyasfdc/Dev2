@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Grants EDIT access to &apos;Hide Events Widget&apos; checkbox field on Contact. Admins will assign this checkbox to control access to the Events widget, as needed per Contact
+
+BRMS-883</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Hide_Events_Widget__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Contact: Admin Limit of Events Widget</label>
+</PermissionSet>

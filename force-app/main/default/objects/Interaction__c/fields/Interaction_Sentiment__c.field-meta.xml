@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Interaction_Sentiment__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(ISPICKVAL(Sentiment__c,  &quot;Neutral&quot;), IMAGE(&quot;/resource/1548864802000/Mixed_Icon?&quot;, &quot;Neutral&quot;, 42,30),
+IF(ISPICKVAL(Sentiment__c,  &quot;Favorable&quot;), IMAGE(&quot;/resource/1548864830000/Positive_Icon?&quot;, &quot;favorable&quot;,42,30),
+IF(ISPICKVAL(Sentiment__c,  &quot;Non_Favorable&quot;), IMAGE(&quot;/resource/1548864853000/Negative_Icon?&quot;, &quot;non favorable&quot;,42,30),
+null)))</formula>
+    <label>Interaction Sentiment</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

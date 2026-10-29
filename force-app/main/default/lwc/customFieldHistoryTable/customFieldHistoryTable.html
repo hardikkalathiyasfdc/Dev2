@@ -1,0 +1,31 @@
+<template>
+    <div class="slds-box">
+        <lightning-card >
+            <h3 slot="title" class="slds-p-left_small slds-p-top_small">
+                <lightning-icon icon-name={objectIcon} size="small" ></lightning-icon>
+                <span class="slds-p-around_small">{objectLabel} Custom History</span>
+            </h3>
+            <div class="slds-card__body">
+                <div style="height:200px">
+                    <c-custom-field-history-datatable
+                        key-field="id"
+                        data={historyRecords}
+                        columns={columns}
+                        onloadmore={handleLoadMore}
+                        hide-checkbox-column
+                        sorted-by="createdDate"
+                        sorted-direction="desc"
+                        enable-infinite-loading
+                    >
+                    </c-custom-field-history-datatable>
+                </div>
+                <template if:true={isLoading}>
+                    <lightning-spinner alternative-text="Loading more records" size="small"></lightning-spinner>
+                </template>
+                <template if:true={noMoreData}>
+                    <div class="slds-text-align_center slds-m-top_medium">{tableEndMessage}</div>
+                </template>
+            </div>
+        </lightning-card>
+    </div>
+</template>

@@ -1,0 +1,8 @@
+/* Selected record highlight - light blue to distinguish from hover */
+.slds-is-selected {
+    background-color: #e5f3ff;
+}
+
+.slds-is-selected:hover {
+    background-color: #d8edff;
+}

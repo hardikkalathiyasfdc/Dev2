@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Budget_Term_Years__c</fullName>
+    <description>IM-42: Divide budget term months by 12 and round up.</description>
+    <externalId>false</externalId>
+    <formula>IF(  ROUND(Budget_Term_months__c / 12 , 0) = 0, 1, ROUND(Budget_Term_months__c / 12 , 0))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Budget Term (Years)</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

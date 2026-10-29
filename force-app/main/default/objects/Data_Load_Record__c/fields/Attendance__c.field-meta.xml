@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Attendance__c</fullName>
+    <description>(BRME-3673) Field created to update value on created List Member Record</description>
+    <label>Attendance</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Yes - Cocktails Only</fullName>
+                <default>false</default>
+                <label>Yes - Cocktails Only</label>
+            </value>
+            <value>
+                <fullName>Yes - In Person</fullName>
+                <default>false</default>
+                <label>Yes - In Person</label>
+            </value>
+            <value>
+                <fullName>Yes - Virtually</fullName>
+                <default>false</default>
+                <label>Yes - Virtually</label>
+            </value>
+            <value>
+                <fullName>Did Not Attend</fullName>
+                <default>false</default>
+                <label>Did Not Attend</label>
+            </value>
+            <value>
+                <fullName>Did Not Attend - Cancelled RSVP</fullName>
+                <default>false</default>
+                <label>Did Not Attend - Cancelled RSVP</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

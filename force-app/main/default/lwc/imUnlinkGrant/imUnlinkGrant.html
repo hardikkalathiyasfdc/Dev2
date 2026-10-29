@@ -1,0 +1,52 @@
+<template>
+    <!--Modal Body-->
+    <lightning-modal-body>
+        <template if:true={isError}>
+            <template for:each={errorMessages} for:item="message">
+                <div key={message}>
+                    <div class="slds-m-bottom_xx-small slds-m-top_small slds-error">{message}</div>
+                </div>
+            </template>
+        </template>
+        <template lwc:if={showSpinner}>
+            <lightning-spinner size="medium" variant="brand" alternative-text="Loading"></lightning-spinner>
+        </template>
+        <template lwc:else>
+            <lightning-combobox name="action" label="Select Action" placeholder="Select Action" value={selectedAction}
+                onchange={handleActionChange} options={actionOptions} disabled={isActionDisabled} required>
+            </lightning-combobox>
+            <div class="slds-m-top_large">
+                <template lwc:if={isDecline}>
+                    <div>
+                        <p><span>Please decline the request </span>
+                            <lightning-formatted-url value={bgiveGrantURL} label={imGrant.Bgive_Contig_Id__c}
+                                target="_blank"></lightning-formatted-url>
+                            <span> in Bgive before proceeding further.</span>
+                        </p>
+                    </div>
+                </template>
+                <template lwc:elseif={isDelete}>
+                    <div>
+                        <div>
+                            <p><span>All payment amounts for this request </span>
+                                <lightning-formatted-url value={bgiveGrantURL} label={imGrant.Bgive_Contig_Id__c}
+                                    target="_blank"></lightning-formatted-url>
+                                <span> must be $0 in Bgive before proceeding.</span>
+                            </p>
+                            <p><strong>Reminder:</strong> Documents will be lost if not saved
+                                elsewhere.
+                            </p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+    </lightning-modal-body>
+    <!--Modal Footer-->
+    <lightning-modal-footer>
+        <lightning-button class="slds-button" variant="neutral" label="Cancel" onclick={handleClose}
+            disabled={isCancelDisabled}></lightning-button>
+        <lightning-button class="slds-button slds-m-left_x-small" variant="brand" label="Save" onclick={handleSave}
+            disabled={isSaveDisabled}></lightning-button>
+    </lightning-modal-footer>
+</template>

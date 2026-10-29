@@ -1,0 +1,20 @@
+<template>
+    <div class="pagination">
+        <button class="page-button" onclick={handlePrevious} disabled={isFirstPage}>
+            &lt;
+        </button>
+        <template for:each={visiblePages} for:item="page">
+            <template lwc:if={page.isEllipsis}>
+                <span key={page.key} class="page-ellipsis">...</span>
+            </template>
+            <template lwc:else>
+                <button key={page.key} class={page.class} onclick={handlePageClick} data-page={page.number}>
+                    {page.number}
+                </button>
+            </template>
+        </template>
+        <button class="page-button" onclick={handleNext} disabled={isLastPage}>
+            &gt;
+        </button>
+    </div>
+</template>

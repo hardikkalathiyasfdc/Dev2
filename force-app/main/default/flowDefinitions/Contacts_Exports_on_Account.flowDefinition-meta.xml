@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionNumber>1</activeVersionNumber>
+    <description>This Screenflow is used to Embed the Leadership Contact Export component in the screen flow. (BRME-5682)</description>
+    <masterLabel>Contacts Exports on Account</masterLabel>
+</FlowDefinition>

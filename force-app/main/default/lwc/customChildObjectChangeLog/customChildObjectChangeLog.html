@@ -1,0 +1,38 @@
+<template>
+    <lightning-card>
+        <h3 slot="title" class="sticky-title slds-p-top_x-small">
+            <lightning-icon icon-name="custom:custom101" size="small"></lightning-icon>
+            <span class="slds-p-around_small">{tableName} Change History</span>
+        </h3>
+        <div class="table-container">
+            <template lwc:if={logs.length}>
+                <table class="custom-table slds-table slds-table_bordered slds-table_cell-buffer slds-max-medium-table_stacked">
+                    <thead class="table-header">
+                        <template for:each={columns} for:item="col">
+                            <th key={col.fieldName}>{col.label}</th>
+                        </template>
+                    </thead>
+                    <tbody>
+                        <template for:each={logs} for:item="log">
+                            <tr key={log.id} class={log.rowClass}>
+                                <template for:each={log.values} for:item="val" for:index="index">
+                                    <td key={val} data-label={val.tableHeader}>
+                                        <template lwc:if={val.isUrl}>
+                                            <a href={val.value} target="_blank">{val.label}</a>
+                                        </template>
+                                        <template lwc:else>
+                                            {val.value}
+                                        </template>
+                                    </td>
+                                </template>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+            <template lwc:else>
+                <div class="slds-p-around_small">No Change History</div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

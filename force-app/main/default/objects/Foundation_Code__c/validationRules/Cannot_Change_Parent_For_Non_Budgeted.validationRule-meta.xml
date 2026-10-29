@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Change_Parent_For_Non_Budgeted</fullName>
+    <active>true</active>
+    <description>IM-108: Validation to block changing of parent for Non Budgeted Foundation Code.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Foundation_Code_Validation__c &amp;&amp;
+AND(
+NOT(ISNEW()),
+ISCHANGED( Parent__c),
+ISPICKVAL( Type__c , &apos;Miscellaneous Initiative&apos;)  
+)</errorConditionFormula>
+    <errorDisplayField>Parent__c</errorDisplayField>
+    <errorMessage>Changing Parent is not allowed for &quot;Miscellaneous Initiative&quot; Foundation Code.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,3 @@
+<design:component>
+    <design:attribute name="showActiveLists" label="Show Active Lists" default="true"/>
+</design:component>

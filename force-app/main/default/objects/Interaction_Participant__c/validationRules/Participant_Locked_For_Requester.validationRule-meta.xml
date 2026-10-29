@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Participant_Locked_For_Requester</fullName>
+    <active>true</active>
+    <description>BRME-6954: Blocks participant edits for Requester once the highlight is past Draft. The &apos;New&apos; URL button can’t check the related Highlight status, so page-level visibility won’t work.</description>
+    <errorConditionFormula>AND(
+				NOT($Setup.Bypass_Automation_Setting__c.Interaction_Participant_Validation__c), 
+    NOT(ISPICKVAL(Highlight__r.Status__c, &apos;Draft&apos;)),
+				NOT($Permission.Highlights_Metrics_Reviewer)
+)</errorConditionFormula>
+    <errorMessage>Participant cannot be revised after the highlight has been submitted.</errorMessage>
+</ValidationRule>

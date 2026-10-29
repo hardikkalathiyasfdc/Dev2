@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Account_Delete_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account_Delete_Error</shortDescription>
+        <value>Please click on &apos;Flag for Review&apos; in one of the duplicate organizations (upper right corner), or reach out to bpsalesforceteam@e.bloomberg.org.</value>
+    </labels>
+    <labels>
+        <fullName>BGiveLinked_Account_Delete_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BGiveLinked_Account_Delete_Error</shortDescription>
+        <value>Unable to delete Organization due to link with Bgive. Please reach out to a member of the BRM team at bpsalesforceteam@e.bloomberg.org to resolve.</value>
+    </labels>
+    <labels>
+        <fullName>BGiveLinked_Contact_Delete_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BGiveLinked_Contact_Delete_Error</shortDescription>
+        <value>Unable to delete Contact due to link with Bgive.
+Please reach out to a member of the BRM team at salesforcehelp@bloomberg.org to resolve.</value>
+    </labels>
+    <labels>
+        <fullName>Bio_Photo_Error_Notification</fullName>
+        <categories>ContactTriggerHandler</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Bio Photo Error Notification</shortDescription>
+        <value>Please use a screenshot or the snipping tool to copy and paste a square headshot in the Bio Photo field.</value>
+    </labels>
+    <labels>
+        <fullName>Bloomberg_Connects_Association_ID</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Bloomberg Connects Association ID</shortDescription>
+        <value>a114v00000Y7SuxAAF</value>
+    </labels>
+    <labels>
+        <fullName>BoardMemberInteractionsDescFields</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Board report desc fields, order matters, first field with access &amp; value is used</shortDescription>
+        <value>Background__c,LPLeadershipConfidentialBackground__c,CorrespondenceConfidentialDescription__c,Description__c</value>
+    </labels>
+    <labels>
+        <fullName>Bucket_Acc_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Bucket Acc Name</shortDescription>
+        <value>-</value>
+    </labels>
+    <labels>
+        <fullName>CampaignMembershipWarningToEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CampaignMembershipWarningToEmail</shortDescription>
+        <value>brmpoc@bloomberg.org</value>
+    </labels>
+    <labels>
+        <fullName>City_View_Publish_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>City View Publish Error</shortDescription>
+        <value>This interaction has been published to CityView. Please email bpsalesforceteam@e.bloomberg.org with any questions or issues.</value>
+    </labels>
+    <labels>
+        <fullName>Contact_Delete_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact_Delete_Error</shortDescription>
+        <value>Please click on &apos;Flag for Review&apos; in one of the duplicate contacts (upper right corner), or reach out to bpsalesforceteam@e.bloomberg.org.</value>
+    </labels>
+    <labels>
+        <fullName>Contacts_With_Missing_Email_Report</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contacts With Missing Email Report</shortDescription>
+        <value>00O7x00000FF8e9EAD</value>
+    </labels>
+    <labels>
+        <fullName>Custom_Sync_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custom Sync Error Message</shortDescription>
+        <value>Changes to the initiative could not be synced with Bgive. Please contact your administrator for assistance.</value>
+    </labels>
+    <labels>
+        <fullName>Duplicate_Record</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Duplicate Record</shortDescription>
+        <value>You are creating a Duplicate record! We recommend using existing record instead.</value>
+    </labels>
+    <labels>
+        <fullName>Generate_Bio_Too_Many_Contacts_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Generate_Bio_Too_Many_Contacts_Error</shortDescription>
+        <value>This list is over the limit, for assistance contact bpsalesforceteam@e.bloomberg.org.</value>
+    </labels>
+    <labels>
+        <fullName>Google_News_Endpoint</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Google News Endpoint</shortDescription>
+        <value>https://news.google.com/rss/search?cf=all&amp;hl=en&amp;pz=1&amp;ned=us&amp;q=searchstring</value>
+    </labels>
+    <labels>
+        <fullName>Image_Call_Out_Token</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Image Call Out Token</shortDescription>
+        <value>brmbot:ab3546#@90821HlJS921</value>
+    </labels>
+    <labels>
+        <fullName>Image_Call_Out_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Image Call Out URL</shortDescription>
+        <value>https://bsp.bloomberg.com/app/utility/image/resize</value>
+    </labels>
+    <labels>
+        <fullName>Invalid_Salutation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid Salutation</shortDescription>
+        <value>Invalid Salutation! Please update salutation to a valid value.</value>
+    </labels>
+    <labels>
+        <fullName>Invalid_State</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid State</shortDescription>
+        <value>Invalid State! Please update state to a valid two character value.</value>
+    </labels>
+    <labels>
+        <fullName>LWC_ContactSpaceFields</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LWC_ContactSpaceFields</shortDescription>
+        <value>Business_Email_2__c,MailingCountry,OtherCountry__c</value>
+    </labels>
+    <labels>
+        <fullName>LWC_UserClonePermissionCloneProcessErrMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LWC_UserClonePermissionCloneProcessErrMsg</shortDescription>
+        <value>There is something wrong during clone. Please help to try again later.</value>
+    </labels>
+    <labels>
+        <fullName>LWC_UserClonePermissionCloneSuccessMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LWC_UserClonePermissionCloneSuccessMsg</shortDescription>
+        <value>The Permission Sets &amp; Public Groups are copied to selected Users successfully.</value>
+    </labels>
+    <labels>
+        <fullName>LWC_UserClonePermissionCopyFromErrMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LWC_UserClonePermissionCopyFromErrMsg</shortDescription>
+        <value>Please select a user to copy the permission from that user.</value>
+    </labels>
+    <labels>
+        <fullName>LWC_UserClonePermissionCopyToErrMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LWC_UserClonePermissionCopyToErrMsg</shortDescription>
+        <value>Please select at least one user to copy the permission.</value>
+    </labels>
+    <labels>
+        <fullName>List_Create_Org_Engagement_Button_Permission_Error</fullName>
+        <categories>CreateOrgInteractions</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>List: Create Org Engagement Button Permission Error</shortDescription>
+        <value>You don&apos;t have permission to create Organization Engagements in bulk.</value>
+    </labels>
+    <labels>
+        <fullName>Org_Engagement_Instruction_Text</fullName>
+        <categories>CreateOrgInteractions</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Org Engagement Instruction Text</shortDescription>
+        <value>This function will add an Organization Engagement for every Organization inside this list, and will also appear on all Contacts at these Organizations.</value>
+    </labels>
+    <labels>
+        <fullName>Pricebook_ExcludedDepartments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pricebook_ExcludedDepartments</shortDescription>
+        <value>Food Services,Briefings</value>
+    </labels>
+    <labels>
+        <fullName>Special_Characters_Regex</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Special Characters Regex</shortDescription>
+        <value>[A-Za-z0-9 _.,!&quot;&apos;/$&amp;]*</value>
+    </labels>
+    <labels>
+        <fullName>SyncGuestsToZkipsterDelay</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SyncGuestsToZkipsterDelay</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>Unique_Significant_Other_Error_Msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Unique Significant Other Error Msg</shortDescription>
+        <value>This contact already exists as a Significant Other on another contact.</value>
+    </labels>
+    <labels>
+        <fullName>Zkipster_Forward_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Zkipster_Forward_Email</shortDescription>
+        <value>z@2qzmq77n438rd3chqkipakzdazlq3jl5ik57y8bqpnhss9nq1a.6g-24uudeae.na148.apex.salesforce.com</value>
+    </labels>
+</CustomLabels>

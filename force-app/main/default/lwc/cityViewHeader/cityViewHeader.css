@@ -1,0 +1,404 @@
+.filter-icon {
+    --sds-c-icon-color-foreground-default: white;
+}
+.company-icon {
+    --sds-c-icon-color-foreground-default: #878aa9;
+}
+.white-help-icon .slds-icon {
+    fill: white !important;
+}
+.filter-text {
+    font-size: 12px;
+    color: white;
+}
+.search-input {
+    padding: 10px;
+}
+.nav-bar {
+    position: sticky;
+    top: 84px;
+    z-index: 10;
+    height: 50px;
+    background: #34626b;
+    font-family: Arial;
+}
+.nav-item.active {
+    color: white;
+    background: #36a7a2;
+    width: 40%;
+    height: 75%;
+    border: 1px solid #00b7af;
+    border-bottom: none;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    background: linear-gradient(180deg, #2ca4a1, #defffe);
+    font-size: 15px;
+    margin-top: 12px;
+}
+.nav-item {
+    color: rgb(14, 1, 1);
+    width: 40%;
+    height: 75%;
+}
+.nav-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: white;
+}
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-left: 1px solid white;
+    height: 31px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+}
+.image-container {
+    border-right: 1px solid white;
+    height: 31px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+}
+.header-section {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    font-size: 24px;
+    font-style: italic;
+    color: white;
+}
+.slds-brand-band_medium:after {
+    content: none !important;
+}
+.map-container, .other-content {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-right: 1px solid #00b7af;
+    padding: 5px;
+}
+.white-icon {
+    --slds-c-icon-color-foreground: white;
+}
+.white-icon::part(icon) {
+    fill: white;
+    color: white;
+}
+.side-bar-item {
+    padding: 10px;
+    background-color: #FBF9FF;
+}
+.checkbox-list {
+    display: flex;
+    flex-direction: column;
+}
+.checkbox-wrapper {
+    margin-bottom: 0.5rem;
+}
+.custom-checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+input[type="checkbox"] {
+    margin-right: 4px;
+}
+.color-circle {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 4px;
+}
+.checkbox-label-text {
+    margin-left: 0;
+}
+.cityview-logo {
+    text-align: center;
+    padding: 5px;
+    width: 100%;
+    height: auto;
+    max-height: 60px;
+    padding-bottom: 0px;
+    margin-top: -5.5px;
+    cursor: pointer;
+}
+.parent-div {
+    width: 100%;
+    overflow-x: hidden;
+}
+.full-width-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+.fixed-width-column {
+    width: auto;
+    word-wrap: break-word;
+    white-space: normal;
+}
+.box {
+    border: 1px solid #98b8f6;
+    border-radius: 15px;
+    padding: 5px;
+    border-color: #ccdbf7;
+    box-shadow: inset -2px -3px 1px 0px #dae2ef;
+    box-shadow: 2px 3px 4px 0px #98b8f6;
+}
+.box>h3 {
+    background: rgb(148 203 255 / 92%);
+    height: 25px;
+    padding: 0 10px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 21px;
+    vertical-align: middle;
+    padding-top: 5px;
+    margin-bottom: 10px;
+    background: rgb(212 239 240);
+    font-family: monospace;
+    background: #845aa0;
+    background: #4d2b83;
+    color: white;
+
+}
+.detail-box {
+    border: 1px solid #98b8f6;
+    border-radius: 15px;
+    padding: 5px;
+    border-color: #ccdbf7;
+    box-shadow: inset -2px -3px 1px 0px #dae2ef;
+    box-shadow: 2px 3px 4px 0px #98b8f6;
+    background: white;
+}
+.detail-box>h3 {
+    background: rgb(148 203 255 / 92%);
+    height: 25px;
+    padding: 0 10px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 21px;
+    vertical-align: middle;
+    padding-top: 5px;
+    margin-bottom: 10px;
+    background: rgb(212 239 240);
+    font-family: monospace;
+    background: #845aa0;
+    color: white;
+}
+.close-button {
+    position: absolute;
+    top: 0px;
+    right: 1px;
+}
+.side-bar-header {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+}
+.action-button {
+    position: absolute;
+    top: 3px;
+    left: 4px;
+}
+.modal {
+    position: relative;
+}
+.table-border {
+    border-color: rgb(212 239 240) !important;
+    border-right: 1px solid rgb(212 239 240) !important;
+    border: 1px solid;
+}
+li {
+    margin: 2px;
+}
+.highlight-item {
+    padding: 5px;
+}
+.map-section {
+    height: 100%;
+}
+.icon-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    height: 24px;
+    width: 24px;
+}
+.icon-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.search-combobox {
+    width: 90px !important;
+    margin-left: auto;
+}
+.search-by-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    width: 100%;
+    overflow: visible;
+    z-index: 1000;
+}
+.search-label {
+    font-weight: bold;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    color: white;
+    margin-top: 10px;
+}
+lightning-button-menu::part(button) {
+    padding: 4px 6px;
+    font-size: 14px;
+    color: White;
+    z-index: 1001 !important;
+}
+.combobox-wrapper {
+    position: relative;
+    z-index: 1000;
+    overflow: visible;
+}
+lightning-combobox .slds-combobox__input {
+    background-color: white !important;
+    border: 1px solid #ccc;
+    height: 30px;
+    padding: 0 8px;
+}
+.dots-background {
+    position: absolute;
+    top: 0;
+    left: 11.2rem;
+    width: calc(100% - 22rem);
+    height: 99%;
+    object-fit: cover;
+    z-index: 0;
+    opacity: 0.4;
+}
+.video-gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 11.2rem;
+    width: calc(100% - 22rem);
+    height: 100%;
+    z-index: 1;
+    background: linear-gradient(to right, #34626b, transparent);
+    pointer-events: none;
+}
+.header-filters {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+}
+.filter-icon {
+    position: absolute;
+    scale: 88%;
+    top: 1.5rem;
+    right: 10.6rem;
+    z-index: 5;
+    border-radius: 999px;
+    box-shadow: -3px 3px 9px rgba(0, 0, 0, 0.25);
+}
+.filter-icon-btn {
+    height: 34px;
+    border-radius: 4px;
+    border: none;
+    background: rgb(255 255 255);
+    color: #26464d;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 0 12px;
+    overflow: hidden;
+    width: 84px;
+    justify-content: flex-start;
+}
+.filter-icon-btn.filters-disabled {
+    opacity: 0.45;
+}
+.filter-icon-label {
+    color: #26464d;
+}
+.filter-icon-btn lightning-icon {
+    --slds-c-icon-color-foreground-default: #26464d;
+}
+.filter-icon-btn:hover {
+    filter: brightness(0.95);
+}
+.filter-icon-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.25), -3px 3px 9px rgba(0, 0, 0, 0.25);
+}
+.filters-popup {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 447px;
+    max-height: 73vh;
+    overflow: auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    z-index: 100;
+}
+.filters-popup::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    right: 14px;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    transform: rotate(45deg);
+    box-shadow: -2px -2px 6px rgba(0,0,0,0.06);
+}
+.filters-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    background: transparent;
+}
+.icon-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    scale: 92%;
+    margin-top: 0.8px;
+}
+.active-indicator {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 4px;
+    height: 5px;
+    border-radius: 999px;
+    background: #fdaa40;
+    box-shadow: 0 0 0 2px #fdaa40;
+}
+.filters-disabled {
+    opacity: 0.55;
+}

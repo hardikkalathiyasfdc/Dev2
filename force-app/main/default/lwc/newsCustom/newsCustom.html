@@ -1,0 +1,38 @@
+<template>
+  <div class="slds-card-wrapper">
+    <lightning-card title="Google News" icon-name="action:google_news">
+      <template if:true={wrappers.data}>
+        <template for:each={wrappers.data} for:item="wrapper">
+          <div class="slds-card_boundary" key={wrapper.title}>
+            <div class="slds-m-around_small">
+              <lightning-card>
+                <li>
+                  <a
+                    href={wrapper.link}
+                    target="_blank"
+                    class="slds-text-heading_small"
+                  >
+                    {wrapper.title}
+                  </a>
+                  - (<lightning-formatted-date-time
+                    value={wrapper.pubDate}
+                    year="numeric"
+                    month="numeric"
+                    day="numeric"
+                    hour="2-digit"
+                    minute="2-digit"
+                    time-zone-name="short"
+                    time-zone={userTimeZone}
+                    hour12="true"
+                  ></lightning-formatted-date-time
+                  >)
+                </li>
+                {wrapper.descVal}
+              </lightning-card>
+            </div>
+          </div>
+        </template>
+      </template>
+    </lightning-card>
+  </div>
+</template>

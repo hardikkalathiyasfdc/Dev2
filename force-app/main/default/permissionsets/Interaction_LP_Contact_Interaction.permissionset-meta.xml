@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Create LP Leadership Interaction record type for LP Leadership users.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Interaction: LP Leadership Interaction Creation</label>
+    <recordTypeVisibilities>
+        <recordType>Interaction__c.LPContactInteraction</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

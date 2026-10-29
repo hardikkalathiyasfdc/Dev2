@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Private_Submit_to_CityView_Validation</fullName>
+    <active>true</active>
+    <description>BRME-5794: Validation rule to prevent private interactions from being submitted to CityView</description>
+    <errorConditionFormula>AND(
+!$Setup.Bypass_Automation_Setting__c.Interaction_Validation__c,
+OR(
+AND(
+ISNEW(),
+Add_to_CityView__c,
+Private_Interaction__c 
+),
+AND(
+OR(
+ISCHANGED(Add_to_CityView__c),
+ISCHANGED(Private_Interaction__c)
+),
+Add_to_CityView__c,
+Private_Interaction__c
+)
+)
+)</errorConditionFormula>
+    <errorMessage>Cannot Save. Interactions cannot have both Private and Submit to CityView checkboxes checked.</errorMessage>
+</ValidationRule>

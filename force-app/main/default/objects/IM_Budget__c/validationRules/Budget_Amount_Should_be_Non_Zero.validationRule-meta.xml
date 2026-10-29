@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Budget_Amount_Should_be_Non_Zero</fullName>
+    <active>true</active>
+    <description>IM-400: Validation to prevent users from selecting budget status as pending approval if Budget Amount is zero</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.IM_Budget_Validation__c &amp;&amp;
+AND(NOT(ISNEW()), ISPICKVAL(Status__c, &apos;Pending Approval&apos;) , Budget_Amount__c &lt;=  0)</errorConditionFormula>
+    <errorMessage>Budget amount is zero and cannot be moved forward. Please update the budget before proceeding</errorMessage>
+</ValidationRule>

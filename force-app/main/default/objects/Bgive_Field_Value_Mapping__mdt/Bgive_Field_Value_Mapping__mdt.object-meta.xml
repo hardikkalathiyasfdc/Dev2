@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>IM-49: Captures the Bgive to BRM Picklist value mapping</description>
+    <label>Bgive Field Value Mapping</label>
+    <pluralLabel>Bgive Field Value Mappings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

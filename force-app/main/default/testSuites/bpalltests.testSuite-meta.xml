@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexTestSuite xmlns="http://soap.sforce.com/2006/04/metadata">
+    <testClassName>AddCampaignMemberController_Test</testClassName>
+    <testClassName>CampaignCloneWithMembersController_Test</testClassName>
+    <testClassName>CampaignMembershipBannerController_Test</testClassName>
+    <testClassName>CampaignMemberTrigger_Test</testClassName>
+    <testClassName>ConfidentialItemUploadController_Test</testClassName>
+    <testClassName>ContactTrigger_Test</testClassName>
+    <testClassName>CreateInteractionsController_Test</testClassName>
+    <testClassName>EditMemberContactsController_Test</testClassName>
+    <testClassName>EmploymentHistoryBoardMemTrigger_Test</testClassName>
+    <testClassName>NewsCustomController_Test</testClassName>
+</ApexTestSuite>

@@ -1,0 +1,145 @@
+<template>
+  <section
+    class="slds-modal slds-fade-in-open slds-modal_small slds-align_absolute-center"
+  >
+    <div class="slds-modal__container">
+      <header class="slds-modal__header">
+        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+          Send Guest Summary
+        </h2>
+      </header>
+      <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+        <div class="slds-box" style="margin:2%;">
+          <lightning-input
+            type="checkbox"
+            label="Add Salutation"
+            name="salutationSelection"
+            value={emailParams.isSalutationChecked}
+            onchange={checkboxChange}
+          ></lightning-input>
+          <lightning-input
+            type="checkbox"
+            label="Add Title"
+            name="titleSelection"
+            value={emailParams.isTitleChecked}
+            onchange={checkboxChange}
+          ></lightning-input>
+          <lightning-input
+            type="checkbox"
+            label="Add Organization"
+            name="orgSelection"
+            value={emailParams.isOrgChecked}
+            onchange={checkboxChange}
+          ></lightning-input>
+          <lightning-input
+            type="checkbox"
+            label="Add City"
+            name="citySelection"
+            value={emailParams.isCityChecked}
+            onchange={checkboxChange}
+          ></lightning-input>
+          <lightning-input
+            type="checkbox"
+            label="Add State"
+            name="stateSelection"
+            value={emailParams.isStateChecked}
+            onchange={checkboxChange}
+          ></lightning-input>
+          <lightning-input
+            type="checkbox"
+            label="Add Country"
+            name="countrySelection"
+            value={emailParams.isCountryChecked}
+            onchange={checkboxChange}
+          ></lightning-input>
+          <lightning-input
+            type="checkbox"
+            label="Add Guest Of"
+            name="addGuestOfSelection"
+            value={emailParams.isAddGuestOfChecked}
+            onchange={checkboxChange}
+          ></lightning-input>
+          <lightning-input
+            type="checkbox"
+            label="Add Source"
+            name="addSourceSelection"
+            value={emailParams.isAddSourceChecked}
+            onchange={checkboxChange}
+          ></lightning-input>
+          <lightning-input
+            type="checkbox"
+            label="Add Waitlists"
+            name="waitlistSelection"
+            value={emailParams.isWaitlistChecked}
+            onchange={checkboxChange}
+          ></lightning-input>
+          <lightning-input
+            type="checkbox"
+            label="Use Preferred First Name"
+            name="preferredNameSelection"
+            value={emailParams.isPreferredNameChecked}
+            onchange={checkboxChange}
+          ></lightning-input>
+           <lightning-input
+            type="checkbox"
+            label="Use Preferred Last Name"
+            name="preferredLastnameSelection"
+            value={emailParams.isPreferredLastnameChecked}
+            onchange={checkboxChange}
+          ></lightning-input>
+          <lightning-layout multiple-rows="true">
+            <lightning-layout-item padding="around-small" size="6">
+          <lightning-input
+            type="datetime"
+            label="From Date"
+            name="fromDate"
+            class="fromDate"
+            value={emailParams.fromDate}
+            onchange={dateChange}
+          ></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="6">
+          <div class="slds-p-top_large">
+          <c-multi-select-lookup 
+                data-id="campaign-lookup" 
+                label-name="Group By Source"
+                is-list-member-source={isListMemberSource}
+                campaign-id={recordId}
+                icon-name="standard:campaign"
+                onretrieve={listSelected} 
+                onremove={listSelected}>
+          </c-multi-select-lookup>
+        </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="6">
+          <lightning-input
+            type="datetime"
+            label="To Date"
+            class="toDate"
+            name="toDate"
+            value={emailParams.toDate}
+            onchange={dateChange}
+          ></lightning-input>
+        </lightning-layout-item>
+        </lightning-layout>
+        </div>
+        <footer class="slds-modal__footer">
+          <lightning-button
+            variant="neutral"
+            label="Cancel"
+            title="Cancel"
+            onclick={closeEmail}
+          ></lightning-button>
+          <lightning-button
+            class="slds-m-top_small myBtn"
+            variant="brand"
+            onclick={sendEmail}
+            name="Send Email"
+            label="Send Me Email"
+          ></lightning-button></footer
+      >
+      </div>
+    </div>
+  </section>
+  <div class="slds-backdrop slds-backdrop_open"></div>
+</template>

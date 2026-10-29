@@ -1,0 +1,12 @@
+<template>
+	<lightning-card>
+		<div class="slds-m-around_small"><span style="font-weight: bold;">Spotlight On</span></div>
+		<template if:true={photo}>
+			<div class="slds-m-around_small">
+				<img  src={photo.url} />
+				<div class="slds-m-top_small slds-text-heading_small"><lightning-formatted-rich-text value={photo.Title}></lightning-formatted-rich-text></div>
+				<div class="slds-m-top_small"><lightning-formatted-rich-text value={photo.Description}></lightning-formatted-rich-text></div>
+			</div>
+		</template>
+	</lightning-card>
+</template>

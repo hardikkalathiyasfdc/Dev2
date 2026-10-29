@@ -1,0 +1,141 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" access="global" controller="CreateInteractionsController">
+
+    <!-- CRITICAL MODAL FRAME OVERRIDES IN THE CMP -->
+    <aura:html tag="style">
+        /* Lock modal sizing boundaries */
+        .slds-modal__container {
+            width: 70% !important;
+            max-width: 70% !important;
+            height: auto; 
+        }
+        
+        /* Force body to scroll while header and footer stay strictly pinned */
+        .slds-modal__content {
+            height: calc(100% - 116px) !important; 
+            max-height: calc(100% - 116px) !important;
+            padding: 0 !important;
+        }
+
+        .cuf-content {
+            padding: 0 !important;
+        }
+
+        /* Clean fixed standard white footer wrapper */
+        .modal-footer.slds-modal__footer {
+            background-color: #ffffff !important;
+            border-top: 1px solid #e5e5e5 !important;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05) !important;
+            padding: 0.75rem 1rem !important;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Strips quick action container background bleedthrough completely */
+        .cuf-footer_wrapper, .slds-modal__footer_directed {
+            background-color: transparent !important;
+            background: none !important;
+            box-shadow: none !important;
+        }
+    </aura:html>
+
+	<aura:handler name="init" value="{!this}" action="{!c.countMem}" />
+	<aura:handler event="c:SelectedRecordsEvent" action="{!c.handleComponentEvent}" />
+
+	<aura:attribute name="memCount" type="Integer" default="0" />
+	<aura:attribute name="recordId" type="String" />
+	<aura:attribute name="showSpinner" type="Boolean" default="false" />
+	<aura:attribute name="hideCreateButton" type="Boolean" default="false" />
+	<aura:attribute name="selectedRecs" type="sObject" />
+	<aura:attribute name="showCreationSection" type="Boolean" default="false" />
+	<aura:attribute name="recordTypes" type="List" />
+	<aura:attribute name="value" type="String" />
+	<aura:attribute name="errMsg" type="String" />
+	<aura:attribute name="requiredFields" type="Object" />
+	<aura:attribute name="interactionFields" type="List" />
+	<aura:attribute name="defaultTeamId" type="String" />
+
+	<aura:if isTrue="{!v.showSpinner}">
+		<lightning:spinner alternativeText="Processing.." variant="brand" />
+	</aura:if>
+
+    <!-- FIXED HEADER -->
+    <div class="modal-header slds-modal__header">
+        <h2 class="slds-text-heading_medium slds-hyphenate">Create Interaction</h2>
+    </div>
+
+    <!-- SCROLLABLE BODY CONTENT CONTAINER -->
+    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+      <div class="slds-p-around_small" style="max-height: 500px !important;overflow:auto ">	
+			<!-- STEP A: Record Type Selection Block -->
+			<aura:if isTrue="{!v.showCreationSection == false}">
+				<div class="recordTypeStepLayout">
+					<div class="typeStepContainer">
+						<div class="typeStepPanel">
+							<div class="recordTypeLabelRow">
+								<span class="slds-form-element__label">Select a record type</span>
+							</div>
+							<div class="recordTypeOptionsRow slds-p-left_large">
+								<lightning:radioGroup name="radioGroupRequired" label="Select a record type"
+									variant="label-hidden" options="{! v.recordTypes }" value="{! v.value }" type="radio" class="recordTypeRadioGroup" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</aura:if>
+
+			<!-- STEP B: Form Generation Block -->
+			<aura:if isTrue="{!v.showCreationSection == true}">
+				<div>
+					<aura:if isTrue="{!v.errMsg != null }">
+						<div>
+							<div class="slds-notify_container slds-is-relative">
+								<div class="slds-notify slds-notify_toast slds-theme_error" role="status">
+									<lightning:icon iconName="utility:error" size="small" class="slds-m-right_small" variant="inverse" />
+									<div class="slds-notify__content">
+										<h2 class="slds-text-heading_small ">{!v.errMsg}</h2>
+									</div>
+								</div>
+							</div>
+						</div>
+					</aura:if>
+					
+					<lightning:recordEditForm aura:id="createInteraction" recordTypeId="{!v.value}" objectApiName="Interaction__c"
+						onsubmit="{!c.handleSubmit}" onsuccess="{!c.handleSuccess}" onerror="{!c.handleError}">
+						<lightning:messages />
+						
+						<div class="slds-text-body_regular slds-m-bottom_x-small">This function will add interactions for all Contacts on this List.</div>
+						
+						<div class="interactionFormContainer">
+							<lightning:layout multipleRows="true">
+								<aura:iteration items="{!v.interactionFields}" var="field">
+									<lightning:layoutItem padding="around-small" size="6">
+										<lightning:inputField fieldName="{!field.fieldPath}" required="{!field.required}" value="{!field.value}" />
+									</lightning:layoutItem>
+								</aura:iteration>
+							</lightning:layout>
+						</div>
+						
+						<!-- Hidden form button to invoke submit actions programmatically -->
+						<lightning:button aura:id="hiddenSubmitBtn" type="submit" class="slds-hide" />
+					</lightning:recordEditForm>
+				</div>
+			</aura:if>
+		</div>
+    </div>
+
+	<!-- FIXED STATIC FOOTER (Stays outside slds-modal__content to protect positions) -->
+	<div class="modal-footer slds-modal__footer">
+		<aura:if isTrue="{!v.showCreationSection == false}">
+			<lightning:button variant="neutral" label="Cancel" title="Cancel" class="slds-m-right_small" onclick="{! c.cancel }" />
+			<lightning:button variant="brand" label="Next" title="Next" onclick="{! c.handleCreate }" disabled="{!v.value == null || v.value == ''}" />
+		</aura:if>
+
+		<aura:if isTrue="{!v.showCreationSection == true}">
+			<lightning:button onclick="{!c.closeAction}" variant="neutral" label="Cancel" iconName="utility:close" class="slds-m-right_small" />
+			<lightning:button title="{!'It will auto create total '+v.memCount+' Interaction records, one each on all the Campaign Members'}"
+				onclick="{!c.triggerFormSubmit}" variant="brand" disabled="{!v.hideCreateButton}"
+				label="{! 'Create Interactions ('+v.memCount+')'}" iconName="utility:add" />
+		</aura:if>
+	</div>
+
+</aura:component>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Default</label>
+    <protected>false</protected>
+    <values>
+        <field>Default_Headers__c</field>
+        <value xsi:type="xsd:string">Contact_Name_Link__c,UB_FirstName__c,UB_LastName__c,Priority__c,Status__c,Type,UB_Notes__c</value>
+    </values>
+    <values>
+        <field>Export_Headers__c</field>
+        <value xsi:type="xsd:string">Contact_Name_Link__c,UB_FirstName__c,UB_LastName__c,Priority__c,Status__c,Type,UB_Notes__c</value>
+    </values>
+    <values>
+        <field>Highlight_Contacts_Updated_Hours__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Page_Size__c</field>
+        <value xsi:type="xsd:double">50.0</value>
+    </values>
+    <values>
+        <field>Record_Type__c</field>
+        <value xsi:type="xsd:string">Default</value>
+    </values>
+    <values>
+        <field>Update_Info_Fields__c</field>
+        <value xsi:type="xsd:string">EventTier__c,GuestOf__c</value>
+    </values>
+</CustomMetadata>

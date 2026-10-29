@@ -1,0 +1,4 @@
+.picklist button {
+    width: 100%;
+    color: var(--lwc-brandTextLinkActive, rgb(0, 95, 178));
+  }

@@ -1,0 +1,58 @@
+.list-container {
+    padding-top: 7em;
+    padding-left: 3em;
+    padding-right: 3em;
+    padding-bottom: 2em;
+    border-radius: 8px;
+    background-image: url('/resource/CityViewMapBackground');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #eef5f9;
+    backdrop-filter: blur(6px);
+    overflow-x: auto;
+    overflow-y: auto;
+    height: calc(93vh - 200px);
+}
+.header-title-section {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    position: relative;
+    transition: transform 220ms ease, box-shadow 220ms ease;
+    margin-bottom: 25px;
+    margin-top: -14px;
+    margin-left: 12px;
+    scale: 1.06;
+}
+.header-title-section:hover {
+    transform: scale(1.01);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.16);
+}
+.header-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 220ms ease;
+    color: #272727;
+}
+.header-title-section:hover .header-icon {
+    transform: rotate(-6deg) scale(1.07);
+}
+.header-title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #272727;
+    line-height: 1.2;
+}
+.header-globe {
+    --slds-c-icon-color-foreground-default: currentColor;
+    --slds-c-icon-color-foreground: currentColor;
+}

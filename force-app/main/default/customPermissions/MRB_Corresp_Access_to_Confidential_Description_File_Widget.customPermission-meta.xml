@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Related to the Interaction: MRB Corresp. Access to Confidential Description &amp; File Widget</description>
+    <isLicensed>false</isLicensed>
+    <label>MRB Corresp. Access to Confidential Description &amp; File Widget</label>
+</CustomPermission>

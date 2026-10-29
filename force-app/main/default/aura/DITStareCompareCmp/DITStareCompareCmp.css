@@ -1,0 +1,131 @@
+.THIS .fieldConflicts {
+  table-layout: fixed;
+  margin: 0;
+  padding: 0;
+}
+/* BRME-4435: the no-review MyTable gets a fixed pixel width from the ListWorker (sum of 16 column widths),
+   which is wider than the centered container and leaves white space on the right. Cap it to the container and let
+   columns share the width so the table hugs its content without a horizontal scrollbar for short lists. */
+.THIS #noReview {
+  width: 100%;
+}
+.THIS #noReview table {
+  width: 100% !important;
+  table-layout: auto;
+}
+.THIS #noReview table th,
+.THIS #noReview table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-right: 1px solid #d8dde6;
+}
+.THIS #noReview table th:first-child,
+.THIS #noReview table td:first-child {
+  width: 84px !important;
+  min-width: 84px !important;
+  max-width: 84px !important;
+  border-left: 1px solid #d8dde6;
+}
+.THIS th:first-child {
+  width: 19%;
+}
+.THIS thead th {
+  font-weight: normal;
+  padding-bottom: var(--lwc-spacingSmall, 0.75rem);
+}
+.THIS .recordLabel {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+.THIS .forceRecordsComparisonTemplate.fieldConflictItem {
+  padding: 0 var(--lwc-spacingLarge, 1.5rem);
+  border-bottom: var(--lwc-borderWidthThick, 2px) solid
+    var(--lwc-colorBorder, rgb(221, 219, 218));
+}
+.THIS .forceRecordsComparisonTemplate.fieldConflictItem .fieldLabel {
+  color: var(--lwc-colorTextLabel, rgb(62, 62, 60));
+  font-size: inherit;
+  font-weight: var(--lwc-fontWeightRegular, 400);
+  text-transform: uppercase;
+  padding: var(--lwc-spacingSmall, 0.75rem) 0 var(--lwc-spacingSmall, 0.75rem)
+    var(--lwc-spacingLarge, 1.5rem);
+}
+.THIS .forceRecordsComparisonTemplate.fieldConflictItem .fieldValue {
+  position: relative;
+  text-decoration: none;
+}
+.THIS
+  .forceRecordsComparisonTemplate.fieldConflictItem
+  .fieldValue
+  input[type="radio"] {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: var(--lwc-spacingSmall, 0.75rem);
+}
+.THIS .forceRecordsComparisonTemplate.fieldConflictItem .fieldValue .field {
+  display: block;
+  cursor: pointer;
+  padding: var(--lwc-spacingSmall, 0.75rem) 0 var(--lwc-spacingSmall, 0.75rem)
+    var(--lwc-spacingSmall, 0.75rem);
+  overflow: hidden;
+  border-radius: var(--lwc-borderRadiusMedium, 0.25rem);
+}
+.THIS
+  .forceRecordsComparisonTemplate.fieldConflictItem
+  .fieldValue
+  .fieldOption {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: var(--lwc-spacingLarge, 1.5rem);
+  color: var(--lwc-colorTextDefault, rgb(8, 7, 7));
+  margin-right: 2%;
+}
+.THIS
+  .forceRecordsComparisonTemplate.fieldConflictItem.disabled
+  .fieldValue
+  .fieldOption {
+  color: var(--lwc-colorTextInputDisabled, rgb(62, 62, 60));
+}
+.THIS
+  .forceRecordsComparisonTemplate.fieldConflictItem
+  .fieldValue
+  input[type="radio"]:checked
+  + .field {
+  background-color: var(--lwc-colorBackground, rgb(243, 242, 242));
+}
+.THIS
+  .forceRecordsComparisonTemplate.fieldConflictItem.disabled
+  .fieldValue
+  input[type="radio"]:disabled {
+  display: none;
+}
+.THIS
+  .forceRecordsComparisonTemplate.fieldConflictItem.disabled
+  .fieldValue
+  input[type="radio"]:checked
+  + .field {
+  background-color: inherit;
+}
+.THIS .forceRecordsComparisonTemplate .tooltipIcon {
+  position: relative;
+  left: var(--lwc-spacingXxxSmall, 0.125rem);
+  bottom: var(--lwc-spacingXxxSmall, 0.125rem);
+}
+
+.THIS .myDupeOptions {
+  width: 40%;
+}
+
+.THIS .createBtn {
+  float: right;
+}
+
+.THIS .myContactSelect {
+  padding-right: 2%;
+}

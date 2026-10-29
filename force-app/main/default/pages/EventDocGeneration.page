@@ -1,0 +1,128 @@
+<apex:page controller="EventDocGenerationCtrl" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" > 
+
+<apex:includeScript value="{!$Resource.JSWord+'/FileSaver.min.js'}"/> <!-- File Save JS Library to save the Content into Word -->
+<apex:includeScript value="{!$Resource.JSWord+'/index.js'}"/> <!-- Dox JS Library to generate Word content into Blob -->
+
+
+<script>
+    const doc = new docx.Document();
+    let events = {!events};
+    console.log(events);
+    let lastMeetingDate = '{!lastMeeting}';
+    let years = Object.keys(events);
+
+    let content = [];
+    years.forEach(item => {
+        let tmpEvents = events[item];
+
+        tmpEvents.sort((a, b) => {
+            if( a.event.Start_Date_Time__c === undefined ) {
+                        return 1;
+                    }
+                    if( b.event.Start_Date_Time__c === undefined) {
+                        return -1;
+                    }
+                    return a.event.Start_Date_Time__c > b.event.Start_Date_Time__c?1:a.event.Start_Date_Time__c<b.event.Start_Date_Time__c?-1:0;
+        });
+
+        content.push( new docx.Paragraph({children: [new docx.TextRun({ text: item + ' Events', underline: {}, })], 
+                                    bold:true,
+                                    alignment: docx.AlignmentType.CENTER,
+                                    underline: {},
+                                    spacing: {
+                                        after: 140,
+                                    }}));
+        tmpEvents.forEach(x => {
+            //Generate current date info
+            let today = new Date();
+                let dd = String(today.getDate()).padStart(2, '0');
+                let mm = today.toLocaleString('default', { month: 'long' });
+                let yyyy = today.getFullYear();
+
+                let  currentDate = mm + ' ' + dd + ', ' + yyyy;
+                let title = x.workDay+', ' + x.startDate+': ' + x.event.Name;
+                if( x.event.CreatedDate > lastMeetingDate && lastMeetingDate) {
+                    title = '**'+title+'**';
+                }
+                let location = '';
+                let locationInfo = [];
+                if( x.event.SetUpEventLocationType__c === 'Hybrid' || x.event.SetUpEventLocationType__c === 'InPlace' ) {
+                    
+
+                    if( x.event.LocationName__c ) {
+                        locationInfo.push(x.event.LocationName__c);
+                    } else {
+                        locationInfo.push('TBD');
+                    }
+
+                    if( x.event.LocationName__c && x.event.LocationName__c !== 'TBD' ) {
+                        if( x.event.LocationDetail__c ) {
+                            locationInfo.push(x.event.LocationDetail__c);
+                        } else {
+                            locationInfo.push('TBD');
+                        }
+                    }
+
+                    if( x.event.SetUpEventLocationType__c ) {
+                        let locationType = x.event.SetUpEventLocationType__c === 'InPlace'?'In-Person':x.event.SetUpEventLocationType__c;
+                        locationInfo.push(locationType);
+                    }
+                    location = locationInfo.join(', ');
+                } else if( x.event.SetUpEventLocationType__c === 'Virtual' ) {
+                    location = 'Zoom';
+                }
+
+                location = location?location:'TBD';
+                
+                let coordinateName = '';
+                let coordinatePhone = '';
+                
+                if( x.event.EventCoordinator__r ) {
+                    coordinateName = x.event.EventCoordinator__r.Name;
+                }
+
+
+            content.push(new docx.Paragraph({ text: title, bold:true,}));
+            content.push(new docx.Paragraph({text: "DESCRIPTION: "+ (x.event.Description === undefined?'':x.event.Description) ,
+                                            bullet: {
+                                                level: 0 //How deep you want the bullet to be
+                                            }}));
+            content.push(new docx.Paragraph({text: "GUESTS: " + (x.event.ExpectedAttendance__c === undefined?'0':x.event.ExpectedAttendance__c),
+                                            bullet: {
+                                                level: 0 //How deep you want the bullet to be
+                                            }}));
+            content.push(new docx.Paragraph({text: "TIME: " + x.startDateTime.split(', ')[1] + (x.endDateTime?' - ' + x.endDateTime.split(', ')[1]:''),
+                                            bullet: {
+                                                level: 0 //How deep you want the bullet to be
+                                            }}));
+            content.push(new docx.Paragraph({text: "SET UP: " + location,
+                                            bullet: {
+                                                level: 0 //How deep you want the bullet to be
+                                            }}));
+            content.push(new docx.Paragraph({text: x.event.HowMRBAttended__c?'MRB Attends: '+x.event.HowMRBAttended__c:'MRB Attends: TBD',
+                                            bullet: {
+                                                level: 0 //How deep you want the bullet to be
+                                            }}));
+            content.push(new docx.Paragraph({text: 'Coordinated by: ' + coordinateName + (x.contactPhone?', ' +x.contactPhone:''),
+                                            bullet: {
+                                                level: 0 //How deep you want the bullet to be
+                                            },
+                                            spacing: {
+                                                after: 140,
+                                            } }));
+            
+        });
+
+    });
+
+    //console.log(content);
+    doc.addSection({
+        children: content,
+    });
+
+    docx.Packer.toBlob(doc).then(blob => {
+      saveAs(blob, "Upcoming Events.docx");
+      window.open('', '_parent', '').close();
+    });
+</script>
+</apex:page>

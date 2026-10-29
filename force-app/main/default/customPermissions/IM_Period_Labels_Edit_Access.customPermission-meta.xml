@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>IM-265: Custom Permission used to control the ability to edit Budget Period Labels, used for IM Access Provision.</description>
+    <isLicensed>false</isLicensed>
+    <label>IM: Period Labels Edit Access</label>
+</CustomPermission>

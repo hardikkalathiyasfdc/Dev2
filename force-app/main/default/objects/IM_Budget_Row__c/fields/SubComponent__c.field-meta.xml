@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SubComponent__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>IM-45: SubComponent Specified in Budget Template for a row</description>
+    <label>SubComponent</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>IM_Component__c.Type__c</field>
+            <operation>equals</operation>
+            <value>SubComponent</value>
+        </filterItems>
+        <isOptional>true</isOptional>
+    </lookupFilter>
+    <referenceTo>IM_Component__c</referenceTo>
+    <relationshipLabel>Budget Rows (SubComponent)</relationshipLabel>
+    <relationshipName>Budget_Rows1</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

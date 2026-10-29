@@ -1,0 +1,156 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 02-07-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+	<section class="slds-modal slds-fade-in-open slds-modal_small slds-align_absolute-center">
+		<template if:true={showCreation}>
+			<c-org-creation oncancelation={handleCreationCancel} onsuccess={handleCreationSuccess}
+				title="Create New Organization"></c-org-creation>
+		</template>
+		<template if:true={showDuplicates}>
+			<c-view-duplicate-contacts oncancelation={handleShowDuplicatesCancel} onselection={handleContactSelection}
+				duplicate-record-ids={duplicateRecordIds} contact-records={duplicateRecords}
+				name={duplicateContactName}></c-view-duplicate-contacts>
+		</template>
+		<div class="slds-modal__container">
+			<header class="slds-modal__header">
+				<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Create New Contact</h2>
+			</header>
+			<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1"> <br><br>
+				<div class="c-container">
+					<lightning-layout multiple-rows="true">
+						<lightning-layout-item padding="around-small" size="12">
+							 <lightning-combobox  name="salutation" label="Salutation" value={selectedSalutation}
+                               placeholder="Select Salutation"  options={salutationOptions} onchange={handleSalutationChange}> </lightning-combobox>
+						</lightning-layout-item>
+						<lightning-layout-item padding="around-small" size="12">
+							<lightning-input type="text" label="First Name" value={contactRecord.FirstName} name="FirstName"
+								onchange={handleInputChange}></lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item padding="around-small" size="12">
+							<lightning-input type="text" label="Middle Name" value={contactRecord.MiddleName} name="MiddleName"
+								onchange={handleInputChange}></lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item padding="around-small" size="12">
+							<lightning-input type="text" label="Last Name" class="lastNameValidation"
+								value={contactRecord.LastName} onchange={handleInputChange} required="true" name="LastName"
+								></lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item padding="around-small" size="12">
+							<lightning-input type="text" label="Suffix" value={contactRecord.Suffix} name="Suffix"
+								onchange={handleInputChange}></lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item padding="around-small" size="12">
+							<lightning-input type="text" label="Preferred First Name" value={contactRecord.Preferred_First_Name__c} name="Preferred_First_Name__c"
+								onchange={handleInputChange}></lightning-input>
+						</lightning-layout-item>
+
+						<lightning-layout-item padding="around-small" size="12">
+							<lightning-input type="text" label="Title" value={contactRecord.Title} name="Title"
+								onchange={handleInputChange}></lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item padding="around-small" size="12">
+							<lightning-layout>
+								<lightning-layout-item size="11">
+									<c-custom-lookup-lwc field-label="Organization Name" child-object-api-name='Contact'
+										value={accountId} target-field-api-name='AccountId' required
+										onvalueselected={handleValueSelected}>
+									</c-custom-lookup-lwc>
+								</lightning-layout-item>
+								<lightning-layout-item size="1">
+									<div class="slds-m-top_medium">
+										<lightning-button-icon icon-name="utility:add" alternative-text="Add new Org"
+											class="slds-m-top_large" onclick={handleCreation}></lightning-button-icon>
+									</div>
+								</lightning-layout-item>
+							</lightning-layout>
+						</lightning-layout-item>
+
+						<lightning-layout-item padding="around-small" size="12">
+							<lightning-input type="email" label="Business Email" value={contactRecord.Email} name="Email"
+								onchange={handleInputChange}></lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item padding="around-small" size="12">
+							<lightning-input type="email"  label="Personal Email" value={contactRecord.Alternate_Email__c} name="Alternate_Email__c"
+								onchange={handleInputChange}></lightning-input>
+						</lightning-layout-item>
+
+						<lightning-layout-item padding="around-small" size="12">
+							<lightning-combobox name="mailingCountryCode" label="Business Country"
+								value={selectedCountryValue} options={countryOptions} onchange={handleCountryChange}>
+							</lightning-combobox>
+						</lightning-layout-item>
+						<lightning-layout-item padding="around-small" size="12">
+							<lightning-input type="text" label="Business City" value={contactRecord.MailingCity} name="MailingCity"
+								onchange={handleInputChange}></lightning-input>
+						</lightning-layout-item>
+						
+						<lightning-layout-item padding="around-small" size="12">
+							<lightning-combobox name="mailingStateCode" label="Business State/Province"
+								value={selectedStateValue} options={stateOptions} onchange={handleStatesChange}
+								disabled={isStatesDisabled}></lightning-combobox>
+						</lightning-layout-item>
+						<!--
+						<lightning-layout-item padding="around-small" size="12">
+							<lightning-input type="checkbox" required="true" label="Business City/State N/A"
+								name="input1" onchange={handleCityStateNAChange}></lightning-input>
+						</lightning-layout-item>
+						-->
+					</lightning-layout>
+					<div class="slds-align_absolute-center">
+						<template if:true={duplicateRecordFound}>
+							<div class="icon-container" onclick={togglePopover}>
+								<lightning-icon icon-name="utility:warning" alternative-text="Duplicate warning"
+									size="medium" class="warning-icon slds-icon-text-warning slds-p-right_medium">
+								</lightning-icon>
+								<template if:true={showPopover}>
+									<section aria-describedby="dialog-body-id-117" aria-labelledby="dialog-heading-id-2"
+										class="slds-popover slds-popover_warning slds-nubbin_bottom" role="dialog">
+										 <button 
+                                          class="slds-button slds-button_icon slds-button_icon-inverse slds-button_icon-small slds-float_right slds-popover__close"
+                                            title="Close dialog" 
+                                             onclick={togglePopover}>
+                                               <lightning-icon icon-name="utility:close" alternative-text="Close" onclick={togglePopover} class="slds-button_icon-small" size="small"></lightning-icon>
+                                              <span class="slds-assistive-text">Close dialog</span>
+                                        </button>
+
+										<header class="slds-popover__header">
+											<div class="slds-media slds-media_center slds-has-flexi-truncate ">
+												<div class="slds-media__figure">
+													<span class="slds-icon_container slds-icon-utility-warning">
+                                                   <lightning-icon icon-name="utility:warning" alternative-text="Warning" title="Warning"></lightning-icon>
+                                                    </span>
+												</div>
+												<div class="slds-media__body">
+													<h2 class="slds-truncate slds-text-heading_medium"
+														id="dialog-heading-id-2" title="Just a heads up…">Similar Records Exist</h2>
+												</div>
+											</div>
+										</header>
+										<div class="slds-popover__body slds-popover_warning__body"
+											id="dialog-body-id-117">
+											<p>This record looks like an existing record. Make sure to check any potential duplicate records before creating.</br>
+												<lightning-button variant="base" label="View Duplicates"
+													title="View Duplicates" onclick={handleViewDuplicates}
+													class="slds-m-left_x-small"> </lightning-button>
+											</p>
+										</div>
+									</section>
+								</template>
+							</div>
+						</template>
+						<lightning-button class="slds-m-top_small slds-m-right_small" variant="neutral" name="cancel"
+							label="Cancel" onclick={handleCancel}></lightning-button>
+						<lightning-button class="slds-m-top_small" variant="brand" name="create" label="Create"
+							onclick={handleCreate}></lightning-button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="slds-backdrop slds-backdrop_open"></div>
+</template>

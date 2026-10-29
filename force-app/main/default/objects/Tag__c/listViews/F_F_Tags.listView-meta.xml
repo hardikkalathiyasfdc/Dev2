@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>F_F_Tags</fullName>
+    <columns>NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>NAME</field>
+        <operation>startsWith</operation>
+        <value>F&amp;F</value>
+    </filters>
+    <label>F&amp;F Tags</label>
+    <sharedTo>
+        <group>Data_Team</group>
+        <group>Executive_Team</group>
+    </sharedTo>
+</ListView>

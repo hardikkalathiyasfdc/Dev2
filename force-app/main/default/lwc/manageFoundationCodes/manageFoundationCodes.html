@@ -1,0 +1,110 @@
+<template>
+
+    <template if:true={viewMode}>
+
+        <div class="view-panel slds-p-around_large">
+        <article class="slds-card lightning-card">
+            <div class="slds-card__header slds-theme_shade">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate slds-p-bottom_x-small">
+                    <div class="slds-media__figure">
+                        <lightning-icon icon-name="custom:custom43" size="small"></lightning-icon>
+                    </div>
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">{treeTitle}</h2>
+                    </div>
+                    <div class="slds-no-flex" lwc:if={hasManagePermission}>
+                        <lightning-button-group> 
+                            <lightning-button label="Add Child" onclick={handleCreateRecord}></lightning-button>
+                            <lightning-button label="Sync All to BGive" onclick={handleSyncAll}></lightning-button>
+                        </lightning-button-group>
+                       
+                    </div>
+                </header>
+            </div>
+            <div class="slds-p-left_x-large">
+                <lightning-tree items={codes} selected-item={selected} onselect={handleOnselect}></lightning-tree>
+            </div>
+        </article>
+
+
+        <article class="slds-p-around_small slds-card lightning-card" if:true={jobInstance}>
+            <div class="slds-card__header slds-theme_shade">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate slds-p-bottom_x-small">
+                   
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">Last Sync All Status</h2>
+                    </div>
+                   
+                </header>
+            </div>
+
+            <div lwc:if={hasManagePermission}>
+                <div style="display:flex;" class="slds-m-around_small">
+                    <div style="font-weight:bold;" class="slds-m-right_small"> Job Id : </div>
+                    <div > {jobInstance.Id} </div>
+                </div>
+                <div style="display:flex;" class="slds-m-around_small">
+                    <div style="font-weight:bold;" class="slds-m-right_small"> Status: </div>
+                    <div> {jobInstance.Status} </div>
+                </div>
+
+                <div style="display:flex;" class="slds-m-around_small">
+                    <div style="font-weight:bold;" class="slds-m-right_small"> Last Synced Date : </div>
+                    <div> <lightning-formatted-date-time value={jobInstance.CompletedDate} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                        minute="2-digit" time-zone-name="short"></lightning-formatted-date-time>  </div>
+                </div>
+
+            </div>
+
+            <div class="slds-p-around_medium">
+                <div style="font-weight:bold;" class="slds-m-right_small slds-m-bottom_small"> Progress: </div>
+                <lightning-progress-bar value={syncProgressValue} size="large"></lightning-progress-bar>
+            </div>
+        </article>
+        
+        </div>
+
+    </template>
+
+    <template if:false={viewMode}>
+        <lightning-quick-action-panel header={action}>
+        <!--<div class="edit-panel slds-m-around_small slds-p-around_large">-->
+        <div class="slds-m-around_small slds-p-around_large">
+            <div class="slds-m-bottom_large">
+                <label style="font-size:16px;"> {message}</label>
+            </div>
+            
+            <article class="slds-card slds-card_boundary lightning-card">
+                <div class="slds-card__header slds-grid slds-theme_shade">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate slds-p-bottom_x-small">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="custom:custom43" size="small"></lightning-icon>
+                        </div>
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title">{treeTitle}</h2>
+                        </div>
+                    </header>
+                </div>
+                <div class="slds-p-left_x-large">
+                    <lightning-tree items={codes} selected-item={selected} onselect={handleOnselect}></lightning-tree>
+                </div>
+            </article>
+            
+        </div>
+
+        <div slot="footer">
+            <lightning-button
+                variant="neutral"
+                label="Cancel" onclick={closeQuickAction}
+            ></lightning-button>
+            <lightning-button
+                variant="brand"
+                label="Save"
+                class="slds-m-left_x-small" onclick={handleSave}
+            ></lightning-button>
+        </div>
+        </lightning-quick-action-panel>
+
+    </template>
+
+</template>

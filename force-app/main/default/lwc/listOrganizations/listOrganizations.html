@@ -1,0 +1,52 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 04-18-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+	<article class="slds-card" >
+		<div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <lightning-icon icon-name="standard:campaign_members" alternative-text="Organizations List" size="small"></lightning-icon>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="List Members">
+                            <span>Organization Lists - Active ({numberOfListOrganization})</span>
+                        </a>
+                    </h2>
+                </div>
+                <template if:true={showButton}>
+                	<div class="slds-float_right">
+                        <lightning-button label={buttonLabel} onclick={showContent}></lightning-button>
+                    </div>
+                </template>
+            </header>
+        </div>
+        <template if:true={showAll}>
+        	<div>
+	            <div class="slds-card__body slds-scrollable--y">
+	                <ul>
+	                	<template for:each={listOrganizations} for:item="item">
+	                		<li key={item.Id}><lightning-formatted-url value={item.url} label={item.Name} class="cmLink"></lightning-formatted-url></li>
+	                	</template>
+	                </ul>
+	            </div>
+	        </div>
+        </template>
+        <template if:false={showAll}>
+            <div>
+                <div class="slds-card__body slds-scrollable--y">
+                    <ul>
+                        <template for:each={listOrganizations} for:item="item">
+	                		<li key={item.Id}><lightning-formatted-url value={item.url} label={item.Name} class="cmLink"></lightning-formatted-url></li>
+	                	</template>
+                    </ul>
+                </div>
+            </div>
+        </template>
+	</article>
+</template>

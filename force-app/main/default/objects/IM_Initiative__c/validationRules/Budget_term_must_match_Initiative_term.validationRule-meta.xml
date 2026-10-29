@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Budget_term_must_match_Initiative_term</fullName>
+    <active>false</active>
+    <description>The term from selected budget and Initiative term which is calculated based on start/end date should match.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.IM_Initiative_Validation__c &amp;&amp;
+Term__c != Current_Budget__r.Budget_Term_months__c</errorConditionFormula>
+    <errorMessage>Selected Budget Term and Initiative Term has to match.</errorMessage>
+</ValidationRule>

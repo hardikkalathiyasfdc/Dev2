@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Organization__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>IM-46: Lookup filter to check Bgive Id is present</description>
+    <label>Organization</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Budget Org</relationshipLabel>
+    <relationshipName>Budget_Org</relationshipName>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

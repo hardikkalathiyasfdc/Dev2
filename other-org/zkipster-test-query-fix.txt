@@ -1,0 +1,100 @@
+-- TEMP (local only, do not deploy): LP London Dear Line field mismatch across orgs
+--
+-- SITUATION (confirmed):
+--   dev2Current has  Contact.CorrespondenceDearLine__c   (no LP_London_Dear_Line__c)
+--   other org  has  Contact.LP_London_Dear_Line__c        (no CorrespondenceDearLine__c)
+--
+--   ZkipsterIntegration.cls lines 107 & 152 hardcode guest.Contact.CorrespondenceDearLine__c
+--   for the "LP London Dear Line" zkipster custom field -> that code CANNOT run in the other org.
+--   The failing test queries are a symptom; the class itself references a field that doesn't exist there.
+--
+-- PICK ONE OF THE TWO OPTIONS BELOW.
+
+==================================================================================
+-- OPTION A (recommended): align the orgs - deploy the missing field
+==================================================================================
+-- Deploy Contact.CorrespondenceDearLine__c to the other org (it exists in this repo:
+--   force-app/main/default/objects/Contact/fields/CorrespondenceDearLine__c.field-meta.xml
+--   ...verify that file exists; if the field only exists in the other org's metadata,
+--   retrieve it from dev2Current first).
+--
+--   sf project deploy start -o <other-org> --source-dir force-app/main/default/objects/Contact/fields/CorrespondenceDearLine__c.field-meta.xml
+--
+-- Then ONE field name works everywhere: keep CorrespondenceDearLine__c in both the
+-- ZkipsterIntegration payload AND the test queries. No code changes needed.
+-- Test queries keep: ... Contact.RestrictedSalutation__c, Contact.CorrespondenceDearLine__c, Contact.Account.Name, ...
+
+==================================================================================
+-- OPTION B: make the code read whichever field exists (dynamic, works in both orgs)
+==================================================================================
+-- 1) ZkipsterIntegration.cls - in BOTH createZkipsterGuest and updateZkipsterGuest,
+--    replace the LP London Dear Line payload line:
+--
+--    REPLACE:
+--    data +='{"field-name":"LP London Dear Line","value":"'+(guest.Contact.CorrespondenceDearLine__c == null?'':guest.Contact.CorrespondenceDearLine__c)+'"},';
+--
+--    WITH:
+--    String dearLine = '';
+--    Map<String, Object> contactPopulated = guest.Contact.getPopulatedFieldsAsMap();
+--    if (contactPopulated.containsKey('CorrespondenceDearLine__c') && guest.Contact.CorrespondenceDearLine__c != null) {
+--        dearLine = guest.Contact.CorrespondenceDearLine__c;
+--    } else if (contactPopulated.containsKey('LP_London_Dear_Line__c') && guest.Contact.get('LP_London_Dear_Line__c') != null) {
+--        dearLine = (String) guest.Contact.get('LP_London_Dear_Line__c');
+--    }
+--    data +='{"field-name":"LP London Dear Line","value":"'+dearLine+'"},';
+--
+--    (do this in both methods; the line appears twice - around lines 107 and 152)
+--
+-- 2) Test queries (testSyncToZkipsterFailureSetsFailed ~line 349,
+--    testSyncToZkipsterDedupLinksExistingGuest ~line 420):
+--    query NEITHER field statically; the code above falls back via getPopulatedFieldsAsMap().
+--    Use this query in both tests (no CorrespondenceDearLine__c, no LP_London_Dear_Line__c):
+--
+String query = 'SELECT Id, CreatedBy.Email, UB_FirstName__c, Table__c, Seat__c, Guest_Email__c, First_Preferred_First_Name__c, Last_Preferred_Last_Name__c, SpouseInvited__c, RSVPNotes__c, UB_LastName__c, Title, Dietary__c, Contact.Full_Name__c, Contact.FirstName, Contact.LastName, Contact.Salutation, Contact.RestrictedSalutation__c, Contact.Account.Name, EventEmail__c, RSVPStatus__c, ZkipsterGuestId__c, PartySize__c, Phone, Contact.Significant_Other__r.Full_Name__c, Campaign.ZkipsterGuestListId__c, Contact.Restricted__c, Contact.RestrictedFirstName__c, Contact.RestrictedLastName__c, Contact.Account.Restricted_Org_Name__c, Synced_With_Zkipster__c ' ;
+--
+--    NOTE: SyncGuestsToZkipster.start() also queries Contact.CorrespondenceDearLine__c
+--    (line 32) and EventMangementAuraCtrl.syncZkipsterGuests (line ~696) - those would
+--    ALSO need the dynamic treatment for Option B to fully work in the other org.
+
+==================================================================================
+-- RECOMMENDATION: Option A. Field-name divergence between orgs will keep biting -
+-- the same class cannot reference two different API names without dynamic code
+-- everywhere. Aligning the field is the one-time fix.
+==================================================================================
+
+
+##################################################################################
+## DEFINITIVE FIX for: SObjectException: Contact.LP_London_Dear_Line__c in the OTHER org
+## (testSyncToZkipsterDedupLinksExistingGuest, line 432 assert)
+##################################################################################
+--
+-- PROOF: In THIS workspace, nothing reads LP_London_Dear_Line__c:
+--   - ZkipsterIntegration.cls reads guest.Contact.CorrespondenceDearLine__c (lines 107/152)
+--   - SyncGuestsToZkipster.start() queries Contact.CorrespondenceDearLine__c (line 32)
+--   - grep for LP_London_Dear_Line__c in classes/ -> only matches inside test query strings
+--
+-- So the SObjectException in the other org comes from a STALE ZkipsterIntegration /
+-- SyncGuestsToZkipster deployed there that still references LP_London_Dear_Line__c.
+-- The test query alone cannot fix it - the classes under test must match this workspace.
+--
+-- FIX: deploy this workspace's versions to the other org, then re-run the test.
+--
+--   sf project deploy start -o <OTHER_ORG_ALIAS> \
+--     --source-dir force-app/main/default/classes/ZkipsterIntegration.cls \
+--     --source-dir force-app/main/default/classes/SyncGuestsToZkipster.cls \
+--     --source-dir force-app/main/default/classes/EventMangementAuraCtrl.cls \
+--     --source-dir force-app/main/default/classes/EventMangementAuraCtrl_Test.cls
+--
+--   sf apex run test --tests EventMangementAuraCtrl_Test.testSyncToZkipsterDedupLinksExistingGuest -o <OTHER_ORG_ALIAS> --wait 10
+--
+-- After the class deploy, the OTHER org's test query should use CorrespondenceDearLine__c
+-- (same as this workspace). The query line for testSyncToZkipsterDedupLinksExistingGuest:
+--
+String query = 'SELECT Id, CreatedBy.Email, UB_FirstName__c, Table__c, Seat__c, Guest_Email__c, First_Preferred_First_Name__c, Last_Preferred_Last_Name__c, SpouseInvited__c, RSVPNotes__c, UB_LastName__c, Title, Dietary__c, Contact.Full_Name__c, Contact.FirstName, Contact.LastName, Contact.Salutation, Contact.RestrictedSalutation__c, Contact.CorrespondenceDearLine__c, Contact.Account.Name, EventEmail__c, RSVPStatus__c, ZkipsterGuestId__c, PartySize__c, Phone, Contact.Significant_Other__r.Full_Name__c, Campaign.ZkipsterGuestListId__c, Contact.Restricted__c, Contact.RestrictedFirstName__c, Contact.RestrictedLastName__c, Contact.Account.Restricted_Org_Name__c, Synced_With_Zkipster__c ' ;
+--
+-- (i.e. NO LP_London_Dear_Line__c anywhere; CorrespondenceDearLine__c present.)
+--
+-- If the other org genuinely lacks CorrespondenceDearLine__c as a FIELD (not just the
+-- test), then the FIELD itself must be deployed to that org first (Option A above),
+-- because ZkipsterIntegration will fail to compile there without it.
+##################################################################################

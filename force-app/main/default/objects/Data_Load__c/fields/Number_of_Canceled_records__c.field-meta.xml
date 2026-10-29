@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Number_of_Canceled_records__c</fullName>
+    <label>Number of &apos;Canceled&apos; records</label>
+    <summaryFilterItems>
+        <field>Data_Load_Record__c.Status__c</field>
+        <operation>equals</operation>
+        <value>Canceled</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Data_Load_Record__c.Data_Load__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

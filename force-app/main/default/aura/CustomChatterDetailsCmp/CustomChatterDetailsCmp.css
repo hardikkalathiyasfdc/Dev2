@@ -1,0 +1,19 @@
+.THIS .myCard,
+.THIS.myCard {
+  min-height: 50px;
+  padding-left: 1%;
+  padding-right: 1%;
+}
+
+.THIS .contactList .slds-card__body,
+.THIS.contactList.slds-card__body{
+    width: 20%;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 2%;
+}
+
+.THIS .contactList,
+.THIS.contactList{
+    margin-top: 1%;
+}

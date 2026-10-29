@@ -1,0 +1,126 @@
+<apex:page controller="PhotoBookController" renderAs="pdf" readOnly="true" showHeader="false" sidebar="false" title="HR Photo Book" applyBodyTag="false">
+    <head>
+        <style>
+            @page {
+                size: A4 landscape;
+            }
+            body {
+                font-family: 'Arial Unicode MS';
+            }
+            table {
+                page-break-inside: auto;
+            }
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+                padding:5px 10px 10px 2px;
+                margin:5px 10px 10px 2px;
+            }
+            thead {
+                display: table-header-group;
+            }
+            tfoot {
+                display: table-footer-group;
+            }
+            .profilePicture {
+                float: left;
+                width: 100px;
+                height: 100px;
+                padding-right: 10px;
+            }
+            .containerPerson {
+                border: 2px solid #777777;
+                overflow: hidden;
+                margin: 2px 10px 10px 2px;
+                height: 2.10in;
+            }
+            .containerPersonTop {
+                height: 110px;
+                margin: 5px;
+            }
+            .containerField {
+                padding-bottom: 10px;
+                font-size: 85%;
+            }
+            .fieldLabel {
+                text-decoration: underline;
+            }
+            .name {
+                font-size: 120%;
+            }
+            .department {
+                font-size: 90%;
+                padding-bottom: 10px;
+            }
+            .column {
+                width: 2.75in;
+            }
+            .table {
+                table-layout: fixed;
+                width: 10.5in;
+            }
+            .cover {
+                position: relative;
+                width: 10in;
+                height: 7in;
+                color:white;
+                padding-left: 0.5in;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="cover" style="background-color: #{!criteria.coverColor}; page-break-after: always">
+            <div style="font-size: 400%;">{!criteria.title1}</div>
+            <div style="font-size: 400%;padding-bottom:100px;margin-top:-0.25in">{!criteria.title2}</div>
+            <div style="font-size: 1000%;border-top:5px solid white;width:7in">Welcome</div>
+            <div style="position: absolute;bottom:0px;right:0px;padding-bottom:0.25in;padding-right:0.25in">
+                &ldquo;People are our most important asset.&rdquo; &ndash; Mike Bloomberg
+            </div>
+        </div>
+        <div class="cover" style="background-color: #{!criteria.coverColor}">
+            <div style="margin-top:0.5in;margin-right:0.5in;border-top:5px solid white">
+                <div style="font-size: 300%;line-height:0.95em;width:5in;padding-bottom:1in">
+                    You can look up your colleagues&rsquo; contact information in the following ways:
+                </div>
+                <ul>
+                    <li>On your cell phone (Go to contacts <span style="font-size: 200%">&#8594;</span>
+                        Groups (upper left corner)
+                        <span style="font-size: 200%">&#8594;</span>
+                        Bloomberg.org Global Address list
+                    </li>
+                    <li>Outlook email search</li>
+                    <li>FON&lt;GO&gt; on the Bloomberg Terminal</li>
+                </ul>
+            </div>
+        </div>
+        <div style="position: relative; width: 10in; height: 7in;">
+            <table class="table">
+                <apex:repeat value="{!headerRows}" var="dept">
+                    <tr>
+                        <apex:repeat value="{!dept}" var="d">
+                            <td style="width: 33%; background-color: #{!d.color};">
+                                <apex:outputPanel rendered="{!d.rendered}" layout="none">
+                                    <span style="color: #FFFFFF;">
+                                        <apex:outputField value="{!d.c.Department__c}"/>
+                                    </span>
+                                </apex:outputPanel>
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                </apex:repeat>
+            </table>
+        </div>
+        <table styleClass="table">
+            <apex:repeat value="{!contactRows}" var="cRow">
+                <tr>
+                    <apex:repeat value="{!cRow}" var="person">
+                        <td>
+                            <c:PhotoBookContactCard contact="{!person.c}" color="{!person.color}"
+                                imageUrl="{!person.imageUrl}" show="{!person.rendered}" displayFields="{!person.displayFields}"/>
+                        </td>
+                    </apex:repeat>
+                </tr>
+            </apex:repeat>
+        </table>
+    </body>
+</apex:page>

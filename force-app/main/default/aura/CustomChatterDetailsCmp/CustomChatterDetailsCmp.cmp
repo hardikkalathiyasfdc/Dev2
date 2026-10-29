@@ -1,0 +1,85 @@
+<aura:component
+  implements="lightning:isUrlAddressable"
+  controller="CustomChatterFeedController"
+  access="global"
+>
+  <aura:attribute name="detailsId" type="String" />
+  <aura:attribute name="list" type="Map" default="{}" />
+  <aura:attribute name="contact" type="Map" default="{}" />
+  <aura:attribute name="isLoading" type="Boolean" default="true" />
+  <aura:attribute name="rowOffset" type="Integer" default="0" />
+  <aura:attribute name="curPage" type="Integer" default="0" />
+  <aura:attribute name="showNext" type="Boolean" default="false" />
+  <aura:attribute name="showPrev" type="Boolean" default="false" />
+  <ltng:require scripts="{!$Resource.cmputil}" afterScriptsLoaded="{!c.init}" />
+  <lightning:card class="myCard">
+    <aura:if isTrue="{!v.isLoading}">
+      <div style="height: 50px">
+        <lightning:spinner alternativeText="Loading" size="large" />
+      </div>
+    </aura:if>
+    <aura:set attribute="title">
+      <aura:if isTrue="{!not(empty(v.list))}">
+        <lightning:icon iconName="standard:campaign" size="small" />
+        &nbsp; {!v.list.name}
+      </aura:if>
+    </aura:set>
+    <aura:if isTrue="{!not(empty(v.contact))}">
+      <lightning:card class="contactList">
+        <aura:set attribute="title">
+          <lightning:icon iconName="standard:campaign" size="small" />
+          &nbsp; Lists that you follow that contain contact: {!v.contact.name}
+        </aura:set>
+        <lightning:datatable
+          keyField="feedId"
+          data="{! v.contact.lists.data }"
+          columns="{! v.contact.lists.columns }"
+                             columnWidthsMode="auto"
+                             showRowNumberColumn="true"
+          hideCheckboxColumn="true"
+        />
+      </lightning:card>
+      <lightning:card>
+        <aura:set attribute="title">
+          <lightning:icon iconName="standard:contact" size="small" />
+          &nbsp; Field changes for contact: {!v.contact.name}
+        </aura:set>
+        <lightning:datatable
+          keyField="feedId"
+          data="{! v.contact.data }"
+          columns="{! v.contact.columns }"
+          hideCheckboxColumn="true"
+          showRowNumberColumn="true"
+          rowNumberOffset="{!v.contact.offset}"
+        />
+      </lightning:card>
+    </aura:if>
+    <aura:if isTrue="{!not(empty(v.list))}">
+      <lightning:datatable
+        keyField="feedId"
+        data="{! v.list.data }"
+        columns="{! v.list.columns }"
+        hideCheckboxColumn="true"
+        showRowNumberColumn="true"
+        rowNumberOffset="{!v.list.offset}"
+      />
+    </aura:if>
+    <aura:set attribute="footer">
+      <aura:if isTrue="{!v.showPrev}">
+        <lightning:button
+          label="prev"
+          iconName="utility:left"
+          iconPosition="left"
+          onclick="{!c.prevPage}"
+        />
+      </aura:if>
+      <aura:if isTrue="{!v.showNext}">
+        <lightning:button
+          label="next"
+          iconName="utility:right"
+          onclick="{!c.nextPage}"
+        />
+      </aura:if>
+    </aura:set>
+  </lightning:card>
+</aura:component>

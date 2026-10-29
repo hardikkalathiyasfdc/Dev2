@@ -1,0 +1,22 @@
+.myBtn {
+	margin-left: 2%;
+}
+:host {
+	text-align: start;
+}
+.myHtml caption,
+.myHtml th,
+.myHtml td {
+	text-align: start;
+}
+.slds-rich-text-editor__textarea th,
+.slds-rich-text-editor__textarea td,
+.slds-rich-text-editor__output th,
+.slds-rich-text-editor__output td {
+	padding: 0 !important;
+	text-align: start !important;
+}
+.slds-rich-text-editor__textarea p,
+.slds-rich-text-editor__output p {
+	padding: 0 !important;
+}

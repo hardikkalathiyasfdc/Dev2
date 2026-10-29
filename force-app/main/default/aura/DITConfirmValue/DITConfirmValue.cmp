@@ -1,0 +1,7 @@
+<aura:component >
+      <aura:attribute name="row" type="String" default="" />
+  <aura:attribute name="col" type="String" default="" />
+    <aura:attribute name="colValue" type="String" default="" />
+	 <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    {!v.colValue}
+</aura:component>

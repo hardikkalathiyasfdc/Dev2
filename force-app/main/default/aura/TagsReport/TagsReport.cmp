@@ -1,0 +1,136 @@
+<aura:component
+  implements="lightning:isUrlAddressable,force:appHostable,flexipage:availableForAllPageTypes,force:lightningQuickAction"
+  controller="TagsReportController"
+  access="global"
+>
+  <aura:attribute name="tagResults" type="Map" default="{}" />
+  <aura:attribute name="contactOptions" type="List" default="[]" />
+  <aura:attribute name="contactFields" type="List" default="[]" />
+  <aura:attribute name="includeTags" type="List" default="[]" />
+  <aura:attribute name="excludeTags" type="List" default="[]" />
+  <aura:attribute name="rowOffset" type="Integer" default="0" />
+  <aura:attribute name="curPage" type="Integer" default="0" />
+  <aura:attribute name="search" type="String" default="" />
+  <aura:attribute name="whereClause" type="String" default="" />
+  <aura:attribute name="isLoading" type="Boolean" default="false" />
+  <aura:attribute name="showNext" type="Boolean" default="false" />
+  <aura:attribute name="showPrev" type="Boolean" default="false" />
+  <ltng:require scripts="{!$Resource.cmputil}" afterScriptsLoaded="{!c.init}" />
+  <aura:handler
+    name="oSelectedRecordEvent"
+    event="c:SelectedsObjectRecordEvent"
+    action="{!c.addTag}"
+  />
+  <lightning:card class="myCard">
+    <aura:if isTrue="{!v.isLoading}">
+      <div style="height: 50px">
+        <lightning:spinner alternativeText="Loading" size="large" />
+      </div>
+    </aura:if>
+    <aura:set attribute="title">
+      <lightning:icon iconName="standard:topic2" size="small" />
+      &nbsp; Tags Report
+    </aura:set>
+    <div class="slds-grid slds-grid_vertical">
+      <div class="slds-col">
+        <div class="slds-grid slds-gutters">
+          <div class="slds-col slds-size_1-of-4">
+            <c:CustomLookup
+              objectAPIName="tag__c"
+              label="Tags to include:"
+              whereClause="{!v.whereClause}"
+              IconName="standard:topic2"
+              enableEnter="true"
+              placeHolder="Tags to include"
+              cmpId="tagInclude"
+            />
+          </div>
+          <div class="slds-col slds-size_1-of-4">
+            <c:CustomLookup
+              objectAPIName="tag__c"
+              whereClause="{!v.whereClause}"
+              label="Tags to exclude:"
+              IconName="standard:topic2"
+              enableEnter="true"
+              placeHolder="Tags to exclude"
+              cmpId="tagExclude"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="slds-col">
+        <div class="slds-grid slds-gutters">
+          <div class="slds-col slds-size_1-of-4">
+            <aura:if isTrue="{!not(empty(v.includeTags))}">
+              <lightning:pillContainer
+                items="{!v.includeTags}"
+                onitemremove="{!c.removeIncludeTag}"
+              />
+            </aura:if>
+          </div>
+          <div class="slds-col slds-size_1-of-4">
+            <aura:if isTrue="{!not(empty(v.excludeTags))}">
+              <lightning:pillContainer
+                items="{!v.excludeTags}"
+                onitemremove="{!c.removeExcludeTag}"
+              />
+            </aura:if>
+          </div>
+        </div>
+      </div>
+      <div class="slds-col" style="margin-top: 1%">
+        <div class="slds-grid slds-gutters">
+          <div class="slds-col slds-size_1-of-2">
+            <lightning:dualListbox
+              name="multipleOptions"
+              label="Select Contact Fields"
+              sourceLabel="Available"
+              selectedLabel="Selected"
+              options="{!v.contactOptions}"
+              value="{!v.contactFields}"
+              onchange="{! c.loadData }"
+            />
+          </div>
+        </div>
+      </div>
+
+      <aura:if isTrue="{!not(empty(v.tagResults.columns))}">
+        <div class="slds-col" style="margin-top: 2%;">
+          <lightning:button
+            variant="brand"
+            label="Export"
+            title="Export"
+            class="exportBtn"
+            onclick="{! c.export }"
+          />
+        </div>
+        <div class="slds-col" style="margin-top: 1%;overflow-y: auto; max-height:500px;">
+          <lightning:datatable
+            keyField="id"
+            data="{! v.tagResults.data }"
+            columns="{! v.tagResults.columns }"
+            hideCheckboxColumn="true"
+            showRowNumberColumn="true"
+            rowNumberOffset="{!v.rowOffset}"
+          /></div
+      ></aura:if>
+    </div>
+    <aura:set attribute="footer">
+      <aura:if isTrue="{!v.showPrev}">
+        <lightning:button
+          label="prev"
+          iconName="utility:left"
+          iconPosition="left"
+          onclick="{!c.prevPage}"
+        />
+      </aura:if>
+      <aura:if isTrue="{!v.showNext}">
+        <lightning:button
+          label="next"
+          iconName="utility:right"
+          onclick="{!c.nextPage}"
+        />
+      </aura:if>
+    </aura:set>
+  </lightning:card>
+</aura:component>

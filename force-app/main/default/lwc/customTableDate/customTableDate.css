@@ -1,0 +1,11 @@
+.myText {
+  min-height: 15px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.myForm{
+    min-height: 100px;
+}

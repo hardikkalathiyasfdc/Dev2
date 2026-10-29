@@ -1,0 +1,15 @@
+lightning-button.Bbutton {
+	--slds-c-button-brand-color-background: black;
+    --slds-c-button-brand-text-color: white;
+    --slds-c-button-brand-color-background-hover : black;
+
+
+
+}
+
+lightning-button.BObutton{
+    --slds-c-button-outline-brand-color-border: black;
+    --slds-c-button-text-color: black;
+
+
+}

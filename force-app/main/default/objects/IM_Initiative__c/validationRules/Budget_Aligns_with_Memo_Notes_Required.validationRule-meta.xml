@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Budget_Aligns_with_Memo_Notes_Required</fullName>
+    <active>true</active>
+    <description>BRME-7039: Budget Aligns with Memo Notes is required when Budget Aligns with Memo = No.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.IM_Initiative_Validation__c &amp;&amp;
+TEXT(Budget_Aligns_with_Memo__c) = &quot;No&quot; &amp;&amp;
+ISBLANK(Budget_Aligns_with_Memo_Notes__c)</errorConditionFormula>
+    <errorDisplayField>Budget_Aligns_with_Memo_Notes__c</errorDisplayField>
+    <errorMessage>Budget Aligns with Memo Notes is required when Budget Aligns with Memo is &quot;No&quot;.</errorMessage>
+</ValidationRule>

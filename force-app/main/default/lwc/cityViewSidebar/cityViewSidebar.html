@@ -1,0 +1,14 @@
+<template>
+	<template lwc:if={isNotLoading}>
+		<template lwc:if={showSummary}>
+			<div class="lwc-wrapper">
+				<c-city-view-summary is-country-selected={isCountrySelected} is-state-selected={isStateSelected}
+					selected-map-marker={selectedMapMarker} office-icon-path={officeIconPath} style={summaryStyles}
+					show-detail-page={showDetailPage} shall-show-grants={shallShowGrants}
+					selected-group-by-for-state-on-country-level={selectedGroupByForStateOnCountryLevel} 
+					selected-group-by-for-city-on-country-level={selectedGroupByForCityOnCountryLevel}>
+				</c-city-view-summary>
+			</div>
+		</template>
+	</template>
+</template>

@@ -1,0 +1,48 @@
+.box {
+    border: 1px solid #98b8f6;
+    border-radius: 15px;
+    padding: 5px;
+    border-color: #ccdbf7;
+    box-shadow: inset -2px -3px 1px 0px #dae2ef;
+    box-shadow: 2px 3px 4px 0px #98b8f6;
+}
+.box > h3 {
+    height: 25px;
+    padding: 5px 10px 0;
+    text-align: center;
+    border-radius: 21px;
+    margin-bottom: 10px;
+}
+.table-border {
+    border-color: rgb(212, 239, 240) !important;
+    border-right: 1px solid rgb(212, 239, 240) !important;
+    border: 1px solid;
+}
+td {
+    white-space: normal;
+    word-wrap: break-word;
+}
+.mayor-row td {
+    border-top: 1px solid #d2eff0;
+    border-bottom: 1px solid #d2eff0;
+    vertical-align: top;
+    background-color: white;
+    font-size: inherit;
+}
+.mayor-row td:first-child {
+    border-left: 1px solid #d2eff0;
+}
+.mayor-row td:last-child {
+    border-right: 1px solid #d2eff0;
+}
+.mayor-name-cell {
+    word-break: break-word;
+    width: 100%;
+    font-family: Arial !important;
+}
+.mayor-years-cell {
+    white-space: nowrap;
+    text-align: right;
+    padding-left: 1rem;
+    font-family: Arial !important;
+}

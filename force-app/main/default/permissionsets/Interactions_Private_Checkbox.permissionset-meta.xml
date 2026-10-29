@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>BRME-5551 - Grants access to the &apos;Private&apos; checkbox field on Interaction object</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Interaction__c.Original_Subject__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Interaction__c.Private_Interaction__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Interaction: Private Checkbox</label>
+</PermissionSet>

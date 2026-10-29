@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Parent_Validation</fullName>
+    <active>true</active>
+    <description>BRME-5342</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Foundation_Code_Validation__c &amp;&amp; AND(UPPER( Foundation_Code__c ) != &apos;INITIATIVES&apos;, UPPER(Foundation_Code__c) != &apos;NON INITIATIVES&apos;, ISBLANK(Parent__c))</errorConditionFormula>
+    <errorMessage>Please set the parent for the Foundation Code.</errorMessage>
+</ValidationRule>

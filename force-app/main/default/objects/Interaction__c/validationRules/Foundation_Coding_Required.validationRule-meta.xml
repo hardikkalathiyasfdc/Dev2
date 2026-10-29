@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Foundation_Coding_Required</fullName>
+    <active>true</active>
+    <description>Foundation Coding is required when the &quot;Submit to City View&quot; is checked. BRME-5263</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Interaction_Validation__c &amp;&amp; (Add_to_CityView__c = true &amp;&amp; ISBLANK(Foundation_Coding__c))</errorConditionFormula>
+    <errorDisplayField>Foundation_Coding__c</errorDisplayField>
+    <errorMessage>Please select Foundation Coding when Submit to CityView is checked.</errorMessage>
+</ValidationRule>

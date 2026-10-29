@@ -1,0 +1,27 @@
+<template>
+
+	<template if:true={data}>
+		<lightning-card>
+			<table class="slds-m-around_small" style="width: 98%;">
+				<thead>
+					<tr style="border-bottom: 2px solid #000000;" >
+						<th class="head">Name</th>
+						<th class="head">Cell</th>
+						<th class="head">Email</th>
+						<th class="head">Office</th>
+					</tr>
+				</thead>
+				<tbody>
+					<template for:each={data} for:item="office">
+						<tr key={office.OfficeName__c}>
+							<td class="table-row">{office.OfficeName__c}</td>
+							<td class="table-row">{office.CellPhone__c}</td>
+							<td class="table-row">{office.Email__c}</td>
+							<td class="table-row">{office.OfficePhone__c}</td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+		</lightning-card>
+	</template>
+</template>

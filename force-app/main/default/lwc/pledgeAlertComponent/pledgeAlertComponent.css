@@ -1,0 +1,14 @@
+.color{
+	background-color : antiquewhite;
+	text-decoration-color: red;
+	height: 3rem;
+}
+.alertSection {
+	background: #f3ba15;
+	height: 4rem !important;
+}
+.alertLabel {
+	font-size: 1.5rem;
+    color: #ef3e3e;
+    font-weight: bold;
+}

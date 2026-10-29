@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>IM-487:Custom Permission to grant read access to Foundation Code fields.</description>
+    <isLicensed>false</isLicensed>
+    <label>Foundation Codes Tab Access (Read Only)</label>
+</CustomPermission>

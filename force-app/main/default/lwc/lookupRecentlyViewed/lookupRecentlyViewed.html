@@ -1,0 +1,27 @@
+<template>
+    <template lwc:if={isLoading}>
+        <div class="slds-align_absolute-center slds-p-around_medium">
+            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+        </div>
+    </template>
+    
+    <template lwc:if={hasRecords}>
+        <ul class="slds-listbox slds-listbox_vertical" role="listbox">
+            <template lwc:if={showHeader}>
+                <li role="presentation" class="slds-listbox__item">
+                    <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_center">
+                        <h3 class="slds-text-title_caps">Recently Viewed</h3>
+                    </div>
+                </li>
+            </template>
+            <template for:each={processedRecords} for:item="record">
+                <li key={record.Id} role="presentation" class="slds-listbox__item">
+                    <c-lookup-result-item record={record} display-fields={displayFields}
+                        display-field-prefixes={displayFieldPrefixes} icon={icon} is-selected={record.isSelected}
+                        onselect={handleRecordSelect}>
+                    </c-lookup-result-item>
+                </li>
+            </template>
+        </ul>
+    </template>
+</template>

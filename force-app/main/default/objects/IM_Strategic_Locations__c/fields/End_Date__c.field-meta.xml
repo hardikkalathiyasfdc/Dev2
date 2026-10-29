@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>End_Date__c</fullName>
+    <description>IM-426: Renders the end date for this record based on the initiative end date and end date override value.</description>
+    <formula>IF(ISBLANK(End_Date_Override__c),  Initiative__r.End_Date__c,  End_Date_Override__c)</formula>
+    <label>End Date</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

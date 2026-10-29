@@ -1,0 +1,10 @@
+.custom-card-header {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #d8dde6;
+  /* Optional: a subtle divider line */
+  margin-bottom: 1rem;
+  line-height: 0.7;
+}

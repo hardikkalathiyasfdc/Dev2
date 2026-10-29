@@ -1,0 +1,23 @@
+<template>
+    <lightning-quick-action-panel header="Request Revisions">
+        <div class="slds-var-p-around_medium">
+            <lightning-record-edit-form record-id={recordId} object-api-name="IM_Initiative__c"
+                onsuccess={handleSuccess} onerror={handleError}>
+                <lightning-input-field field-name="Revisions_Reason__c" required>
+                </lightning-input-field>
+                <!-- Hidden fields submitted with the form to perform the send-back (BRME-7045) -->
+                <lightning-input-field field-name="Status__c" value={inDevelopmentStatus} class="slds-hide">
+                </lightning-input-field>
+                <lightning-input-field field-name="Revisions_Needed__c" value={revisionsNeededYes} class="slds-hide">
+                </lightning-input-field>
+            </lightning-record-edit-form>
+        </div>
+        <div slot="footer" class="slds-align_absolute-center">
+            <lightning-button label="Cancel" onclick={handleCancel} disabled={isSaving} class="slds-m-right_small"></lightning-button>
+            <lightning-button variant="brand" label="Request Revisions" onclick={handleConfirm}
+                disabled={isSaving}>
+            </lightning-button>
+        </div>
+        <lightning-spinner if:true={isSaving} alternative-text="Saving" size="medium"></lightning-spinner>
+    </lightning-quick-action-panel>
+</template>

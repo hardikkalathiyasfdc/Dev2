@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Parent_Initiative__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>IM-77: Stores the Parent Initiative of a particular Initiative</description>
+    <label>Parent Initiative</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>IM_Initiative__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Parent Initiative</value>
+        </filterItems>
+        <isOptional>true</isOptional>
+    </lookupFilter>
+    <referenceTo>IM_Initiative__c</referenceTo>
+    <relationshipLabel>Initiatives (Parent Initiative)</relationshipLabel>
+    <relationshipName>Child_Initiatives</relationshipName>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

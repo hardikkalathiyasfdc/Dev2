@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enabled_For_Grants_Needs_BP_Active_Flag</fullName>
+    <active>true</active>
+    <description>&quot;Enabled for Grants&quot; checkbox can be checked only if &quot;BP Active&quot; checkbox is checked.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Geo_Area_Validation__c &amp;&amp;
+(AND(NOT(BP_Active__c), Enabled_For_Grants__c))</errorConditionFormula>
+    <errorDisplayField>Enabled_For_Grants__c</errorDisplayField>
+    <errorMessage>Enabled For Grants required BP Active to be set.</errorMessage>
+</ValidationRule>

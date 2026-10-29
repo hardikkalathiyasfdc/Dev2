@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Required_Approval_Docs__c</fullName>
+    <description>BRME-7039: Auto-check that Final Memo Link, Budget Narrative Link and Approval Email Link are all populated. Returns &quot;Yes&quot; only when all three document links are populated, otherwise &quot;No&quot;.</description>
+    <externalId>false</externalId>
+    <formula>IF(AND(NOT(ISBLANK(Final_Memo_Link__c)),
+       NOT(ISBLANK(Budget_Narrative_Link__c)),
+       NOT(ISBLANK(Approval_Email_Link__c))),
+   &quot;Yes&quot;, &quot;No&quot;)</formula>
+    <label>Required Approval Docs</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

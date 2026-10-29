@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Skip_Code_Category__c</fullName>
+    <description>IM-471: This field is used to store the Skip Code category</description>
+    <label>Skip Code Category</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1.Fatal</fullName>
+                <default>false</default>
+                <label>1.Fatal</label>
+            </value>
+            <value>
+                <fullName>2.Error</fullName>
+                <default>false</default>
+                <label>2.Error</label>
+            </value>
+            <value>
+                <fullName>3.Dependency</fullName>
+                <default>false</default>
+                <label>3.Dependency</label>
+            </value>
+            <value>
+                <fullName>4.Env Default</fullName>
+                <default>false</default>
+                <label>4.Env Default</label>
+            </value>
+            <value>
+                <fullName>8.Informational</fullName>
+                <default>false</default>
+                <label>8.Informational</label>
+            </value>
+            <value>
+                <fullName>9.Ignore</fullName>
+                <default>false</default>
+                <label>9.Ignore</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

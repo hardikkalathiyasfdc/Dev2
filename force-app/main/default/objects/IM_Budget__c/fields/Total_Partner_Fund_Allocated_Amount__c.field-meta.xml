@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Partner_Fund_Allocated_Amount__c</fullName>
+    <description>IM-197:Roll up of Partner Fund Allocated Amount from partner fund list</description>
+    <label>Total Partner Fund Allocated Amount</label>
+    <summarizedField>IM_Funding_Source__c.Allocated_Amount__c</summarizedField>
+    <summaryForeignKey>IM_Funding_Source__c.Budget__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

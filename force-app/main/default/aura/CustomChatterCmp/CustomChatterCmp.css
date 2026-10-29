@@ -1,0 +1,10 @@
+.THIS .slds-card__body,
+.THIS.slds-card__body {
+  min-height: 50px;
+  padding-left: 1%;
+  padding-right: 1%;
+}
+
+.THIS tr[aria-level="1"] th, .THIS tr[aria-level="1"] td{
+    border-top: 2px solid black;
+}

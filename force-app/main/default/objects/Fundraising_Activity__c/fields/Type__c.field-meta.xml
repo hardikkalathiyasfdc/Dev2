@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type__c</fullName>
+    <description>Capture the Fundraising Effort mode</description>
+    <label>Type</label>
+    <required>true</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>BP Outreach</fullName>
+                <default>false</default>
+                <label>BP Outreach</label>
+            </value>
+            <value>
+                <fullName>Breakfast</fullName>
+                <default>false</default>
+                <label>Breakfast</label>
+            </value>
+            <value>
+                <fullName>Call</fullName>
+                <default>false</default>
+                <label>Call</label>
+            </value>
+            <value>
+                <fullName>Coffee</fullName>
+                <default>false</default>
+                <label>Coffee</label>
+            </value>
+            <value>
+                <fullName>Dinner</fullName>
+                <default>false</default>
+                <label>Dinner</label>
+            </value>
+            <value>
+                <fullName>Email</fullName>
+                <default>false</default>
+                <label>Email</label>
+            </value>
+            <value>
+                <fullName>Event</fullName>
+                <default>false</default>
+                <label>Event</label>
+            </value>
+            <value>
+                <fullName>Event (Virtual)</fullName>
+                <default>false</default>
+                <label>Event (Virtual)</label>
+            </value>
+            <value>
+                <fullName>Event - Gala</fullName>
+                <default>false</default>
+                <label>Event - Gala</label>
+            </value>
+            <value>
+                <fullName>Event - Run/Walk</fullName>
+                <default>false</default>
+                <label>Event - Run/Walk</label>
+            </value>
+            <value>
+                <fullName>External</fullName>
+                <default>false</default>
+                <label>External</label>
+            </value>
+            <value>
+                <fullName>Letter</fullName>
+                <default>false</default>
+                <label>Letter</label>
+            </value>
+            <value>
+                <fullName>Lunch</fullName>
+                <default>false</default>
+                <label>Lunch</label>
+            </value>
+            <value>
+                <fullName>Meeting</fullName>
+                <default>false</default>
+                <label>Meeting</label>
+            </value>
+            <value>
+                <fullName>Meeting (Virtual)</fullName>
+                <default>false</default>
+                <label>Meeting (Virtual)</label>
+            </value>
+            <value>
+                <fullName>Text</fullName>
+                <default>false</default>
+                <label>Text</label>
+            </value>
+            <value>
+                <fullName>Tour</fullName>
+                <default>false</default>
+                <label>Tour</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Dinner - MRB Social</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Dinner - MRB Social</label>
+            </value>
+            <value>
+                <fullName>Gala</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Gala</label>
+            </value>
+            <value>
+                <fullName>InPerson</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>InPerson</label>
+            </value>
+            <value>
+                <fullName>Run/Walk</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Run/Walk</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

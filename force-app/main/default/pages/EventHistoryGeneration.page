@@ -1,0 +1,51 @@
+<apex:page controller="EventHistoryGenerationCtrl" renderAs="pdf" applyBodyTag="false" readOnly="true" showHeader="false" sidebar="false" title="Event History">
+	<head>
+        <style>
+            @page {
+                size: A4;
+            }
+            .itemHead {
+                border: 1px solid black; 
+                font-size: 20px;
+            }
+            div {
+            	font-family:  Calibri, sans-serif;
+            	font-size: 15px;
+            }
+        </style>
+    </head>
+    <div>
+    	<span>As of: {!currentDate}</span>
+    </div>
+    <div  align="center">
+        <span style="font-size: 21px;font-weight: bold;">{!fullName} - BRM Event History</span>
+    </div>
+    <div style="font-size: 18px;font-weight: bold;padding-top:30px; padding-bottom: 20px; border-bottom: 1px solid black;">
+		<div><span>Total RSVP Yes: {!totalYes}</span></div>
+		<div><span>Total Attended: {!totalAttended}</span></div>
+		<div><span>Total RSVP No: {!totalNo}</span></div>
+		<div><span>Total Did Not Attend: {!totalDidNotAttend}</span></div>
+    </div>
+	<apex:repeat value="{!events}" var="cm">
+		<div style="width: 100%;padding-top: 20px;">
+			<div class="slds-m-around_small">
+	        	<div>
+	        		<span style="font-size: 18px;font-weight: bold;">{!cm.eventName}</span>
+	        	</div>
+	        	<div>
+	        		<span>Event Date: <span>{!cm.startDate}</span></span>
+	        	</div>
+	        	<apex:outputPanel rendered="{!cm.rsvpAttendedStatus != ''}">
+		        	<div>
+		        		<span>{!cm.rsvpAttendedStatus}</span>
+		        	</div>
+		        </apex:outputPanel>
+	        	<apex:outputPanel rendered="{!cm.guestOfName != ''}">
+	            	<div>
+	            		<span>Guest Of: <span>{!cm.guestOfName}</span></span>
+	            	</div>
+	            </apex:outputPanel>
+	        </div>
+		</div>
+	</apex:repeat>
+</apex:page>

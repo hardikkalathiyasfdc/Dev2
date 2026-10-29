@@ -1,0 +1,196 @@
+<!--
+@description       :
+@author            : Gauri S
+@group             :
+@last modified on  : 07-29-2025
+@last modified by  : Sai Bhargav Thotakura
+-->
+<template>
+	<template if:true={showSpinner}>
+		<lightning-spinner class="slds-is-fixed" alternative-text="Loading" size="large"></lightning-spinner>
+	</template>
+	<div class="slds-is-relative">
+		<template if:true={isDataReceived}>
+			<template lwc:if={isBudgetGrantHeader}>
+				<div class="slds-m-bottom_small">
+					<lightning-card>
+						<template if:true={isRefresh}>
+							<div slot="actions" class="slds-m-top_small">
+								<lightning-button-icon icon-name="utility:refresh" title="Refresh"
+									onclick={handleRefresh}></lightning-button-icon>
+							</div>
+						</template>
+						<h2 slot="title">
+							<lightning-icon icon-name="custom:custom17" size="medium"></lightning-icon>
+							<span class="slds-text-heading_medium slds-m-left_small">Grant</span>
+						</h2>
+						<div class="slds-m-left_small">
+							<lightning-formatted-url value={initiativeURL} label={budgetGrant.Budget__r.Initiative__r.Name}> </lightning-formatted-url>
+							<span>: </span>
+							<lightning-formatted-url value={budgetGrantURL} label={budgetGrantLabel}> </lightning-formatted-url>
+						</div>
+					</lightning-card>
+				</div>
+			</template>
+			<template lwc:elseif={isNonBudgetGrantHeader}>
+				<div class="slds-m-bottom_small">
+					<lightning-card>
+						<h2 slot="title">
+							<lightning-icon icon-name="custom:custom17" size="medium"></lightning-icon>
+							<span class="slds-text-heading_medium slds-m-left_small">Grant</span>
+						</h2>
+						<div class="slds-m-left_small">
+							<lightning-formatted-url value={initiativeURL}
+								label={nonBudgetGrant.Initiative__r.Name}> </lightning-formatted-url>
+							<span>: </span>
+							<lightning-formatted-url value={nonBudgetGrantURL} label={nonBudgetGrantLabel}>
+							</lightning-formatted-url>
+						</div>
+					</lightning-card>
+				</div>
+			</template>
+			<template lwc:else>
+				<div class="slds-m-bottom_small">
+					<lightning-card>
+						<h2 slot="title">
+							<lightning-icon icon-name="custom:custom17" size="medium"></lightning-icon>
+							<span class="slds-text-heading_medium slds-m-left_small">Grant</span>
+						</h2>
+						<div class="slds-m-left_small">
+							<lightning-formatted-url value={partnerOrgURL} label={imGrant.Partner_Org__r.Name}> </lightning-formatted-url>
+							<span
+								>{imGrantHeader1}
+								<lightning-formatted-date-time year="numeric" month="numeric" day="numeric" value={imGrant.Start_Date__c}>
+								</lightning-formatted-date-time>
+								<span> - </span>
+								<lightning-formatted-date-time year="numeric" month="numeric" day="numeric" value={imGrant.End_Date__c}>
+								</lightning-formatted-date-time>
+								{imGrantHeader2}
+							</span>
+						</div>
+					</lightning-card>
+				</div>
+			</template>
+
+			<template if:true={isError}>
+				<lightning-modal-header>
+					<template for:each={errorMessages} for:item="message">
+						<div key={message}>
+							<div class="slds-m-bottom_xx-small slds-error">{message}</div>
+						</div>
+					</template>
+				</lightning-modal-header>
+			</template>
+			<lightning-modal-body>
+				<div class="custom-modal-height">
+					<div class="slds-section slds-is-open slds-m-bottom_large">
+						<template if:true={isDataReceived}>
+							<c-im-budget-grant-details is-partner-org-not-blinked={isPartnerOrgNotBlinked}
+								is-budget-grant-view={isBudgetGrantView} is-non-budget-grant-view={isNonBudgetGrantView}
+								im-grant={imGrant} budget-grant={budgetGrant} non-budget-grant={nonBudgetGrant}
+								is-single-before-creation={isSingleBeforeCreation} is-not-in-bgive={isNotInBgive}
+								is-bgive-managed={isBgiveManaged}
+								is-bgive-managed-after-creation={isBgiveManagedAfterCreation}
+								is-fund={isFund}
+								fetched-grant-request={selectedGrantRequest}
+								input-amount-attributes={inputAmountAttributes} is-read-only={isPaymentScheduled}
+								oncurrencychange={handleCurrencyChange} onlocalamountchange={handleLocalAmountChange}
+								onsynctypechange={handleBgiveIMConnectionChange}
+								onallocationtypechange={handleFundedByMultipleChange}
+								onstartdatechange={handleStartDateChange}
+								onenddatechange={handleEndDateChange}
+								onfundchange={handleFundChange}>
+							</c-im-budget-grant-details>
+						</template>
+					</div>
+
+					<!-- if grant type - Single Allocation Request -->
+					<template if:true={isSingleBeforeCreation}>
+						<c-im-grant-details
+							budget-grant={budgetGrant}
+							im-grant={imGrant}
+							fiscal-sponsor={fiscalSponsorOrgName}
+							is-fiscal-sponsor-not-blinked={isFiscalSponsorNotBlinked}
+							is-single-before-creation={isSingleBeforeCreation} json-data={dataJSON}
+							start-date={startDate} picklist-values={picklistValues} is-read-only={isPaymentScheduled}
+							onfundchange={handleFundChange} onprogramcontactchange={handleProgramContactChange}
+							ongrantcontactchange={handleGrantContactChange}>
+						</c-im-grant-details>
+						<template lwc:if={isPaymentScheduled}>
+							<c-im-payment-scheduler budget-grant={budgetGrant} start-date={startDate} end-date={endDate}
+								fund-record-id={selectedFund} type-of-support={dataJSON.IM_Grant__c.type_of_support}
+							is-this-payment-restricted={dataJSON.IM_Grant__c.is_this_grant_restricted}
+								is-usd-currency={isUsdCurrency} input-amount-attributes={inputAmountAttributes}
+								show-personal-subfund={showPersonalSubfund} has-payment-reset={hasPaymentReset}
+								onresetpayments={handleResetPayments}>
+						</c-im-payment-scheduler>
+					</template>
+						<template lwc:else>
+							<div class="slds-m-top_medium">
+								<lightning-card>
+									<div class="slds-m-bottom_medium slds-grid">
+										<div class="slds-col slds-size_2-of-12">
+											<lightning-button variant="brand" label="Schedule Payments"
+												title="Schedule Payments" onclick={handleSchedulePayment}
+												class="slds-m-left_x-small">
+											</lightning-button>
+										</div>
+										<div class="slds-col slds-size_10-of-12 slds-m-top_x-small">
+											<template if:true={isError}>
+												<div class="slds-m-bottom_xx-small slds-error">
+													<p>Please fix above errors before scheduling payments</p>
+												</div>
+											</template>
+										</div>
+									</div>
+								</lightning-card>
+							</div>
+						</template>
+					</template>
+					<template if:true={isDataReceived}>
+						<template if:true={isBgiveGrantDetails}>
+							<c-im-bgive-grant-details
+								is-budget-grant-view={isBudgetGrantView}
+								budget-grant={budgetGrant}
+								im-grant={imGrant}
+								is-single-before-creation={isSingleBeforeCreation}
+								is-single-after-creation={isSingleAfterCreation}
+								is-partial-before-creation={isPartialBeforeCreation}
+								is-bgive-managed={isBgiveManaged}
+								is-bgive-managed-after-creation={isBgiveManagedAfterCreation}
+								is-usd-currency={isUsdCurrency}
+								selected-local-amount={selectedLocalAmount}
+								selected-bgive-i-m-connection={selectedBgiveIMConnection}
+								selected-currency={selectedCurrency} is-marked-for-partial={isMarkedForPartial}
+								is-future-amount={isFutureAmount} bgive-base-url={bgiveBaseUrl} ongrantrequestchange={handleGrantRequestChange}>
+							</c-im-bgive-grant-details>
+						</template>
+						<template if:true={isParticipatingList}>
+							<c-im-budget-grant-list im-grant={imGrant}> </c-im-budget-grant-list>
+						</template>
+					</template>
+				</div>
+			</lightning-modal-body>
+			<lightning-modal-footer>
+				<lightning-button class="slds-m-right_medium slds-m-top_medium" label="Back" onclick={handleBack} variant="brand"> </lightning-button>
+				<template if:true={isBudgetGrantView}>
+					<template if:true={isChangePartner}>
+						<lightning-button class="slds-m-right_medium slds-m-top_medium" label="Update Partner"
+							onclick={handlePartnerChange} variant="brand"> </lightning-button>
+					</template>
+					<template if:true={isUnlink}>
+						<lightning-button class="slds-m-right_medium slds-m-top_medium" label="Unlink"
+							onclick={handleUnlink} variant="brand"> </lightning-button>
+					</template>
+					<template if:true={isSave}>
+						<lightning-button class="slds-m-right_medium slds-m-top_medium" label="Save" onclick={handleSave} variant="brand"> </lightning-button>
+					</template>
+					<template if:true={isPushToBgive}>
+						<lightning-button class="slds-m-top_medium" label={pushButtonLabel} onclick={handlePushToBgive}
+							variant="brand" disabled={isPushDisabled}> </lightning-button>
+					</template>
+				</template>
+			</lightning-modal-footer>
+		</template>
+	</div>
+</template>

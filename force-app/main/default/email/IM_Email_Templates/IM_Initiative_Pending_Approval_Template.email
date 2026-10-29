@@ -1,0 +1,7 @@
+{!IM_Budget__c.LastModifiedBy} has moved a budget for <a href={!IM_Initiative__c.Link} target="_blank" rel="noopener noreferrer">{!IM_Initiative__c.Name}</a> to "Pending Approval". 
+<br />
+When it is time, please proceed to BIM to record the approval for <a href={!IM_Initiative__c.Link} target="_blank" rel="noopener noreferrer">{!IM_Initiative__c.Name}</a>.
+<br />
+<br />
+Regards, <br />
+BIM System

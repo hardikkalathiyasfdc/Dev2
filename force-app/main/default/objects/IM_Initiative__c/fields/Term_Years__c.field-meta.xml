@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Term_Years__c</fullName>
+    <description>IM-86: If the number of months is not a multiple of 12, the # of years for that initiative budget will be rounded UP</description>
+    <externalId>false</externalId>
+    <formula>IF(ISBLANK(Term__c), 
+      null, 
+      CEILING((Term__c*2/12)) / 2
+)</formula>
+    <label>Term (years)</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

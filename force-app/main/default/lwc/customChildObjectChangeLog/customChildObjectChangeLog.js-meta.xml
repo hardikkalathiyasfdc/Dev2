@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Child Object History Table</masterLabel>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage,lightning__AppPage,lightning__HomePage">
+            <property name="tableName" type="String" label="Object/Table Name"/>
+            <property name="sobjectApiName" type="String" label="Object API Name"/>
+            <property name="fieldsToFetch" type="String" label="List of Fields on Child Object (comma separated and no space)"/>
+            <property name="nameField" type="String" label="Name Field for URL"/>
+            <property name="columnsConfig" type="String" label="Columns Config (JSON)"/>
+            <property name="permissionSet" type="String" label="Permission Set for visibility"/>
+            <property name="checkForRecordAccess" type="Boolean" label="Check for Record Access"/>
+            <supportedFormFactors>
+                <supportedFormFactor type="Small"/>
+                <supportedFormFactor type="Large"/>
+            </supportedFormFactors>
+        </targetConfig>     
+    </targetConfigs>
+</LightningComponentBundle>

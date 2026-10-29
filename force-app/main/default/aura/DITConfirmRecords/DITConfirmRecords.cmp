@@ -1,0 +1,211 @@
+<aura:component controller="DITCmpController">
+  <aura:attribute name="selectedContact" type="Map" default="{}" />
+  <aura:attribute
+    name="contactFields"
+    type="List"
+    default="['FirstName_LastName__c']"
+  />
+  <aura:attribute
+    name="accountFields"
+    type="List"
+    default="['Converted_Org_Name__c']"
+  />
+  <aura:attribute name="contactList" type="List" default="[]" />
+  <aura:attribute name="isDataLoaded" type="Boolean" default="false" />
+  <aura:attribute name="isLoading" type="Boolean" default="false" />
+  <aura:attribute name="showDuplicatesModal" type="Boolean" default="false" />
+  <aura:attribute name="renderTable" type="Boolean" default="false" />
+  <aura:attribute name="confirmNumber" type="Integer" default="0" />
+  <aura:attribute name="totalRecordCount" type="Integer" default="0" />
+  <aura:attribute name="dataLoaderId" type="String" default="" />
+  <aura:attribute name="rawResult" type="Map" default="{}" />
+  <aura:attribute name="dupesData" type="List" default="[]" />
+  <aura:attribute name="columns" type="List" default="[]" />
+  <aura:attribute name="unconfirmedRecords" type="List" default="[]" />
+  <aura:attribute name="disabledNext" type="Boolean" default="false" />
+  <aura:attribute name="isStageChange" type="Boolean" default="false" />
+  <ltng:require scripts="{!$Resource.cmputil}" afterScriptsLoaded="{!c.init}" />
+  <aura:if isTrue="{!v.isLoading}">
+    <lightning:spinner alternativeText="Loading" size="medium" />
+  </aura:if>
+
+  <div class="slds-p-around_small">
+    <aura:if isTrue="{!v.unconfirmedRecords.length>0}">
+      <aura:set attribute="else">
+        <center>
+          <div class="slds-text-color_success">
+            <h1>No validation errors, please click on Next button</h1>
+          </div>
+        </center>
+      </aura:set>
+      <div class="tableFixHead">
+        <table
+          class="slds-table slds-table_bordered slds-table_col-bordered tablec"
+          aria-label="Example table of Opportunities with vertical borders"
+        >
+          <thead>
+            <tr class="slds-line-height_reset">
+              <aura:iteration items="{!v.columns}" var="col">
+                <th class="thc" scope="col">
+                  <div class="slds-truncate" title="{!col.label}">
+                    {!col.label}
+                  </div>
+                </th>
+              </aura:iteration>
+            </tr>
+          </thead>
+          <tbody>
+            <aura:if isTrue="{!v.isDataLoaded}">
+              <aura:iteration
+                items="{!v.unconfirmedRecords}"
+                var="dlRecord"
+                indexVar="conIdx"
+              >
+                <tr class="slds-hint-parent">
+                  <aura:iteration items="{!v.columns}" var="col">
+                    <aura:if
+                      isTrue="{!AND(AND(col.api != 'Organization_Name__c',col.api != 'Significant_Other__c'),col.api != 'Assistant_Name__c')}"
+                    >
+                      <td scope="row" style="min-width: 250px">
+                        <div class="slds-truncate" title="Cloudhub">
+                          <aura:if isTrue="{!col.api == 'UUID__c'}">
+                            <lightning:input
+                              aura:id="inputUpdate"
+                              name="{!dlRecord.Id}"
+                              value="{!dlRecord.UUID__c}"
+                              onblur="{!c.handleInputChange}"
+                              variant="label-hidden"
+                            />
+                            <aura:set attribute="else">
+                              <c:DITConfirmValue
+                                row="{!dlRecord}"
+                                col="{!col.api}"
+                              ></c:DITConfirmValue>
+                            </aura:set>
+                          </aura:if>
+                          <aura:if
+                            isTrue="{!and(dlRecord.isError,col.api == 'UUID__c')}"
+                          >
+                            <div class="slds-m-top_xx-small">
+                              <div
+                                class="slds-theme_error slds-p-around_xx-small"
+                              >
+                                <label class="slds-truncate"
+                                  >{!dlRecord.errorMsg}</label
+                                >
+                              </div>
+                            </div>
+                          </aura:if>
+                        </div>
+                      </td>
+                    </aura:if>
+                    <aura:if isTrue="{!col.api == 'Organization_Name__c'}">
+                      <td data-label="Organization" style="min-width: 250px">
+                        <div class="slds-truncate" title="Organization">
+                          <c:reusableLookup
+                            isError="{!dlRecord.orgError}"
+                            loaderId="{!v.dataLoaderId}"
+                            selectedIconName="standard:account"
+                            objectLabel="Account"
+                            label="Organization"
+                            dlRecordId="{!dlRecord.Id}"
+                            selectedRecordId="{!dlRecord.Organization_Id__c}"
+                            objectApiName="Account"
+                            fieldApiName="{!accountFields}"
+                            searchString="{!dlRecord.Organization_Name__c}"
+                            otherFieldApiName="Industry"
+                            fieldChanged="Organization_Name__c"
+                            onvalueselect="{!c.handleValueSelected}"
+                            oncandidateschecked="{!c.handleCandidatesChecked}"
+                          >
+                          </c:reusableLookup>
+                          <aura:if isTrue="{!dlRecord.orgError}">
+                            <div class="slds-m-top_xx-small">
+                              <div
+                                class="slds-theme_error slds-p-around_xx-small"
+                              >
+                                <label class="slds-truncate"
+                                  >{!dlRecord.orgErrorMsg}</label
+                                >
+                              </div>
+                            </div>
+                          </aura:if>
+                        </div>
+                      </td>
+                    </aura:if>
+                    <aura:if isTrue="{!col.api == 'Significant_Other__c'}">
+                      <td data-label="Significant" style="min-width: 250px">
+                        <div class="slds-truncate" title="Significant">
+                          <c:reusableLookup
+                            isError="{!dlRecord.signError}"
+                            loaderId="{!v.dataLoaderId}"
+                            selectedIconName="standard:contact"
+                            objectLabel="Contact"
+                            label="Significant Other"
+                            dlRecordId="{!dlRecord.Id}"
+                            selectedRecordId="{!dlRecord.Significant_Other_Link__c}"
+                            objectApiName="contact"
+                            fieldApiName="{!contactFields}"
+                            searchString="{!dlRecord.Significant_Other__c}"
+                            otherFieldApiName="Email"
+                            fieldChanged="Significant_Other__c"
+                            onvalueselect="{!c.handleValueSelected}"
+                          >
+                          </c:reusableLookup>
+                          <aura:if isTrue="{!dlRecord.signError}">
+                            <div class="slds-m-top_xx-small">
+                              <div
+                                class="slds-theme_error slds-p-around_xx-small"
+                              >
+                                <label class="slds-truncate"
+                                  >{!dlRecord.signErrorMsg}</label
+                                >
+                              </div>
+                            </div>
+                          </aura:if>
+                        </div>
+                      </td>
+                    </aura:if>
+                    <aura:if isTrue="{!col.api == 'Assistant_Name__c'}">
+                      <td data-label="Staff" style="min-width: 250px">
+                        <div class="slds-truncate" title="Staff">
+                          <c:reusableLookup
+                            isError="{!dlRecord.assistantError}"
+                            loaderId="{!v.dataLoaderId}"
+                            selectedIconName="standard:contact"
+                            objectLabel="Contact"
+                            label="Staff"
+                            dlRecordId="{!dlRecord.Id}"
+                            selectedRecordId="{!dlRecord.Assistant__c}"
+                            objectApiName="Contact"
+                            fieldApiName="{!contactFields}"
+                            searchString="{!dlRecord.Assistant_Name__c}"
+                            otherFieldApiName="Email"
+                            fieldChanged="Assistant_Name__c"
+                            onvalueselect="{!c.handleValueSelected}"
+                          >
+                          </c:reusableLookup>
+                          <aura:if isTrue="{!dlRecord.assistantError}">
+                            <div class="slds-m-top_xx-small">
+                              <div
+                                class="slds-theme_error slds-p-around_xx-small"
+                              >
+                                <label class="slds-truncate"
+                                  >{!dlRecord.assistantErrorMsg}</label
+                                >
+                              </div>
+                            </div>
+                          </aura:if>
+                        </div>
+                      </td>
+                    </aura:if>
+                  </aura:iteration>
+                </tr>
+              </aura:iteration>
+            </aura:if>
+          </tbody>
+        </table>
+      </div>
+    </aura:if>
+  </div>
+</aura:component>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Partner_Fund__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>IM-112:Related Partner Fund record.</description>
+    <label>Funding Partner</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>$Source.Budget__c</field>
+            <operation>equals</operation>
+            <valueField>IM_Funding_Source__c.Budget__c</valueField>
+        </filterItems>
+        <isOptional>true</isOptional>
+    </lookupFilter>
+    <referenceTo>IM_Funding_Source__c</referenceTo>
+    <relationshipLabel>Budget Rows</relationshipLabel>
+    <relationshipName>Budget_Rows</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

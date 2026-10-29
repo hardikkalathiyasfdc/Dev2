@@ -1,0 +1,35 @@
+/* sharedStyles.css */
+.lwc-wrapper h3 {
+  background: #34626b !important;
+  height: 25px;
+  padding: 5px 10px 0;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 21px;
+  font-family: Arial !important;
+  color: white;
+  margin-bottom: 10px;
+  vertical-align: middle;
+}
+
+.lwc-wrapper div {
+  font-family: Arial !important;
+}
+
+/* sharedStyles.css */
+.mobile-view h3 {
+  background: #34626b !important;
+  height: 25px;
+  padding: 3px 10px 5px 10px !important;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 21px;
+  font-family: Arial !important;
+  color: white;
+  margin-bottom: 10px;
+  vertical-align: middle;
+}
+
+.mobile-view div {
+  font-family: Arial !important;
+}

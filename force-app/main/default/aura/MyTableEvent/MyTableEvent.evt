@@ -1,0 +1,8 @@
+<aura:event type="COMPONENT">
+    <aura:attribute name="tableId" type="String"/>
+    <aura:attribute name="row" type="Integer"/>
+    <aura:attribute name="cell" type="Integer"/>
+    <aura:attribute name="data" type="Map"/>
+    <aura:attribute name="type" type="String"/>
+    <aura:attribute name="rowId" type="String"/>
+</aura:event>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Confidential. Access to Grants/Fundraising Notes field</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Donor_Memo_Override_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Grants_Fundraising_Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Organization: Reporting Grants/Fundraising Notes</label>
+</PermissionSet>

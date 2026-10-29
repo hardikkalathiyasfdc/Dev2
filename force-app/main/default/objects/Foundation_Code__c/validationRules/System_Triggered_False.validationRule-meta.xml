@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>System_Triggered_False</fullName>
+    <active>true</active>
+    <description>IM-47: Do not allow creation of Foundation Code type Parent or Budgeted Initiative if System triggered field is false</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Foundation_Code_Validation__c &amp;&amp; ISNEW()  &amp;&amp; (  ISPICKVAL(Type__c , &apos;Parent Initiative&apos;)   || ISPICKVAL(Type__c , &apos;Budgeted Initiative&apos;) )  &amp;&amp; System_Triggered__c  = false</errorConditionFormula>
+    <errorMessage>Cannot create Foundation Code with type Parent or Budgeted Initiative</errorMessage>
+</ValidationRule>

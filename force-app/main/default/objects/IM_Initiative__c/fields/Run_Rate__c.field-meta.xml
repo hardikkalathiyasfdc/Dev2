@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Run_Rate__c</fullName>
+    <description>IM-342:This is the annual run rate for an Initiative</description>
+    <formula>IF(RecordType.DeveloperName = &apos;Budgeted_Initiative&apos;,
+   IF(ISBLANK(Term__c),
+   	null,
+        IF( Approved__c , 
+	       IF(ISBLANK(Approved_Amount__c),
+               null,
+               ROUND((Approved_Amount__c / Term__c) * 12,0)
+           ),
+           IF(ISBLANK(Proposed_Amount__c),
+               null,
+               ROUND((Proposed_Amount__c / Term__c) * 12,0)
+           )
+        )
+   ),
+   null
+)</formula>
+    <label>Run Rate</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

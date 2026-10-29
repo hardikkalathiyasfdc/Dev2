@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Board_Member_Email_Receiver</fullName>
+    <columns>MasterLabel</columns>
+    <columns>DeveloperName</columns>
+    <columns>NamespacePrefix</columns>
+    <columns>Active__c</columns>
+    <columns>Email__c</columns>
+    <columns>Environment__c</columns>
+    <columns>Report_Email_Setting__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Report_Email_Setting__c</field>
+        <operation>contains</operation>
+        <value>Board</value>
+    </filters>
+    <label>Board Member Email Receiver</label>
+</ListView>

@@ -1,0 +1,67 @@
+<aura:component access="global" controller="EditMemberContactsController">	
+    <!-- attributes -->
+    <aura:attribute name="fromRelatedList" type="Boolean" default="false"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="errors" type="Object" default="[]"/>    
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="filteredData" type="Object" default="[]" />
+    <aura:attribute name="filter" type="String" />
+    <aura:attribute name="sortedBy" type="String" default="Name"/>
+    <aura:attribute name="sortedDirection" type="String" default="asc"/>
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
+    <aura:attribute name="selectedData" type="sObject"/>
+    <aura:attribute name="isValChanged" type="boolean" default="false"/>
+    <aura:attribute name="validateConMsg" type="String"/>
+    <!-- handlers-->
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    
+	<table>
+	<tr>
+        <td>
+            <lightning:input type="text" onchange="{!c.filter}" value="{!v.filter}" placeholder="search here..." class="slds-float_left slds-m-bottom_medium"/>
+		</td>
+		<td class="slds-float_right">
+	    	<tr>
+				<lightning:button onclick="{!c.closeAction}"
+				variant="destructive"
+				label="Cancel"
+				iconName="action:close"
+				/>
+			</tr>
+		</td>
+    </tr>
+	</table>
+
+	<div class="slds-is-relative">
+  	<lightning:spinner aura:id="mySpinner" alternativeText="Processing.." variant="brand" size="medium"/>
+  	</div>
+    <div>
+        <h1>Selected Rows: {! v.selectedRowsCount }</h1>
+        <aura:if isTrue="{!v.isValChanged}">
+        <div class="slds-align_absolute-center slds-m-around_x-small">
+        <ul class="slds-button-group-row">
+          <li class="slds-button-group-item">
+            <button class="slds-button slds-button_neutral" onclick="{!c.handleCancel}">Cancel</button>
+          </li>
+          <li class="slds-button-group-item">
+            <button class="slds-button slds-button_brand" onclick="{!c.handleSave}">Save</button>
+          </li>
+        </ul>
+        </div>
+        </aura:if>
+	</div>
+        <lightning:datatable aura:id="editTable"
+            columns="{! v.columns }"
+            data="{! v.filteredData }"
+            keyField="Id"
+            errors="{! v.errors }"
+            onsave="{!c.handleSave}"
+            oncancel="{!c.handleCancel}"
+            showRowNumberColumn="true"
+            onsort="{!c.updateColumnSorting}"
+            sortedBy="{!v.sortedBy}"  
+            sortedDirection="{!v.sortedDirection}"
+            onrowselection="{!c.updateSelectedRecs}"
+            oncellchange="{!c.handleCellChange}"/>   
+</aura:component>

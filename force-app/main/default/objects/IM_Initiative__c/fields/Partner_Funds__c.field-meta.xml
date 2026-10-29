@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Partner_Funds__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>IM-137:This field indicates if Partner Funds are supported for given initiative or not. Currently this is supported only for public health initiatives.</description>
+    <label>Partner Funds?</label>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

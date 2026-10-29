@@ -1,0 +1,93 @@
+.box {
+    border: 1px solid #98b8f6;
+    border-radius: 15px;
+    padding: 5px;
+    border-color: #ccdbf7;
+    box-shadow: inset -2px -3px 1px 0px #dae2ef;
+    box-shadow: 2px 3px 4px 0px #98b8f6;
+}
+
+.country-scroll {
+    overflow: auto;
+    padding-left: 11px;
+    padding-right: 14px;
+    height: 417px;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.city-section {
+    position: relative;
+    margin-bottom: .5rem;
+}
+
+.city-header {
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background: #fff;
+    padding-bottom: 4.5px;
+    border-bottom: 1px solid #e5e5e5;
+    border-radius: .5rem .5rem 0 0;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.city-name {
+    flex: 1 1 auto;
+}
+
+.city-link,
+.access-link {
+    color: #0176d3;
+    font-weight: 400;
+}
+
+.access-box {
+    border: 1px solid rgb(212, 239, 240);
+    overflow: hidden;
+}
+
+.access-title {
+    display: flex;
+    padding: .25rem 0.4rem;
+    position: sticky;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.access-details {
+    padding: .75rem 1rem 1rem;
+}
+
+.table-border {
+    border: 1px solid rgb(212, 239, 240);
+}
+
+.wrapped-content {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 400px;
+}
+
+th,
+td {
+    word-break: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+.chev {
+    --slds-c-icon-color-foreground-default: #68778d;
+}
+
+.city-table-shell .slds-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>View_Hierarchy</fullName>
+    <availability>online</availability>
+    <description>BRME-5259 - List Button to show Foundation Code Hierarchy in tree structure.</description>
+    <displayType>massActionButton</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <height>600</height>
+    <linkType>url</linkType>
+    <masterLabel>View Hierarchy</masterLabel>
+    <openType>sidebar</openType>
+    <protected>false</protected>
+    <requireRowSelection>false</requireRowSelection>
+    <url>{! URLFOR(&quot;/lightning/n/View_Foundation_Codes_Hierarchy&quot; )}</url>
+</WebLink>

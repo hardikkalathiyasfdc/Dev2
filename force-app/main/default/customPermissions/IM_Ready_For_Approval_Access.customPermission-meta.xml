@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>BRME-7043: Custom permission to control the visibility of &apos;Ready for Approval&apos; button on Initiative</description>
+    <isLicensed>false</isLicensed>
+    <label>IM: Ready For Approval Access</label>
+</CustomPermission>

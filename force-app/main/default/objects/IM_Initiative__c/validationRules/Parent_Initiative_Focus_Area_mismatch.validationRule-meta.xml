@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Parent_Initiative_Focus_Area_mismatch</fullName>
+    <active>true</active>
+    <description>IM-52: Parent Initiative focus area must match with current initiative focus area.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.IM_Initiative_Validation__c &amp;&amp; 
+RecordType.Name != &apos;Non Budgeted Initiative&apos; &amp;&amp; Parent_Initiative__c !=null &amp;&amp; Focus_Area__c !=  Parent_Initiative__r.Focus_Area__c</errorConditionFormula>
+    <errorDisplayField>Parent_Initiative__c</errorDisplayField>
+    <errorMessage>Parent Initiative Focus Area must match with current Initiative Focus Area.</errorMessage>
+</ValidationRule>

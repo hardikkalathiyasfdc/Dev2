@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>IM_Initiative_Private_Docs_FileGroup</name>
+    </customPermissions>
+    <description>IM-535:This permission set is used to give access to Private Doc section on Initiative.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>IM: Private Doc Access</label>
+</PermissionSet>

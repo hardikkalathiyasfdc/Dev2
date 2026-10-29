@@ -1,0 +1,138 @@
+<template>
+	<lightning-card>
+		<div class="slds-m-around_medium">
+			<template lwc:if={error}>
+				<span class="slds-text-color--error">{error}</span>
+			</template>
+			<div class="slds-grid slds-wrap">
+				<div class="slds-size_2-of-3 slds-m-top_large" style="display: flex;">
+					<lightning-input style="width: 25%;" date-style="short" type="date" name="startDate" label="Pledge Date From" class="slds-m-right_x-large"
+						value={startDate} min="1980-01-01" onchange={handleDateSelection} placeholder="Please select from date" disabled={shallDisableDateCheckbox}>
+					</lightning-input>
+					<lightning-input style="width: 25%;" type="date" name="endDate" label="Pledge Date To"  class="slds-m-right_x-large"
+						value={endDate} date-style="short" onchange={handleDateSelection} placeholder="Please select to date" disabled={shallDisableDateCheckbox}>
+					</lightning-input>
+					<lightning-input style="width: 25%; padding-top: 1.7em;" type="checkbox" name="activeDonors" checked={activeDonors} 
+						onchange={handleActiveDonorCheckbox} label="Calendar Year Pledges">
+					</lightning-input>
+				</div>
+				<div class="slds-col slds-size_2-of-4 slds-m-top_large">
+					<lightning-input type="number" name="minAmount" value={minAmount} onchange={handleAmountChange} 
+						label="Top Donors - Minimum Total Amount (USD)">
+					</lightning-input>
+				</div>
+
+				<div class="slds-col slds-size_2-of-4 slds-m-top_large">
+
+
+
+				</div>
+				<div class="slds-col slds-size_2-of-3 slds-m-top_large">
+					<div class="slds-grid slds-wrap slds-gutters">
+						<div class="slds-col slds-size_2-of-6">
+							<lightning-radio-group name="selectFilter" label="Select Filter" options={selectFilterOptions} required value={selectedFilter}
+								onchange={handleSelectFilterChange} type="button">
+							</lightning-radio-group>
+						</div>
+						<div class="slds-col slds-size_2-of-6">
+							<lightning-radio-group name="sortBy" label="Sort By" options={selectFilterOptions} required value={sortBy}
+								onchange={handleSortByChange} type="radio">
+							</lightning-radio-group>
+						</div>
+					</div>
+				</div>
+				<div class="slds-col slds-size_2-of-4 slds-m-top_large">
+					<lightning-input type="checkbox" name="includeCoverPage" checked={includeCoverPage} onchange={handleIncludeCoverPageChange}
+						label="Include Cover Page with Pledges $10k and above – last month">
+					</lightning-input>
+				</div>
+				<div class="slds-col slds-size_2-of-4 slds-m-top_large">
+				</div>
+				<div class="slds-col slds-size_2-of-4 slds-m-top_large">
+					<template lwc:if={showFocusArea}>
+						<lightning-dual-listbox name="area" label="Focus Area" source-label="Available" selected-label="Selected" options={options}
+							value={selectedOptions} onchange={handleOptionsChange}>
+						</lightning-dual-listbox>
+					</template>
+					<template lwc:if={showProject}>
+						<c-generic-lookup
+							object-api-name="Fundraising_Project__c"
+							icon="standard:opportunity"
+							label="Search Projects"
+							display-fields={projectDisplayFields}
+							custom-search-class="WeightedFieldLookupSearch"
+							search-config={projectSearchConfig}
+							default-results-filter-clause={projectDefaultFilterClause}
+							order-by-clause={projectDefaultOrderByClause}
+							is-multi-select="true"
+							show-recently-viewed={showRecentlyViewed}
+							allow-new-record={allowNewRecord}
+							onchange={handleProjectSelected}>
+						</c-generic-lookup>
+
+
+					</template>
+					<template lwc:if={showDonor}>
+						<c-generic-lookup
+							object-api-name="Contact"
+							icon="standard:contact"
+							label="Search Contacts"
+							display-fields={contactDisplayFields}
+							search-fields={contactSearchFields}
+							filter-clause={contactFilterClause}
+							custom-search-class="ContactLookupSearch"
+							default-results-filter-clause={contactFilterClause}
+							is-multi-select="true"
+							show-recently-viewed={showRecentlyViewed}
+							allow-new-record={allowNewRecord}
+							onchange={handleDonorContactSelected}>
+						</c-generic-lookup>
+
+
+
+						<div class="slds-p-top_medium"></div>
+						<c-generic-lookup
+							object-api-name="Account"
+							icon="standard:account"
+							label="Search Organizations"
+							display-fields={orgDisplayFields}
+							search-fields={orgSearchFields}
+							filter-clause={orgFilterClause}
+							custom-search-class="OrganizationLookupSearch"
+							default-results-filter-clause={orgFilterClause}
+							is-multi-select="true"
+							show-recently-viewed={showRecentlyViewed}
+							allow-new-record={allowNewRecord}
+							onchange={handleDonorOrgsSelected}>
+						</c-generic-lookup>
+
+
+
+						<div class="slds-p-top_medium"></div>
+						<c-generic-lookup
+							object-api-name="Campaign"
+							icon="standard:campaign"
+							label="Search Lists"
+							display-fields={listDisplayFields}
+							display-field-prefixes={listDisplayFieldPrefixes}
+							custom-search-class="WeightedFieldLookupSearch"
+							search-config={listSearchConfig}
+							filter-clause={listFilterClause}
+							order-by-clause={listDefaultOrderByClause}
+							is-multi-select="true"
+							allow-new-record={allowNewRecord}
+							show-recently-viewed={showRecentlyViewed}
+							onchange={handleListSelected}>
+						</c-generic-lookup>
+
+
+					</template>
+				</div>
+				<div class="slds-col slds-m-top_large slds-size_3-of-3">
+					<lightning-button variant="brand" label="Generate Donor Memo" onclick={handleGenerateReport}>
+					</lightning-button>
+				</div>
+			</div>
+		</div>
+	</lightning-card>
+</template>

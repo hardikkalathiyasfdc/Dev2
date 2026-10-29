@@ -1,0 +1,46 @@
+.THIS .stickyTh,
+.THIS.stickyTh {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.THIS .stickyTd,
+.THIS.stickyTd {
+  position: sticky;
+  z-index: 1;
+}
+
+.THIS td{
+  background:white;
+}
+
+.THIS.myThDiv, .THIS .myThDiv{
+    min-width: 100px;
+}
+
+.THIS.red, .THIS .red{
+  background: red !important;
+}
+
+
+.THIS.changed, .THIS .changed,.THIS.yellow, .THIS .yellow{
+  background: yellow !important;
+}
+
+.THIS.changed:hover, .THIS .changed:hover{
+  background: #cf9700;
+}
+
+.THIS .label-hidden > label {
+  display: none;
+}
+
+.THIS .myAdd{
+  margin-top: 1%;
+  margin-left: 1%;
+}
+
+.THIS .slds-form-element__help{
+  color:black;
+}

@@ -1,0 +1,60 @@
+<template>
+  <lightning-card
+    title={title}
+    icon-name="standard:campaign_members"
+  >
+    <p class="slds-p-horizontal_small" 
+    style="min-height: 400px">
+      <template if:false={isLoaded}>
+        <lightning-spinner
+          alternative-text="Loading"
+          size="large"
+        ></lightning-spinner>
+      </template>
+      <template if:true={isLoaded}>
+        <c-inline-data-table
+          key-field="Id"
+          data={data}
+          columns={columns}
+          onsave={handleSave}
+          oncancel={handleCancel}
+          onpicklistchanged={picklistChanged}
+          draft-values={getDraftValues}
+          sorted-by={getSortField}
+          sorted-direction={getSortDir}
+          onsort={handleSort}
+          show-row-number-column
+          row-number-offset={getRowOffset}
+          oncellchange={handleCellChanged}
+          hide-checkbox-column
+        >
+        </c-inline-data-table>
+      </template>
+    </p>
+
+    <template if:true={isPagination}>
+        <template if:true={isPrev}>
+          <lightning-button
+            variant="brand"
+            label="Prev"
+            title="Prev"
+            icon-name="utility:left"
+            icon-position="left"
+            class="slds-m-left_x-small"
+            onclick={handlePrev}
+          ></lightning-button
+        ></template>
+        <template if:true={isNext}>
+          <lightning-button
+            variant="brand"
+            label="Next"
+            title="Next"
+            icon-name="utility:right"
+            icon-position="right"
+            class="slds-m-left_x-small"
+            onclick={handleNext}
+          ></lightning-button
+        ></template>
+    </template>
+  </lightning-card>
+</template>

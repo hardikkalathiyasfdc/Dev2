@@ -1,0 +1,8 @@
+<template>
+    <template if:true={isErrorStatus}>
+        <div style="color:red;margin-left: 5%;">{value}</div>
+    </template>
+    <template if:false={isErrorStatus}>
+        <div style="margin-left: 5%;">{value}</div>
+    </template>
+</template>

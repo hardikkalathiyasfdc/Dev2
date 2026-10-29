@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mapping_Type__c</fullName>
+    <description>IM-49: The type of mapping for a Bgive attribute and BRM Field</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Mapping Type</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>User Lookup</fullName>
+                <default>true</default>
+                <label>User Lookup</label>
+            </value>
+            <value>
+                <fullName>Value</fullName>
+                <default>false</default>
+                <label>Value</label>
+            </value>
+            <value>
+                <fullName>Picklist</fullName>
+                <default>false</default>
+                <label>Picklist</label>
+            </value>
+            <value>
+                <fullName>Segment</fullName>
+                <default>false</default>
+                <label>Segment</label>
+            </value>
+            <value>
+                <fullName>Related List</fullName>
+                <default>false</default>
+                <label>Related List</label>
+            </value>
+            <value>
+                <fullName>Relation</fullName>
+                <default>false</default>
+                <label>Relation</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

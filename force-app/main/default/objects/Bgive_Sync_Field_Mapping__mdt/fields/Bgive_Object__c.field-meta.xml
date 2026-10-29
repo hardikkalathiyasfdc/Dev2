@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bgive_Object__c</fullName>
+    <description>IM-49: The Object name in Bgive.</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Bgive Object</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>concept_initiative</fullName>
+                <default>false</default>
+                <label>concept_initiative</label>
+            </value>
+            <value>
+                <fullName>grant_request</fullName>
+                <default>false</default>
+                <label>grant_request</label>
+            </value>
+            <value>
+                <fullName>request_transaction</fullName>
+                <default>false</default>
+                <label>request_transaction</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Not_For_External_Use__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>BRME-6950:Marks the record as internal-only, excluded from external-facing views.</description>
+    <label>Not For External Use</label>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

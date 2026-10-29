@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>CityView_Include_Grants_Filter_Access</name>
+    </customPermissions>
+    <description>Allows Access to view and use the “Include Grants” filter icon in CityView which then shows Grant Geo Area records in the City/State/Country sections when applied. (BRME-6368)</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>CityView: Include Grants Filter Access</label>
+</PermissionSet>

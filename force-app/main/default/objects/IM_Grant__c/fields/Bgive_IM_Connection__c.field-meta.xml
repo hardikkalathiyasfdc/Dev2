@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bgive_IM_Connection__c</fullName>
+    <description>IM-131: This field indicates if Grant is IM managed or Bgive Managed or does not exist in Bgive.</description>
+    <label>Bgive IM Connection</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>IM Managed</fullName>
+                <default>false</default>
+                <label>IM Managed</label>
+            </value>
+            <value>
+                <fullName>Bgive Managed</fullName>
+                <default>false</default>
+                <label>Bgive Managed</label>
+            </value>
+            <value>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+                <label>Not Applicable</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

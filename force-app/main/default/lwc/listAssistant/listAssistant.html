@@ -1,0 +1,65 @@
+<template>
+  <section
+    class="slds-modal slds-fade-in-open slds-modal_small slds-align_absolute-center"
+  >
+    <div class="slds-modal__container">
+      <header class="slds-modal__header">
+        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+          Update Assistants
+        </h2>
+      </header>
+      <div
+        class="slds-modal__content slds-p-around_medium"
+        style="overflow-y: auto; max-height: 80%; min-height: 300px"
+      >
+        <template if:true={isLoading}>
+          <div class="exampleHolder">
+            <lightning-spinner
+              alternative-text="Loading"
+              size="medium"
+            ></lightning-spinner></div
+        ></template>
+        <div class="slds-grid slds-wrap">
+          <div class="slds-col slds-size_2-of-2">
+            <template if:true={recordIds.length}>
+              <h1>
+                You have selected {recordIds.length} of {total} member(s) to
+                update
+              </h1>
+              <lightning-combobox
+                name="CC Assistant"
+                label="CC Assistant"
+                value=""
+                placeholder=""
+                class="marginTop"
+                options={options}
+                onchange={handleOptionsChange}
+              ></lightning-combobox>
+            </template>
+            <template if:false={recordIds}>
+              <h1>Please select guests to update.</h1>
+            </template>
+          </div>
+        </div>
+      </div>
+
+      <footer class="slds-modal__footer">
+        <lightning-button
+          variant="neutral"
+          label="Close"
+          title="Close"
+          onclick={onClose}
+        ></lightning-button>
+        <lightning-button
+          class="slds-m-top_small myBtn"
+          variant="brand"
+          type="submit"
+          name="Update"
+          label="Update"
+          onclick={handleUpdate}
+        ></lightning-button>
+      </footer>
+    </div>
+  </section>
+  <div class="slds-backdrop slds-backdrop_open"></div>
+</template>

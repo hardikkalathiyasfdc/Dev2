@@ -1,0 +1,5 @@
+<aura:component implements="force:appHostable" controller="TestReportEmailCntrl">
+    <div style="font-weight:bold;font-size:16px; margin:10px"> Test Auto Generated Reports </div>
+	<lightning:button label="Test Mayors And City View Report" onclick="{!c.testMayorReport}"/>
+    <lightning:button label="Test BP Board Report" onclick="{!c.testBPMemberReport}" class="slds-m-top_small"/>
+</aura:component>

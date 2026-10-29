@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Program_Area_Required</fullName>
+    <active>false</active>
+    <description>CityView program area is required when the Add to CityView checkbox is checked</description>
+    <errorConditionFormula>Add_to_CityView__c = true &amp;&amp; ISBLANK(Text(CityView_Program_Area__c))</errorConditionFormula>
+    <errorMessage>Please select CityView Focus Area when Submit to CityView is checked.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,32 @@
+<aura:component controller="ConfidentialItemUploadController" implements="force:hasRecordId">
+ 
+   <aura:attribute name="recordId" type="String"/>
+ <!-- 'showLoadingSpinner' attribute for show/hide the uploading image and msg in aura:if-->
+   <aura:attribute name="showLoadingSpinner" type="boolean" default="false" />
+ <!-- 'fileName' attribute for display the selected file name -->  
+   <aura:attribute name="fileName" type="String" default="No File Selected.." />
+   <aura:attribute name="desc" type="String" default="" />
+ <!-- Lightning Input with file type and on file change call the 'handleFilesChange' controller --> 
+ 
+   <lightning:input aura:id="fileId" onchange="{!c.handleFilesChange}" type="file" name="file" label="Upload Confidential File" multiple="false"/>
+   <div class="slds-text-body_small slds-text-color_error">{!v.fileName} </div>
+ 
+ <!--use aura:if for show-hide the loading spinner image--> 
+   <aura:if isTrue="{!v.showLoadingSpinner}">
+      <div class="slds-text-body_small slds-text-color_error">Uploading... 
+         <img src="/auraFW/resources/aura/images/spinner.gif" class="spinner-img" alt="Loading"/>'
+      </div>
+   </aura:if>
+   <div style="height: 400px;">
+      <div class="slds-p-around_xxx-small slds-medium-size_1-of-8 ">
+         <lightning:input aura:id="date" type="date" name="input2" label="Briefing Date" required="true"/>
+      </div>
+      <!--<div class="slds-p-around_xxx-small">
+         <lightning:textarea name="inputDesc" label="Description" placeholder="type here..." value="{!v.desc}"/>
+      </div>-->
+    <br/>
+    
+      <button class="slds-button slds-button_brand slds-p-around_xxx-medium" onclick="{!c.doSave}">Upload</button>
+      <button class="slds-button slds-button_brand slds-p-around_xxx-medium" onclick="{!c.doCancel}">Cancel</button>
+   </div>
+</aura:component>

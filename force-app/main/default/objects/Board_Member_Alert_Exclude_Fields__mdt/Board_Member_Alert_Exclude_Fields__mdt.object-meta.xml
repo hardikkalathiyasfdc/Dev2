@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Exclude field api names from contact object for Board Member Alert.</description>
+    <label>Board Member Alert Exclude Fields</label>
+    <pluralLabel>Board Member Alert Exclude Fields</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

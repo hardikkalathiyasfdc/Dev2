@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Note_To_Reviewer__c</fullName>
+    <description>IM-39: Users can include questions, context, or additional notes for the Reviewer in this field.</description>
+    <inlineHelpText>Users can include questions, context, or additional notes for the Reviewer in this field.</inlineHelpText>
+    <label>Note To Reviewer</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

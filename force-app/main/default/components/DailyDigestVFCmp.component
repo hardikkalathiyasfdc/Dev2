@@ -1,0 +1,232 @@
+<apex:component controller="DailyDigestVFCmpController" access="global">
+    <apex:attribute name="digestUserId" Description="user's id" type="String" assignTo="{!userId}" required="false" />
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+            border: 0px;
+            border-spacing: 0px;
+            padding: 0px 0px 0px 0px;
+        }
+
+        td {
+            font-family: 'Salesforce Sans', 'Helvetica Neue', Helvetica, Arial,
+            'Sans Serif';
+            font-size: 14px;
+        }
+
+        .hrTop {
+            padding-top: 7px;
+            border-bottom: solid 1px #e0e5ee;
+            font-size: 0px;
+        }
+
+        .pb5 {
+            padding-bottom: 5px;
+            font-size: 0px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #015ba7;
+        }
+
+        .pst {
+            border-top: 1px solid #e0e5ee;
+            border-bottom: 1px solid #e0e5ee;
+            vertical-align: middle;
+        }
+
+        .dfv {
+            text-decoration: none;
+        }
+
+        .pb10 {
+            padding: 0px 0px 10px 0px;
+        }
+    </style>
+    <table width="100%" bgcolor="#F2F2F2">
+        <tr>
+            <td colspan="3" height="6" style="color: #2a94d6; background-color: #2a94d6; line-height: 6px; font-size: 6px;">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="3" height="25" style="line-height: 25px; font-size: 25px;">&nbsp;</td>
+        </tr>
+        <tr>
+            <td width="20">&nbsp;</td>
+            <td style="color: #000000; background-color: #FFFFFF; padding: 0px 20px 0px 20px;">
+                <p style="margin: 28px 0px 10px 0px;font-size: 24px; font-weight: light">Hi {!userName}, catch up on activity from the past day.</p>
+            </td>
+        </tr>
+        <tr style="{!IF(listDigest.hasVal, '', 'display:none')}">
+            <td width="20">&nbsp;</td>
+            <td style="color: #000000; background-color: #FFFFFF; padding: 0px 20px 0px 20px;">
+
+                <div>
+                    <p style="margin: 20px 0px 20px 13px;font-size: 18px; font-weight: light">Lists I Follow</p>
+                    <apex:repeat value="{!listDigest.feedList}" var="feed">
+                        <div>
+                            <div>
+                                <table width="100%" class="pst" bgcolor="#F2F2F2">
+                                    <tr>
+                                        <td style="padding: 18px 20px 18px 18px;font-size:16px;">
+                                            <b>List:
+                                                <a href="{!feed.url}" style="text-decoration: none; color: #015BA7;">{!feed.name} </a>
+                                            </b>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <b>Owner:</b>&nbsp;&nbsp;&nbsp; </td>
+                                                    <td>
+                                                        <a href="{!feed.ownerUrl}" style="text-decoration: none; color: #015BA7;">{!feed.owner} </a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <table width="100%" style="margin-top: 1%;">
+                                <apex:repeat value="{!feed.changeList}" var="change">
+                                    <tr>
+                                        <td style="padding: 0px 20px;">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td width="100%">
+                                                        <span class="text">
+                                                            <a href="{!change.ownerUrl}" style="text-decoration: none; color: #015BA7;">{!change.owner}</a> {!change.change}
+                                                            <a href="{!change.nameUrl}" style="text-decoration: none; color: #015BA7;">{!change.name}</a>
+                                                        </span>
+                                                        <br /> {!change.ownerDate}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="pb10"> </td>
+                                                </tr>
+                                            </table>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </apex:repeat>
+                                    <tr style="{!IF(feed.hasMore, 'text-decoration: none;', 'display:none')}">
+                                        <td style="{!IF(feed.hasMore, 'padding: 10px 20px;', 'display:none')}">
+                                            <table width="100%">
+                                                <tr style="padding-top: 1%;">
+                                                    <td width="100%">
+                                                        <span class="text">
+                                                            <a href="{!feed.viewMoreUrl}" style="{!IF(feed.hasMore, 'text-decoration: none; color: #015BA7;', 'display:none')}">There's additional changes today for {!feed.name}, click here
+                                                                to view additional changes</a>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="pb10"> </td>
+                                                </tr>
+                                            </table>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                            </table>
+                        </div>
+                    </apex:repeat>
+                    <div style="{!IF(listDigest.hasMore, 'margin: 20px 0px 20px 13px;font-size: 18px; font-weight: light', 'display:none')}">
+                        <a href="{!listDigest.viewMoreUrl}" style="text-decoration: none; color: #015BA7;">Today you have more than 20 list changes in this email, click here to view additional lists changes.
+                        </a>
+                    </div>
+                </div>
+            </td>
+            <td width="20">&nbsp;</td>
+        </tr>
+        <tr style="{!IF(contactDigest.hasVal, '', 'display:none')}">
+            <td width="20">&nbsp;</td>
+            <td style="color: #000000; background-color: #FFFFFF; padding: 0px 20px 0px 20px;">
+                <div>
+                    <p style="margin: 20px 0px 20px 13px;font-size: 18px; font-weight: light">Contacts I Follow</p>
+                    <apex:repeat value="{!contactDigest.feedList}" var="feed">
+                        <div>
+                            <div>
+                                <table width="100%" class="pst" bgcolor="#F2F2F2">
+                                    <tr>
+                                        <td style="padding: 18px 20px 18px 18px;font-size:16px;">
+                                            <b>Contact:
+                                                <a href="{!feed.url}" style="text-decoration: none; color: #015BA7;">{!feed.name} </a>
+                                            </b>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <b>Organization:</b>&nbsp;&nbsp;&nbsp; </td>
+                                                    <td>
+                                                        <a href="{!feed.orgUrl}" style="text-decoration: none; color: #015BA7;">{!feed.org} </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <b>Title:</b>&nbsp;&nbsp;&nbsp; </td>
+                                                    <td>
+                                                        <div class="dfv">{!feed.title}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <table width="100%" style="margin-top: 1%;">
+                                <apex:repeat value="{!feed.changeList}" var="change">
+                                    <tr>
+                                        <td style="padding: 0px 20px;">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td width="100%">
+                                                        <span class="text">
+                                                            <a href="{!change.ownerUrl}" style="text-decoration: none; color: #015BA7;">{!change.owner}</a> changed {!change.oldVal} from {!change.field}
+                                                            to {!change.newVal}</span>
+                                                        <br /> {!change.ownerDate}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="pb10"> </td>
+                                                </tr>
+                                            </table>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </apex:repeat>
+                                <tr style="{!IF(feed.hasMore, '', 'display:none')}">
+                                    <td style="{!IF(feed.hasMore, 'padding: 10px 20px;', 'display:none')}">
+                                        <table width="100%">
+                                            <tr style="padding-top: 1%;">
+                                                <td width="100%">
+                                                    <span class="text">
+                                                        <a href="{!feed.viewMoreUrl}" style="{!IF(feed.hasMore, 'text-decoration: none; color: #015BA7;', 'display:none')}">There's additional changes today for {!feed.name}, click here to
+                                                            view additional changes</a>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="pb10"> </td>
+                                            </tr>
+                                        </table>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </apex:repeat>
+                    <div style="{!IF(contactDigest.hasMore, 'margin: 20px 0px 20px 13px;font-size: 18px; font-weight: light', 'display:none')}">
+                        <a href="{!contactDigest.viewMoreUrl}" style="text-decoration: none; color: #015BA7;">Today you have more than 20 contact changes listed in this email, click here to view additional contact
+                            changes.
+                        </a>
+                    </div>
+                </div>
+            </td>
+            <td width="20">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="3" height="25" style="line-height: 25px; font-size: 25px;">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="3" height="6" style="color: #2a94d6; background-color: #2a94d6; line-height: 6px; font-size: 6px;">&nbsp;</td>
+        </tr>
+    </table>
+</apex:component>

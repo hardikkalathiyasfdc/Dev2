@@ -1,0 +1,41 @@
+<template>
+    <template lwc:if={isBudgetDataLoaded}>
+        <lightning-modal-header label="Budget Views"></lightning-modal-header>
+        <lightning-modal-body>
+            <div class="slds-grid slds-grid_vertical slds-m-bottom_small">
+                <div class="slds-col slds-m-bottom_large">
+                    <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
+                        <lightning-icon icon-name="utility:warning" alternative-text="Warning!" title="Warning"
+                            size="x-small" class="slds-m-right_small">
+                        </lightning-icon>
+                        <h2>This is for view only purpose. Do not use generated file for Check In.</h2>
+                    </div>
+                </div>
+                <lightning-tabset variant="scoped" class="slds-tabs_medium">
+                    <lightning-tab label={tab1Name} value='1'>
+                        <c-im-view-budget-tab class="tab1" column-options={columnOptions} oncolchange={handleColChange}
+                            ontabnamechange={handleTab1NameChange}></c-im-view-budget-tab>
+                    </lightning-tab>
+                    <lightning-tab label={tab2Name} value='2'>
+                        <c-im-view-budget-tab class="tab2" column-options={columnOptions}
+                            ontabnamechange={handleTab2NameChange}></c-im-view-budget-tab>
+                    </lightning-tab>
+                    <lightning-tab label={tab3Name} value='3'>
+                        <c-im-view-budget-tab class="tab3" column-options={columnOptions}
+                            ontabnamechange={handleTab3NameChange}></c-im-view-budget-tab>
+                    </lightning-tab>
+                    <lightning-tab label={tab4Name} value='4'>
+                        <c-im-view-budget-tab class="tab4" column-options={columnOptions}
+                            ontabnamechange={handleTab4NameChange}></c-im-view-budget-tab>
+                    </lightning-tab>
+                </lightning-tabset>
+            </div>
+        </lightning-modal-body>
+        <lightning-modal-footer>
+            <lightning-button class="slds-m-right_small slds-m-top_medium" label="Cancel"
+                onclick={handleClose}></lightning-button>
+            <lightning-button class="slds-m-top_medium" label="Export" onclick={handleSave} variant="brand"
+                disabled={isExportDisabled}></lightning-button>
+        </lightning-modal-footer>
+    </template>
+</template>

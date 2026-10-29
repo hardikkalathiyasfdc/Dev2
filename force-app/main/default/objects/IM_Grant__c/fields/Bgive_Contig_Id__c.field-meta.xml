@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bgive_Contig_Id__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>IM-126: Bgive Contig Id to identify grant record in Bgive.</description>
+    <externalId>true</externalId>
+    <label>Bgive Contig Id</label>
+    <length>255</length>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

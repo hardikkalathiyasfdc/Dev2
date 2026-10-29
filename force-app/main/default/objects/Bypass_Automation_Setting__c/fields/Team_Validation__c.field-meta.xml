@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Team_Validation__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>IM-101: Bypass automation for Team Object Validations</description>
+    <label>Team Validation</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

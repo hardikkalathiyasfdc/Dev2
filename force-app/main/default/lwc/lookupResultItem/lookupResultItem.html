@@ -1,0 +1,20 @@
+<template>
+    <div class={optionClass} role="option" onclick={handleSelect}>
+        <span class="slds-media__figure slds-listbox__option-icon">
+            <lightning-icon icon-name={icon} size="small" alternative-text="Record"></lightning-icon>
+        </span>
+        <span class="slds-media__body">
+            <span class="slds-listbox__option-text slds-listbox__option-text_entity">{primaryField}</span>
+            <template lwc:if={hasSecondaryFields}>
+                <template for:each={secondaryFieldValues} for:item="field">
+                    <span key={field.key} class="slds-listbox__option-meta slds-listbox__option-meta_entity">{field.value}</span>
+                </template>
+            </template>
+        </span>
+        <template lwc:if={isSelected}>
+            <span class="slds-media__figure slds-media__figure_reverse">
+                <lightning-icon icon-name="utility:check" size="x-small" alternative-text="Selected"></lightning-icon>
+            </span>
+        </template>
+    </div>
+</template>

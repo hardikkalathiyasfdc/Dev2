@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IM_Budget_Grant_Validation__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>IM-246: ByPass automation logic for Budget Grant object validations</description>
+    <label>IM Budget Grant Validation</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

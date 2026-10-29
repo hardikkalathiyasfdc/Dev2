@@ -1,0 +1,353 @@
+<template>
+    <div class={geoAreaId} data={shallShowGrants}></div>
+    <template lwc:if={isGeoAreaIdAvailable}>
+        <template lwc:if={isLoading}>
+            <lightning-spinner variant="brand" size="large"></lightning-spinner>
+        </template>
+        <template lwc:else>
+            <!-- City Level Work Section -->
+            <template lwc:if={showCityWorkTable}>
+                <div class="slds-m-top_small box slds-p-around_x-small" style="background-color: white; clear: both;"
+                    id={geoAreaId}>
+                    <h3>City Level Work</h3>
+                    <div style={tableStyle} data-id="CityLevelWork">
+                        <table class="slds-table">
+                            <tbody>
+                                <template lwc:if={showCityWork}>
+                                    <template for:each={groupedCityWork} for:item="group">
+                                        <template for:each={group.records} for:item="city">
+                                            <tr key={city.Id} style={city.colorStyle} title={city.focusArea}
+                                                class="table-border">
+                                                <td class={city.customCss}>
+                                                    <template lwc:if={city.showDate}>
+                                                        <div class="wrapped-content">
+                                                            <template lwc:if={city.nonConsecutive}>
+                                                                <a href="javascript:void(0);"
+                                                                    data-id={city.orgAssociationId}
+                                                                    onclick={handleCityClick}>
+                                                                    <span lwc:if={shallShowGrants}> <lightning-icon
+                                                                            lwc:if={city.iconName}
+                                                                            icon-name={city.iconName}
+                                                                            size={city.iconSize}
+                                                                            title={city.iconTitle}></lightning-icon>
+                                                                    </span>&nbsp;
+                                                                    <span>{city.associationName} ({city.startDate} -
+                                                                        {city.endDate}) (Non-Consecutive)</span>
+                                                                </a>
+                                                            </template>
+                                                            <template lwc:else>
+                                                                <a href="javascript:void(0);"
+                                                                    data-id={city.orgAssociationId}
+                                                                    onclick={handleCityClick}>
+                                                                    <span lwc:if={shallShowGrants}> <lightning-icon
+                                                                            lwc:if={city.iconName}
+                                                                            icon-name={city.iconName}
+                                                                            size={city.iconSize}
+                                                                            title={city.iconTitle}></lightning-icon>
+                                                                    </span>&nbsp;
+                                                                    <span>{city.associationName} ({city.startDate} -
+                                                                        {city.endDate}) </span>
+                                                                </a>
+                                                            </template>
+                                                        </div>
+                                                    </template>
+                                                    <template lwc:else>
+                                                        <div class="wrapped-content">
+                                                            <a href="javascript:void(0);"
+                                                                data-id={city.orgAssociationId}
+                                                                onclick={handleCityClick}>
+                                                                <span lwc:if={shallShowGrants}> <lightning-icon
+                                                                        lwc:if={city.iconName} icon-name={city.iconName}
+                                                                        size={city.iconSize}
+                                                                        title={city.iconTitle}></lightning-icon>
+                                                                </span>&nbsp;
+                                                                <span>{city.associationName}</span>
+                                                            </a>
+                                                        </div>
+                                                    </template>
+                                                </td>
+                                            </tr>
+                                            <template lwc:if={city.showDescription}>
+                                                <tr key={city.orgAssociationId} class="table-border"
+                                                    style={city.colorStyle}>
+                                                    <td class="wrapped-content">
+                                                        <template lwc:if={city.description}>
+                                                            <lightning-formatted-rich-text value={city.description}>
+                                                            </lightning-formatted-rich-text>
+                                                        </template>
+                                                        <template lwc:else>
+                                                            <p>No Initiative description at this time.</p>
+                                                        </template>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </template>
+                                    </template>
+                                </template>
+                                <template lwc:else>
+                                    <td>No City Level Work</td>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </template>
+            <!-- State Level Work Section -->
+            <template lwc:if={showStateWorkForStates}>
+                <div class="slds-m-top_small box slds-p-around_x-small" id={geoAreaId}>
+                    <h3>State Level Work</h3>
+                    <div style={tableStyle} data-id="StateLevelWork">
+                        <table class="slds-table">
+                            <tbody>
+                                <template lwc:if={showStateWork}>
+                                    <template for:each={stateWork} for:item="state">
+                                        <tr key={state.Id} style={state.colorStyle} title={state.focusArea}
+                                            class="table-border">
+                                            <td class={state.customCss}>
+                                                <template lwc:if={state.showDate}>
+                                                    <div class="wrapped-content">
+                                                        <template lwc:if={state.nonConsecutive}>
+                                                            <a href="javascript:void(0);"
+                                                                data-id={state.orgAssociationId}
+                                                                onclick={handleStateClick}>
+                                                                <span lwc:if={shallShowGrants}> <lightning-icon
+                                                                        lwc:if={state.iconName}
+                                                                        icon-name={state.iconName} size={state.iconSize}
+                                                                        title={state.iconTitle}></lightning-icon>
+                                                                </span>&nbsp;
+                                                                <span>{state.associationName} ({state.startDate} -
+                                                                    {state.endDate}) (Non-Consecutive)</span>
+                                                            </a>
+                                                        </template>
+                                                        <template lwc:else>
+                                                            <a href="javascript:void(0);"
+                                                                data-id={state.orgAssociationId}
+                                                                onclick={handleStateClick}>
+                                                                <span lwc:if={shallShowGrants}> <lightning-icon
+                                                                        lwc:if={state.iconName}
+                                                                        icon-name={state.iconName} size={state.iconSize}
+                                                                        title={state.iconTitle}></lightning-icon>
+                                                                </span>&nbsp;
+                                                                <span>{state.associationName} ({state.startDate} -
+                                                                    {state.endDate})</span>
+                                                            </a>
+                                                        </template>
+                                                    </div>
+                                                </template>
+                                                <template lwc:else>
+                                                    <div class="wrapped-content">
+                                                        <a href="javascript:void(0);" data-id={state.orgAssociationId}
+                                                            onclick={handleStateClick}>
+                                                            <span lwc:if={shallShowGrants}> <lightning-icon
+                                                                    lwc:if={state.iconName} icon-name={state.iconName}
+                                                                    size={state.iconSize}
+                                                                    title={state.iconTitle}></lightning-icon>
+                                                            </span>&nbsp;
+                                                            <span>{state.associationName}</span>
+                                                        </a>
+                                                    </div>
+                                                </template>
+                                            </td>
+                                        </tr>
+                                        <template lwc:if={state.showDescription}>
+                                            <tr key={state.orgAssociationId} class="table-border"
+                                                style={state.colorStyle}>
+                                                <td class="wrapped-content">
+                                                    <template lwc:if={state.description}>
+                                                        <lightning-formatted-rich-text value={state.description}>
+                                                        </lightning-formatted-rich-text>
+                                                    </template>
+                                                    <template lwc:else>
+                                                        <p>No Initiative description at this time.</p>
+                                                    </template>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </template>
+                                </template>
+                                <template lwc:else>
+                                    <td>No State Level Work</td>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </template>
+            <!-- Country Level Work Section -->
+            <template lwc:if={isCountrySelected}>
+                <div class="slds-m-top_small box slds-p-around_x-small" id={geoAreaId}>
+                    <h3>Country Level Work</h3>
+                    <div style={tableStyle} data-id="NationalLevelWork">
+                        <table class="slds-table">
+                            <tbody>
+                                <template lwc:if={showCountryWork}>
+                                    <template for:each={countryWork} for:item="country">
+                                        <tr key={country.Id} style={country.colorStyle} title={country.focusArea}
+                                            class="table-border">
+                                            <td class={country.customCss}>
+                                                <template lwc:if={country.showDate}>
+                                                    <div class="wrapped-content">
+                                                        <template lwc:if={country.nonConsecutive}>
+                                                            <a href="javascript:void(0);"
+                                                                data-id={country.orgAssociationId}
+                                                                onclick={handleCountryClick}>
+                                                                <span lwc:if={shallShowGrants}> <lightning-icon
+                                                                        lwc:if={country.iconName}
+                                                                        icon-name={country.iconName}
+                                                                        size={country.iconSize}
+                                                                        title={country.iconTitle}></lightning-icon>
+                                                                </span>&nbsp;
+                                                                <span>{country.associationName} ({country.startDate} -
+                                                                    {country.endDate}) (Non-Consecutive)</span>
+                                                            </a>
+                                                        </template>
+                                                        <template lwc:else>
+                                                            <a href="javascript:void(0);"
+                                                                data-id={country.orgAssociationId}
+                                                                onclick={handleCountryClick}>
+                                                                <span lwc:if={shallShowGrants}> <lightning-icon
+                                                                        lwc:if={country.iconName}
+                                                                        icon-name={country.iconName}
+                                                                        size={country.iconSize}
+                                                                        title={country.iconTitle}></lightning-icon>
+                                                                </span>&nbsp;
+                                                                <span>{country.associationName} ({country.startDate} -
+                                                                    {country.endDate})</span>
+                                                            </a>
+                                                        </template>
+                                                    </div>
+                                                </template>
+                                                <template lwc:else>
+                                                    <div class="wrapped-content">
+                                                        <a href="javascript:void(0);" data-id={country.orgAssociationId}
+                                                            onclick={handleCountryClick}>
+                                                            <span lwc:if={shallShowGrants}> <lightning-icon
+                                                                    lwc:if={country.iconName}
+                                                                    icon-name={country.iconName} size={country.iconSize}
+                                                                    title={country.iconTitle}></lightning-icon>
+                                                            </span>&nbsp;
+                                                            <span>{country.associationName}</span>
+                                                        </a>
+                                                    </div>
+                                                </template>
+                                            </td>
+                                        </tr>
+                                        <template lwc:if={country.showDescription}>
+                                            <tr key={country.orgAssociationId} class="table-border"
+                                                style={country.colorStyle}>
+                                                <td class="wrapped-content">
+                                                    <template lwc:if={country.description}>
+                                                        <lightning-formatted-rich-text value={country.description}>
+                                                        </lightning-formatted-rich-text>
+                                                    </template>
+                                                    <template lwc:else>
+                                                        <p>No Initiative description at this time.</p>
+                                                    </template>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </template>
+                                </template>
+                                <template lwc:else>
+                                    <td>No Country Level Work</td>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <template lwc:if={showStateWorkForCountries}>
+                    <div data-id="State Level Work">
+                        <c-city-view-country-level-work geo-area-id={geoAreaId} form-factor={formFactor}
+                            show-detail-page={showDetailPage} selected-group-by={selectedGroupBy}
+                            shall-show-grants={shallShowGrants} is-country-selected={isCountrySelected}
+                            is-state-selected={isStateSelected}>
+                        </c-city-view-country-level-work>
+                    </div>
+                </template>
+            </template>
+            <template lwc:else>
+                <div class="slds-m-top_small box slds-p-around_x-small" id={geoAreaId}>
+                    <h3>Country Level Work</h3>
+                    <div style={tableStyle} data-id="NationalLevelWork">
+                        <table class="slds-table">
+                            <tbody>
+                                <template lwc:if={showCountryWork}>
+                                    <template for:each={countryWork} for:item="country">
+                                        <tr key={country.Id} style={country.colorStyle} title={country.focusArea}
+                                            class="table-border">
+                                            <td class={country.customCss}>
+                                                <template lwc:if={country.showDate}>
+                                                    <div class="wrapped-content">
+                                                        <template lwc:if={country.nonConsecutive}>
+                                                            <a href="javascript:void(0);"
+                                                                data-id={country.orgAssociationId}
+                                                                onclick={handleCountryClick}>
+                                                                <span lwc:if={shallShowGrants}> <lightning-icon
+                                                                        lwc:if={country.iconName}
+                                                                        icon-name={country.iconName}
+                                                                        size={country.iconSize}
+                                                                        title={country.iconTitle}></lightning-icon>
+                                                                </span>&nbsp;
+                                                                <span>{country.associationName} ({country.startDate} -
+                                                                    {country.endDate}) (Non-Consecutive)</span>
+                                                            </a>
+                                                        </template>
+                                                        <template lwc:else>
+                                                            <a href="javascript:void(0);"
+                                                                data-id={country.orgAssociationId}
+                                                                onclick={handleCountryClick}>
+                                                                <span lwc:if={shallShowGrants}> <lightning-icon
+                                                                        lwc:if={country.iconName}
+                                                                        icon-name={country.iconName}
+                                                                        size={country.iconSize}
+                                                                        title={country.iconTitle}></lightning-icon>
+                                                                </span>&nbsp;
+                                                                <span>{country.associationName} ({country.startDate} -
+                                                                    {country.endDate})</span>
+                                                            </a>
+                                                        </template>
+                                                    </div>
+                                                </template>
+                                                <template lwc:else>
+                                                    <div class="wrapped-content">
+                                                        <a href="javascript:void(0);" data-id={country.orgAssociationId}
+                                                            onclick={handleCountryClick}>
+                                                            <span lwc:if={shallShowGrants}> <lightning-icon
+                                                                    lwc:if={country.iconName}
+                                                                    icon-name={country.iconName} size={country.iconSize}
+                                                                    title={country.iconTitle}></lightning-icon>
+                                                            </span>&nbsp;
+                                                            <span>{country.associationName}</span>
+                                                        </a>
+                                                    </div>
+                                                </template>
+                                            </td>
+                                        </tr>
+                                        <template lwc:if={country.showDescription}>
+                                            <tr key={country.orgAssociationId} class="table-border"
+                                                style={country.colorStyle}>
+                                                <td class="wrapped-content">
+                                                    <template lwc:if={country.description}>
+                                                        <lightning-formatted-rich-text value={country.description}>
+                                                        </lightning-formatted-rich-text>
+                                                    </template>
+                                                    <template lwc:else>
+                                                        <p>No Initiative description at this time.</p>
+                                                    </template>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </template>
+                                </template>
+                                <template lwc:else>
+                                    <td>No Country Level Work</td>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </template>
+            <!-- State level work for countries -->
+        </template>
+    </template>
+</template>

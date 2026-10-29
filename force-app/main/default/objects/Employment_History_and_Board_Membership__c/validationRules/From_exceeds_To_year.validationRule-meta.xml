@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>From_exceeds_To_year</fullName>
+    <active>true</active>
+    <description>From date cannot be greater than the To date</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Employment_Board_Affiliation_Validation__c &amp;&amp;
+(VALUE(TEXT(From__c)) &gt; VALUE(TEXT(To__c)))</errorConditionFormula>
+    <errorMessage>From date cannot be exceed the To date</errorMessage>
+</ValidationRule>

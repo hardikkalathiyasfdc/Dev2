@@ -1,0 +1,32 @@
+<apex:page standardController="Tag__c" recordSetVar="tags" extensions="AddContactsToListController" >
+    
+    <apex:includeLightning />
+     
+    <div id="LightningAppDivId">
+        <!-- Lightning Web Component will be included here. -->
+    </div>
+ 
+     <script>
+         $Lightning.use(
+             "c:AddContactsToListfromTagApp", // Name of Aura Dependency app where c is namespace.
+             function() { // Callback function
+                 $Lightning.createComponent(
+                     "c:addContactsToListfromTag", // Name of Lightning Component where c is namespace.
+                     {
+                         "tagIds":"{!tagIdsString}",
+                         "navigateToList" : navigateToList
+                     }, // attribute parameters
+                     "LightningAppDivId" // Id of the element where Lightning Component will be rendered.
+                 );
+             }
+         );
+    	
+    	function navigateToList(url) {
+          if(typeof sforce != 'undefined' && sforce && sforce.one){
+             sforce.one.navigateToURL(url);
+          } else {
+             window.location.href = url;
+          }
+        }
+     </script>
+</apex:page>

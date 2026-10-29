@@ -1,0 +1,21 @@
+.dropdown-content {
+    margin-top: -0.2em;
+    max-height: 250px;
+    z-index: 1000;
+    position: relative;
+    padding-bottom: 3rem;
+}
+.dropdown-scrollable {
+    max-height: 200px;
+    overflow-y: auto;
+}
+.done-button-wrapper {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0;
+    width: 100%;
+    background: white;
+    text-align: center;
+    padding-top: 0.5rem;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>IM-283: Custom permission to grant access to File Group on Announcement.</description>
+    <isLicensed>false</isLicensed>
+    <label>IM: Announcement FileGroup</label>
+</CustomPermission>

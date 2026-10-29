@@ -1,0 +1,43 @@
+<template>
+	<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+		<template if:true={showSpinner}>
+				<lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+			</template>
+	  <div class="slds-modal__container">
+	    <header class="slds-modal__header">
+	      <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Remove users from Permission Set by Team</h2>
+	      <p class="slds-m-top_x-small"></p>
+	    </header>
+	    <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1">
+
+	    	<div><span class="slds-text-color_error">{error}</span></div>
+	    	<!-- Permission Set search -->
+	    	<div class="slds-m-around_small">
+		    	<c-permission-set-lookup multiple="false" lookup-label="Search Permission Set" onselected={handleSection}></c-permission-set-lookup>
+			</div>
+
+		    <div style="height: 250px;" class="slds-p-around_small">
+		    	<template for:each={teams} for:item="team">
+		    		<div key={team.value} > 
+		    			<div class="slds-grid">
+		    				<div class="slds-size_1-of-3  slds-border_bottom">
+					    		{team.label} 
+					    	</div>
+				    		<div class="slds-float_left slds-size_1-of-3 slds-m-bottom_xxx-small">
+				    			<lightning-button id={team.value} variant="destructive" label="Delete" onclick={handleDelete}></lightning-button>
+				    		</div>
+				    	</div>
+			    		
+			    	</div>
+		    	</template>
+		    </div>
+
+	    </div>
+	    <footer class="slds-modal__footer">
+	      <lightning-button variant="neutral" label="Close" class="slds-m-right_small" onclick={handleCancel}></lightning-button>
+	    </footer>
+	  </div>
+	</section>
+	<div class="slds-backdrop slds-backdrop_open"></div>
+
+</template>

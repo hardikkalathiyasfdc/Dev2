@@ -1,0 +1,53 @@
+.myIcon:hover {
+  cursor: pointer;
+}
+
+.myIcon {
+  font-size: x-large;
+  display: inline-block;
+}
+.defaultBtn {
+  border-color: rgb(221, 219, 218);
+  color: black;
+}
+
+.sentBtn {
+  background-color: #1c6317;
+  border-color: #1c6317;
+  color: white;
+}
+.saveBtn {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  /*background-color: #ebbd34; 
+  color: white; */
+}
+
+.invBtn {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 12px;
+  padding-right: 12px;
+  /*background-color: #1c6317;
+  color: white; */
+}
+
+.remindBtn {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  /*background-color: #872a71;
+  color: white; */
+}
+
+.emailBtn {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+  /*background-color: #070d7d;
+  color: white; */
+}

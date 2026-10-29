@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Bp_Board_Member_Info_Access</name>
+    </customPermissions>
+    <description>Removed field visibility from all Profiles. This permission set only controls BP Board Member  Confidential Notes and Approved Website Listing fields on the contact record</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Approved_Website_Listing__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.BP_Board_Confidential_Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Contact: Board Member Confidential Notes and Website Listing Fields</label>
+</PermissionSet>

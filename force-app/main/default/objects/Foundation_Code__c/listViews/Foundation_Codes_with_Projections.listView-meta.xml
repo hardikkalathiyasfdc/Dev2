@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Foundation_Codes_with_Projections</fullName>
+    <columns>NAME</columns>
+    <columns>Parent__c</columns>
+    <columns>Full_Path_Calculated__c</columns>
+    <columns>Type__c</columns>
+    <columns>Projected_Totals_Set_As__c</columns>
+    <columns>Projected_Total_Assumptions__c</columns>
+    <columns>Reporting_Parent__c</columns>
+    <columns>Status__c</columns>
+    <columns>Enabled_for_Grants__c</columns>
+    <columns>Projection_Total_Calculated__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Projected_Totals_Set_As__c</field>
+        <operation>notEqual</operation>
+    </filters>
+    <filters>
+        <field>Projected_Totals_Set_As__c</field>
+        <operation>notEqual</operation>
+        <value>N/A</value>
+    </filters>
+    <label>Foundation Codes with Projections</label>
+</ListView>

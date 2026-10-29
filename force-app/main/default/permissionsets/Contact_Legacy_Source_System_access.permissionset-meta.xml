@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Contact_UUID</name>
+    </customPermissions>
+    <description>Access to UUID field (legacy system field now visible to all) (UUID also controlled by HR perm set) (all DIT members in here since UUID was added to DIT January 2024)</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CampaignMember.UUID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.UUID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Contact: UUID</label>
+</PermissionSet>

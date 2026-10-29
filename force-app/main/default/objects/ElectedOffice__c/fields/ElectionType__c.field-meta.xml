@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ElectionType__c</fullName>
+    <label>Election Type</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Direct Election</fullName>
+                <default>false</default>
+                <label>Direct Election</label>
+            </value>
+            <value>
+                <fullName>Chosen by Council</fullName>
+                <default>false</default>
+                <label>Chosen by Council</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

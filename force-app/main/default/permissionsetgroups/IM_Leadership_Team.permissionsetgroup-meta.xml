@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>IM-253: Permission set group to give permissions to the Leadership Team</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>IM: Leadership Team</label>
+    <permissionSets>Currency_Read_Access</permissionSets>
+    <permissionSets>File_Group_Edit_Access</permissionSets>
+    <permissionSets>Focus_Area_Read_Access</permissionSets>
+    <permissionSets>Fund_Read_Access</permissionSets>
+    <permissionSets>IM_Amendment_Creation</permissionSets>
+    <permissionSets>IM_Apex_Classes</permissionSets>
+    <permissionSets>IM_Approval_Tab_Edit_Access</permissionSets>
+    <permissionSets>IM_Budget_Grant_Read_Access</permissionSets>
+    <permissionSets>IM_Budget_Tab_Edit_Access</permissionSets>
+    <permissionSets>IM_Budget_Version_Read_Access</permissionSets>
+    <permissionSets>IM_Coding_Tab_Access</permissionSets>
+    <permissionSets>IM_Comms_Tab_Edit_Access</permissionSets>
+    <permissionSets>IM_Create_Edit_Budgeted_Initiative</permissionSets>
+    <permissionSets>IM_Final_Doc_Tab_Edit_Access</permissionSets>
+    <permissionSets>IM_IM_Access</permissionSets>
+    <permissionSets>IM_Metrics_Strategy_Tab_Edit_Access</permissionSets>
+    <permissionSets>IM_Standard_Initiative_Fields_Edit_Access</permissionSets>
+    <permissionSets>IM_Strategic_Location_Read_Access</permissionSets>
+    <permissionSets>Segment_Read_Access</permissionSets>
+    <permissionSets>Team_Read_Access</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

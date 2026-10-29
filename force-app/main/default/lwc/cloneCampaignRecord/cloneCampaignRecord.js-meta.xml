@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+	<masterLabel>CloneCampaignRecord</masterLabel>
+	<apiVersion>60.0</apiVersion>
+	<isExposed>true</isExposed>
+	<targets>
+		<target>lightning__RecordPage</target>
+		<target>lightning__RecordAction</target>
+	</targets>
+	<targetConfigs>
+      <targetConfig targets="lightning__RecordAction">
+     <actionType>ScreenAction</actionType>
+	   <objects>
+                <object>Campaign</object> <!-- Specify the object API name here -->
+            </objects>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

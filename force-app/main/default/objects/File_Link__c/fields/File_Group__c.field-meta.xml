@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>File_Group__c</fullName>
+    <description>IM-41, IM-284: This is a Master Detail to File Group to associate file link to a object and category</description>
+    <label>File Group</label>
+    <referenceTo>File_Group__c</referenceTo>
+    <relationshipLabel>File Links</relationshipLabel>
+    <relationshipName>File_Links</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

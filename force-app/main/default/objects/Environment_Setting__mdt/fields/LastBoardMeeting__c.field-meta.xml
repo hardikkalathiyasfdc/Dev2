@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LastBoardMeeting__c</fullName>
+    <description>BRME_5709</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Last Board Meeting</label>
+    <required>false</required>
+    <type>Date</type>
+</CustomField>

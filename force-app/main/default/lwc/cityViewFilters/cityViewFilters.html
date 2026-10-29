@@ -1,0 +1,57 @@
+<template>
+    <template lwc:if={isNotLoading}>
+        <template lwc:if={isNotShowingDetailPage}>
+            <lightning-accordion allow-multiple-sections-open active-section-name={activeSections} class="slds-m-horizontal_small">
+                <lightning-accordion-section name="focusAreas" label="BP Work" class="slds-var-p-bottom_small">
+                    <div class="slds-p-left_small slds-grid slds-align-center">
+                        <input type="checkbox" data-name="All" id="all" onchange={handleCheckboxChange} checked={isAllChecked}/>
+                        <label for="all" class="slds-m-left_small">All</label>
+                    </div>
+                    <template for:each={focusAreasForUi} for:item="area">
+                        <div key={area.focusAreaName} class="slds-p-left_small slds-grid slds-align-center"
+                            data-id="FocusAreaList">
+                            <input type="checkbox" data-name={area.focusAreaName} id={area.focusAreaName}
+                                onchange={handleCheckboxChange} checked={area.checked} />
+                            <label for={area.focusAreaName} class="slds-m-left_small">
+                                <span class="color-circle" style={area.style}></span>
+                                {area.focusAreaName}
+                            </label>
+                        </div>
+                    </template>
+                </lightning-accordion-section>
+            </lightning-accordion>
+        </template>
+        <div lwc:if={isNotShowingDetailPage} class="slds-border_top slds-m-horizontal_small"></div>
+        <div lwc:if={isNotShowingDetailPage} class="slds-p-left_x-large slds-p-top_medium slds-grid slds-align-center" data-id="BloombergOffices">
+            <input type="checkbox" data-name="office" id="office" checked={showOffices} onchange={handleOfficeChange}/>
+            <label for="office" class="slds-m-left_small">
+                Show Bloomberg Offices
+                <span class="slds-m-left_x-small">
+                    <svg width="33px" height="33px" viewBox="-100 -100 3167 1991"
+                        xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; margin-bottom: 13px;">
+                        <title>office icon</title>
+                        <g transform="translate(240, 250) scale(1.2)">
+                            <circle cx="981.4" cy="962.4" r="943.5" fill="black" />
+                            <path fill="white"
+                                d="M948.1,1129.1c0,14.7-12,26.7-26.7,26.7H307.4c-14.7,0-26.7-12-26.7-26.7v-480.6c0-14.7,12-26.7,26.7-26.7h614c14.7,0,26.7,12,26.7,26.7v480.6" />
+                            <path fill="white"
+                                d="M1682,1129c0,14.7-12,26.7-26.7,26.7h-614c-14.7,0-26.7-12-26.7-26.7v-480.6c0-14.7,12-26.7,26.7-26.7h614c14.7,0,26.7,12,26.7,26.7v480.6" />
+                            <path fill="white"
+                                d="M910.5,1300.9v45c0,16.7,29.9,30.3,66.8,30.3s66.8-13.6,66.8-30.3v-45l3.1.3c104.1,11.5,176.7,49.3,176.7,95.4s-109.7,100-245.1,100-245.1-44.8-245.1-100,73.9-83.6,175.3-95.8l1.5.2" />
+                        </g>
+                    </svg>
+                </span>
+            </label>
+        </div>
+        <template lwc:if={shallShowGrantsCheckbox}>
+            <div class="slds-p-left_x-large slds-align-center" data-id="IncludeGrants">
+                <input type="checkbox" data-name="includeGrants" id="includeGrants" checked={showGrants} onchange={handleIncludeGrants}/>
+                <label for="includeGrants" class="slds-m-left_small" style="font-size: 1.03em">Include Grants Locations</label>
+            </div>
+        </template>
+        <div class="slds-var-p-right_large slds-m-bottom_large" style="float: right;">
+            <lightning-button label="Apply Filters" variant="brand" onclick={applyFilters} data-id="FiltersButton" disabled={isApplying}>
+            </lightning-button>
+        </div>
+    </template>
+</template>

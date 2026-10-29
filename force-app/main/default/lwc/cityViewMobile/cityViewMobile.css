@@ -1,0 +1,50 @@
+.lightning-studio {
+    color: blue;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    box-sizing: border-box;
+    width: 80%;
+    padding: 10px;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+    width: 100%;
+    max-width: 100%;
+}
+
+.image-container {
+    margin: 10px;
+}
+
+.wrapped-content {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.search-by-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-by-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+
+.search-label {
+    font-weight: bold;
+    font-size: 0.875rem;
+    white-space: nowrap;
+}
+
+.search-combobox {
+    width: 200px;
+}

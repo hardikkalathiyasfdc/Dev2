@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Budget_Term_months_is_Required</fullName>
+    <active>true</active>
+    <description>IM-99:Budget Term (months) is required.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.IM_Budget_Validation__c &amp;&amp;
+ISBLANK(Budget_Term_months__c)</errorConditionFormula>
+    <errorDisplayField>Budget_Term_months__c</errorDisplayField>
+    <errorMessage>Budget Term (months) is required.</errorMessage>
+</ValidationRule>

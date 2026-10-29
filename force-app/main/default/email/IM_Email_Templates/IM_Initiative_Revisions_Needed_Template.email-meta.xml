@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BRME-7045: Notify the Grants Contact when an Initiative/Amendment is sent back for
+        revisions</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>IM Initiative Revisions Needed Template</name>
+    <style>none</style>
+    <subject>An Initiative or Amendment needs your attention in BIM</subject>
+    <textOnly>Hello, {!IM_Initiative__c.Name} was moved back to In Development because revisions
+        were requested. Please see the notes for additional details. Revisions Reason:
+        {!IM_Initiative__c.Revisions_Reason__c} Link to initiative: {!IM_Initiative__c.Link}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

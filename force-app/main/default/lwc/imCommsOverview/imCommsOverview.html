@@ -1,0 +1,25 @@
+<!--
+  @description       : 
+  @author            : Sai Bhargav Thotakura
+  @group             : 
+  @last modified on  : 06-23-2025
+  @last modified by  : Sai Bhargav Thotakura
+-->
+<template>
+	<!--Communications Tab-->
+	<div class="slds-p-around_small inline-display">
+		<div class="slds-table slds-table_col-bordered slds-border_left slds-border_right slds-border_top">
+			<!--DATA TABLE-->
+			<lightning-datatable
+				key-field="id"
+				data={announcementRows}
+				columns={columns}
+				onsort={handleSort}
+				sorted-by={sortBy}
+				sorted-direction={sortDirection}
+				hide-checkbox-column
+				suppress-bottom-bar>
+			</lightning-datatable>
+		</div>
+	</div>
+</template>

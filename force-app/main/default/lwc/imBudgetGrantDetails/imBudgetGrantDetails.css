@@ -1,0 +1,21 @@
+.slds-font-style {
+    color: #444444;
+    font-size: 12px;
+}
+
+.custom-bold{
+    margin-left: 5px;
+    font-weight: bold;
+    font-size: 12px;
+    color: red;
+}
+
+.not-blinked-class{
+    margin-left: 4px;
+    text-wrap: nowrap;
+}
+
+.display-class{
+    display: flex;
+    text-wrap: wrap;
+}

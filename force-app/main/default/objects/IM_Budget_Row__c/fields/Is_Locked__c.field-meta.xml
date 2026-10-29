@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Locked__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>IM-548: This field indicates if a row is locked in Budget. A row will be locked post final approval for all budgets and in case of amendment - rows existing on parent Initiative will be locked</description>
+    <label>Is Locked</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

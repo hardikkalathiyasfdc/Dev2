@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>B_Link_Org_Edit_Access</name>
+    </customPermissions>
+    <description>Grants access to BRM SYS ADMINS AND GRANTS TEAM to update linked orgs in BRM. EDIT access to Legal Name, Tax ID and Tax Status fields. 
+
+IM-79: Grants Team and BRM Sys Admins would update linked orgs in BRM.
+
+BRME 5845 Permission Set relabeled.</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Legal_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Tax_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Tax_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>B-Link: Organization Edit Access</label>
+    <recordTypeVisibilities>
+        <recordType>Account.Organization</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

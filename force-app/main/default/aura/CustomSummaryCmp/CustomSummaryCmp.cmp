@@ -1,0 +1,24 @@
+<!--
+Description: This component is used on the Contact Record Page for 'Contact Highlights' section
+-->
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName"
+    controller="CustomSummaryCmpController" access="global">
+    <aura:attribute name="summaries" type="List" default="[]"/>
+    <aura:attribute name="isLoading" type="Boolean" default="true"/>
+    <aura:attribute name="cardTitle" type="String" default="Contact Highlights"/>
+    <ltng:require scripts="{!$Resource.cmputil}" afterScriptsLoaded="{!c.init}"/>
+    <lightning:card class="myCard">
+        <aura:if isTrue="{!v.isLoading}">
+            <lightning:spinner alternativeText="Loading" size="medium"/>
+        </aura:if>
+        <aura:set attribute="title">{!v.cardTitle}</aura:set>
+        <div class="slds-grid slds-wrap">
+            <aura:iteration items="{!v.summaries}" var="sum">
+                <div class="slds-col">
+                    <lightning:icon iconName="{!sum.icon}" size="xx-small" alternativeText="{!sum.label}"/>
+                    &nbsp;{!sum.label}&nbsp;({!sum.count})
+                </div>
+            </aura:iteration>
+        </div>
+    </lightning:card>
+</aura:component>

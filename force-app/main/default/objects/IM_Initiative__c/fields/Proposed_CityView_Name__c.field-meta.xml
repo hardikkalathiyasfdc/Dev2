@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Proposed_CityView_Name__c</fullName>
+    <description>Stores the proposed name for the CityView Initiative when a CityView Initiative has not yet been created or linked.(BRME-6856)</description>
+    <externalId>false</externalId>
+    <label>Proposed CityView Name</label>
+    <length>255</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

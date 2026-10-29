@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Foundation_Code_Retired</fullName>
+    <active>true</active>
+    <description>Allow only Foundation Codes which are not retired. BRME-5263</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Association_Validation__c &amp;&amp; (AND(OR(ISNEW(), ISCHANGED(Foundation_Coding__c)), TEXT(Foundation_Coding__r.Status__c) == &apos;Retired&apos;))</errorConditionFormula>
+    <errorDisplayField>Foundation_Coding__c</errorDisplayField>
+    <errorMessage>Foundation Code is retired.</errorMessage>
+</ValidationRule>

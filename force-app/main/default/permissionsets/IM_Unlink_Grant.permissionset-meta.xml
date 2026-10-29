@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>IM_Unlink_Grant</name>
+    </customPermissions>
+    <description>IM-497: This permission set is used to give access to remove linkage between IM and Bgive for a grant.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>IM: Unlink Grant</label>
+</PermissionSet>

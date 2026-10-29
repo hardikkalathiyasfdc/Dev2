@@ -1,0 +1,23 @@
+.THIS.myCard,
+.THIS .myCard {
+  padding: 2%;
+}
+
+.THIS .slds-card__body {
+  margin: 0;
+  padding: 0;
+}
+
+.THIS .headerTitleTopics {
+  padding-left: 1%;
+  font-weight: var(--lwc-fontWeightBold, 700);
+}
+
+.THIS.slds-pill_container,
+.THIS .slds-pill_container {
+  border: none;
+}
+
+.THIS .helpText .slds-form-element__icon {
+  padding: 0;
+}

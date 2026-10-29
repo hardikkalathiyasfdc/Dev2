@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disable_Budget_Options__c</fullName>
+    <description>IM-364: Use this field to disable certain budget options to uncheck based on the budget rows data and post approval or amendment scenarios.</description>
+    <label>Disable Budget Options</label>
+    <length>2500</length>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

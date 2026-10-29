@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Send_to_Reporting__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>BRME-6077: Removed “Send to Reporting” checkbox from both Tag and List layouts. we&apos;ll keep it in the background if/when blink ever expands for additional contacts</description>
+    <label>Send to Reporting</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

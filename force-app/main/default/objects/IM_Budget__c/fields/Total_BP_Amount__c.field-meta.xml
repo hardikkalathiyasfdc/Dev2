@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_BP_Amount__c</fullName>
+    <description>IM-197: Roll up of all budget row total amount if PartnerFund__c = null</description>
+    <label>Total BP Amount</label>
+    <summarizedField>IM_Budget_Row__c.Total_Amount__c</summarizedField>
+    <summaryFilterItems>
+        <field>IM_Budget_Row__c.Is_BP_Fund__c</field>
+        <operation>equals</operation>
+        <value>True</value>
+    </summaryFilterItems>
+    <summaryForeignKey>IM_Budget_Row__c.Budget__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

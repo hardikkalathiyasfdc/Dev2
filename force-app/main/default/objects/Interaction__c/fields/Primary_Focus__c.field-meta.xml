@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Focus__c</fullName>
+    <description>The focus of the interaction</description>
+    <label>Primary Focus</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Arts and Culture</fullName>
+                <default>false</default>
+                <label>Arts and Culture</label>
+            </value>
+            <value>
+                <fullName>Criminal Justice</fullName>
+                <default>false</default>
+                <label>Criminal Justice</label>
+            </value>
+            <value>
+                <fullName>Education</fullName>
+                <default>false</default>
+                <label>Education</label>
+            </value>
+            <value>
+                <fullName>Environment and Energy</fullName>
+                <default>false</default>
+                <label>Environment and Energy</label>
+            </value>
+            <value>
+                <fullName>Foreign Policy</fullName>
+                <default>false</default>
+                <label>Foreign Policy</label>
+            </value>
+            <value>
+                <fullName>Government Innovation</fullName>
+                <default>false</default>
+                <label>Government Innovation</label>
+            </value>
+            <value>
+                <fullName>Gun Control</fullName>
+                <default>false</default>
+                <label>Gun Control</label>
+            </value>
+            <value>
+                <fullName>Homeland Security</fullName>
+                <default>false</default>
+                <label>Homeland Security</label>
+            </value>
+            <value>
+                <fullName>Housing and Urban Development</fullName>
+                <default>false</default>
+                <label>Housing and Urban Development</label>
+            </value>
+            <value>
+                <fullName>Immigration</fullName>
+                <default>false</default>
+                <label>Immigration</label>
+            </value>
+            <value>
+                <fullName>Infrastructure</fullName>
+                <default>false</default>
+                <label>Infrastructure</label>
+            </value>
+            <value>
+                <fullName>Labor</fullName>
+                <default>false</default>
+                <label>Labor</label>
+            </value>
+            <value>
+                <fullName>LGBT Equality</fullName>
+                <default>false</default>
+                <label>LGBT Equality</label>
+            </value>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <label>None</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Parks</fullName>
+                <default>false</default>
+                <label>Parks</label>
+            </value>
+            <value>
+                <fullName>Politics</fullName>
+                <default>false</default>
+                <label>Politics</label>
+            </value>
+            <value>
+                <fullName>Public Health</fullName>
+                <default>false</default>
+                <label>Public Health</label>
+            </value>
+            <value>
+                <fullName>Social Services and Community Development</fullName>
+                <default>false</default>
+                <label>Social Services and Community Development</label>
+            </value>
+            <value>
+                <fullName>Tourism and Marketing</fullName>
+                <default>false</default>
+                <label>Tourism and Marketing</label>
+            </value>
+            <value>
+                <fullName>Transportation</fullName>
+                <default>false</default>
+                <label>Transportation</label>
+            </value>
+            <value>
+                <fullName>Veterans Affairs</fullName>
+                <default>false</default>
+                <label>Veterans Affairs</label>
+            </value>
+            <value>
+                <fullName>Youth Development</fullName>
+                <default>false</default>
+                <label>Youth Development</label>
+            </value>
+            <value>
+                <fullName>Personal</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Personal</label>
+            </value>
+            <value>
+                <fullName>Project 0214</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Project 0214</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

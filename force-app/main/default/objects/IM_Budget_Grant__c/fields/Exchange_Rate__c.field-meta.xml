@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exchange_Rate__c</fullName>
+    <description>IM-282: Exchange rate if currency is non USD.</description>
+    <externalId>false</externalId>
+    <formula>Confirmed_Budget_Amount_Local__c  /  Confirmed_Budget_Amount_USD__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Exchange Rate</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>10</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

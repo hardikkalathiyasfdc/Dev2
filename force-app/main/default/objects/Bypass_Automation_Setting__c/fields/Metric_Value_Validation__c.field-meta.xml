@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Metric_Value_Validation__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>BRME-6951: Bypass checkbox for Metric_Value__c object validations</description>
+    <label>Metric Value Validation</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

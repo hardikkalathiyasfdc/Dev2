@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>IM-281:Custom Permission to grant access to Budget tab.</description>
+    <isLicensed>false</isLicensed>
+    <label>IM: Budget Tab Access</label>
+</CustomPermission>

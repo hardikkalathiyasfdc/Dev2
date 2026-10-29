@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="category" type="String" default="Strategy" label="Category"
+                required="true" datasource="Strategy, Metrics, Final Docs, Budget, Communications, Private Docs, Highlight" />
+            <property name="showAddFiles" type="Boolean" default="false"
+                label="Show Add Files button?" required="true" />
+            <property name="showAddLinks" type="Boolean" default="false"
+                label="Show Add File Links button?" required="true" />
+            <property name="showDeleteButton" type="Boolean" default="false"
+                label="Is Deletion Allowed?" required="true" />
+            <property name="customPermission" type="String" default=""
+                label="Custom Permission Name" />
+            <property name="header" type="String" default="Files"
+                label="Header" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

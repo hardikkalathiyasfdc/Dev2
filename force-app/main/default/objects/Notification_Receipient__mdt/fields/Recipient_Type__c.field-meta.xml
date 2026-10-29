@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recipient_Type__c</fullName>
+    <description>IM-588:Indicates whether this address is used as To, Cc, or Bcc on the notification email.</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Recipient Type</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>To</fullName>
+                <default>true</default>
+                <label>To</label>
+            </value>
+            <value>
+                <fullName>Cc</fullName>
+                <default>false</default>
+                <label>Cc</label>
+            </value>
+            <value>
+                <fullName>Bcc</fullName>
+                <default>false</default>
+                <label>Bcc</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

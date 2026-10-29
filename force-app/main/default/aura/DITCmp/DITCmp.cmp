@@ -1,0 +1,303 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" controller="DITCmpController"
+    access="global">
+    <aura:html tag="style">
+        :root { --lwc-colorBackgroundPathActiveHover: teal !important;
+        --lwc-colorBackgroundPathActive: teal !important;
+        --lwc-colorBorderPathCurrentHover: teal !important; }
+    </aura:html>
+    <aura:html tag="style">.toastMessage.forceActionsText{ white-space : pre-line !important;
+        }</aura:html>
+    <ltng:require scripts="{!join(',',
+                           $Resource.jszip,
+                           $Resource.xlsx,
+                           $Resource.Confetti,
+                           $Resource.ExcelJS + '/unpkg/exceljs.min.js',
+                           $Resource.cmputil)}" afterScriptsLoaded="{!c.init}" />
+    <aura:import library="lightning:confirm" property="LightningConfirm" />
+    <aura:attribute name="isLoading" type="Boolean" default="false" />
+    <aura:attribute name="isLoading2" type="Boolean" default="false" />
+    <aura:attribute name="disabledNext" type="Boolean" default="false" />
+
+    <aura:attribute name="dataLoaderId" type="String" default="" />
+    <aura:attribute name="dataLoad" type="Map" />
+    <aura:attribute name="fileName" type="String" default="" />
+    <aura:attribute name="stage" type="String" default="loadFile" />
+    <aura:attribute name="ditColumns" type="List" default="[]" />
+    <aura:attribute name="accepted" type="Boolean" default="false" />
+    <!--uploading data-->
+    <aura:attribute name="uploadData" type="List" default="[]" />
+    <aura:attribute name="uploadColumns" type="Map" default="{}" />
+    <aura:attribute name="unconfirmedRecords" type="List" default="[]" />
+    <!--Setup data-->
+    <aura:attribute name="showSetupWarning" type="Boolean" default="false" />
+    <aura:attribute name="sfColumns" type="List" default="[]" />
+    <aura:attribute name="excelColumns" type="List" default="[]" />
+    <aura:attribute name="isStageChange" type="Boolean" default="false" />
+
+    <!--Preview data-->
+    <aura:attribute name="showPreviewBackWarning" type="Boolean" default="false" />
+    <aura:attribute name="previewColumns" type="List" default="[]" />
+    <aura:attribute name="previewData" type="List" default="[]" />
+    <aura:attribute name="previewErrors" type="List" default="[]" />
+    <aura:attribute name="showPreviewError" type="Boolean" default="false" />
+
+    <!--Contact data-->
+    <aura:attribute name="contactList" type="List" default="[]" />
+
+    <!--Create-->
+    <aura:attribute name="createValue" type="String" default="existingList" />
+    <aura:attribute name="selectedList" type="sObject" default="{}" />
+    <aura:attribute name="newListName" type="String" default="" />
+
+    <aura:attribute name="contactSelected" type="Map" default="{}" />
+
+    <aura:attribute name="isMergeReady" type="Boolean" default="false" />
+
+    <aura:attribute name="showDupe" type="Boolean" default="false" />
+    <aura:attribute name="dupe" type="Map" default="{}" />
+    <lightning:card footer="" title="Data Import" class="myCard">
+        <aura:if isTrue="{!and(v.stage != 'loadFile', not(empty(v.fileName)))}">
+            <div style="width: 100%; font-size: large; text-align: center">
+                <h1>Filename: {!v.fileName}</h1>
+            </div>
+        </aura:if>
+
+        <div class="slds-path" style="width: 100%; padding: 1%">
+            <div class="slds-grid slds-path__track">
+                <div class="slds-grid slds-path__scroller-container">
+                    <div class="slds-path__scroller">
+                        <div class="slds-path__scroller_inner">
+                            <ul class="slds-path__nav" role="listbox" aria-orientation="horizontal">
+                                <li title="Choose the excel file of Contacts to be added into BRM."
+                                    class="{!v.stage == 'loadFile' ? 'slds-path__item slds-is-current slds-is-active' : 'slds-path__item slds-is-current'}"
+                                    role="presentation">
+                                    <a aria-selected="true" class="slds-path__link" name="loadFile"
+                                        href="javascript:void(0)" id="path-1" role="option" tabindex="0">
+                                        <span class="slds-path__title">Upload File</span>
+                                    </a>
+                                </li>
+                                <li title="Map all of the fields from the excel file to corresponding fields within BRM."
+                                    class="{!v.stage == 'setup' ? 'slds-path__item slds-is-current slds-is-active' : 'slds-path__item slds-is-current'}"
+                                    role="presentation">
+                                    <a aria-selected="false" class="slds-path__link" name="setup"
+                                        style="text-decoration: none" href="javascript:void(0)" id="path-2"
+                                        role="option" tabindex="-1">
+                                        <span class="slds-path__title">Map Columns</span>
+                                    </a>
+                                </li>
+                                <li title="Review values from the excel and make edits or match them to existing values within BRM."
+                                    class="{!v.stage == 'preview' ? 'slds-path__item slds-is-current slds-is-active' : 'slds-path__item slds-is-current'}"
+                                    role="presentation">
+                                    <a aria-selected="false" class="slds-path__link" href="javascript:void(0)"
+                                        id="path-3" style="text-decoration: none" role="option" tabindex="-1">
+                                        <span class="slds-path__title">Preview</span>
+                                    </a>
+                                </li>
+                                <li title="Review values from the excel and make edits or match them to existing values within BRM."
+                                    class="{!v.stage == 'unconfirm' ? 'slds-path__item slds-is-current slds-is-active' : 'slds-path__item slds-is-current'}"
+                                    role="presentation">
+                                    <a aria-selected="false" class="slds-path__link" href="javascript:void(0)"
+                                        id="path-3" style="text-decoration: none" role="option" tabindex="-1">
+                                        <span class="slds-path__title">Review Errors</span>
+                                    </a>
+                                </li>
+
+                                <li title="Compare and match excel Contacts to existing Contacts already in BRM and import any new details from the excel."
+                                    class="{!v.stage == 'contact' ? 'slds-path__item slds-is-current slds-is-active' : 'slds-path__item slds-is-current'}"
+                                    role="presentation">
+                                    <a aria-selected="false" class="slds-path__link" href="javascript:void(0)"
+                                        id="path-4" role="option" tabindex="-1">
+                                        <span class="slds-path__title">Compare Potential Duplicates</span>
+                                    </a>
+                                </li>
+                                <li title="Choose or create a list to import the Contacts into and update/create Contacts in BRM!"
+                                    class="{!v.stage == 'create' ? 'slds-path__item slds-is-current slds-is-active' : 'slds-path__item slds-is-current'}"
+                                    role="presentation">
+                                    <a aria-selected="false" class="slds-path__link" href="javascript:void(0)"
+                                        id="path-5" role="option" tabindex="-1">
+                                        <span class="slds-path__title">Import</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="myActions">
+            <aura:if isTrue="{!v.stage != 'loadFile'}">
+                <lightning:button label="Prev" iconName="utility:back" iconPosition="left" variant="brand"
+                    onclick="{!c.handleBack}" />
+            </aura:if>
+            <aura:if isTrue="{!or(or(v.stage=='setup', v.stage == 'preview'), v.stage =='unconfirm')}">
+                <lightning:button label="Next" iconName="utility:forward" iconPosition="right" variant="brand"
+                    disabled="{!v.disabledNext}" onclick="{!c.handleNext}" />
+            </aura:if>
+
+            <aura:if isTrue="{!v.stage == 'contact'}">
+                <lightning:button label="Next" iconName="utility:forward" iconPosition="right" variant="brand"
+                    onclick="{!c.handleNext}" />
+            </aura:if>
+            <aura:if isTrue="{!v.stage == 'create'}">
+                <lightning:button label="Finish and Import" variant="brand" onclick="{!c.handleDone}" />
+            </aura:if>
+        </div>
+        <aura:if isTrue="{! or(v.isLoading,v.isLoading2)}">
+            <lightning:spinner alternativeText="Loading" size="medium" />
+        </aura:if>
+        <p class="slds-p-horizontal_small">
+            <aura:if isTrue="{!v.stage == 'loadFile'}">
+                <c:DITLoadCmp stage="{!v.stage}" dataLoaderId="{!v.dataLoaderId}" isLoading="{!v.isLoading}"
+                    dataLoad="{!v.dataLoad}" uploadData="{!v.uploadData}" uploadColumns="{!v.uploadColumns}"
+                    fileName="{!v.fileName}"></c:DITLoadCmp>
+            </aura:if>
+
+        <div style="margin-top: 1%">
+            <aura:if isTrue="{!v.stage == 'setup'}">
+                <c:DITSetupCmp stage="{!v.stage}" isLoading="{!v.isLoading}" dataLoad="{!v.dataLoad}"
+                    uploadColumns="{!v.uploadColumns}" uploadData="{!v.uploadData}" excelColumns="{!v.excelColumns}"
+                    ditColumns="{!v.ditColumns}" dataLoaderId="{!v.dataLoaderId}" sfColumns="{!v.sfColumns}">
+                </c:DITSetupCmp>
+            </aura:if>
+            <aura:if isTrue="{!v.stage == 'preview'}">
+                <c:DITValidationCmp dataLoaderId="{!v.dataLoaderId}" excelColumns="{!v.excelColumns}"
+                    uploadData="{!v.uploadData}" dataLoad="{!v.dataLoad}" fileName="{!v.fileName}"
+                    isLoading="{!v.isLoading}" uploadColumns="{!v.uploadColumns}" previewColumns="{!v.previewColumns}"
+                    previewData="{!v.previewData}"></c:DITValidationCmp>
+            </aura:if>
+
+            <aura:if isTrue="{!v.stage == 'unconfirm'}">
+                <c:DITConfirmRecords unconfirmedRecords="{!v.unconfirmedRecords}" dataLoaderId="{!v.dataLoaderId}"
+                    contactList="{!v.contactList}" isLoading="{!v.isLoading}" isStageChange="{!v.isStageChange}"
+                    disabledNext="{!v.disabledNext}"></c:DITConfirmRecords>
+            </aura:if>
+            <aura:if isTrue="{!v.stage == 'contact'}">
+                <c:DITStareCompareCmp selectedContact="{!v.contactSelected}" dataLoaderId="{!v.dataLoaderId}"
+                    contactList="{!v.contactList}" isLoading="{!v.isLoading}" isStageChange="{!v.isStageChange}"
+                    isMergeReady="{!v.isMergeReady}"></c:DITStareCompareCmp>
+            </aura:if>
+
+            <aura:if isTrue="{!v.stage == 'create'}">
+                <c:DITCreateCmp contactList="{!v.contactList}" createValue="{!v.createValue}"
+                    listName="{!v.newListName}" dataLoaderId="{!v.dataLoaderId}" selectedRecord="{!v.selectedList}"
+                    accepted="{!v.accepted}"></c:DITCreateCmp>
+            </aura:if>
+        </div>
+        </p>
+    </lightning:card>
+
+    <aura:if isTrue="{!v.showSetupWarning}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{!c.closeSetupWarning}"
+                        alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+                        Warning: Not All Fields are mapped.
+                    </h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <h1>
+                        Not all BRM fields are mapped, are you sure you want to proceed?
+                    </h1>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="brand" label="Yes" title="Yes" onclick="{! c.setupNext }" />
+                    <lightning:button variant="neutral" label="No" title="No" onclick="{!c.closeSetupWarning}" />
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+
+    <aura:if isTrue="{!v.showPreviewBackWarning}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{!c.closePreviewWarning}"
+                        alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+                        Warning
+                    </h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <h1>
+                        Going back to setup columns may cause resets to values on excel.
+                    </h1>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="brand" label="Yes" title="Yes" onclick="{! c.showSetup }" />
+                    <lightning:button variant="neutral" label="No" title="No" onclick="{!c.closePreviewWarning}" />
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    <aura:if isTrue="{!v.showPreviewError}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open" style="width: 90%">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{!c.closePreviewError}"
+                        alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+                        Error on validate
+                    </h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <h1>The following record(s) must be corrected before moving on.</h1>
+                    <br />
+                    <div style="width: 100%; height: 400px">
+                        <aura:if isTrue="{!not(empty(v.previewErrors))}">
+                            <ul>
+                                <aura:iteration items="{!v.previewErrors}" var="errors" indexVar="conIdx">
+                                    <li style="color: red; margin-bottom: 1%">{!errors}</li>
+                                </aura:iteration>
+                            </ul>
+                        </aura:if>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="brand" label="Okay" title="Okay" onclick="{! c.closePreviewError }" />
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    <aura:if isTrue="{!v.showDupe}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeDupeModal }"
+                        alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
+                        Resolving {!v.dupe.name}
+                    </h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <aura:if isTrue="{!not(empty(v.dupe.data))}">
+                        <h1>Possible Matches for Orgs</h1>
+                        <br />
+                        <ul>
+                            <aura:iteration items="{!v.dupe.data}" var="dupe" indexVar="dupeIdx">
+                                <li>
+                                    <lightning:button label="{!dupe.Name}" name="{!dupeIdx}" iconPosition="left"
+                                        class="fullWidth" onclick="{!c.handleDupeAction}" />
+                                </li>
+                            </aura:iteration>
+                        </ul>
+                    </aura:if>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{! c.closeDupeModal }" />
+                    <lightning:button variant="brand" label="Create New" title="Create New"
+                        onclick="{!c.handleDupeCreate}" />
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>

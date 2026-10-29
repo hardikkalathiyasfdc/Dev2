@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Built for Erica Soto to be able to distribute gala and event tickets according to where employees live. Controls Contact fields: Employee Confidential State/Province, Employee Confidential zip/postal code, and Employee Engagement Notes</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Employee_Confidential_State_Province__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Employee_Confidential_Zip_Postal_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Employee_Engagement_Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Employee_Engagement_Response_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Contact: BP Employee - Employee Engagement Confidential  Permissions</label>
+</PermissionSet>

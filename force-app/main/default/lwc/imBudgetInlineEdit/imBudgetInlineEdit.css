@@ -1,0 +1,12 @@
+.slds-card__header {
+    background-color: var(--slds-c-card-color-background, #f3f3f3);
+}
+
+.slds-icon-color{
+    --slds-c-icon-color-background: #3BA755;
+}
+
+.slds-inline-edit {
+    border: 1px solid #D8D8D8;
+    border-radius: 5px;
+}

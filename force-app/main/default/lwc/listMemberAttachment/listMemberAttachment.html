@@ -1,0 +1,48 @@
+<template>
+	<template if:false={noAccess}>
+		<lightning-card >
+			<div style="margin-top: -1.2rem;">
+				<div class="slds-grid slds-page-header forceRelatedListCardHeader" data-aura-class="forceRelatedListCardHeader">
+				   <header class="slds-media slds-media--center slds-has-flexi-truncate" >
+				      <div class="slds-media__figure stencil slds-avatar slds-avatar_small" aria-hidden="true" >
+				         <div class="extraSmall forceEntityIcon" style="background-color: #BAAC93" data-aura-class="forceEntityIcon"><span class="uiImage" data-aura-class="uiImage"><img src="/img/icon/t4v35/standard/file_120.png" class="icon " alt="Files" title="Files"></span></div>
+				      </div>
+				      <div class="slds-media__body" data-aura-rendered-by="1030:0">
+				         <h2 class="slds-card__header-title" id="header_1011:0" >{title}</h2>
+				      </div>
+				   </header>
+				</div>
+			</div>
+	    	<div class="slds-m-left_small">
+	    		<lightning-file-upload
+			            label=""
+			            name="fileUploader"
+			            record-id={listId}
+			            onuploadfinished={handleUploadFinished}
+			            multiple>
+			    </lightning-file-upload>
+	    	</div>
+	       	<div if:true={showSpinner} class="slds-is-relative">
+	            <lightning-spinner
+	            	size="medium"
+	                alternative-text="Loading...">
+	            </lightning-spinner>
+	        </div>
+	        <template if:true={showExistedAttachmentSection}>
+		       	<div class="slds-m-around_small">
+			        <template if:true={attchements}>
+			        	<lightning-datatable
+			                key-field="Id"
+			                data={attchements}
+			                columns={columns}
+			                onrowaction={handleRowAction}
+			                hide-checkbox-column="true"
+			                >
+				        </lightning-datatable>
+				    </template>
+				</div>
+			</template>
+		</lightning-card>
+	</template>
+
+</template>

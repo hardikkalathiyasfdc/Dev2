@@ -1,0 +1,33 @@
+<template>
+    <div>
+        <lightning-card  variant="Narrow"  title="Prospective Soft Credits" icon-name="standard:account">
+            <template lwc:if={showList}>
+                <template lwc:if={hasContacts}>
+                    <div>
+                        <lightning-datatable
+                            hide-checkbox-column="true"
+                            key-field="donorId"
+                            data={previousContactSoftCredits}
+                            columns={donorContactColumns}>
+                        </lightning-datatable>
+                    </div>
+                </template>
+
+                <template lwc:if={hasOrgs}>
+                    <div class="slds-p-top_medium">
+                        <lightning-datatable
+                            hide-checkbox-column="true"
+                            key-field="donorId"
+                            data={previousOrgSoftCredits}
+                            columns={donorOrgColumns}>
+                        </lightning-datatable>
+                    </div>
+                </template>
+            </template>
+            <template lwc:else>
+                
+            </template>
+        </lightning-card>
+        
+    </div>
+</template>

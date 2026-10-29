@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Geography__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>IM-45:Geography specified in Budget Template for a row</description>
+    <label>Geography</label>
+    <referenceTo>IM_Geography__c</referenceTo>
+    <relationshipLabel>Budget Rows</relationshipLabel>
+    <relationshipName>Budget_Rows</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

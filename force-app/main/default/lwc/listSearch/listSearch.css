@@ -1,0 +1,5 @@
+/* sample css file */
+.my-icon {
+    --sds-c-icon-color-foreground-default: #098bca;
+    --sds-c-icon-color-background: #FFFFFF;
+}

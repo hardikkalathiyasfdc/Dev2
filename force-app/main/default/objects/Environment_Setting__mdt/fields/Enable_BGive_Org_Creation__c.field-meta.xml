@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enable_BGive_Org_Creation__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>BRME-6069: Checkbox to enable &apos;Create New Org&apos; functionality in B-Link tab</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Enable BGive Org Creation</label>
+    <type>Checkbox</type>
+</CustomField>

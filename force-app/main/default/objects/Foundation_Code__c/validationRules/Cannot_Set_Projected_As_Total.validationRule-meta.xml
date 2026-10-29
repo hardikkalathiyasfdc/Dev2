@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Set_Projected_As_Total</fullName>
+    <active>true</active>
+    <description>BRME-6797: Rule to not allow users to set Projected As Title for certain Foundation Codes</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Foundation_Code_Validation__c &amp;&amp; 
+ AND(OR(ISPICKVAL(Type__c , &apos;Initiative Root&apos;) ,ISPICKVAL(Type__c , &apos;Focus Area&apos;), ISPICKVAL(Type__c , &apos;Non Initiative&apos;), ISPICKVAL(Type__c , &apos;Non Initiative Root&apos;)), Projection_Total_Calculated__c)</errorConditionFormula>
+    <errorMessage>The Projected Total As cannot be set for this Foundation Code.</errorMessage>
+</ValidationRule>

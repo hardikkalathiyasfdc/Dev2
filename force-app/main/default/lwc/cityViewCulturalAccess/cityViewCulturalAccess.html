@@ -1,0 +1,128 @@
+<template>
+    <template lwc:if={isLoading}>
+        <lightning-spinner alternative-text="Loading cultural access…" size="medium"></lightning-spinner>
+    </template>
+    <!-- Country Cultural List -->
+    <template lwc:if={showCulturalDataForCountryState}>
+        <div class="slds-m-top_xx-small box slds-p-around_x-small slds-m-right_small">
+            <h3>Cultural Access</h3>
+            <div style={innedBoxClass}>
+                <template lwc:if={cities.length}>
+                    <template for:each={cities} for:item="city">
+                        <section key={city.id} class="city-section">
+                            <div class="city-header sticky">
+                                <a href="javascript:void(0);" class="city-link" data-id={city.id}
+                                    aria-expanded={city.isExpanded} onclick={toggleCity}>
+                                    {city.name} ({city.count})
+                                </a>
+                            </div>
+                            <template lwc:if={city.isExpanded}>
+                                <div class="city-body">
+                                    <div class="city-table-shell">
+                                        <table class="slds-table">
+                                            <tbody>
+                                                <template lwc:if={city.rows.length}>
+                                                    <template for:each={city.rows} for:item="data">
+                                                        <tr key={data.id} class="table-border">
+                                                            <td class="no-padding">
+                                                                <div class="access-box">
+                                                                    <div class="access-title sticky-sub">
+                                                                        <a href="javascript:void(0);"
+                                                                            class="access-link" data-id={data.id}
+                                                                            data-city={city.id}
+                                                                            aria-expanded={data.showBenefit}
+                                                                            onclick={handleOrgClick}>
+                                                                            {data.organizationName}
+                                                                        </a>
+                                                                    </div>
+                                                                    <template lwc:if={data.showBenefit}>
+                                                                        <div class="access-details">
+                                                                            <template lwc:if={data.address}>
+                                                                                <h1><b>{data.address}</b></h1><br />
+                                                                            </template>
+                                                                            <template lwc:if={data.culturalBenefit}>
+                                                                                <lightning-formatted-rich-text
+                                                                                    value={data.culturalBenefit}>
+                                                                                </lightning-formatted-rich-text>
+                                                                            </template>
+                                                                            <template lwc:else>
+                                                                                <p>No Cultural Access benefits data at this time</p>
+                                                                            </template>
+                                                                        </div>
+                                                                    </template>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </template>
+                                                </template>
+                                                <template lwc:else>
+                                                    <tr>
+                                                        <td>No Cultural Partners</td>
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </template>
+                        </section>
+                    </template>
+                </template>
+                <template lwc:else>
+                    <div class="slds-text-color_weak slds-m-top_small">No Cultural Partners</div>
+                </template>
+            </div>
+        </div>
+    </template>
+    <!-- City Cultural List -->
+    <template lwc:else>
+        <template lwc:if={isGeoAreaIdAvailable}>
+            <div class="slds-m-top_xx-small box slds-p-around_x-small slds-m-right_small">
+                <h3>Cultural Access</h3>
+                <div style={innedBoxClass}>
+                    <table class="slds-table">
+                        <tbody>
+                            <template lwc:if={showCulturalData}>
+                                <template for:each={culturalData} for:item="data">
+                                    <tr key={data.Id} class="table-border">
+                                        <td class="no-padding">
+                                            <div class="access-box">
+                                                <div class="access-title sticky-sub" role="button" tabindex="0"
+                                                    aria-expanded={data.showBenefit} data-id={data.id}
+                                                    onclick={handleOrgClick}>
+                                                    <span class="access-name">
+                                                        <a href="javascript:void(0);">{data.organizationName}</a>
+                                                    </span>
+                                                </div>
+                                                <template lwc:if={data.showBenefit}>
+                                                    <div class="access-details">
+                                                        <template lwc:if={data.address}>
+                                                            <h1><b>{data.address}</b></h1><br />
+                                                        </template>
+                                                        <template lwc:if={data.culturalBenefit}>
+                                                            <lightning-formatted-rich-text value={data.culturalBenefit}>
+                                                            </lightning-formatted-rich-text>
+                                                        </template>
+                                                        <template lwc:else>
+                                                            <p>No Cultural Access benefits data at this time</p>
+                                                        </template>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </template>
+                            <template lwc:else>
+                                <tr>
+                                    <td>No Cultural Partners</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </template>
+    </template>
+</template>

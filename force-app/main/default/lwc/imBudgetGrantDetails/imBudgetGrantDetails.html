@@ -1,0 +1,395 @@
+<!--
+  @description       : 
+  @author            : Gauri S
+  @group             : 
+  @last modified on  : 08-14-2025
+  @last modified by  : Sai Bhargav Thotakura
+-->
+<template>
+	<div class="slds-section slds-is-open">
+		<c-alert-banner object-api-name="IM_Grant__c" field-api-name="Pending_Action_Alert_Message__c"
+			record-id={imGrant.Id} header="Errors"> </c-alert-banner>
+		<div class="slds-grid"></div>
+	</div>
+	<template lwc:if={isBudgetGrantView}>
+		<div class="slds-section slds-is-open">
+			<h3 class="slds-section__title slds-theme_shade">
+				<span class="slds-truncate slds-var-p-horizontal_small" title="Section Title">Details</span>
+			</h3>
+			<div class="slds-grid">
+				<div class="slds-col slds-size_5-of-12">
+					<div class="slds-form-element_horizontal">
+						<div class="slds-grid slds-m-bottom_medium slds-m-top_small">
+							<div class="slds-col slds-size_4-of-12">
+								<p><lightning-formatted-text value="Partner Org"
+										class="slds-font-style"></lightning-formatted-text></p>
+							</div>
+							<div class="slds-col slds-size_5-of-12">
+								<p class="slds-truncate">
+									<!--IM-316: Show Not B-Linked if the org is not B-Linked-->
+									<template lwc:if={isPartnerOrgNotBlinked}>
+										<lightning-layout class="slds-m-around_none" vertical-align="center">
+											<lightning-layout-item flexibility="auto">
+												<div class="display-class">
+													<lightning-formatted-url value={partnerOrg}
+														label={imGrant.Partner_Org__r.Name}> </lightning-formatted-url>
+													<div class="not-blinked-class">
+														<lightning-formatted-text class="custom-bold"
+															value="(Not B-Linked)"></lightning-formatted-text>
+													</div>
+												</div>
+											</lightning-layout-item>
+										</lightning-layout>
+									</template>
+									<template lwc:else>
+										<lightning-formatted-url value={partnerOrg} label={imGrant.Partner_Org__r.Name}>
+										</lightning-formatted-url>
+									</template>
+								</p>
+							</div>
+						</div>
+						<div class="slds-grid slds-m-bottom_small">
+							<div class="slds-col slds-size_4-of-12">
+								<p><lightning-formatted-text value="Tax Status"
+										class="slds-font-style"></lightning-formatted-text></p>
+							</div>
+							<div class="slds-col slds-size_5-of-12">
+								<p><lightning-formatted-text value={imGrant.Tax_Status__c}></lightning-formatted-text>
+								</p>
+							</div>
+						</div>
+						<div class="slds-m-bottom_small">
+							<lightning-combobox name="generate" label="Bgive IM Connection"
+								value={imGrant.Bgive_IM_Connection__c} options={bgiveIMConnectionValues}
+								disabled={isReadOnly} placeholder="Select" onchange={handleSyncTypeChange}>
+							</lightning-combobox>
+						</div>
+						<template if:false={isNotInBgive}>
+							<div>
+								<lightning-combobox name="allocationType" label="Funded By Multiple Initiatives?"
+									value={imGrant.Funded_By_Multiple_Initiatives__c} options={fundedByMultipleValues}
+									disabled={isReadOnly} placeholder="Select" onchange={handleAllocationTypeChange}>
+								</lightning-combobox>
+							</div>
+						</template>
+						<template if:true={isBgiveManaged}>
+							<div>
+								<lightning-combobox name="allocationType" label="Funded By Multiple Initiatives?"
+									value={fundedByMultiple} options={fundedByMultipleValues} placeholder="Select"
+									onchange={handleAllocationTypeChange} disabled="true">
+								</lightning-combobox>
+							</div>
+						</template>
+						<template lwc:if={isDateEditable}>
+							<div class="slds-m-top_x-small">
+								<p>
+									<lightning-input type="date" date-style="short" value={imGrant.Start_Date__c}
+										disabled={isReadOnly} label="Start Date" onchange={handleStartDateChange}>
+									</lightning-input>
+								</p>
+							</div>
+						</template>
+						<template lwc:else>
+							<div class="slds-grid slds-m-top_small">
+								<div class="slds-col slds-size_4-of-12">
+									<p><lightning-formatted-text value="Start Date"
+											class="slds-font-style"></lightning-formatted-text></p>
+								</div>
+								<div class="slds-col slds-size_5-of-12">
+									<p>
+										<lightning-formatted-date-time year="numeric" month="numeric" day="numeric"
+											time-zone="UTC" value={startDate}>
+										</lightning-formatted-date-time>
+									</p>
+								</div>
+							</div>
+						</template>
+						<template lwc:if={isDateEditable}>
+							<div class="slds-m-top_x-small">
+								<p>
+									<lightning-input type="date" date-style="short" value={imGrant.End_Date__c}
+										disabled={isReadOnly} label="End Date" onchange={handleEndDateChange}>
+									</lightning-input>
+								</p>
+							</div>
+						</template>
+						<template lwc:else>
+							<div class="slds-grid slds-m-top_medium">
+								<div class="slds-col slds-size_4-of-12">
+									<p><lightning-formatted-text value="End Date"
+											class="slds-font-style"></lightning-formatted-text></p>
+								</div>
+								<div class="slds-col slds-size_5-of-12">
+									<p>
+										<lightning-formatted-date-time year="numeric" month="numeric" day="numeric"
+											time-zone="UTC" value={endDate}>
+										</lightning-formatted-date-time>
+									</p>
+								</div>
+							</div>
+						</template>
+						<template if:true={isFund}>
+							<div class="slds-m-top_small">
+								<lightning-record-picker label="Fund" placeholder="Search funds" value={imGrant.Fund__c}
+									object-api-name="Fund__c" onchange={handleFundChange}>
+								</lightning-record-picker>
+							</div>
+						</template>
+					</div>
+				</div>
+				<div class="slds-col slds-size_1-of-12"></div>
+				<div class="slds-col slds-size_5-of-12">
+					<div class="slds-form-element_horizontal">
+						<div class="slds-grid slds-m-top_small">
+							<div class="slds-col slds-size_4-of-12">
+								<p><lightning-formatted-text value="Status"
+										class="slds-font-style"></lightning-formatted-text></p>
+							</div>
+							<div class="slds-col slds-size_5-of-12">
+								<p><lightning-formatted-text value={imGrant.Status__c}></lightning-formatted-text></p>
+							</div>
+						</div>
+						<div class="slds-grid slds-m-top_small slds-m-bottom_small">
+							<div class="slds-col slds-size_4-of-12">
+								<p><lightning-formatted-text value="Type of Work"
+										class="slds-font-style"></lightning-formatted-text></p>
+							</div>
+							<div class="slds-col slds-size_5-of-12">
+								<p><lightning-formatted-text value={imGrant.Type_of_Work__c}></lightning-formatted-text>
+								</p>
+							</div>
+						</div>
+						<div class="slds-m-top_x-small">
+							<lightning-record-picker label="Currency" placeholder="Search Currencies..."
+								value={selectedCurrency} object-api-name="Currency__c" disabled={isReadOnly}
+								onchange={handleCurrencyChange}>
+							</lightning-record-picker>
+						</div>
+						<div class="slds-grid slds-m-top_medium">
+							<div class="slds-col slds-size_4-of-12">
+								<p><lightning-formatted-text value="Budget Amount (USD)"
+										class="slds-font-style"></lightning-formatted-text></p>
+							</div>
+							<div class="slds-col slds-size_5-of-12">
+								<p>
+									<lightning-formatted-number value={budgetGrant.Budget_Amount_USD__c}
+										format-style="currency" currency-code="USD" currency-display-as="symbol"
+										minimum-fraction-digits="2">
+									</lightning-formatted-number>
+								</p>
+							</div>
+						</div>
+						<template if:true={isUSDAmountDifferent}>
+							<div class="slds-grid slds-m-top_large">
+								<div class="slds-col slds-size_4-of-12">
+									<p><lightning-formatted-text value="Previous Budget Amount (USD)"
+											class="slds-font-style"></lightning-formatted-text></p>
+								</div>
+								<div class="slds-col slds-size_5-of-12">
+									<p>
+										<lightning-formatted-number value={budgetGrant.Confirmed_Budget_Amount_USD__c}
+											format-style="currency" currency-code="USD" currency-display-as="symbol"
+											minimum-fraction-digits="2">
+										</lightning-formatted-number>
+									</p>
+								</div>
+							</div>
+						</template>
+						<template if:true={isNonUSD}>
+							<div class="slds-m-top_small">
+								<p>
+									<lightning-input name="BudgetAmountLocal" data-id="BudgetAmountLocal" type="number"
+										step={inputAmountAttributes.step} max={inputAmountAttributes.max}
+										message-when-range-overflow={inputAmountAttributes.messageWhenRangeOverflow}
+										message-when-step-mismatch={inputAmountAttributes.messageWhenStepMismatch}
+										value={localAmount} label="Budget Amount (Local)" disabled={isReadOnly}
+										onchange={handleLocalAmountChange}>
+									</lightning-input>
+								</p>
+							</div>
+						</template>
+						<template if:true={isLocalAmountDifferent}>
+							<div class="slds-grid slds-m-top_medium">
+								<div class="slds-col slds-size_4-of-12">
+									<p><lightning-formatted-text value="Previous Budget Amount (Local)"
+											class="slds-font-style"></lightning-formatted-text></p>
+								</div>
+								<div class="slds-col slds-size_5-of-12">
+									<p>
+										<lightning-formatted-number value={budgetGrant.Confirmed_Budget_Amount_Local__c}
+											minimum-fraction-digits="2">
+										</lightning-formatted-number>
+									</p>
+								</div>
+							</div>
+						</template>
+					</div>
+				</div>
+			</div>
+		</div>
+	</template>
+	<template lwc:else>
+		<div class="slds-section slds-is-open">
+			<h3 class="slds-section__title slds-theme_shade">
+				<span class="slds-truncate slds-var-p-horizontal_small" title="Section Title">Details</span>
+			</h3>
+			<div class="slds-grid">
+				<div class="slds-col slds-size_5-of-12">
+					<div class="slds-form-element_horizontal">
+						<div class="slds-grid slds-m-bottom_medium slds-m-top_small">
+							<div class="slds-col slds-size_4-of-12">
+								<p><lightning-formatted-text value="Partner Org"
+										class="slds-font-style"></lightning-formatted-text></p>
+							</div>
+							<div class="slds-col slds-size_5-of-12">
+								<p class="slds-truncate">
+									<lightning-formatted-url value={partnerOrg} label={imGrant.Partner_Org__r.Name}>
+									</lightning-formatted-url>
+								</p>
+							</div>
+						</div>
+						<div class="slds-grid slds-m-bottom_small">
+							<div class="slds-col slds-size_4-of-12">
+								<p><lightning-formatted-text value="Tax Status"
+										class="slds-font-style"></lightning-formatted-text></p>
+							</div>
+							<div class="slds-col slds-size_5-of-12">
+								<p><lightning-formatted-text value={imGrant.Tax_Status__c}></lightning-formatted-text>
+								</p>
+							</div>
+						</div>
+						<div class="slds-m-bottom_small">
+							<lightning-combobox name="generate" label="Bgive IM Connection"
+								value={imGrant.Bgive_IM_Connection__c} options={bgiveIMConnectionValues}
+								placeholder="Select" disabled>
+							</lightning-combobox>
+						</div>
+						<template if:false={isNotInBgive}>
+							<div>
+								<lightning-combobox name="allocationType" label="Funded By Multiple Initiatives?"
+									value={imGrant.Funded_By_Multiple_Initiatives__c} options={fundedByMultipleValues}
+									placeholder="Select" disabled>
+								</lightning-combobox>
+							</div>
+						</template>
+						<div class="slds-grid slds-m-top_small">
+							<div class="slds-col slds-size_4-of-12">
+								<p><lightning-formatted-text value="Start Date"
+										class="slds-font-style"></lightning-formatted-text></p>
+							</div>
+							<div class="slds-col slds-size_5-of-12">
+								<p>
+									<lightning-formatted-date-time year="numeric" month="numeric" day="numeric"
+										time-zone="UTC" value={imGrant.Start_Date__c}>
+									</lightning-formatted-date-time>
+								</p>
+							</div>
+						</div>
+						<div class="slds-grid slds-m-top_medium">
+							<div class="slds-col slds-size_4-of-12">
+								<p><lightning-formatted-text value="End Date"
+										class="slds-font-style"></lightning-formatted-text></p>
+							</div>
+							<div class="slds-col slds-size_5-of-12">
+								<p>
+									<lightning-formatted-date-time year="numeric" month="numeric" day="numeric"
+										time-zone="UTC" value={imGrant.End_Date__c}>
+									</lightning-formatted-date-time>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="slds-col slds-size_1-of-12"></div>
+				<div class="slds-col slds-size_5-of-12">
+					<div class="slds-form-element_horizontal">
+						<div class="slds-grid slds-m-top_small">
+							<div class="slds-col slds-size_4-of-12">
+								<p><lightning-formatted-text value="Status"
+										class="slds-font-style"></lightning-formatted-text></p>
+							</div>
+							<div class="slds-col slds-size_5-of-12">
+								<p><lightning-formatted-text value={imGrant.Status__c}></lightning-formatted-text></p>
+							</div>
+						</div>
+						<div class="slds-grid slds-m-top_small slds-m-bottom_small">
+							<div class="slds-col slds-size_4-of-12">
+								<p><lightning-formatted-text value="Type of Work"
+										class="slds-font-style"></lightning-formatted-text></p>
+							</div>
+							<div class="slds-col slds-size_5-of-12">
+								<p><lightning-formatted-text value={imGrant.Type_of_Work__c}></lightning-formatted-text>
+								</p>
+							</div>
+						</div>
+						<div class="slds-m-top_x-small">
+							<lightning-record-picker label="Currency" placeholder="Search Currencies..."
+								value={imGrant.Currency__c} object-api-name="Currency__c" disabled>
+							</lightning-record-picker>
+						</div>
+						<div class="slds-grid slds-m-top_medium">
+							<div class="slds-col slds-size_4-of-12">
+								<p><lightning-formatted-text value="Budget Amount (USD)"
+										class="slds-font-style"></lightning-formatted-text></p>
+							</div>
+							<div class="slds-col slds-size_5-of-12">
+								<p>
+									<lightning-formatted-number format-style="currency" currency-code="USD"
+										currency-display-as="symbol" minimum-fraction-digits="2"
+										value={budgetAmountUSD}>
+									</lightning-formatted-number>
+								</p>
+							</div>
+						</div>
+						<template if:true={isUSDAmountDifferent}>
+							<div class="slds-grid slds-m-top_medium">
+								<div class="slds-col slds-size_4-of-12">
+									<p><lightning-formatted-text value="Previous Budget Amount (USD)"
+											class="slds-font-style"></lightning-formatted-text></p>
+								</div>
+								<div class="slds-col slds-size_5-of-12">
+									<p>
+										<lightning-formatted-number format-style="currency" currency-code="USD"
+											currency-display-as="symbol" value={imGrant.Confirmed_Budget_Amount_USD__c}
+											minimum-fraction-digits="2">
+										</lightning-formatted-number>
+									</p>
+								</div>
+							</div>
+						</template>
+						<template if:true={isNonUSD}>
+							<div class="slds-grid slds-m-top_large">
+								<div class="slds-col slds-size_4-of-12">
+									<p><lightning-formatted-text value="Budget Amount (Local)"
+											class="slds-font-style"></lightning-formatted-text></p>
+								</div>
+								<div class="slds-col slds-size_5-of-12">
+									<p>
+										<lightning-formatted-number value={budgetAmountLocal}
+											minimum-fraction-digits="2">
+										</lightning-formatted-number>
+									</p>
+								</div>
+							</div>
+						</template>
+						<template if:true={isLocalAmountDifferent}>
+							<div class="slds-grid slds-m-top_medium">
+								<div class="slds-col slds-size_4-of-12">
+									<p><lightning-formatted-text value="Previous Budget Amount (Local)"
+											class="slds-font-style"></lightning-formatted-text></p>
+								</div>
+								<div class="slds-col slds-size_5-of-12">
+									<p>
+										<lightning-formatted-number value={imGrant.Confirmed_Budget_Amount_Local__c}
+											minimum-fraction-digits="2">
+										</lightning-formatted-number>
+									</p>
+								</div>
+							</div>
+						</template>
+					</div>
+				</div>
+			</div>
+		</div>
+	</template>
+</template>

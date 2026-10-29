@@ -1,0 +1,57 @@
+<template>
+<template if:true={isLoading}>
+    <lightning-spinner variant="brand" size="large"> </lightning-spinner>
+</template>
+<section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_small">
+    <div class="slds-modal__container">
+        <div class="slds-modal__header">
+            <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Add to List</h1>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" style="height: 300px;" id="modal-content-id-1">
+                <template if:false={isLoading}>
+                    <lightning-radio-group name="radioGroup"
+                                        label="List Selection"
+                                        options={listSelectionOptions}
+                                        value={value}
+                                        onchange={radioChange}
+                                        type="button">
+                    </lightning-radio-group>
+                    
+                    <template if:true={showListLookup}>
+                        <div class="slds-m-top_medium">
+                            <c-generic-lookup
+                                object-api-name="Campaign"
+                                icon="standard:campaign"
+                                label="Select an Existing List"
+                                display-fields={listDisplayFields}
+                                display-field-prefixes={listDisplayFieldPrefixes}
+                                custom-search-class="WeightedFieldLookupSearch"
+                                search-config={listSearchConfig}
+                                filter-clause={listFilterClause}
+                                required
+                                onchange={handleValueSelected}>
+                            </c-generic-lookup>
+                        </div>
+                    </template>
+
+                    <template if:true={showListText}>
+                        <div class="slds-m-top_medium">
+                            <lightning-input type="text" required label="Name of List" onchange={handleNewListNameChange}></lightning-input>
+                        </div>
+                    </template>       
+                </template>
+            </div>
+            <div class="slds-modal__footer">
+                <div class="slds-m-top_medium slds-align_absolute-center">
+                    <div class="slds-float_right">
+                        <lightning-button label="Add" variant="brand" onclick={handleFinish}>
+                        </lightning-button>
+                        &nbsp;&nbsp;
+                        <lightning-button label="Cancel" variant="brand-outline" onclick={handleCancel}>
+                        </lightning-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+</template>

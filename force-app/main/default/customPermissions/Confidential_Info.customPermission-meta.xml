@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This Custom permission is assigned to &quot;Contact: Confidential Phone/Email&quot;.
+Used to include Confidential Fields when exporting Contacts from Tags. Currently, only &apos;Confidential Email&apos; is being included when the user has this permission</description>
+    <isLicensed>false</isLicensed>
+    <label>Confidential Phone and Email</label>
+</CustomPermission>

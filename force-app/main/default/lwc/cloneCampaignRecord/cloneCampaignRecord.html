@@ -1,0 +1,29 @@
+<template>
+    <lightning-card title="Clone Campaign Record" icon-name="standard:campaign">
+        <template if:true={recordFields}>
+            <div class="slds-p-around_medium">
+                <template for:each={recordFields} for:item="field">
+                    <div key={field.fieldName} class="slds-m-bottom_small">
+                        <lightning-input 
+                            label={field.label} 
+                            data-field={field.fieldName}
+                            value={field.value} 
+                            onchange={handleFieldChange}>
+                        </lightning-input>
+                    </div>
+                </template>
+            </div>
+            <div class="slds-m-top_medium">
+                <lightning-button variant="brand" label="Save Clone" onclick={handleSave}></lightning-button>
+            </div>
+        </template>
+        
+        <template if:true={clonedRecordId}>
+            <p class="slds-text-heading_small slds-m-top_medium">Record cloned successfully! New Record ID: {clonedRecordId}</p>
+        </template>
+
+        <template if:true={errorMessage}>
+            <p class="slds-text-color_error slds-m-top_medium">{errorMessage}</p>
+        </template>
+    </lightning-card>
+</template>

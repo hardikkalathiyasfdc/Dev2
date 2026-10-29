@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Event_Region__c</fullName>
+    <description>Formula dependent on Event Location. Based on US Census Bureau-designated regions</description>
+    <externalId>false</externalId>
+    <formula>Case( Event_Location__c,
+
+&quot;Colorado&quot;, &quot;Mountain&quot;,
+&quot;Wyoming&quot;, &quot;Mountain&quot;,
+&quot;Utah&quot;, &quot;Mountain&quot;,
+&quot;New Mexico&quot;, &quot;Mountain&quot;,
+&quot;Nevada&quot;, &quot;Mountain&quot;,
+&quot;Idaho&quot;, &quot;Mountain&quot;,
+&quot;Arizona&quot;, &quot;Mountain&quot;,
+&quot;Montana&quot;, &quot;Mountain&quot;,
+&quot;Washington&quot;, &quot;Pacific&quot;,
+&quot;Oregon&quot;, &quot;Pacific&quot;,
+&quot;California&quot;, &quot;Pacific&quot;,
+&quot;Hawaii&quot;, &quot;Pacific&quot;,
+&quot;Alaska&quot;, &quot;Pacific&quot;,
+&quot;Illinois&quot;, &quot;East North Central&quot;,
+&quot;Indiana&quot;, &quot;East North Central&quot;,
+&quot;Michigan&quot;, &quot;East North Central&quot;,
+&quot;Ohio&quot;, &quot;East North Central&quot;,
+&quot;Wisconsin&quot;, &quot;East North Central&quot;,
+&quot;Iowa&quot;, &quot;West North Central&quot;,
+&quot;Kansas&quot;,&quot;West North Central&quot;,
+&quot;Minnesota&quot;,&quot;West North Central&quot;,
+&quot;Missouri&quot;,&quot;West North Central&quot;,
+&quot;Nebraska&quot;,&quot;West North Central&quot;,
+&quot;North Dakota&quot;,&quot;West North Central&quot;,
+&quot;South Dakota&quot;,&quot;West North Central&quot;,
+&quot;Maine&quot;,&quot;New England&quot;,
+&quot;Vermont&quot;,&quot;New England&quot;,
+&quot;New Hampshire&quot;,&quot;New England&quot;,
+&quot;Massachusetts&quot;,&quot;New England&quot;,
+&quot;Rhode Island&quot;,&quot;New England&quot;,
+&quot;Connecticut&quot;,&quot;New England&quot;,
+&quot;New Jersey&quot;,&quot;Mid Atlantic&quot;,
+&quot;Pennsylvania&quot;,&quot;Mid Atlantic&quot;,
+&quot;New York&quot;,&quot;Mid Atlantic&quot;,
+&quot;Delaware&quot;,&quot;South Atlantic&quot;,
+&quot;Maryland&quot;,&quot;South Atlantic&quot;,
+&quot;Florida&quot;,&quot;South Atlantic&quot;,
+&quot;Georgia&quot;,&quot;South Atlantic&quot;,
+&quot;North Carolina&quot;,&quot;South Atlantic&quot;,
+&quot;South Carolina&quot;,&quot;South Atlantic&quot;,
+&quot;Virginia&quot;,&quot;South Atlantic&quot;,
+&quot;West Virginia&quot;,&quot;South Atlantic&quot;,
+&quot;District of Columbia&quot;,&quot;South Atlantic&quot;,
+&quot;Alabama&quot;,&quot;East South Central&quot;,
+&quot;Kentucky&quot;,&quot;East South Central&quot;,
+&quot;Mississippi&quot;,&quot;East South Central&quot;,
+&quot;Tennessee&quot;,&quot;East South Central&quot;,
+&quot;Arkansas&quot;,&quot;West South Central&quot;,
+&quot;Louisiana&quot;,&quot;West South Central&quot;,
+&quot;Oklahoma&quot;,&quot;West South Central&quot;,
+&quot;Texas&quot;,&quot;West South Central&quot;, &quot;&quot; )</formula>
+    <label>Event Region</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

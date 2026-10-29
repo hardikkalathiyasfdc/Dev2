@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OutreachToByBPContacts__c</fullName>
+    <description>As per the ticket 3857-Outreach To/By BP Contacts changed to Outreach Contacts</description>
+    <externalId>false</externalId>
+    <formula>IF( ISBLANK( Relationship_Owner__c ) ,&quot;&quot;, IF( AND(ISBLANK( RelationshipOwner1__c ), ISBLANK( RelationshipOwner2__c )) ,Relationship_Owner__r.Full_Name__c, Relationship_Owner__r.Full_Name__c+&quot;, &quot;))  + IF( ISBLANK( RelationshipOwner1__c ) ,&quot;&quot;, IF( NOT(ISBLANK( RelationshipOwner2__c )) ,RelationshipOwner1__r.Full_Name__c+&quot;, &quot;,RelationshipOwner1__r.Full_Name__c)) + IF( ISBLANK( RelationshipOwner2__c ) ,&quot;&quot;, RelationshipOwner2__r.Full_Name__c )</formula>
+    <label>Outreach Contacts</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

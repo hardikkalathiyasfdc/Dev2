@@ -1,0 +1,59 @@
+<template>
+    <template lwc:if={isGeoAreaIdAvailable}>
+        <template lwc:if={isLoading}>
+            <lightning-spinner variant="brand" size="large"></lightning-spinner>
+        </template>
+        <template lwc:else>
+            <div class="slds-m-top_medium box slds-p-around_x-small" id={geoAreaId}>
+                <h3>Bloomberg Office(s)</h3>
+                <div style={tableStyle} data-id="LPOffices">
+                    <table class="slds-table">
+                        <tbody>
+                            <template if:true={showAddress}>
+                                <template for:each={bmoAddresses} for:item="address">
+                                    <tr key={address.bmoOfficeId} style={address.colorCode} title={address.focusArea}
+                                        class="table-border">
+                                        <td class="slds-p-vertical_x-small">
+                                            <div class="slds-grid slds-wrap" style="align-items: center;">
+                                                <div
+                                                    style="display: flex; align-items: center; white-space: normal; min-width: 0;">
+                                                    <div style="flex: 0 0 auto;">
+                                                        <svg width="35px" height="35px" viewBox="-100 -100 3167 1991"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <title>office icon</title>
+                                                            <g>
+                                                                <circle cx="981.4" cy="962.4" r="943.5" fill="black" />
+                                                                <path fill="white"
+                                                                    d="M948.1,1129.1c0,14.7-12,26.7-26.7,26.7H307.4c-14.7,0-26.7-12-26.7-26.7v-480.6c0-14.7,12-26.7,26.7-26.7h614c14.7,0,26.7,12,26.7,26.7v480.6" />
+                                                                <path fill="white"
+                                                                    d="M1682,1129c0,14.7-12,26.7-26.7,26.7h-614c-14.7,0-26.7-12-26.7-26.7v-480.6c0-14.7,12-26.7,26.7-26.7h614c14.7,0,26.7,12,26.7,26.7v480.6" />
+                                                                <path fill="white"
+                                                                    d="M910.5,1300.9v45c0,16.7,29.9,30.3,66.8,30.3s66.8-13.6,66.8-30.3v-45l3.1.3c104.1,11.5,176.7,49.3,176.7,95.4s-109.7,100-245.1,100-245.1-44.8-245.1-100,73.9-83.6,175.3-95.8l1.5.2" />
+                                                            </g>
+                                                        </svg>
+                                                    </div>
+                                                    <template lwc:if={address.addressText}>
+                                                        <div style="min-width: 0;">
+                                                            <label style="white-space: normal; word-break: break-word;">
+                                                                {address.addressText}
+                                                            </label>
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </template>
+                            <template if:false={showAddress}>
+                                <tr>
+                                    <td class="slds-p-vertical_x-small">No Bloomberg Office(s)</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </template>
+    </template>
+</template>

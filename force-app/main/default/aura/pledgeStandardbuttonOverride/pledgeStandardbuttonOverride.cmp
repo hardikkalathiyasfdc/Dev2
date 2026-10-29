@@ -1,0 +1,15 @@
+<aura:component implements="lightning:isUrlAddressable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:actionOverride" access="global" >
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="parentRecordId" type="String"/>
+    <aura:attribute name="recordId" type="String"/>
+     <aura:attribute name="refresh" type="Boolean" default="false"/>
+     <!-- Implement the navigation service. -->
+    <lightning:navigation aura:id="navService"/>
+
+    <!-- pageReferenceUtil component -->
+    <lightning:pageReferenceUtils aura:id="pageRefUtils"/>
+    <lightning:navigation aura:id="navigation"/>
+     <aura:handler name="change" value="{!v.pageReference}" action="{!c.onPageReferenceChanged}" />
+
+    <c:pledgeRecordEditForm  aura:id="pledgeCompedit" recordId="{!v.recordId}" parentRecordId="{!v.parentRecordId}" onchildmethod="{!c.handleClick}" ></c:pledgeRecordEditForm>
+</aura:component>

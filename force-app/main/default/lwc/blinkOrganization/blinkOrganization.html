@@ -1,0 +1,144 @@
+<!--
+  @description       : 
+  @author            : Paddy
+  @group             : 
+  @last modified on  : 09-24-2025
+  @last modified by  : Sai Bhargav Thotakura
+-->
+<template>
+	<template lwc:if={showSpinner}>
+		<lightning-spinner size="large" variant="brand" alternative-text="Saving"></lightning-spinner>
+	</template>
+	<template lwc:else>
+		<div class="c-container slds-theme_default">
+			<lightning-spinner variant="brand" size="large" if:true={isLoading}></lightning-spinner>
+			<template lwc:if={showSearchSection}>
+				<lightning-layout class="slds-var-p-bottom_large">
+					<lightning-layout-item padding="around-small" size="2">
+						<lightning-input type="text" label="Organization Name" value={searchKeyOrg} onchange={handleSearchOrgInputChange}></lightning-input>
+					</lightning-layout-item>
+					<lightning-layout-item padding="around-small" size="2">
+						<lightning-input
+							type="text"
+							label="Bgive Contig Id"
+							value={searchKeyContigId}
+							onchange={handleSearchContigIdInputChange}></lightning-input>
+					</lightning-layout-item>
+					<lightning-layout-item padding="around-small" size="2" style="margin-top: 1.2rem">
+						<lightning-button
+							variant="brand"
+							label="Search"
+							title="Search"
+							onclick={handleSearch}
+							disabled={shallDisableSaveButton}></lightning-button>
+					</lightning-layout-item>
+				</lightning-layout>
+			</template>
+			<template lwc:if={showSearchResults}>
+				<lightning-layout multiple-rows="true">
+					<lightning-layout-item padding="around-small" size="12">
+						<div class="slds-section-custom slds-section-custom_fixed-height">
+							<!--BRM Org Card-->
+							<template lwc:if={showLinkedStatus}>
+								<h3>BRM Organization</h3>
+								<template lwc:if={brmOrgDetails}>
+									<c-blink-organization-card org-details={brmOrgDetails} is-brm-org></c-blink-organization-card>
+								</template>
+							</template>
+							<!-- BRM Search Results-->
+							<template lwc:else>
+								<h3>BRM Search Results</h3>
+								<br />
+								<template lwc:if={isBRMData}>
+									<label style="margin-bottom: 1em; font-size: 1em"> Please select BRM organization to link </label>
+									<div style="margin-top: 0.6em; height: 19em">
+										<lightning-datatable
+											key-field="Id"
+											data={brmData}
+											columns={brmColumns}
+											max-row-selection="1"
+											onrowselection={handleBRMRowSelection}
+											selected-rows={preSelectedRow}>
+										</lightning-datatable>
+									</div>
+								</template>
+								<template lwc:else>
+									<div class="slds-text-color_error">{noBRMOrgMessage}</div>
+								</template>
+							</template>
+						</div>
+					</lightning-layout-item>
+					<lightning-layout-item padding="around-small" size="12">
+						<div class="slds-section-custom slds-section-custom_fixed-height">
+							<!--BRM Org Card-->
+							<template lwc:if={showBgiveOrgCard}>
+								<h3>Bgive Organization</h3>
+								<template lwc:if={bgiveOrg}>
+									<c-blink-organization-card org-details={bgiveOrg}></c-blink-organization-card>
+								</template>
+							</template>
+							<!-- BRM Search Results-->
+							<template lwc:else>
+								<h3>Bgive Search Results</h3>
+								<br />
+								<!--BGive Search Results-->
+								<template lwc:if={isBgiveData}>
+									<label style="margin-bottom: 1em; font-size: 1em"> Please select Bgive organization to link </label>
+									<div style="margin-top: 0.6em; height: 19em">
+										<lightning-datatable
+											key-field="id"
+											data={bgiveData}
+											columns={bgiveColumns}
+											max-row-selection="1"
+											onrowselection={handleBgiveRowSelection}>
+										</lightning-datatable>
+									</div>
+								</template>
+								<template lwc:else>
+									<div class="slds-text-color_error">{showNoBRMOrgMessage}</div>
+								</template>
+							</template>
+						</div>
+					</lightning-layout-item>
+				</lightning-layout>
+			</template>
+			<template lwc:if={showMasterOrgInfo}>
+				<lightning-layout multiple-rows="true">
+					<lightning-layout-item padding="around-small" size="12">
+						<div class="slds-section-custom" style="margin-top: 20px">
+							<h3>Master Organization Info</h3>
+							<lightning-layout multiple-rows="true">
+								<template lwc:if={showLinkedStatus}>
+									<lightning-layout-item padding="around-small" size="3">
+										<lightning-combobox
+											name="bgiveLinkedStatus"
+											label="Bgive Linked Status: "
+											value={bgiveLinkedStatusValue}
+											placeholder="Select Status"
+											options={bgiveLinkedStatusOptions}
+											onchange={handleBgiveLinkedChange}>
+										</lightning-combobox>
+									</lightning-layout-item>
+								</template>
+								<!--<lightning-layout-item padding="around-small" size="3"><lightning-input label="Name" name="orgName" value={orgName} onchange={handleNameChange}></lightning-input></lightning-layout-item>-->
+							</lightning-layout>
+						</div>
+					</lightning-layout-item>
+				</lightning-layout>
+			</template>
+			<br />
+			<template lwc:if={showButton}>
+				<div slot="footer" class="slds-align_absolute-center">
+					<lightning-button
+						variant="brand"
+						data-name={buttonLabel}
+						label={buttonLabel}
+						disabled={isButtonDisabled}
+						class="slds-m-left_x-small"
+						onclick={handleSave}>
+					</lightning-button>
+				</div>
+			</template>
+		</div>
+	</template>
+</template>

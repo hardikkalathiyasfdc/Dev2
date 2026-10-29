@@ -1,0 +1,365 @@
+<aura:component>
+  <ltng:require
+    scripts="{!join(',',
+    $Resource.jQuery224,
+  $Resource.cmputil,
+  $Resource.ListWorker)}"
+    afterScriptsLoaded="{!c.doInit}"
+  />
+  <aura:attribute name="tableId" type="String" default="" />
+  <aura:attribute name="isInit" type="Boolean" default="false" />
+  <aura:attribute name="selectedLookup" type="SObject" />
+  <aura:attribute name="isLoading" type="Boolean" default="true" />
+  <aura:attribute name="hideCheckboxColumn" type="Boolean" default="true" />
+  <aura:attribute name="singleRowSelection" type="Boolean" default="false" />
+  <aura:attribute name="showActions" type="Boolean" default="false" />
+  <aura:attribute name="columns" type="List" default="[]" />
+  <aura:attribute name="tableData" type="List" default="[]" />
+  <aura:attribute name="data" type="List" default="[]" />
+  <aura:attribute name="oldData" type="List" default="[]" />
+  <aura:attribute name="tableWidth" type="String" default="1000px" />
+  <aura:attribute name="tableHeight" type="String" default="600px" />
+  <aura:attribute name="contentHeight" type="Boolean" default="false" />
+  <aura:attribute name="hideHeaderCheckbox" type="Boolean" default="true" />
+  <aura:registerEvent name="changeEvent" type="c:MyTableEvent" />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <aura:registerEvent
+    name="oSelectedRecordEvent"
+    type="c:SelectedsObjectRecordEvent"
+  />
+  <aura:registerEvent
+    name="clearSelectedRecordEvent"
+    type="c:clearSelectedRecordEvent"
+  />
+  <aura:handler
+    name="clearSelectedRecordEvent"
+    event="c:clearSelectedRecordEvent"
+    action="{!c.handleLookup}"
+  />
+
+  <aura:handler
+    name="oSelectedRecordEvent"
+    event="c:SelectedsObjectRecordEvent"
+    action="{!c.handleLookup}"
+  />
+  <aura:method name="setWidth" action="{!c.setWidth}" access="PUBLIC" />
+
+  <aura:method name="updateUICell" action="{!c.updateUICell}" access="public">
+    <aura:attribute name="row" type="String" default="" />
+    <aura:attribute name="col" type="String" default="" />
+    <aura:attribute name="cell" type="Map" default="{}" />
+  </aura:method>
+  <div
+    id="{!v.tableId}"
+    style="{!v.contentHeight ? 'overflow-x: auto; overflow-y: auto; height: 100%' : 'overflow-x: auto; overflow-y: auto; height: auto'}"
+    onmousemove="{!c.setNewWidth}"
+    onmouseup="{!c.colMouseUp}"
+  >
+    <aura:if isTrue="{!v.isLoading}">
+      <lightning:spinner alternativeText="Loading" size="medium" />
+    </aura:if>
+
+    <aura:if isTrue="{!v.isInit}">
+      <table
+        aria-multiselectable="true"
+        class="slds-table slds-table--bordered slds-table--fixed-layout"
+        role="grid"
+        style="{!'width: '+v.tableWidth+'px;'}"
+        aria-label="MyTable"
+      >
+        <thead>
+          <tr class="slds-line-height_reset">
+            <aura:if isTrue="{!not(v.hideCheckboxColumn)}">
+              <th
+                class="stickyThCol slds-text-align_right slds-cell_action-mode"
+                scope="col"
+                style="width: 3.25rem"
+              >
+                <span id="column-group-header" class="slds-assistive-text"
+                  >Choose a row</span
+                >
+                <aura:if isTrue="{!v.hideHeaderCheckbox}">
+                  <div class="slds-th__action slds-th__action_form">
+                    <div class="slds-checkbox">
+                      <input
+                        type="checkbox"
+                        name="options"
+                        id="checkbox-select-all"
+                        tabindex="0"
+                        aria-labelledby="label-select-all column-group-header"
+                      />
+                      <label
+                        class="slds-checkbox__label"
+                        for="checkbox-unique-id-297"
+                        id="label-select-all"
+                      >
+                        <span class="slds-checkbox_faux"></span>
+                        <span
+                          class="slds-form-element__label slds-assistive-text"
+                          >Select All</span
+                        >
+                      </label>
+                    </div>
+                  </div></aura:if
+                >
+              </th>
+            </aura:if>
+            <aura:iteration items="{!v.columns}" var="col">
+              <th
+                aria-label="{!col.label}"
+                aria-sort="none"
+                class="{!'stickyTh slds-is-resizable slds-is-sortable slds-cell_action-mode '+col.class}"
+                style="{!col.style}"
+                scope="col"
+              >
+                <aura:if isTrue="{!col.isSortable}">
+                  <span class="slds-assistive-text">Sort by: </span>
+                  <div
+                    class="myThDiv slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate"
+                  >
+                    <span class="slds-truncate" title="{!col.label}"
+                      >{!col.label}</span
+                    >
+                    <aura:if isTrue="{!col.sort == 'desc'}">
+                      <span
+                        class="slds-icon_container slds-icon-utility-arrowdown"
+                      >
+                        <lightning:icon
+                          iconName="utility:arrowdown"
+                          class="slds-icon slds-icon-text-default slds-is-sortable__icon"
+                          alternativeText=""
+                          size="x-small"
+                          title=""
+                        />
+                      </span>
+                    </aura:if>
+                    <aura:if isTrue="{!col.sort == 'asc'}">
+                      <span
+                        class="slds-icon_container slds-icon-utility-arrowup"
+                      >
+                        <lightning:icon
+                          iconName="utility:arrowup"
+                          class="slds-icon slds-icon-text-default slds-is-sortable__icon"
+                          alternativeText=""
+                          size="x-small"
+                          title=""
+                        />
+                      </span>
+                    </aura:if>
+                  </div>
+
+                  <aura:set attribute="else">
+                    <div
+                      class="myThDiv slds-th__action slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate"
+                    >
+                      <span class="slds-truncate" title="{!col.label}"
+                        >{!col.label}</span
+                      >
+                    </div>
+                  </aura:set>
+                </aura:if>
+                <div class="slds-resizable">
+                  <input
+                    type="range"
+                    aria-label="{!col.label + 'column width'}"
+                    class="slds-assistive-text"
+                    id="{!'cell-resize-handle-'+col.api}"
+                    max="1000"
+                    min="20"
+                    tabindex="0"
+                  />
+                  <span
+                    class="slds-resizable__handle"
+                    onmousedown="{!c.calculateWidth}"
+                  >
+                    <span class="slds-resizable__divider"></span>
+                  </span>
+                </div>
+              </th>
+            </aura:iteration>
+            <aura:if isTrue="{!v.showActions}">
+              <th
+                class="slds-cell_action-mode"
+                scope="col"
+                style="width: 3.25rem"
+              >
+                <div class="slds-truncate slds-assistive-text" title="Actions">
+                  Actions
+                </div>
+              </th></aura:if
+            >
+          </tr>
+        </thead>
+        <tbody>
+          <aura:iteration items="{!v.tableData}" var="row" indexVar="rowIdx">
+            <tr aria-selected="false" class="slds-hint-parent">
+              <aura:if isTrue="{!not(v.hideCheckboxColumn)}">
+                <td
+                  class="stickyTd slds-text-align_right slds-cell_action-mode"
+                  role="gridcell"
+                >
+                  <div class="slds-checkbox">
+                    <lightning:input
+                      type="checkbox"
+                      name="{!rowIdx+'-0'}"
+                      checked="{!row.isChecked}"
+                      onchange="{!c.handleCheckboxChange}"
+                      variant="label-hidden"
+                    />
+                  </div>
+                </td>
+              </aura:if>
+              <aura:iteration
+                items="{!row.cells}"
+                var="cell"
+                indexVar="cellIdx"
+              >
+                <td
+                  class="{!'slds-cell_action-mode '+cell.class}"
+                  data-id="{!'td-'+rowIdx+'-'+cellIdx}"
+                  style="{!cell.style}"
+                  id="{!v.tableId+'-'+rowIdx+'-'+cellIdx}"
+                  role="gridcell"
+                >
+                  <div class="slds-truncate" title="{!cell.value}">
+                    <aura:if isTrue="{!and(cell.isEdit, not(cell.isReadOnly))}">
+                      <aura:if isTrue="{!cell.type == 'STRING'}">
+                        <lightning:input
+                          aura:id="inputUpdate"
+                          class="{!rowIdx+'-'+cellIdx}"
+                          name="{!rowIdx+'-'+cellIdx}"
+                          value="{!cell.value}"
+                          onblur="{!c.handleInputChange}"
+                          variant="label-hidden"
+                        />
+                      </aura:if>
+                      <aura:if isTrue="{!cell.type == 'PICKLIST'}">
+                        <lightning:select
+                          name="{!rowIdx+'-'+cellIdx}"
+                          variant="label-hidden"
+                          class="label-hidden"
+                          value="{!cell.value}"
+                          onchange="{!c.handleInputChange}"
+                        >
+                          <option value="">choose one...</option>
+                          <aura:iteration items="{!cell.options}" var="opt">
+                            <option value="{!opt.value}">{!opt.label}</option>
+                          </aura:iteration>
+                        </lightning:select>
+                      </aura:if>
+                      <aura:if isTrue="{!cell.type == 'EMAIL'}">
+                        <lightning:input
+                          aura:id="inputUpdate"
+                          type="email"
+                          name="{!rowIdx+'-'+cellIdx}"
+                          class="{!rowIdx+'-'+cellIdx}"
+                          value="{!cell.value}"
+                          variant="label-hidden"
+                          onblur="{!c.handleInputChange}"
+                        />
+                      </aura:if>
+                      <aura:if isTrue="{!cell.type == 'PHONE'}">
+                        <lightning:input
+                          type="tel"
+                          name="{!rowIdx+'-'+cellIdx}"
+                          value="{!cell.value}"
+                          variant="label-hidden"
+                          onblur="{!c.handleInputChange}"
+                        />
+                      </aura:if>
+                      <aura:if isTrue="{!cell.type == 'LOOKUP'}">
+                        <div
+                          style="{!cell.issticky ? 'display: inline;width: 90%;' : 'display: inline;position: absolute;top: 10%;width: 90%;'}"
+                        >
+                          <div style="width: 85%; float: left">
+                            <c:CustomLookup
+                              objectAPIName="{!cell.obj}"
+                              IconName="{!cell.icon}"
+                              enableEnter="true"
+                              cmpId="{!rowIdx+'-'+cellIdx}"
+                              aura:id="lookup"
+                              SearchKeyWord="{!cell.value}"
+                              isStickyVal="true"
+                              placeHolder="Just start typing"
+                            />
+                          </div>
+                          <lightning:buttonIcon
+                            iconName="utility:add"
+                            class="myAdd"
+                            name="{!rowIdx+'-'+cellIdx}"
+                            onclick="{!c.handleLookupClick}"
+                            alternativeText=""
+                            title=""
+                          />
+                        </div>
+                      </aura:if>
+
+                      <aura:if
+                        isTrue="{!and(cell.type == 'COMPARE',not(empty(cell.value)))}"
+                      >
+                        <label> {!cell.label} </label> <br />
+
+                        <lightning:button
+                          label="{!cell.value}"
+                          class="fullWidth"
+                          variant="{!cellIdx > 0 ? 'neutral' : 'brand'}"
+                        />
+                      </aura:if>
+                      <aura:if isTrue="{!cell.requiredError}">
+                        <div style="width: 100%" class="requiredError">
+                          {!cell.requiredError}
+                        </div>
+                      </aura:if>
+                      <aura:set attribute="else">
+                        <aura:if isTrue="{!cell.type == 'VIEW'}">
+                          <aura:if isTrue="{!row.id}">
+                            <lightning:formattedUrl
+                              value="{! '/' + row.id}"
+                              label="View"
+                              target="_blank"
+                            />
+                            <aura:set attribute="else">New Record</aura:set>
+                          </aura:if>
+                          <aura:set attribute="else">
+                            <aura:if isTrue="{!cell.type == 'HYPERLINK'}">
+                              <lightning:formattedUrl
+                                value="{! '/' + row.id}"
+                                label="{!cell.value}"
+                                target="_blank"
+                              />
+                              <aura:set attribute="else">
+                                {!cell.value}
+                              </aura:set>
+                            </aura:if>
+                          </aura:set>
+                        </aura:if>
+                      </aura:set>
+                    </aura:if>
+                  </div>
+                </td>
+              </aura:iteration>
+              <aura:if isTrue="{!showActions}">
+                <td class="slds-cell_action-mode" role="gridcell">
+                  <button
+                    class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small"
+                    aria-haspopup="true"
+                    tabindex="0"
+                    title="More Actions"
+                  >
+                    <lightning:icon
+                      iconName="utility:down"
+                      class="slds-icon slds-icon-text-default slds-is-sortable__icon"
+                      alternativeText=""
+                      size="small"
+                      title=""
+                    />
+                  </button>
+                </td>
+              </aura:if>
+            </tr>
+          </aura:iteration>
+        </tbody></table
+    ></aura:if>
+  </div>
+</aura:component>

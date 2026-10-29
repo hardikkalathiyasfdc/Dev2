@@ -1,0 +1,70 @@
+<apex:page controller="DonorMemoReportController" renderAs="pdf" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+        <head>
+            <style>
+                @page {
+                    size: A4;
+                    @bottom-left {
+                        content: element(footer);
+                    }
+                    @bottom-right {
+                        content: "" counter(page) " of " counter(pages);
+                    }
+                    
+                }
+                div.footer {
+                    display: block;
+                    position: running(footer);
+                }
+            </style>
+        </head>
+        <body>  
+            <div>
+                <span style="font-size: 14px; font-weight: bold; color: red;">
+                    CONFIDENTIAL DONOR UPDATE/ NOT FOR EXTERNAL DISTRIBUTION
+                </span>
+            </div>
+            <div style="padding-top: 20px;">
+                <span style="font-size: 25px; font-weight: bold;">
+                    BRM Monthly Report: Fundraising - {!reportTimeFrame}
+                </span>
+            </div>
+            <div style="padding-top: 20px;">
+                <span style="font-size: 22px; color: #2f5496;">
+                    Gifts $10k and above received in {!reportTimeFrame}<apex:outputPanel layout="none" rendered="{!hasData}"><span style="font-size: 18px;"> (Total: ${!totalAmount})</span></apex:outputPanel>
+                </span>
+            </div>
+            <apex:outputPanel rendered="{!hasData == false}">
+                <div style="padding-top: 30px;">
+                    <span style="font-size: 15px;">There were no new pledges in {!reportTimeFrame}</span>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!hasData}">
+                <div style="padding-top: 20px;">
+                    <apex:repeat value="{!donors}" var="row">
+                        <div style="padding-top: 12px;">
+                            <b>{!row.donorName} - {!row.totalAmount} for: </b>
+                            <ul style="margin-top: 2px;">
+                                <apex:repeat value="{!row.projects}" var="p">
+                                    <li>
+                                        {!p.projectText}
+                                        <apex:outputPanel layout="none" rendered="{!p.hasAnonBreakout}">
+                                            <ul style="margin-top: 2px;">
+                                                <apex:repeat value="{!p.anonBreakoutLines}" var="sub">
+                                                    <li>{!sub}</li>
+                                                </apex:repeat>
+                                            </ul>
+                                        </apex:outputPanel>
+                                    </li>
+                                </apex:repeat>
+                            </ul>
+                        </div>
+                    </apex:repeat>
+                </div>
+            </apex:outputPanel>
+            <div class="footer">
+                <div>
+                    Created On {!currentDateLocal} (via BRM)
+                </div>
+            </div>
+        </body>
+</apex:page>

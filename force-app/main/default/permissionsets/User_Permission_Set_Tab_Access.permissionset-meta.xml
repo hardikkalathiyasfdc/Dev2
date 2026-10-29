@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>UserWithPermissionSetsAuraCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <description>Access User With Permission Sets tab</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>User Permission Set Tab Access</label>
+    <tabSettings>
+        <tab>User_with_Permission_Sets</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

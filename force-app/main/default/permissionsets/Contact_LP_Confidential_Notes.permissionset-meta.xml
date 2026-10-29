@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>BRME-7021: Confidential. Not part of any profile. Specifically privileges read/edit for the LP Confidential Notes field on the Contact record.</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.LPConfidentialNotes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Contact: LP Confidential Notes</label>
+</PermissionSet>

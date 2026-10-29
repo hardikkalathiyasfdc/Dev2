@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Interaction_Private_Checkbox_Override_Edit</name>
+    </customPermissions>
+    <description>BRME-5878: This permission set is for a limited set of admins/super users to grant EDIT access to the “Private” checkbox field on Interaction Object.</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Interaction__c.Private_Interaction__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Interaction: Private Checkbox Override Edit</label>
+</PermissionSet>

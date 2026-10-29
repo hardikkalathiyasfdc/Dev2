@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Communication_Lists</fullName>
+    <columns>NAME</columns>
+    <columns>RelatedDashboard__c</columns>
+    <columns>LAST_UPDATE</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <columns>FileName__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RelatedDashboard__c</field>
+        <operation>equals</operation>
+        <value>Communication Outreach Ideas</value>
+    </filters>
+    <label>Communication Lists</label>
+    <sharedTo>
+        <group>Data_Team</group>
+    </sharedTo>
+</ListView>

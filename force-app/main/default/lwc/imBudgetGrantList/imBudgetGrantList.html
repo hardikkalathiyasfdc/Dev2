@@ -1,0 +1,27 @@
+<!--
+  @description       : 
+  @author            : Sai Bhargav Thotakura
+  @group             : 
+  @last modified on  : 03-21-2025
+  @last modified by  : Sai Bhargav Thotakura
+-->
+<template>
+    <div class="slds-section slds-is-open slds-m-bottom_none slds-border_bottom">
+        <h3 class="slds-section__title slds-theme_shade">
+            <span class="slds-truncate slds-var-p-horizontal_small" title="Section Title">{relatedListHeader}</span>
+        </h3>
+    </div>
+    <template lwc:if={data}>
+        <lightning-datatable
+        key-field="id"
+        data={data}
+        hide-checkbox-column="true"
+        show-row-number-column="true"
+        columns={columns}
+        sorted-by={sortBy}
+        sorted-direction={sortDirection}
+        onsort={doSorting}
+        suppress-bottom-bar>
+    </lightning-datatable>
+    </template>
+</template>

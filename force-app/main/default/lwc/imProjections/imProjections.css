@@ -1,0 +1,17 @@
+.related-list-container.slds-card {
+    border: 1px solid #e5e5e5;
+    border-radius: 0.25rem;
+    box-shadow: none;
+    overflow: hidden;
+}
+
+.slds-card__body_inner {
+    padding: 0;
+    overflow: hidden;
+    width: 100%;
+}
+
+lightning-datatable {
+    width: 100%;
+    max-width: 100%;
+}

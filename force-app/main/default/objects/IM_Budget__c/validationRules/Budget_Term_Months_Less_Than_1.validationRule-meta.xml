@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Budget_Term_Months_Less_Than_1</fullName>
+    <active>false</active>
+    <description>Budget Term cannot be less than 1, there should be at-least one month in the budget to allocate amounts.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.IM_Budget_Validation__c &amp;&amp;
+Budget_Term_months__c &lt; 1</errorConditionFormula>
+    <errorDisplayField>Budget_Term_months__c</errorDisplayField>
+    <errorMessage>Budget Term must be at least 1 month.</errorMessage>
+</ValidationRule>

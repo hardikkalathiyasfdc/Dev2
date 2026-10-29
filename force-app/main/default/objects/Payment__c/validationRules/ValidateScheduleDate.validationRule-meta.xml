@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidateScheduleDate</fullName>
+    <active>true</active>
+    <description>If the Schedule date is blank for a payment record with the status as Scheduled.</description>
+    <errorConditionFormula>AND(
+!$Setup.Bypass_Automation_Setting__c.Payment_Validation__c,
+OR(
+ISPICKVAL( Status__c ,&apos;Scheduled&apos;),ISPICKVAL( Status__c ,&apos;Past Due&apos;)
+), 
+ISBLANK( Scheduled_Date__c ) 
+)</errorConditionFormula>
+    <errorDisplayField>Scheduled_Date__c</errorDisplayField>
+    <errorMessage>Please Enter the scheduled date for the payment.</errorMessage>
+</ValidationRule>

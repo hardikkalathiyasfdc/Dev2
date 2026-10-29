@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Start_Date_Must_be_Less_than_End_Date</fullName>
+    <active>true</active>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Organization_Association_Validation__c &amp;&amp;
+(AND( From__c &gt; To__c))</errorConditionFormula>
+    <errorMessage>Start Date cannot be greater than End Date</errorMessage>
+</ValidationRule>

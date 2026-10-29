@@ -1,0 +1,87 @@
+<template>
+	<section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modalHeading" class={modalClass}
+		onkeydown={handleKeyDown}>
+		<div class={containerClass}>
+			<template lwc:if={showChrome}>
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+						title="Close" onclick={handleCancel}>
+						<lightning-icon icon-name="utility:close" size="small" variant="inverse"></lightning-icon>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h2 id="modalHeading" class="slds-modal__title slds-hyphenate">{headerLabel}</h2>
+				</header>
+			</template>
+
+			<div class={contentClass}>
+				<template lwc:if={showSpinner}>
+					<lightning-spinner alternative-text="Processing" variant="brand"></lightning-spinner>
+				</template>
+
+				<template lwc:if={errorMessage}>
+					<div class="slds-notify slds-notify_alert slds-theme_error slds-m-bottom_medium" role="alert">
+						<lightning-icon icon-name="utility:error" size="x-small" variant="inverse"
+							class="slds-m-right_x-small"></lightning-icon>
+						<span style="white-space: pre-line;">{errorMessage}</span>
+					</div>
+				</template>
+
+				<template lwc:if={showRestrictedWarning}>
+					<div class="slds-notify slds-notify_alert slds-theme_warning slds-m-bottom_medium" role="alert">
+						<lightning-icon icon-name="utility:warning" size="x-small"
+							class="slds-m-right_x-small"></lightning-icon>
+						<span>{restrictedWarningMessage}</span>
+					</div>
+				</template>
+
+				<p class="slds-m-bottom_medium">{targetSummary}</p>
+
+				<template lwc:if={isRecordTypeStep}>
+					<lightning-radio-group name="interactionRecordType" label="Record type"
+						options={recordTypeOptions} value={selectedRecordTypeId} type="radio" required
+						onchange={handleRecordTypeChange}>
+					</lightning-radio-group>
+				</template>
+
+				<template lwc:else>
+					<lightning-record-edit-form object-api-name="Interaction__c"
+						record-type-id={selectedRecordTypeId} onload={handleFormLoad} onerror={handleFormError}>
+						<lightning-messages></lightning-messages>
+						<lightning-layout multiple-rows="true">
+							<template for:each={interactionFields} for:item="field">
+								<lightning-layout-item key={field.fieldPath} size="12" medium-device-size="6"
+									padding="around-small">
+									<lightning-input-field field-name={field.fieldPath} required={field.required}>
+									</lightning-input-field>
+								</lightning-layout-item>
+							</template>
+						</lightning-layout>
+					</lightning-record-edit-form>
+				</template>
+			</div>
+
+			<footer class="slds-modal__footer">
+				<template lwc:if={isRecordTypeStep}>
+					<lightning-button variant="neutral" label="Cancel" onclick={handleCancel}></lightning-button>
+					<lightning-button class="slds-m-left_x-small" variant="brand" label="Next"
+						disabled={isNextDisabled} onclick={handleNext}>
+					</lightning-button>
+				</template>
+				<template lwc:else>
+					<lightning-button variant="neutral" label="Back" disabled={showSpinner} onclick={handleBack}>
+					</lightning-button>
+					<lightning-button class="slds-m-left_x-small" variant="neutral" label="Cancel"
+						disabled={showSpinner} onclick={handleCancel}>
+					</lightning-button>
+					<lightning-button class="slds-m-left_x-small" variant="brand" label={createButtonLabel}
+						title={createButtonTitle} disabled={isCreateDisabled} onclick={handleCreateClick}>
+					</lightning-button>
+				</template>
+			</footer>
+		</div>
+	</section>
+
+	<template lwc:if={showChrome}>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+</template>

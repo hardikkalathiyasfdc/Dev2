@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Parent_Initiative_Is_Required</fullName>
+    <active>false</active>
+    <description>Parent Initiative is required when Include in Projections is checked.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.IM_Initiative_Validation__c &amp;&amp;
+OR(
+(AND
+(ISBLANK(Parent_Initiative__c), 
+ISPICKVAL(Status__c ,&quot;Approved&quot;))),
+(
+AND
+(ISBLANK(Parent_Initiative__c),
+Include_in_Projections__c==TRUE))
+)</errorConditionFormula>
+    <errorMessage>Parent Initiative is Required.</errorMessage>
+</ValidationRule>

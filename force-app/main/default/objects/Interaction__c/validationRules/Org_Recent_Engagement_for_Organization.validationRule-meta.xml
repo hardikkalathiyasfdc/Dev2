@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Org_Recent_Engagement_for_Organization</fullName>
+    <active>true</active>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Interaction_Validation__c &amp;&amp; 
+NOT(ISBLANK( Organization__c )) &amp;&amp; 
+NOT(ISBLANK(Contact__c)) &amp;&amp; 
+RecordType.DeveloperName != &apos;Recent_Engagement&apos;</errorConditionFormula>
+    <errorMessage>Contact Interactions can only be created on a Contact Record.</errorMessage>
+</ValidationRule>

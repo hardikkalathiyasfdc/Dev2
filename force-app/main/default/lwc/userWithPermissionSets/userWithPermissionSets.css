@@ -1,0 +1,32 @@
+.sticky-header-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #f3f3f3;
+    border-bottom: 2px solid #dddbda;
+}
+
+.table-container{
+    max-height:500px;
+}
+
+/* Large Desktop */
+@media only screen and (min-width: 1600px){
+    .table-container{
+        max-height:700px;
+    }
+}
+
+/* Extra Large Desktop */
+@media only screen and (min-width: 1920px){
+    .table-container{
+        max-height:850px;
+    }
+}
+
+/* 2K / Wide Screens */
+@media only screen and (min-width: 2560px){
+    .table-container{
+        max-height:1000px;
+    }
+}

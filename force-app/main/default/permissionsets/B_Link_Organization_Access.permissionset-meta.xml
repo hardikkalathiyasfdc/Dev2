@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>BLinkOrgService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>BlinkOrganizationController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Organization_B_Link_Access</name>
+    </customPermissions>
+    <description>Grants Access to the B-Link Button on Organization Page and B-Link Tab. B-Link button allows user to Link and Unlink Organizations. User has access to create new Orgs in BRM.
+IM-72, BRME 5845.</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Bgive_Contig_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Bgive_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>B-Link: Organization Access</label>
+    <tabSettings>
+        <tab>B_Link</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

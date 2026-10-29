@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>BRME-7021: Confidential. Not part of any profile. Specifically privileges read/edit for the LP Dear Line on the Contact record which is used for correspondence/invitations.</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CampaignMember.LP_London_Dear_Line__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.LP_London_Dear_Line__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Contact: LP Dear Line</label>
+</PermissionSet>

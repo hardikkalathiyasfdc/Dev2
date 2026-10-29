@@ -1,0 +1,36 @@
+<aura:component controller="DITCmpController">
+  <aura:attribute name="stage" type="String" default="loadFile" />
+  <aura:attribute name="dataLoaderId" type="String" default="" />
+  <aura:attribute name="dataLoad" type="Map" />
+  <aura:attribute name="isLoading" type="Boolean" default="false" />
+
+  <aura:attribute name="uploadData" type="List" default="[]" />
+  <aura:attribute name="uploadColumns" type="Map" default="{}" />
+
+  <aura:attribute name="excelColumns" type="List" default="[]" />
+  <aura:attribute name="tableData" type="List" default="[]" />
+  <aura:attribute name="sfColumns" type="List" default="[]" />
+
+  <aura:attribute name="ditColumns" type="List" default="[]" />
+
+  <ltng:require scripts="{!$Resource.cmputil}" afterScriptsLoaded="{!c.init}" />
+  <aura:handler
+    name="changeEvent"
+    event="c:MyTableEvent"
+    action="{!c.handleCellChange}"
+    phase="capture"
+  />
+  <div style="padding-left: 40%">
+    <aura:if
+      isTrue="{!and(not(empty(v.sfColumns)),not(empty(v.excelColumns)))}"
+    >
+      <c:MyTable
+        aura:id="myTable"
+        tableId="setupTable"
+        columns="{!v.sfColumns}"
+        data="{!v.excelColumns}"
+        tableData="{!v.tableData}"
+      />
+    </aura:if>
+  </div>
+</aura:component>

@@ -1,0 +1,297 @@
+<template>
+	<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+		aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+		<template lwc:if={showSpinner}>
+			<lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+		</template>
+		<template lwc:if={showOrgCreation}>
+			<c-org-creation oncancelation={handleCreationCancel} onsuccess={handleCreationSuccess}
+				title="Create New Venue"></c-org-creation>
+		</template>
+		<template lwc:if={showExternalCreation}>
+			<c-org-creation oncancelation={handleCreationCancel} onsuccess={handleExternalSuccess}
+				title="Create New External"></c-org-creation>
+		</template>
+		<div class="slds-modal__container">
+			<header class="slds-modal__header">
+				<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Create Event</h2>
+			</header>
+			<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+				<lightning-record-edit-form object-api-name="Campaign" record-type-id={recordTypeId}
+					onsuccess={handleSuccess} onsubmit={handleSubmit}>
+					<lightning-messages>
+					</lightning-messages>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input field-name='Name' label='Event Name' variant="label-stacked"
+								required="true" maxlength="80" onchange={handleEventNameChange}>
+							</lightning-input>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='HowMRBAttended__c' variant="label-stacked">
+							</lightning-input-field>
+						</div>
+					</div>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='Description' variant="label-stacked" value={description}>
+							</lightning-input-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='MRBHosting__c' variant="label-stacked"
+								class="slds-m-top_small">
+							</lightning-input-field>
+						</div>
+					</div>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='Start_Date_Time__c' variant="label-stacked"
+								required="true" onchange={handleStartDateChange}>
+							</lightning-input-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='HowPHAttending__c' variant="label-stacked"
+								class="slds-m-top_small"></lightning-input-field>
+						</div>
+					</div>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='End_Date_Time__c' variant="label-stacked"
+								value={eventEndDate} onchange={handleEndDateChange}>
+							</lightning-input-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='PH_Hosting__c' variant="label-stacked" class="slds-m-top_small">
+							</lightning-input-field>
+						</div>
+					</div>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='TimeZone__c' variant="label-stacked" required="true" value={timezoneKey}>
+							</lightning-input-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='EventStatus__c' variant="label-stacked" value={defaultStatus}>
+							</lightning-input-field>
+						</div>
+					</div>
+					<div class="slds-grid slds-m-top_x-large">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='EventType__c' variant="label-stacked" required="true">
+							</lightning-input-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='Advance__c' variant="label-stacked">
+							</lightning-input-field>
+						</div>
+					</div>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='Exclude_From_Event_Count__c' variant="label-stacked">
+							</lightning-input-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='Caterer__c' variant="label-stacked">
+							</lightning-input-field>
+						</div>
+					</div>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='EventCoordinator__c' variant="label-stacked"
+								required="true" onchange={handleEventCoordinatorChange}>
+							</lightning-input-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='Photographer__c' variant="label-stacked">
+							</lightning-input-field>
+						</div>
+					</div>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='ExpectedAttendance__c' variant="label-stacked">
+							</lightning-input-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='Teams__c' variant="label-stacked"
+								required="true" onchange={handleProgramAreaTeamChange}></lightning-input-field>
+						</div>
+					</div>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-combobox name="invitationInfo" label="Invitation From Email"
+								value={invitationEmail} placeholder="Select Event Invitation From Email"
+								options={invitationEmails} onchange={handleInvitationEmailChange}
+								required={invitationRequired}></lightning-combobox>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='Event_Photos__c' variant="label-stacked">
+							</lightning-input-field>
+						</div>
+					</div>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='PartySize__c' variant="label-stacked">
+							</lightning-input-field>
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='Event_Photos_Set_Up_Shots__c' variant="label-stacked">
+							</lightning-input-field>
+						</div>
+					</div>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+						</div>
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='Events_Field_Full_Drop__c' variant="label-stacked">
+							</lightning-input-field>
+						</div>
+					</div>
+					<div class="slds-grid">
+						<div class="slds-col slds-size_1-of-2">
+							<lightning-input-field field-name='EmailDefaultSubjectLine__c' variant="label-stacked"
+								value={defaultSubject}>
+							</lightning-input-field>
+						</div>
+						<template lwc:if={showExternal}>
+							<div class="slds-col slds-size_1-of-2">
+								<div class="slds-grid">
+									<lightning-input-field field-name='External__c' variant="label-stacked"
+										class="slds-m-top_xxx-small" required="true" value={externalId}>
+									</lightning-input-field>
+									<lightning-button-icon icon-name="utility:add" alternative-text="Add new Venue"
+										class="slds-m-top_large" onclick={createNewExternal}>
+									</lightning-button-icon>
+								</div>
+							</div>
+						</template>
+					</div>
+					<div class="slds-grid">
+					</div>
+					<div class="slds-m-top_x-large">
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-input-field field-name='SetUpEventLocationType__c' variant="label-stacked"
+									required="true" onchange={hanleLocationTypeChange}>
+								</lightning-input-field>
+							</div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-input-field field-name='Private_Campaign__c' variant="label-stacked">
+								</lightning-input-field>
+							</div>
+						</div>
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-2"></div>
+							<div class="slds-col slds-size_1-of-2">
+								<div class="slds-col slds-size_1-of-2">
+									<lightning-input-field field-name='Guest_List_Managed_Externally__c'
+										variant="label-stacked">
+									</lightning-input-field>
+								</div>
+							</div>
+						</div>
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-2"></div>
+							<div class="slds-col slds-size_1-of-2">
+								<lightning-input-field field-name='Programmatic__c' variant="label-stacked">
+								</lightning-input-field>
+							</div>
+						</div>
+						<template lwc:if={eventType}>
+							<div class="slds-grid">
+								<template lwc:if={eventType.showLocation}>
+									<div class="slds-col slds-size_1-of-2">
+										<div class="slds-grid">
+											<lightning-input-field field-name='Venue__c' variant="label-stacked" class="slds-m-top_xxx-small"
+												onchange={handleLocationChange} value={selectedOrgId}>
+											</lightning-input-field>
+											<lightning-button-icon icon-name="utility:add" alternative-text="Add new Venue" class="slds-m-top_large"
+												onclick={createNewVenue}>
+											</lightning-button-icon>
+										</div>
+									</div>
+								</template>
+								<template lwc:if={eventType.showVirtualLink}>
+									<div class="slds-col slds-size_1-of-2">
+										<lightning-input-field field-name='VirtualEventLink__c' variant="label-stacked">
+										</lightning-input-field>
+									</div>
+								</template>
+							</div>
+							<template lwc:if={eventType.showLocation}>
+								<div class="slds-grid">
+									<div class="slds-col slds-size_1-of-2">
+										<lightning-input type="text" label="Location Name" variant="label-stacked"
+											required="true" onchange={handleLocationNameChange} value={locationName}>
+										</lightning-input>
+									</div>
+									<div class="slds-col slds-size_1-of-2">
+										<lightning-input-field field-name='LocationDetail__c' variant="label-stacked">
+										</lightning-input-field>
+									</div>
+								</div>
+								<div class="slds-grid">
+									<div class="slds-col slds-size_1-of-2">
+										<lightning-input type="text" label="Street" value={address.BillingStreet}
+											variant="label-stacked" required="true">
+										</lightning-input>
+									</div>
+								</div>
+								<div class="slds-grid">
+									<div class="slds-col slds-size_1-of-2">
+										<lightning-input type="text" label="City" value={address.BillingCity}
+											variant="label-stacked" required="true">
+										</lightning-input>
+									</div>
+									<div class="slds-col slds-size_1-of-2">
+										<lightning-input type="text" label="State/Province" value={address.BillingStateCode} variant="label-stacked">
+										</lightning-input>
+									</div>
+								</div>
+								<div class="slds-grid">
+									<div class="slds-col slds-size_1-of-2">
+										<lightning-input type="text" label="Country" value={address.BillingCountry} variant="label-stacked">
+										</lightning-input>
+									</div>
+								</div>
+							</template>
+						</template>
+					</div>
+					<div class="slds-m-top_x-large" lwc:if={shallShowGalaDetails}>
+						<div class="slds-section__title slds-theme_shade slds-p-around_small slds-text-heading_small">
+							Gala Details
+						</div>
+						<div class="slds-grid slds-wrap slds-m-top_small">
+							<div class="slds-col slds-size_1-of-2 slds-p-right_small">
+								<lightning-input-field field-name="Gala_Organization__c" variant="label-stacked">
+								</lightning-input-field>
+								<lightning-input-field field-name="Attire__c" variant="label-stacked">
+								</lightning-input-field>
+								<lightning-input-field field-name="Gala_Filled_By__c" variant="label-stacked">
+								</lightning-input-field>
+								<lightning-input-field field-name="Gala_Schedule__c" variant="label-stacked">
+								</lightning-input-field>
+							</div>
+							<div class="slds-col slds-size_1-of-2 slds-p-left_small">
+								<lightning-input-field field-name="Gala_Organization_Name_Contig__c" variant="label-stacked">
+								</lightning-input-field>
+								<lightning-input-field field-name="Gala_Ad_Included__c" variant="label-stacked">
+								</lightning-input-field>
+								<lightning-input-field field-name="Gala_Ad_Listing__c" variant="label-stacked">
+								</lightning-input-field>
+								<lightning-input-field field-name="Gala_Notes__c" variant="label-stacked">
+								</lightning-input-field>
+							</div>
+						</div>
+					</div>
+					<div class="slds-grid slds-align_absolute-center">
+						<lightning-button variant="Neutral" class="slds-m-top_small slds-m-right_small" label="Cancel" onclick={handleCancel}>
+						</lightning-button>
+						<lightning-button variant="brand" class="slds-m-top_small" type="submit" label="Create">
+						</lightning-button>
+					</div>
+				</lightning-record-edit-form>
+			</div>
+		</div>
+	</section>
+	<div class="slds-backdrop slds-backdrop_open"></div>
+</template>

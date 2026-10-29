@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Category__c</fullName>
+    <label>Category</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Active Military Personnel or Leader</fullName>
+                <default>false</default>
+                <label>Active Military Personnel or Leader</label>
+            </value>
+            <value>
+                <fullName>Advocate</fullName>
+                <default>false</default>
+                <label>Advocate</label>
+            </value>
+            <value>
+                <fullName>Agricultural Services Representative</fullName>
+                <default>false</default>
+                <label>Agricultural Services Representative</label>
+            </value>
+            <value>
+                <fullName>Arts and Culture Leader</fullName>
+                <default>false</default>
+                <label>Arts and Culture Leader</label>
+            </value>
+            <value>
+                <fullName>Big Business Leader</fullName>
+                <default>false</default>
+                <label>Big Business Leader</label>
+            </value>
+            <value>
+                <fullName>Celebrity</fullName>
+                <default>false</default>
+                <label>Celebrity</label>
+            </value>
+            <value>
+                <fullName>Community Leader</fullName>
+                <default>false</default>
+                <label>Community Leader</label>
+            </value>
+            <value>
+                <fullName>Constituent</fullName>
+                <default>false</default>
+                <label>Constituent</label>
+            </value>
+            <value>
+                <fullName>Construction or Infrastructure Leader</fullName>
+                <default>false</default>
+                <label>Construction or Infrastructure Leader</label>
+            </value>
+            <value>
+                <fullName>Donor</fullName>
+                <default>false</default>
+                <label>Donor</label>
+            </value>
+            <value>
+                <fullName>Education Advocate or Educator</fullName>
+                <default>false</default>
+                <label>Education Advocate or Educator</label>
+            </value>
+            <value>
+                <fullName>Emergency Services Representative</fullName>
+                <default>false</default>
+                <label>Emergency Services Representative</label>
+            </value>
+            <value>
+                <fullName>FoM</fullName>
+                <default>false</default>
+                <label>FoM</label>
+            </value>
+            <value>
+                <fullName>Gun Control Advocate/Grassroots Supporter</fullName>
+                <default>false</default>
+                <label>Gun Control Advocate/Grassroots Supporter</label>
+            </value>
+            <value>
+                <fullName>Influencer</fullName>
+                <default>false</default>
+                <label>Influencer</label>
+            </value>
+            <value>
+                <fullName>LGBT Advocate</fullName>
+                <default>false</default>
+                <label>LGBT Advocate</label>
+            </value>
+            <value>
+                <fullName>Mayor or Local Leader</fullName>
+                <default>false</default>
+                <label>Mayor or Local Leader</label>
+            </value>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <label>None</label>
+            </value>
+            <value>
+                <fullName>Nonprofit Leader</fullName>
+                <default>false</default>
+                <label>Nonprofit Leader</label>
+            </value>
+            <value>
+                <fullName>Personal</fullName>
+                <default>false</default>
+                <label>Personal</label>
+            </value>
+            <value>
+                <fullName>Political Leader</fullName>
+                <default>false</default>
+                <label>Political Leader</label>
+            </value>
+            <value>
+                <fullName>Public Health Leader</fullName>
+                <default>false</default>
+                <label>Public Health Leader</label>
+            </value>
+            <value>
+                <fullName>Religious Leader</fullName>
+                <default>false</default>
+                <label>Religious Leader</label>
+            </value>
+            <value>
+                <fullName>Small Business Owner</fullName>
+                <default>false</default>
+                <label>Small Business Owner</label>
+            </value>
+            <value>
+                <fullName>Sustainability Advocate</fullName>
+                <default>false</default>
+                <label>Sustainability Advocate</label>
+            </value>
+            <value>
+                <fullName>Tourism Expert</fullName>
+                <default>false</default>
+                <label>Tourism Expert</label>
+            </value>
+            <value>
+                <fullName>Union Leader or Representative</fullName>
+                <default>false</default>
+                <label>Union Leader or Representative</label>
+            </value>
+            <value>
+                <fullName>Veteran</fullName>
+                <default>false</default>
+                <label>Veteran</label>
+            </value>
+            <value>
+                <fullName>0214_Volunteer</fullName>
+                <default>false</default>
+                <label>0214 Volunteer</label>
+            </value>
+            <value>
+                <fullName>Youth Services Advocate</fullName>
+                <default>false</default>
+                <label>Youth Services Advocate</label>
+            </value>
+            <value>
+                <fullName>Volunteer</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Volunteer</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>5</visibleLines>
+</CustomField>

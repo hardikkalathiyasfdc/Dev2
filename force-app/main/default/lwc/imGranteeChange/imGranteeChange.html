@@ -1,0 +1,43 @@
+<template>
+    <!-- Modal Header -->
+    <lightning-modal-header label={label}></lightning-modal-header>
+    <!--Modal Body-->
+    <lightning-modal-body>
+        <template if:true={isError}>
+            <template for:each={errorMessages} for:item="message">
+                <div key={message}>
+                    <div class="slds-m-bottom_xx-small slds-m-top_small slds-error">{message}</div>
+                </div>
+            </template>
+        </template>
+        <template lwc:if={showSpinner}>
+            <lightning-spinner size="medium" variant="brand" alternative-text="Loading"></lightning-spinner>
+        </template>
+        <template lwc:else>
+            <lightning-record-picker label="Partner Org" placeholder="Search Organization..." object-api-name="Account"
+                data-aka={displayInfoAdditionalFieldData} required="true" onchange={handlePartnerChange}
+                display-info={displayInfo} matching-info={matchingInfo}>
+            </lightning-record-picker>
+            <template lwc:if={partnerAKA}>
+                <div class="slds-m-bottom_xx-small slds-m-top_x-small">
+                    <p><lightning-formatted-text value='AKA: '></lightning-formatted-text><lightning-formatted-text
+                            value={partnerAKA}></lightning-formatted-text></p>
+                </div>
+            </template>
+            <template if:true={isUniqueIdentifierRequired}>
+                <div class="slds-m-bottom_xx-small slds-m-top_small">
+                    <lightning-input label="Unique Identifier" required="true" placeholder="Enter Unique Identifier..."
+                        value={budgetGrant.Unique_Identifier__c} onchange={handleIdentifierChange}>
+                    </lightning-input>
+                </div>
+            </template>
+        </template>
+    </lightning-modal-body>
+    <!--Modal Footer-->
+    <lightning-modal-footer>
+        <lightning-button class="slds-button" variant="neutral" label="Cancel" onclick={handleClose}
+            disabled={isCancelDisabled}></lightning-button>
+        <lightning-button class="slds-button slds-m-left_x-small" variant="brand" label="Save" onclick={handleSave}
+            disabled={isSaveDisabled}></lightning-button>
+    </lightning-modal-footer>
+</template>

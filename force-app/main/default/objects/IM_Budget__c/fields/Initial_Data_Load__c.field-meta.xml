@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Initial_Data_Load__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>IM-302: This field is used to indicate if record is created as part of data migration.</description>
+    <label>Initial Data Load</label>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,174 @@
+<template>
+	<div>
+		<span class="slds-text-heading_medium">{title}</span>
+	</div>
+	<template lwc:if={displayEvents}>
+		<c-multi-sort-modal is-open={showSortModal} columns={sortableColumns} onapply={handleMultiSortApply}
+			oncancel={closeMultiSort} onclear={handleSortClear}>
+		</c-multi-sort-modal>
+		<div class="slds-table_container table-container">
+			<div class="slds-grid slds-float_right slds-m-bottom_x-small">
+				<lightning-button-icon icon-name="utility:sort" onclick={openMultiSort} title="Column Sort"></lightning-button-icon>
+				<lightning-button label="Previous" onclick={handlePrevious} class="slds-m-left_xx-small" disabled={disablePrev}></lightning-button>
+				<lightning-button label="Next" onclick={handleNext} class="slds-m-left_xx-small" disabled={disableNext}></lightning-button>
+			</div>
+			<table class="slds-table slds-table_bordered slds-table_cell-buffer">
+				<thead>
+					<tr class="slds-line-height_reset">
+						<th scope="col" style="width: 25%;">
+							<div class="slds-resizable">
+								<span class="sortable-header" data-id="name" onclick={handleSort}>Event Name</span>
+								<template lwc:if={sortDisplay.name}>
+									<span><lightning-icon icon-name={sortDisplay.name} size="xx-small"></lightning-icon></span>
+								</template>
+							</div>
+						</th>
+						<th scope="col" style="width: 10%;">
+							<div class="slds-truncate">
+								<span class="sortable-header" data-id="etype" onclick={handleSort}>Event Type</span>
+								<template lwc:if={sortDisplay.etype}>
+									<span><lightning-icon icon-name={sortDisplay.etype} size="xx-small"></lightning-icon></span>
+								</template>
+							</div>
+						</th>
+						<th scope="col" style="width: 10%;">
+							<div class="slds-truncate">
+								<span class="sortable-header" data-id="startDate" onclick={handleSort}>Event Start Date</span>
+								<template lwc:if={sortDisplay.startDate}>
+									<span><lightning-icon icon-name={sortDisplay.startDate} size="xx-small"></lightning-icon></span>
+								</template>
+							</div>
+						</th>
+						<th scope="col" style="width: 10%;">
+							<div class="slds-truncate">
+								<span class="sortable-header" data-id="endDate" onclick={handleSort}>Event End Date</span>
+								<template lwc:if={sortDisplay.endDate}>
+									<span><lightning-icon icon-name={sortDisplay.endDate} size="xx-small"></lightning-icon></span>
+								</template>
+							</div>
+						</th>
+						<th scope="col" style="width: 10%;">
+							<div class="slds-truncate">
+								<span class="sortable-header" data-id="timeZone" onclick={handleSort}>Time Zone</span>
+								<template lwc:if={sortDisplay.timeZone}>
+									<span><lightning-icon icon-name={sortDisplay.timeZone} size="xx-small"></lightning-icon></span>
+								</template>
+							</div>
+						</th>
+						<th scope="col" style="width: 5%;">
+							<div class="slds-truncate">
+								<span class="sortable-header" data-id="guest" onclick={handleSort}>Guests</span>
+								<template lwc:if={sortDisplay.guest}>
+									<span><lightning-icon icon-name={sortDisplay.guest} size="xx-small"></lightning-icon></span>
+								</template>
+							</div>
+						</th>
+						<th scope="col" style="width: 5%;">
+							<div class="slds-truncate">
+								<span class="sortable-header" data-id="pend" onclick={handleSort}>Pend</span>
+								<template lwc:if={sortDisplay.pend}>
+									<span><lightning-icon icon-name={sortDisplay.pend} size="xx-small"></lightning-icon></span>
+								</template>
+							</div>
+						</th>
+						<th scope="col" style="width: 5%;">
+							<div class="slds-truncate">
+								<span class="sortable-header" data-id="yes" onclick={handleSort}>Yes</span>
+								<template lwc:if={sortDisplay.yes}>
+									<span><lightning-icon icon-name={sortDisplay.yes} size="xx-small"></lightning-icon></span>
+								</template>
+							</div>
+						</th>
+						<th scope="col" style="width: 5%;">
+							<div class="slds-truncate">
+								<span class="sortable-header" data-id="no" onclick={handleSort}>No</span>
+								<template lwc:if={sortDisplay.no}>
+									<span><lightning-icon icon-name={sortDisplay.no} size="xx-small"></lightning-icon></span>
+								</template>
+							</div>
+						</th>
+						<th scope="col" style="width: 5%;">
+							<div class="slds-truncate">
+								<span class="sortable-header" data-id="attended" onclick={handleSort}>Attended</span>
+								<template lwc:if={sortDisplay.attended}>
+									<span><lightning-icon icon-name={sortDisplay.attended} size="xx-small"></lightning-icon></span>
+								</template>
+							</div>
+						</th>
+						<th scope="col" style="width: 5%;">
+							<div class="slds-truncate">
+								<span class="sortable-header" data-id="notAttended" onclick={handleSort}>Not Attended</span>
+								<template lwc:if={sortDisplay.notAttended}>
+									<span><lightning-icon icon-name={sortDisplay.notAttended} size="xx-small"></lightning-icon></span>
+								</template>
+							</div>
+						</th>
+						<th scope="col" style="width: 10%;">
+							<div class="slds-truncate">
+								<span class="sortable-header" data-id="coordinator" onclick={handleSort}>Event Coordinator</span>
+								<template lwc:if={sortDisplay.coordinator}>
+									<span><lightning-icon icon-name={sortDisplay.coordinator} size="xx-small"></lightning-icon></span>
+								</template>
+							</div>
+						</th>
+						<th scope="col" style="width: 5%;">
+							<div class="slds-truncate">
+								<span class="sortable-header" data-id="programatic" onclick={handleSort}>Program-Managed</span>
+								<template lwc:if={sortDisplay.programatic}>
+									<span><lightning-icon icon-name={sortDisplay.programatic} size="xx-small"></lightning-icon></span>
+								</template>
+							</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<template for:each={displayEvents} for:item="event">
+						<tr class="slds-hint-parent" key={event.event.Id}>
+							<th scope="row" style="width: 25%;">
+								<div class="slds-truncate" title="Cloudhub">
+									<a data-id={event.event.Id} onclick={handleEventSelection}>{event.event.Name}</a>
+								</div>
+							</th>
+							<td style="width: 10%;">
+								<div class="slds-truncate">{event.event.EventType__c}</div>
+							</td>
+							<td style="width: 10%;">
+								<div class="slds-truncate">{event.startDate}</div>
+							</td>
+							<td style="width: 10%;">
+								<div class="slds-truncate">{event.endDate}</div>
+							</td>
+							<td style="width: 10%;">
+								<div class="slds-truncate">{event.timeZone}</div>
+							</td>
+							<td style="width: 5%;">
+								<div class="slds-truncate">{event.event.TotalGuests__c}</div>
+							</td>
+							<td style="width: 5%;">
+								<div class="slds-truncate">{event.event.TotalPend__c}</div>
+							</td>
+							<td style="width: 5%;">
+								<div class="slds-truncate">{event.event.TotalYes__c}</div>
+							</td>
+							<td style="width: 5%;">
+								<div class="slds-truncate">{event.event.TotalNo__c}</div>
+							</td>
+							<td style="width: 5%;">
+								<div class="slds-truncate">{event.event.TotalAttend__c}</div>
+							</td>
+							<td style="width: 5%;">
+								<div class="slds-truncate">{event.event.TotalNotAttend__c}</div>
+							</td>
+							<td style="width: 10%;">
+								<div class="slds-truncate">{event.event.EventCoordinator}</div>
+							</td>
+							<td style="width: 5%; text-align: center;">
+								<input type="checkbox" disabled checked={event.programatic}/>
+							</td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+		</div>
+	</template>
+</template>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>IM-281:Custom Permission to grant access to Metrics/Strategy tab.</description>
+    <isLicensed>false</isLicensed>
+    <label>IM: Strategy/Metrics Tab Access</label>
+</CustomPermission>

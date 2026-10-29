@@ -1,0 +1,33 @@
+.myBody {
+  padding-left: 2%;
+  padding-right: 2%;
+}
+.slds-docked-form-footer {
+  margin-bottom: 14px;
+}
+.hoverSaveBtn {
+  background-color: orange;
+}
+.topBtn {
+  float: right;
+  margin-left: 10px;
+}
+.topBtnLeft {
+  margin-left: 10px;
+}
+.stickyCol {
+  position: fixed;
+  top: 33vh;
+}
+.table-scroll {
+  overflow: auto;
+}
+.fix {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: #f8f8f8;
+}
+.myBtn{
+    margin-left: 1%;
+}

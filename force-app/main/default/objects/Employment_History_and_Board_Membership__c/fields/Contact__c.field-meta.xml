@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contact__c</fullName>
+    <description>BRME-5498: This formula field replicates the standard Master-Detail lookup field. It was created because fields from the primary Master-Detail object do not appear in Dynamic Related Lists for the child object. By using this formula hyperlink, we can surface the relationship and allow users to access the parent record from dynamic related lists.</description>
+    <externalId>false</externalId>
+    <formula>HYPERLINK(&quot;/?sort=&quot;&amp;Contact_Name__r.FirstName_LastName__c,&apos;&apos;)&amp;
+HYPERLINK (&quot;/&quot;+Contact_Name__r.Id,
+Contact_Name__r.FirstName_LastName__c,
+&apos;_self&apos;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Contact</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

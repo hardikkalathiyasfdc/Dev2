@@ -1,0 +1,108 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-quick-action-panel header="Share" style="overflow:auto; height:auto;">
+        <lightning-layout multiple-rows class="slds-grid_vertical-stretch">
+            <lightning-layout-item class={shareAccessCSS}>   
+                <!--Sharing option combobox-->
+                <lightning-combobox
+                    name="selectItem"
+                    label="Select Share Option"
+                    value={shareOptionSelectedValue}
+                    options={shareOptions}
+                    onchange={selectShareOptions}
+                ></lightning-combobox>
+            </lightning-layout-item>
+            <template lwc:if={userSearch}>
+                <lightning-layout-item class={userSearchCSS}>
+                    <!--Child Lwc 'sObjectMultiSelection' to provide user search box with drop down option-->
+                    <c-s-object-multi-selection 
+                        data-id="user-lookup" 
+                        onselected={handleUserSelection} 
+                        onremoved={handleUserSelection} 
+                        title="Select Colleague(s)"
+                        object-api-name="User" 
+                        filter-data={filterData}
+                        icon-name="standard:user"
+                        >
+                    </c-s-object-multi-selection>
+                </lightning-layout-item>
+            </template>
+            <template lwc:if={groupSearch}>
+                <lightning-layout-item class={userSearchCSS}>
+                    <!--Child Lwc 'sObjectMultiSelection' to provide user search box with drop down option-->
+                    <c-s-object-multi-selection 
+                        data-id="group-lookup" 
+                        onselected={handleUserSelection} 
+                        onremoved={handleUserSelection} 
+                        title="Select Team(s)"
+                        object-api-name="Group" 
+                        filter-data={filterData}
+                        icon-name="standard:groups"
+                        >
+                    </c-s-object-multi-selection>
+                </lightning-layout-item>
+            </template>
+        </lightning-layout>
+        <lightning-layout multiple-rows class="slds-grid_vertical-stretch">
+            <lightning-layout-item class={shareAccessCSS}>
+                <!--Access Level option combobox-->
+                <lightning-combobox
+                    name="selectItem"
+                    value={accessLevelValue}
+                    label="Select Access Level"
+                    placeholder="Access Options"
+                    options={accessLevelOptions}
+                    onchange={selectAccessLevelOptions}
+                    required
+                ></lightning-combobox>
+            </lightning-layout-item>
+        </lightning-layout>
+        <div>
+            <div style="display: inline;" class="slds-m-vertical_small slds-float_left">
+                Shared with <b> {recLength} </b> groups of users.
+                <template lwc:if={hideSharedUsersTable}>
+                    <lightning-button class="slds-button slds-var-m-right_x-small" onclick={handleEditButton} variant="base" 
+                        label="Edit" style="margin-left: 5px;">
+                    </lightning-button>
+                </template>
+            </div>
+            <template lwc:if={showSharedUsersTable}>
+                <template lwc:if={isDesktop}>
+                    <div class="slds-float_right" style="display: inline;">
+                    <template lwc:if={displaySharedRecHierarchy}>
+                        <lightning-button class="slds-button slds-var-m-right_x-small" onclick={handleSelectionHierarchy} variant="base" 
+                            label="View Sharing Hierarchy">
+                        </lightning-button>
+                    </template>
+                    </div>
+                </template>
+            </template>
+        </div>
+        <!-- Table to show list of Users with record is shared with-->
+        <template lwc:if={showSharedUsersTable}>
+            <div style="height:auto;clear:both;">
+                <div class="slds-size_12-of-12 slds-p-bottom_x-small">
+                    <lightning-input
+                        name="enter-search"
+                        type="search"
+                        placeholder="Filter groups of users"
+                        value={searchRecordsShared}   
+                        onchange={searchSharedRecord}
+                    ></lightning-input>
+                </div>
+                <c-custom-datatable class="slds-scrollable" style="overflow:initial"
+                    key-field="Id"
+                    data={sobjectSharedList}
+                    columns={columns}
+                    onrowaction={handleDeleteAction}
+                    onpicklistchanged={updatePicklist} 
+                    hide-checkbox-column>
+                </c-custom-datatable>
+            </div>
+        </template> 
+        <div slot="footer">
+            <lightning-button onclick={closePopup} label="Cancel" variant="neutral" class="slds-m-right_x-small" ></lightning-button>  
+            <lightning-button onclick={handleSave} label="Save" variant="brand" class="slds-m-right_x-small" ></lightning-button>
+        </div>
+    </lightning-quick-action-panel>
+</template>

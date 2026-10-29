@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Grants_Team_Contact__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>IM-38 : Created this field as a part of Create Initiative Object.
+
+Grants Liaison responsible for corresponding Team.</description>
+    <label>Grants Team Contact</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>Initiatives_Grants_Team_Contact</relationshipName>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

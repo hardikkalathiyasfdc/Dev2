@@ -1,0 +1,87 @@
+<template>
+    <!--Modal Header-->
+    <lightning-modal-header label='Amendment Details'>
+        <template if:true={isError}>
+            <template for:each={errorMessages} for:item="message">
+                <div key={message}>
+                    <div class="slds-m-bottom_xx-small slds-error">{message}</div>
+                </div>
+            </template>
+        </template>
+    </lightning-modal-header>
+    <!--Modal Body-->
+    <lightning-modal-body>
+        <div style="min-height:32vh;">
+            <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title slds-theme_shade">
+            <span class="slds-truncate slds-var-p-horizontal_small" title="Section Title">Amendment Details</span>
+                </h3>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_5-of-12">
+                        <div class="slds-form-element_horizontal">
+                            <div class="slds-grid slds-m-top_medium">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <p><lightning-formatted-text value="New Total Amount Recommended (Local)"
+                                            class="slds-font-style"></lightning-formatted-text></p>
+                                </div>
+                                <div class="slds-col slds-size_5-of-12">
+                                    <p>
+                                        <lightning-formatted-number value={amendmentAmount} minimum-fraction-digits="2">
+                                        </lightning-formatted-number>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="slds-m-top_medium">
+                                <p>
+                                    <lightning-input type="date" date-style="short" value={imGrant.End_Date__c}
+                                        label="New End Date" onchange={handleAmdEndDateChange}>
+                                    </lightning-input>
+                                </p>
+                            </div>
+                            <div class="slds-m-top_medium">
+                                <lightning-combobox name="generate" label="Amendment Type" options={amendmentTypeValues}
+                                    placeholder="Select" onchange={handleAmdTypeChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12"></div>
+                    <template if:false={isTypeAdministrative}>
+                        <div class="slds-col slds-size_5-of-12">
+                            <div class="slds-form-element_horizontal">
+                                <div class="slds-m-bottom_small slds-m-top_small slds-col slds-size_12-of-12">
+                                    <lightning-combobox name="generate" label="Has the Budget Changed?"
+                                        options={budgetChangedvalues} placeholder="Select"
+                                        onchange={handleHasBudgetChanged}>
+                                    </lightning-combobox>
+                                </div>
+                                <div class="slds-m-bottom_small slds-m-top_small slds-col slds-size_12-of-12">
+                                    <lightning-combobox name="generate"
+                                        label="Have you received Concept Approval of the new budget and/or scope?"
+                                        options={budgetChangedvalues} placeholder="Select"
+                                        onchange={handleConceptApprovalChange}>
+                                    </lightning-combobox>
+                                </div>
+                                <div class="slds-col slds-size_12-of-12">&nbsp;</div>
+                                <div class="slds-col slds-size_12-of-12">&nbsp;</div>
+                                <div class="slds-m-bottom_small slds-m-top_small slds-col slds-size_12-of-12">
+                                    <lightning-combobox name="generate"
+                                        label="Is this a continuation of funding or a larger strategic realignment?"
+                                        options={continuationOrRealignmentOptions} placeholder="Select"
+                                        onchange={handleContinuationOrRealignmentChange}>
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </lightning-modal-body>
+    <!--Modal Footer-->
+    <lightning-modal-footer>
+        <lightning-button class="slds-button" variant="neutral" label="Cancel" onclick={handleClose}></lightning-button>
+        <lightning-button class="slds-button slds-m-left_x-small" variant="brand" label="Save"
+            onclick={handleAmdDetailsSave}></lightning-button>
+    </lightning-modal-footer>
+</template>

@@ -1,0 +1,48 @@
+<template>
+    <div class={geoAreaId}></div>
+    <template lwc:if={isGeoAreaIdAvailable}>
+        <template lwc:if={isLoading}>
+            <lightning-spinner variant="brand" size="large"></lightning-spinner>
+        </template>
+        <template lwc:else>
+            <div class="slds-m-top_small box slds-p-around_x-small">
+                <h3>Recent Mayors</h3>
+                <div style={tableStyle} data-id="RecentMayors">
+                    <table class="slds-table">
+                        <tbody>
+                            <template lwc:if={showRecentMayors}>
+                                <template for:each={mayors} for:item="mayor">
+                                    <tr key={mayor.Id} class="mayor-row slds-hint-parent">
+                                        <!-- Name column -->
+                                        <td class="mayor-name-cell">
+                                            <template lwc:if={hasPermission}>
+                                                <a href="javascript:void(0);" data-id={mayor.Contact_Name__r.Id} onclick={handleContactClick}>
+                                                    {mayor.Contact_Name__r.Name}
+                                                </a>
+                                            </template>
+                                            <template lwc:else>
+                                                {mayor.Contact_Name__r.Name}
+                                            </template>
+                                        </td>
+                                        <!-- Year column -->
+                                        <td class="mayor-years-cell">
+                                            <template lwc:if={mayor.To__c}> 
+                                                {mayor.From__c} - {mayor.To__c}
+                                            </template>
+                                            <template lwc:else>
+                                                {mayor.From__c} - Present
+                                            </template>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </template>
+                            <template lwc:else>
+                                <td>No Recent Mayor(s)</td>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </template>
+    </template>
+</template>

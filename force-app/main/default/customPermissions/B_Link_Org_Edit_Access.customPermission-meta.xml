@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>IM-79: Used for &quot; Organization: B-Link Org Edit Access&quot; permission set.</description>
+    <isLicensed>false</isLicensed>
+    <label>B-Link Org Edit Access</label>
+</CustomPermission>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>BRME-4788 - Permission set to give access to fields specific to Courtesy Gift fields. (Contact Interaction (BP), Correspondence (MRB), MB2020 Interaction)</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Interaction__c.Courtesy_Gift_Incoming_to_MRB_Detail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Interaction__c.Courtesy_Gift_Outgoing_from_MRB_Detail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Interaction__c.Courtesy_Gift_Outgoing_from_MRB__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Interaction: Courtesy Gift fields across Interaction record types</label>
+</PermissionSet>

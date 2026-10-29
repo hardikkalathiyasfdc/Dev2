@@ -1,0 +1,109 @@
+<template>
+    <div class="slds-grid slds-wrap modal lwc-wrapper"
+        style="border-radius: 3px; padding:11px; background-color:white; clear:both">
+        <div class="slds-col slds-size_4-of-12">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-p-bottom_small"></div>
+                <div class="slds-col slds-size_1-of-1" style="margin-top: -22px;">
+                    <template lwc:if={isNotCountrySelected}>
+                        <c-city-view-recent-mayor geo-area-id={geoAreaId} form-factor={formFactor}>
+                        </c-city-view-recent-mayor>
+                    </template>
+                    <div>
+                        <c-city-view-city-level-work geo-area-id={geoAreaId} form-factor={formFactor}
+                            is-country-selected={isCountrySelected} is-state-selected={isStateSelected}
+                            selected-group-by={selectedGroupByForStateOnCountryLevel} shall-show-grants={shallShowGrants}>
+                        </c-city-view-city-level-work>
+                    </div>
+                    <c-city-view-country-level-work class="slds-hide" geo-area-id={geoAreaId} form-factor={formFactor}
+                        selected-group-by={selectedGroupByForStateOnCountryLevel} is-country-selected={isCountrySelected}
+                        shall-show-grants={shallShowGrants} is-state-selected={isStateSelected}>
+                    </c-city-view-country-level-work>
+                </div>
+                <div class="slds-col slds-size_1-of-1">
+                    <template lwc:if={isNotCountrySelected}>
+                        <c-city-view-key-partners geo-area-id={geoAreaId} form-factor={formFactor}
+                            is-country-selected={isCountrySelected} is-state-selected={isStateSelected}>
+                        </c-city-view-key-partners>
+                    </template>
+                    <template lwc:if={showCityWorkCmp}>
+                        <c-city-level-work-for-selected-country geo-area-id={geoAreaId} form-factor={formFactor}
+                            show-detail-page={showDetailPage} selected-group-by={selectedGroupByForCityOnCountryLevel}
+                            shall-show-grants={shallShowGrants} is-country-selected={isCountrySelected}
+                            is-state-selected={isStateSelected}>
+                        </c-city-level-work-for-selected-country>
+                        <c-city-view-key-partners geo-area-id={geoAreaId} form-factor={formFactor}
+                            is-country-selected={isCountrySelected} is-state-selected={isStateSelected}>
+                        </c-city-view-key-partners>
+                    </template>
+                    <div>
+                        <c-city-view-bloomberg-office geo-area-id={geoAreaId} form-factor={formFactor} office-icon-path={officeIconPath}>
+                        </c-city-view-bloomberg-office>
+                    </div>
+                    <template lwc:if={isNotCountrySelected}>
+                        <div style="margin-top: -1px;" lwc:if={displayEmployeeTravel}>
+                            <c-city-view-travel-calendar geo-area-id={geoAreaId} form-factor={formFactor}>
+                            </c-city-view-travel-calendar>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+        <div class="slds-col slds-size_8-of-12 slds-p-left_medium">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_6-of-12">
+                    <c-city-view-cultural-access geo-area-id={geoAreaId} form-factor={formFactor}
+                        is-country={isCountrySelected} is-state-selected={isStateSelected}>
+                    </c-city-view-cultural-access>
+                </div>
+                <div class="slds-col slds-size_6-of-12" style="margin-top: 5px;">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12">
+                            <template lwc:if={isNotCountrySelected}>
+                                <div>
+                                    <c-city-view-weather latitude={latitude} longitude={longitude}>
+                                    </c-city-view-weather>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_6-of-12" style="margin-top: -5px;">
+                            <template lwc:if={showGenerateButton}>
+                                <div class="close-button slds-text-align_right" data-id="GenSummary">
+                                    <lightning-button-menu title="Click here to generate a word document." variant="brand-outline" 
+                                        onselect={handleOnMenuItem} label="Generate Doc">
+                                        <lightning-menu-item value="withoutDescription" label="Exclude Program Descriptions"></lightning-menu-item>
+                                        <lightning-menu-item value="withDescription" label="Include Program Descriptions"></lightning-menu-item>
+                                    </lightning-button-menu>
+                                </div>
+                            </template>
+                            <template lwc:else>
+                                <div class="close-button">
+                                    <lightning-button-group data-id="GenSummary-Collapse">
+                                        <lightning-button-menu title="Click here to generate a word document." variant="brand-outline" 
+                                            onselect={handleOnMenuItem} label="Generate Doc">
+                                            <lightning-menu-item value="withoutDescription" label="Exclude Program Descriptions"></lightning-menu-item>
+                                            <lightning-menu-item value="withDescription" label="Include Program Descriptions"></lightning-menu-item>
+                                        </lightning-button-menu>
+                                        <lightning-button icon-name="utility:contract_alt" variant="Close" alternative-text="Close" label="View Summary"
+                                            title="Click here to view summary." onclick={handleDetailClose}>
+                                        </lightning-button>
+                                    </lightning-button-group>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                    <div lwc:if={showOfficeMap}>
+                        <c-city-view-office-map geo-area-id={geoAreaId} marker-office-icon={markerOfficeIcon}
+                            is-country-selected={isCountrySelected} is-state-selected={isStateSelected}>
+                        </c-city-view-office-map>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <c-city-view-highlights geo-area-id={geoAreaId} form-factor={formFactor}
+                    is-country-selected={isCountrySelected} is-state-selected={isStateSelected} selected-highlight-sort={selectedHighlightSort}>
+                </c-city-view-highlights>
+            </div>
+        </div>
+    </div>
+</template>

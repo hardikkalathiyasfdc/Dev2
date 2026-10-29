@@ -1,0 +1,37 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" access="global" controller="CampaignCloneWithMembersController">
+	
+	<aura:attribute name="fields" type="String[]" default="['Name','Description']" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="showSpinner" type="boolean" default="false" />
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner />
+    </aura:if>
+	
+    <lightning:recordEditForm aura:id="cloneCampaign"
+    		recordId="{!v.recordId}"
+    		objectApiName="Campaign"
+    		onsubmit="{!c.handleSubmit}">
+        <lightning:messages />
+            <div class="slds-grid slds-gutters slds-container_center">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Name" aura:id="nameCmp"/>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Description"/>
+                </div>
+            </div>
+            <div class="slds-align_absolute-center slds-m-top_small" style="height: 5rem;">
+		      <lightning:button 
+		        title="Clone List with List Members"
+		        type="submit"
+		        variant="success"
+		        label="Create List"
+		        iconName="action:add_relationship"/>&nbsp;&nbsp;
+		      <lightning:button onclick="{!c.closeAction}"
+		        variant="destructive"
+		        label="Cancel"
+		        iconName="action:close"/>
+		    </div>
+    </lightning:recordEditForm>	
+    
+</aura:component>

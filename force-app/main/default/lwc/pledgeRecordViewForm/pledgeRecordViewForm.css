@@ -1,0 +1,6 @@
+.dummy{
+	color : black;
+}
+.THIS .test:focus{
+   box-shadow:none;
+}

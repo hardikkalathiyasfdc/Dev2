@@ -1,0 +1,52 @@
+<aura:component implements="force:lightningQuickAction,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId" access="global" controller="AddOrganizationAuraController">
+	<aura:html tag="style">
+	.slds-modal__container{
+		height : auto;
+		width: 90%;
+		max-width: 90rem;
+	}
+	.modal-body{
+		height : 500px !important;
+		max-height: 500px !important;
+	}
+	.slds-modal__footer{
+		display: none !important;
+	}
+	</aura:html> 
+
+	<aura:attribute name="selectedAccounts" type="List" default="[]" />
+	<aura:attribute name="recordId" type="String" />
+	<aura:attribute name="displayFields" type="List" default="['Search_Display_Name__c', 'AKA__c', 'Legal_Name__c']"/>
+	<aura:attribute name="displayFieldPrefixes" type="List" default="['', '']"/>
+	<aura:attribute name="searchFields" type="List" default="['Search_Display_Name__c']"/>
+	<!-- SHOW LOADING SPINNER-->
+	<lightning:spinner variant="brand" alternativeText="Processing.." size="large" aura:id="Id_spinner" class="slds-hide" /> 
+
+	<lightning:card>       
+		<c:genericLookup
+			aura:id="orgLookup"
+			objectApiName="Account"
+			icon="standard:account"
+			label="Organization Name"
+			isMultiSelect="true"
+			customSearchClass="OrganizationLookupSearch"
+			displayFields="{!v.displayFields}"
+			searchFields="{!v.searchFields}"
+			placeholder="Search..."
+			displayFieldPrefixes="{!v.displayFieldPrefixes}"
+			showRecentlyViewed="true"
+			allowNewRecord="false"
+			onchange="{!c.handleLookupChange}"/>
+		<div class="slds-align_absolute-center" style="height: 5rem;">
+		  <lightning:button onclick="{!c.addSelectedAccounts}"
+		    variant="success"
+		    label="Add Organizations"
+		    iconName="action:add_relationship"/>&nbsp;&nbsp;
+		  <lightning:button onclick="{!c.closeAction}"
+		    variant="destructive"
+		    label="Cancel"
+		    iconName="action:close"/>
+		</div>
+	</lightning:card>
+
+</aura:component>

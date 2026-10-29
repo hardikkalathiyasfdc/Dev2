@@ -1,0 +1,58 @@
+<aura:component
+                implements="force:lightningQuickAction"
+                controller="DITCmpController"
+                >
+    <aura:attribute name="stage" type="String" default="loadFile" />
+    <aura:attribute name="dataLoad" type="Map" />
+    <aura:attribute name="dataLoaderId" type="String" default="" />
+    <aura:attribute name="fileName" type="String" default="" />
+    <aura:attribute name="isLoading" type="Boolean" default="true" />
+    <aura:attribute name="uploadData" type="List" default="[]" />
+    <aura:attribute name="uploadColumns" type="Map" default="{}" />
+    
+    <aura:attribute name="previousFileList" type="List" default="[]" />
+    <aura:attribute name="previousFile" type="String" default="" />
+    <ltng:require
+                  scripts="{!join(',',
+                           $Resource.cmputil,
+                           $Resource.jszip,
+                           $Resource.xlsx,
+                           $Resource.PapaParse
+                           )}"
+                  afterScriptsLoaded="{!c.init}"
+                  />
+    
+    <div>
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="3"  smallDeviceSize="3" mediumDeviceSize="3" largeDeviceSize="3"  padding="around-small">
+                <lightning:input
+                                 name="file1"
+                                 type="file"
+                                 label="Upload Excel"
+                                 class="myFileUpload"
+                                 multiple="false"
+                                 accept=".xlsx,.xlsm,.csv"
+                                 onchange="{! c.handleUpload }"
+                                 />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="9" smallDeviceSize="9" mediumDeviceSize="9" largeDeviceSize="9" padding="around-small">
+                <lightning:select
+                                  label="Load an in progress file"
+                                  value="{!v.previousFile}"
+                                  class="myFileSelect"
+                                  onchange="{!c.handleFileLoadChange}"
+                                  >
+                    <option value="">choose one...</option>
+                    <aura:iteration items="{!v.previousFileList}" var="opt">
+                        <option value="{!opt.value}">{!opt.label}</option>
+                    </aura:iteration>
+                </lightning:select>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3"  smallDeviceSize="3" mediumDeviceSize="3" largeDeviceSize="3" padding="around-small"></lightning:layoutItem>
+            <lightning:layoutItem size="9"  smallDeviceSize="9" mediumDeviceSize="9" largeDeviceSize="9"  padding="around-small" >
+                <div class="slds-text-color_success slds-p-left_large">Note: For better performance, upload lists with a max of 200 contacts.</div>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+    
+</aura:component>

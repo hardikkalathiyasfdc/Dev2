@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Group xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>BRME-7020: Members of this group can read and edit private Highlight records (Private__c = true). Membership is managed in the org by administrators; do not deploy member assignments.</description>
+    <name>Highlights: Private Highlights Review</name>
+</Group>

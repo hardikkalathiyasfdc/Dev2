@@ -1,0 +1,10 @@
+.table-container {
+    overflow-x: auto;
+    max-width: 100%;
+}
+.sortable-header {
+    cursor: pointer;
+}
+.sortable-header:hover {
+    text-decoration: underline;
+}

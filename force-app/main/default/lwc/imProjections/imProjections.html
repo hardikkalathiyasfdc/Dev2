@@ -1,0 +1,60 @@
+<template>
+     <div class="slds-card related-list-container">
+        <!-- Card Header - Standard related list style -->
+        <header class="slds-card__header slds-grid slds-grid_align-spread slds-p-around_small">
+            <div class="slds-media slds-media_center">
+                <div class="slds-media__figure slds-m-around_small">
+                    <lightning-icon
+                        icon-name={cardIcon}
+                        alternative-text={cardTitle}
+                        title={cardTitle}
+                        size="small">
+                    </lightning-icon>
+                </div>
+                <div class="slds-media__body">
+                    <h3 class="slds-text-heading_small">{cardTitle}</h3>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Card Body - Datatable -->
+        <div class="slds-card__body slds-card__body_inner">
+            <!-- Show loading spinner while data is being fetched -->
+            <template lwc:if={isLoading}>
+                <div class="slds-align_absolute-center slds-p-around_medium" style="min-height: 200px; display: flex; align-items: center; justify-content: center;">
+                    <lightning-spinner 
+                        alternative-text="Loading projections..." 
+                        size="small">
+                    </lightning-spinner>
+                </div>
+            </template>
+            
+            <!-- Show datatable only when data is loaded -->
+            <template lwc:if={showDataTable}>
+                <lightning-datatable
+                    key-field="Id"
+                    data={data}
+                    show-row-number-column
+                    hide-checkbox-column
+                    oncellchange={handleCellChange}
+                    onsave={handleSave}
+                    oncancel={handleCancel}
+                    draft-values={draftValues}
+                    errors={errors}
+                    columns={columns}>
+                </lightning-datatable>
+            </template>
+            
+            <!-- Show error message if there's an error -->
+            <template if:true={error}>
+                <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error slds-m-around_small" role="alert">
+                    <span class="slds-assistive-text">Error</span>
+                    <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small">
+                        <lightning-icon icon-name="utility:error" size="x-small"></lightning-icon>
+                    </span>
+                    <h2>Error loading projections: {error.body.message}</h2>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

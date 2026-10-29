@@ -1,0 +1,132 @@
+<template>
+	<template lwc:if={isMobileDevice}>
+		<c-events-management-mobile-view field-options={fieldOptions} shall-show-program-managed-toggle={isShowToggle} is-program-managed-checked={isChecked}
+			event-status-options={eventStatusOptions} display-events={upcomingEvents} total-events={allUpcommingEvents} disable-toggle={disableToggle}
+			onselected={handleEventSelected} title={sectionLabel} event-type-options={eventTypeOptions} timezone-options={timezoneOptions}
+			programmatic-filter-options={programmaticFilterOptions} onsearch={handleSearchFromMobile}
+			shall-show-event-error={shallShowEventError} is-gala-checked={isGalaChecked}
+			shall-show-gala-toggle={isShowGalaToggle} disable-gala-toggle={disableGalaToggle}>
+		</c-events-management-mobile-view>
+	</template>
+	<lightning-card lwc:else>
+		<template lwc:if={hideEventDetail}>
+			<div class="slds-m-around_small">
+				<lightning-button label="Create Event" onclick={handleNewZkipsterEvent}></lightning-button>
+				<lightning-button label="Generate Weekly Events List" class="slds-m-left_medium"
+					onclick={handleEventGeneration}></lightning-button>
+			</div>
+			<div class="slds-grid slds-grid_vertical slds-m-around_small">
+				<!--Toggle button here-->
+				<template lwc:if={isShowToggle}>
+					<div class="slds-form-element slds-m-left_small" style="width: 24rem;">
+						<label class="slds-checkbox_toggle slds-grid slds-grid_align-spread">
+						<span class="slds-form-element__label slds-m-bottom_none">Include Program-Managed Events</span>
+							<input type="checkbox" name="checkbox-toggle-18" disabled={disableToggle} value="checkbox-toggle-18" aria-describedby="checkbox-toggle-18" 
+							onchange={handleToggleChange} checked={isChecked} />
+							<span id="checkbox-toggle-18" class="slds-checkbox_faux_container">
+							<span class="slds-checkbox_faux"></span>
+							<span class="slds-checkbox_on">Include</span>
+							<span class="slds-checkbox_off">Exclude</span>
+						</span>
+					</label>
+					</div>
+				</template>
+				<template lwc:if={isShowGalaToggle}>
+				<div class="slds-form-element slds-m-left_small slds-m-top_x-small" style="width: 24rem;">
+					<label class="slds-checkbox_toggle slds-grid slds-grid_align-spread">
+					<span class="slds-form-element__label slds-m-bottom_none">Include Employee Engagement Galas</span>
+						<input type="checkbox" name="checkbox-toggle-gala" disabled={disableGalaToggle} value="checkbox-toggle-gala" aria-describedby="checkbox-toggle-gala"
+						onchange={handleGalaToggleChange} checked={isGalaChecked} />
+						<span id="checkbox-toggle-gala" class="slds-checkbox_faux_container">
+						<span class="slds-checkbox_faux"></span>
+						<span class="slds-checkbox_on">Include</span>
+						<span class="slds-checkbox_off">Exclude</span>
+					</span>
+				</label>
+				</div>
+				</template>
+			</div>
+			<section class="slds-m-around_small">
+				<div class="c-container slds-var-p-bottom_large">
+					<lightning-layout multiple-rows="true">
+						<lightning-layout-item class="slds-var-p-vertical_medium slds-var-p-right_small" size="12" small-device-size="12"
+							large-device-size="3">
+							<lightning-combobox name="fieldName" data-id="fieldName" label="Field Name"
+								value={eventFilter} placeholder="Select Field Name" options={fieldOptions}
+								onchange={handleFieldChange} variant="label-hidden">
+							</lightning-combobox>
+						</lightning-layout-item>
+						<lightning-layout-item class="slds-var-p-around_medium" size="12" small-device-size="12"
+							large-device-size="2">
+							<lightning-combobox data-id="fieldName" name="fieldNameFilter" label="Field Name Filter"
+								value={selectedFilter} placeholder="Select Filter" options={filterOptions}
+								onchange={handleFilterChange} variant="label-hidden">
+							</lightning-combobox>
+						</lightning-layout-item>
+						<lightning-layout-item class="slds-var-p-around_medium" size="12" small-device-size="12"
+							large-device-size="4">
+							<template lwc:if={isTextField}>
+								<lightning-input type="text" variant="label-hidden" onchange={handleKeyValueChange}
+									value={selectedKeyValue}>
+								</lightning-input>
+							</template>
+							<template lwc:if={isNumberField}>
+								<lightning-input type="number" name="input1" variant="label-hidden"
+									onchange={handleKeyValueChange}></lightning-input>
+							</template>
+							<template lwc:if={isPicklist}>
+								<lightning-combobox data-id="fieldName" name="fieldName" label="Field Name"
+									value={eventStatus} placeholder="Select Value" options={dataOptions}
+									onchange={handleDataChange} variant="label-hidden">
+								</lightning-combobox>
+							</template>
+							<template lwc:if={isLookup}>
+								<lightning-record-picker label="User" placeholder="Search Event Coordinator..."
+									object-api-name="User" variant="label-hidden" filter={coordinatorFilter}
+									onchange={handleUserSelected}>
+								</lightning-record-picker>
+							</template>
+							<template lwc:if={isStartDate}>
+								<lightning-input type="date" variant="label-hidden" onchange={handleKeyValueChange}>
+								</lightning-input>
+							</template>
+							<template lwc:if={ischeckbox}>
+								<lightning-combobox data-id="fieldName" name="Program-Managed" value={selectedProgramic} label="Program-Managed"
+									 placeholder="Select Value" options={dataOptions}
+									onchange={handleCheckboxChange} variant="label-hidden">
+								</lightning-combobox>
+							</template>
+						</lightning-layout-item>
+						<lightning-layout-item class="slds-var-p-around_medium" size="12" small-device-size="12"
+							large-device-size="3">
+							<lightning-button variant="brand" label="Search" title="Search" onclick={handleSearch}>
+							</lightning-button>&nbsp;
+							<lightning-button variant="brand" label="Clear" title="Clear" onclick={handleClear}>
+							</lightning-button>
+						</lightning-layout-item>
+						<lightning-layout-item class="slds-var-p-right_small" size="12" small-device-size="12"
+							large-device-size="3">
+							<lightning-combobox name="status" label="Event Status" value={eventStatus}
+								placeholder="Select Event Status" options={eventStatusOptions} onchange={handleChange}
+								variant="label-hidden">
+							</lightning-combobox>
+						</lightning-layout-item>
+					</lightning-layout>
+				</div>
+				<div>
+					<c-events display-events={upcomingEvents} total-events={allUpcommingEvents} onselected={handleEventSelected} title={sectionLabel}>
+					</c-events>
+				</div>
+			</section>
+		</template>
+		<template lwc:if={showEventCreation}>
+			<c-event-creation oncancel={handleCreationFinished}></c-event-creation>
+		</template>
+		<template lwc:if={showDocGeneration}>
+			<c-doc-pop oncancel={handleDocGenerationFinish}></c-doc-pop>
+		</template>
+		<template lwc:if={showEmailUpdate}>
+			<c-update-invitation-emails oncancel={handleEmailUpdateFinish}></c-update-invitation-emails>
+		</template>
+	</lightning-card>
+</template>

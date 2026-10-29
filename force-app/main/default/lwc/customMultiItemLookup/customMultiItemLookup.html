@@ -1,0 +1,63 @@
+<template>
+    <div class="ml-root" data-ml-root onfocusout={handleFocusOut}>
+        <div class="slds-form-element">
+            <template lwc:if={label}>
+                <label class="slds-form-element__label slds-var-p-left_x-small">{label}</label>
+            </template>
+            <div class="slds-form-element__control">
+                <div class="slds-combobox_container">
+                    <div class={comboboxClass} aria-expanded={dropdownOpen} aria-haspopup="listbox" role="combobox"
+                        aria-owns="modal-id-1" aria-controls="modal-id-1" aria-label={label}>
+                        <div class="slds-combobox__form-element" role="none">
+                            <div class="slds-listbox slds-listbox_inline slds-p-vertical_xx-small" role="listbox"
+                                aria-label="Selected items" style="width: 99%">
+                                <template for:each={selectedList} for:item="pill">
+                                    <span key={pill.id} class="slds-listbox__item slds-var-p-bottom_x-small slds-var-p-right_x-small" role="presentation">
+                                        <lightning-pill label={pill.line1} onremove={handleRemovePill} data-id={pill.id}>
+                                            <lightning-icon icon-name={iconName}></lightning-icon>
+                                        </lightning-pill>
+                                    </span>
+                                </template>
+                                <input id={inputId} class="slds-input slds-combobox__input" type="text" role="textbox"
+                                    placeholder={placeholder} value={searchTerm} onclick={handleInputClick}
+                                    oninput={handleInput} onfocus={openDropdown} onkeydown={handleKeydown}/>
+                            </div>
+                        </div>
+                        <div lwc:if={dropdownOpen} class="slds-dropdown slds-dropdown_fluid slds-dropdown_length-with-icon-7 dropdown"
+                            role="listbox" id="modal-id-1">
+                            <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                <template lwc:if={hasResults}>
+                                    <template for:each={filteredItems} for:item="opt">
+                                        <li key={opt.id} role="presentation" class="slds-listbox__item" data-id={opt.id} onmousedown={handleSelect}>
+                                            <div class="slds-listbox__option slds-listbox__option_entity slds-media slds-media_center"
+                                                role="option" aria-selected="false">
+                                                <span class="slds-media__figure slds-listbox__option-icon">
+                                                    <lightning-icon icon-name={iconName} size="small"></lightning-icon>
+                                                </span>
+                                                <span class="slds-media__body">
+                                                    <span class="slds-listbox__option-text slds-listbox__option-text_entity">
+                                                        <b>{opt.line1}</b>
+                                                    </span>
+                                                    <template for:each={opt.lines} for:item="line">
+                                                        <span key={line} class="slds-listbox__option-meta slds-var-p-top_xx-small">{line}</span>
+                                                    </template>
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </template>
+                                </template>
+                                <template lwc:else>
+                                    <li role="presentation" class="slds-listbox__item">
+                                        <div class="slds-listbox__option slds-listbox__option_plain" role="option" aria-selected="false">
+                                            No matches
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

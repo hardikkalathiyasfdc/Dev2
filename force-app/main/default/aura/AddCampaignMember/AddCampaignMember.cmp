@@ -1,0 +1,182 @@
+<aura:component
+	implements="force:lightningQuickAction,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId"
+	access="global" controller="AddCampaignMemberController">
+	<!--Style-->
+	<aura:html tag="style">
+		.slds-modal__container {
+			height : auto;
+			width: 90%;
+			max-width: 90rem;
+		}
+		.modal-body {
+			height : 70vh !important;
+			max-height: 70vh !important;
+		}
+		.slds-modal__footer {
+			display: none !important;
+		}
+	</aura:html>
+
+	<!--Declare Attributes-->
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:attribute name="fromRelatedList" type="Boolean" default="false" />
+	<aura:attribute name="wrapperList" type="List" />
+	<aura:attribute name="mapValue" type="List" />
+	<aura:attribute name="MaxDate" type="Date" default="" />
+	<aura:attribute name="pageNumber" type="Integer" default="1" />
+	<aura:attribute name="pageSize" type="Integer" default="20" />
+	<aura:attribute name="data" type="Object" />
+	<aura:attribute name="isLastPage" type="Boolean" default="false" />
+	<!-- attribute to check if the page has changed or not -->
+	<aura:attribute name="hasPageChanged" type="Boolean" />
+	<!-- attribute to check if it is initialLoad -->
+	<aura:attribute name="initialLoad" type="Boolean" default="true" />
+	<aura:attribute name="selection" type="List" />
+	<aura:attribute name="columns" type="List" />
+	<aura:attribute name="recordId" type="String" />
+	<aura:attribute name="resultSize" type="Integer" default="0" />
+	<aura:attribute name="categoryList" type="List" default="[]" description="Category Picklist Values" />
+	<aura:attribute name="selectedCategories" type="List" default="[]" description="Selected Category Picklist Values" />
+	<aura:attribute name="disableAddConButton" type="Boolean" default="true" />
+	<!-- Create attribute to store lookup value as a sObject-->
+	<aura:attribute name="selectedLookUpRecords" type="sObject[]" default="[]" />
+	<aura:attribute name="contactDisplayFields" type="List" default="[]" />
+	<aura:attribute name="contactDisplayFieldPrefixes" type="List" default="[]" />
+	<aura:attribute name="contactSearchFields" type="List" default="[]" />
+  <aura:attribute name="errorMessage" type="String" default=""/>
+	<!-- SHOW LOADING SPINNER-->
+	<lightning:spinner variant="brand" alternativeText="Processing.." size="large" aura:id="Id_spinner"
+		class="slds-hide" />
+	<lightning:card>
+
+        <aura:if isTrue="{!not(empty(v.errorMessage))}">
+            <div class="slds-notify slds-notify_alert slds-alert_error slds-m-top_medium"
+                 role="alert">
+
+                <lightning:formattedRichText value="{!v.errorMessage}" />
+            </div>
+        </aura:if>
+
+		<lightning:tabset selectedTabId="add">
+			<lightning:tab label="Add Member Contacts" id="add">
+				<lightning:tabset selectedTabId="one">
+					<lightning:tab label="Basic Search" id="one">
+						<c:genericLookup onchange="{!c.handleLookupSelectionChange}"
+							  label="Contact Name:" showRecentlyViewed="true" objectApiName="Contact"
+                displayFields="{!v.contactDisplayFields}" icon="standard:contact" allowNewRecord="false"
+                searchFields="{!v.contactSearchFields}" isMultiSelect="true" customSearchClass="ContactLookupSearch"/>
+						<div class="slds-align_absolute-center" style="height: 5rem;">
+							<lightning:button onclick="{!c.addSelectedContactsBasic}" variant="success"
+								label="Add Contacts" iconName="action:add_relationship" />&nbsp;&nbsp;
+							<lightning:button onclick="{!c.closeAction}" variant="destructive" label="Cancel"
+								iconName="action:close" />
+						</div>
+					</lightning:tab>
+					<lightning:tab label="Advanced Search" id="two" onactive="{!c.loadData}">
+						<lightning:layout horizontalAlign="center">
+							<lightning:layoutItem padding="around-medium">
+								<table class="slds-table">
+									<!--table body start,Iterate contact list as a <tr>-->
+									<tbody>
+										<aura:iteration items="{!v.wrapperList}" var="con">
+											<tr>
+												<th scope="row">
+													<lightning:select name="colorId" label="Select Field"
+														aura:id="colorId" value="{!con.selectedFldLabel}">
+														<aura:iteration items="{!v.mapValue}" var="option"
+															indexVar="key">
+															<option text="{!option.key}" value="{!option.value}" />
+														</aura:iteration>
+													</lightning:select>
+												</th>
+												<th scope="row">
+													<aura:if
+														isTrue="{!con.selectedFldLabel == 'CreatedDate' || con.selectedFldLabel == 'LastModifiedDate'}">
+														<lightning:layout>
+															<lightning:input type="date" aura:id="startDate"
+																max="{!v.MaxDate}" label="Start Date"
+																value="{!con.startDate}" />&nbsp;
+															<lightning:input type="date" min="{!con.startDate}"
+																max="{!v.MaxDate}" aura:id="endDate" label="End Date"
+																value="{!con.endDate}" />
+														</lightning:layout>
+														<aura:set attribute="else">
+															<aura:if
+																isTrue="{!con.selectedFldLabel == 'Bloomberg_Philanthropies_Board_Member__c'}">
+																<div>&nbsp;</div>
+																<lightning:input type="checkbox" label="Board Member"
+																	name="boardMem" checked="{!con.boardMem}" />
+																<aura:set attribute="else">
+																	<aura:if
+																		isTrue="{!con.selectedFldLabel == 'Categories__c'}">
+																		<div>&nbsp;</div>
+																		<lightning:dualListbox aura:id="selectCategory"
+																			name="Category" label="Select Categories"
+																			sourceLabel="Available Categories"
+																			selectedLabel="Selected Categories"
+																			options="{!v.categoryList }"
+																			value="{!con.lstSelectedCategories}"
+																			onchange="{!c.handleCategoryChange}" />
+																		<aura:set attribute="else">
+																			<lightning:input name="searchVal"
+																				label="Search Value"
+																				placeholder="type here..."
+																				value="{!con.searchTextVal}"
+																				style="width:120px" />
+																		</aura:set>
+																	</aura:if>
+																</aura:set>
+															</aura:if>
+														</aura:set>
+													</aura:if>
+												</th>
+												<th scope="row">
+													<div>&nbsp;</div>
+													<ui:outputText value="AND" />
+												</th>
+											</tr>
+										</aura:iteration>
+									</tbody>
+								</table>
+							</lightning:layoutItem>
+						</lightning:layout>
+						<lightning:layout horizontalAlign="center" multipleRows="true">
+							<lightning:layoutItem size="5" padding="around-small" class="slds-align_absolute-center">
+								<lightning:button onclick="{!c.applyFilters}" variant="brand" label="Apply Filters"
+									iconName="utility:search" />
+								<lightning:button onclick="{!c.loadData}" variant="destructive"
+									label="Clear All Filters" iconName="utility:undo" />
+							</lightning:layoutItem>
+							<lightning:layoutItem padding="around-small" size="12">
+								<lightning:datatable aura:id="contactDataTable" columns="{! v.columns }"
+									data="{! v.data }" keyField="Id" hideCheckboxColumn="false"
+									selectedRows="{!v.selection}" onrowaction="{! c.handleRowAction }"
+									onrowselection="{!c.onRowSelection}" />
+							</lightning:layoutItem>
+							<lightning:layoutItem padding="around-small" flexibility="auto">
+								<lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+									onclick="{!c.onPrev}" disabled="{! v.pageNumber == 1}" />
+								<span class="slds-p-horizontal_small">
+									Page {!v.pageNumber} | Showing records from {! ((v.pageNumber-1)*v.pageSize)+1+' to
+									'+((v.pageNumber-1)*v.pageSize+v.resultSize)}
+								</span>
+								<lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+									disabled="{! v.isLastPage}" onclick="{!c.onNext}" />
+							</lightning:layoutItem>
+						</lightning:layout>
+
+						<div class="slds-align_absolute-center" style="height: 5rem;">
+							<lightning:button onclick="{!c.addSelectedContacts}" disabled="{!v.disableAddConButton}"
+								variant="success" label="Add Contacts" iconName="action:add_relationship" />&nbsp;&nbsp;
+							<lightning:button onclick="{!c.closeAction}" variant="destructive" label="Cancel"
+								iconName="action:close" />
+						</div>
+					</lightning:tab>
+				</lightning:tabset>
+			</lightning:tab>
+			<lightning:tab label="Edit Member Contacts" id="edit">
+				<c:EditMemberContacts recordId="{!v.recordId}" fromRelatedList="{!v.fromRelatedList}" />
+			</lightning:tab>
+		</lightning:tabset>
+	</lightning:card>
+</aura:component>

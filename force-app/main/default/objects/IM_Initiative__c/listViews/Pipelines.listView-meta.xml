@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pipelines</fullName>
+    <columns>Team__c</columns>
+    <columns>Parent_Initiative_Name__c</columns>
+    <columns>NAME</columns>
+    <columns>Kick_off_Meeting_Date__c</columns>
+    <columns>Target_Decision_Month__c</columns>
+    <columns>Last_Round_Expiration_Date__c</columns>
+    <columns>Amount_Term__c</columns>
+    <columns>Include_in_Projections__c</columns>
+    <columns>Status__c</columns>
+    <columns>Include_In_Pipeline__c</columns>
+    <columns>Budget_Status__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Include_In_Pipeline__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>Initiative_Type__c</field>
+        <operation>equals</operation>
+        <value>Renewal,New</value>
+    </filters>
+    <label>Pipeline (Sys)</label>
+    <sharedTo>
+        <group>IM_Admin</group>
+        <group>IM_Content_Team</group>
+        <group>IM_Grant_Team</group>
+        <group>IM_Leadership</group>
+        <group>IM_Metrics_Team</group>
+        <group>IM_Pipeline_Manager</group>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Short_Name__c</fullName>
+    <description>This field shall be used by &quot;City&quot; Recordtype only. Displays the location as &quot;City, Country&quot; by default. If the Country is &quot;United States&quot;, it shows &quot;City, State, United States&quot;.</description>
+    <externalId>false</externalId>
+    <formula>IF(
+    $RecordType.Name = &quot;City&quot;,
+    IF(
+        Parent__c != null &amp;&amp; Parent__r.Parent__c != null &amp;&amp; Parent__r.Parent__r.Geo_Code__c != &apos;US&apos;,
+        Geo_Name__c + &apos;, &apos; + Parent__r.Parent__r.Geo_Name__c,
+        Name
+    ),
+    IF(
+        $RecordType.Name = &quot;State&quot;,
+        IF(
+            Parent__r.BP_Uses_States__c = TRUE,
+            Name,
+            &apos;&apos;
+        ),
+        Name
+    )
+)</formula>
+    <label>Short Name</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>IM-377:  This permission set group gives create/edit access to Focus Area,Team,Segment,Segment Team,Currency and Fund objects.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Manage Grant Reference Data</label>
+    <permissionSets>Currency_Edit_Access</permissionSets>
+    <permissionSets>Focus_Area_Edit_Access</permissionSets>
+    <permissionSets>Fund_Edit_Access</permissionSets>
+    <permissionSets>Segment_Edit_Access</permissionSets>
+    <permissionSets>Team_Edit_Access</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

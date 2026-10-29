@@ -1,0 +1,41 @@
+table { page-break-inside:auto }
+tr    { page-break-inside:avoid; page-break-after:auto; padding:10px; margin:10px }
+thead { display:table-header-group }
+tfoot { display:table-footer-group }
+.profilePicture {
+	float:left;
+    width:100px;
+    height:100px;
+    padding-right:10px;
+}
+.containerPerson {
+	border:2px solid #777777;
+    overflow:hidden;
+    margin:10px;
+    height:3.25in;
+    padding:5px 5px 0px 5px;
+}
+.containerPersonTop {
+    height:110px;
+}
+.containerField {
+    padding-bottom:15px;
+    font-size:90%;
+}
+.fieldLabel {
+    text-decoration: underline;
+}
+.name {
+    font-size:120%
+}
+.department {
+	font-size:90%;
+    padding-bottom:10px;
+}
+.column {
+    width:2.75in;
+}
+.table {
+    table-layout: fixed;
+    width: 10.5in;
+}

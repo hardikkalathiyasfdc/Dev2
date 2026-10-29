@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Projected_Totals_Set_As__c</fullName>
+    <description>BRME-6797 -  This indicated if Target will be calculated or editable for the foundation code for boardbook.</description>
+    <externalId>false</externalId>
+    <formula>IF(
+    OR(
+        ISPICKVAL(Type__c, &quot;Focus Area&quot;),
+        ISPICKVAL(Type__c, &quot;Initiative Root&quot;),
+        ISPICKVAL(Type__c, &quot;Non Initiative Root&quot;),
+        ISPICKVAL(Type__c, &quot;Non Initiative&quot;)
+    ),
+    &quot;&quot;,
+    IF(
+        ISPICKVAL(Status__c, &quot;Active&quot;),
+        IF(
+            Projection_Total_Calculated__c,
+            &quot;Calculated&quot;,
+            IF(
+                Code_Level__c = 2,
+                &quot;Editable&quot;,
+                IF(
+                    OR(
+                        ISPICKVAL(Type__c, &quot;Parent Initiative&quot;),
+                        ISPICKVAL(Type__c, &quot;Focus Area Misc&quot;)
+                    ),
+                    IF(
+                        Parent__r.Projection_Total_Calculated__c,
+                        &quot;Editable&quot;,
+                        &quot;N/A&quot;
+                    ),
+                    IF(
+                        OR(
+                            ISPICKVAL(Type__c, &quot;Non Programmatic Initiative&quot;),
+                            ISPICKVAL(Type__c, &quot;Miscellaneous Initiative&quot;)
+                        ),
+                        IF(
+                            Parent__r.Projection_Total_Calculated__c,
+                            &quot;Editable&quot;,
+                            &quot;N/A&quot;
+                        ),
+                        &quot;N/A&quot;
+                    )
+                )
+            )
+        ),
+        &quot;N/A&quot;
+    )
+)</formula>
+    <label>Projected Totals Set As</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

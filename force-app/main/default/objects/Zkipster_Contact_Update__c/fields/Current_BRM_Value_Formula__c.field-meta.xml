@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Current_BRM_Value_Formula__c</fullName>
+    <description>(BRME-6787) Value present in BRM for the related Contact</description>
+    <externalId>false</externalId>
+    <formula>CASE(
+            Field_API_Name__c,
+            &quot;Salutation&quot;, TEXT(Contact__r.Salutation),
+            &quot;FirstName&quot;, Contact__r.FirstName,
+            &quot;LastName&quot;, Contact__r.LastName,
+            &quot;Title&quot;, Contact__r.Title,
+            &quot;MobilePhone&quot;, Contact__r.MobilePhone,
+            &quot;Mobile_Phone_Country_Code__c&quot;, TEXT(Contact__r.Mobile_Phone_Country_Code__c),
+            &quot;&quot;
+        )</formula>
+    <label>Current BRM Value</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

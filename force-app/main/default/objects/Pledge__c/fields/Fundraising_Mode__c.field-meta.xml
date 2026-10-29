@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fundraising_Mode__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>Capture the fundraising mode in the Pledge record</description>
+    <label>Appeal</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Fundraising_Activity__c.Fundraising_Effort_Id__r.Id</field>
+            <operation>equals</operation>
+            <valueField>$Source.Fundraising_Effort__c</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Fundraising_Activity__c</referenceTo>
+    <relationshipLabel>Pledges</relationshipLabel>
+    <relationshipName>Pledge</relationshipName>
+    <required>true</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

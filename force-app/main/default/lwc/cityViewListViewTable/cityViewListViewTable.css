@@ -1,0 +1,183 @@
+.table-wrapper {
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(8px);
+    box-shadow:
+        0 4px 6px rgba(0, 0, 0, 0.05),
+        0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.custom-table {
+    border-radius: 12px;
+    table-layout: fixed;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(4px);
+}
+
+.custom-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+    backdrop-filter: blur(12px);
+    z-index: 3;
+    padding: 0.75rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.custom-table thead th:first-child {
+    border-top-left-radius: 12px;
+}
+
+.custom-table thead tr {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.custom-table th,
+.custom-table td {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0.5rem;
+    vertical-align: middle;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #333;
+}
+
+.col-city {
+    width: 27%;
+    cursor: pointer;
+}
+
+.col-bp {
+    width: 12%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.col-bar {
+    width: 28%;
+    cursor: pointer;
+}
+
+.bp-bar-wrapper {
+    width: 100%;
+    height: 15px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.bp-bar {
+    display: flex;
+    height: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+    min-width: 10px;
+    transition: width 0.6s ease-in-out;
+}
+
+.bp-count-label {
+    font-weight: 500;
+    min-width: 1.5em;
+    text-align: right;
+    color: #333;
+}
+
+.bp-segment {
+    height: 16px;
+    display: inline-block;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bp-segment.segment-hover {
+    transform: scale(1.08);
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+.hover-scale {
+    transition: transform 0.2s ease;
+}
+
+.hover-scale:hover {
+    transform: scale(1.03);
+}
+
+.custom-tooltip {
+    position: fixed;
+    background-color: rgba(52, 98, 107, 0.9);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 9px;
+    font-size: 0.75rem;
+    z-index: 1000;
+    opacity: 0;
+    animation: fadeIn 0.2s ease forwards;
+    pointer-events: none;
+}
+
+.sort-icon {
+    margin-left: 0.25rem;
+    vertical-align: middle;
+}
+
+.clickable {
+    cursor: pointer;
+    color: #0070d2;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.clickable:hover {
+    text-decoration: underline;
+    color: #005fb2;
+    transform: scale(1.01);
+}
+
+.selected-row {
+    background-color: rgba(244, 246, 249, 1);
+    transition: box-shadow 0.2s ease, background-color 0.2s ease;
+    box-shadow: inset 0 0 0 9999px rgba(255, 255, 255, 0.1),
+        0 0 10px rgba(0, 0, 0, 0.15);
+    z-index: 2;
+    position: relative;
+}
+
+.selected-row td {
+    background-color: rgba(244, 246, 249, 0.4);
+    padding: 0.75rem 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.sticky-footer-row {
+    position: sticky;
+    bottom: 0;
+    background-color: #ffffff;
+    font-weight: 600;
+    text-align: left;
+    z-index: 3;
+    border-top: 2px solid #d8dde6;
+    box-shadow: 0px 2px 17px rgba(0, 0, 0, 0.2);
+}
+
+.custom-table tbody tr:hover {
+    background-color: rgba(230, 240, 255, 0.3);
+}
+
+.header-toggle {
+    display: flex;
+    align-items: center;
+}
+
+.col-city .header-toggle,
+.col-city .header-toggle button {
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}

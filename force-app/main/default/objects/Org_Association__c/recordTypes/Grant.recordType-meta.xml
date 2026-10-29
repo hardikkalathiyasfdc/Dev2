@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Grant</fullName>
+    <active>true</active>
+    <description>(BRME-6186) Grant Org Associations created through integration</description>
+    <label>CityView (Grant)</label>
+</RecordType>

@@ -1,0 +1,22 @@
+.marginClass {
+    margin-left: 0.2rem;
+}
+
+.customLabel {
+    padding: 2px 4px;
+}
+
+.slds-form-element__help.slds-text-color_error {
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    color: #b60554;
+}
+
+.slds-has-error .slds-input {
+    border-color: #c23934;
+    box-shadow: 0 0 0 1px #c23934;
+}
+
+.slds-form-element__label .slds-required {
+    color: #c23934;
+}

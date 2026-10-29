@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Notification_Config__c</fullName>
+    <description>IM-588:Parent Notification Config this recipient belongs to.</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Notification Config</label>
+    <referenceTo>Notification_Config__mdt</referenceTo>
+    <relationshipLabel>Notification Receipients</relationshipLabel>
+    <relationshipName>Notification_Receipients</relationshipName>
+    <required>true</required>
+    <type>MetadataRelationship</type>
+    <unique>false</unique>
+</CustomField>

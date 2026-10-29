@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Checked_Out_By_Message__c</fullName>
+    <description>IM-435: Displays a dynamic message indicating which user currently has checked out the budget.</description>
+    <externalId>false</externalId>
+    <formula>IF( ISBLANK(Checked_Out_By__c) ,&apos;&apos;, &apos;The budget has been checked out by &apos; + Checked_Out_By__r.FirstName + &apos; &apos; +  Checked_Out_By__r.LastName) + &apos;.&apos;</formula>
+    <label>Checked Out By Message</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

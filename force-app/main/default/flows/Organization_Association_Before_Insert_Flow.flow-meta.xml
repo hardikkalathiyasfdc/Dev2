@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Name</name>
+        <label>Assign Name</label>
+        <locationX>820</locationX>
+        <locationY>443</locationY>
+        <assignmentItems>
+            <assignToReference>var_Name</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.Association__r.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>var_Name</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>: </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>var_Name</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.Organization__r.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Name</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Bypass_Check</name>
+        <label>Bypass Check</label>
+        <locationX>688</locationX>
+        <locationY>335</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isNotBypass</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Bypass_Automation_Setting__c.Organization_Association_Trigger__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Name</targetReference>
+            </connector>
+            <label>isNotBypass</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>TruncatedName</name>
+        <dataType>String</dataType>
+        <expression>IF (LEN({!var_Name}) &gt;= 80,LEFT({!var_Name}, 77)+&apos;...&apos;,{!var_Name})</expression>
+    </formulas>
+    <interviewLabel>Organization Association Before Insert Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Organization Association Before Insert Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Name</name>
+        <label>Update Name</label>
+        <locationX>820</locationX>
+        <locationY>551</locationY>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>TruncatedName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>562</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Bypass_Check</targetReference>
+        </connector>
+        <object>Org_Association__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>var_Name</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

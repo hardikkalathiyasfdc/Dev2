@@ -1,0 +1,112 @@
+<template>
+  <div
+    class="picklist-container slds-grid slds-grid_align-spread slds-truncate"
+    onmouseover={setHoverStyles}
+    onmouseout={setHoverOutStyles}
+    onfocusout={setHoverOutStyles}
+    style="margin-left: 5%"
+  >
+    <div class="myText">
+      <template if:true={isDate}>
+        <lightning-formatted-date-time
+          value={value}
+          class="myText"
+        ></lightning-formatted-date-time>
+      </template>
+      <template if:true={isDateTime}>
+        <lightning-formatted-date-time
+          value={value}
+          class="myText"
+          year="numeric"
+          month="numeric"
+          day="numeric"
+          hour="2-digit"
+          minute="2-digit"
+          time-zone-name="short"
+          hour12="true"
+        ></lightning-formatted-date-time>
+      </template>
+      <template if:true={isText}>
+        <lightning-formatted-text
+          value={value}
+          class="myText"
+        ></lightning-formatted-text>
+      </template>
+    </div>
+    <button
+      tabindex="-1"
+      data-navigation="enable"
+      data-action-triggers="enter,space"
+      data-action-edit="true"
+      class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small"
+      style="display: none"
+      onclick={openModal}
+    >
+      <svg
+        focusable="false"
+        data-key="edit"
+        aria-hidden="true"
+        viewBox="0 0 52 52"
+        class="slds-button__icon slds-button__icon_hint slds-button__icon_lock slds-button__icon_small slds-button__icon_edit slds-icon slds-icon-text-default slds-icon_xx-small"
+      >
+        <g>
+          <g>
+            <path
+              d="M9.5 33.4l8.9 8.9c.4.4 1 .4 1.4 0L42 20c.4-.4.4-1 0-1.4l-8.8-8.8c-.4-.4-1-.4-1.4 0L9.5 32.1c-.4.4-.4 1 0 1.3zM36.1 5.7c-.4.4-.4 1 0 1.4l8.8 8.8c.4.4 1 .4 1.4 0l2.5-2.5c1.6-1.5 1.6-3.9 0-5.5l-4.7-4.7c-1.6-1.6-4.1-1.6-5.7 0l-2.3 2.5zM2.1 48.2c-.2 1 .7 1.9 1.7 1.7l10.9-2.6c.4-.1.7-.3.9-.5l.2-.2c.2-.2.3-.9-.1-1.3l-9-9c-.4-.4-1.1-.3-1.3-.1l-.2.2c-.3.3-.4.6-.5.9L2.1 48.2z"
+            ></path>
+          </g>
+        </g></svg
+      ><span class="slds-assistive-text">Edit Last Name</span>
+    </button>
+    <template if:true={isModalOpen}>
+      <section
+        role="dialog"
+        tabindex="-1"
+        aria-labelledby="modal-heading-01"
+        aria-modal="true"
+        aria-describedby="modal-content-id-1"
+        class="slds-modal slds-fade-in-open"
+      >
+        <div class="slds-modal__container" style="width: 20%; height: 80%">
+          <header class="slds-modal__header">
+            <button
+              class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+              title="Close"
+              onclick={closeModal}
+            >
+              <lightning-icon
+                icon-name="utility:close"
+                alternative-text="close"
+                variant="inverse"
+                size="small"
+              ></lightning-icon>
+              <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2
+              id="modal-heading-01"
+              class="slds-text-heading_medium slds-hyphenate"
+            >
+              Select a value
+            </h2>
+          </header>
+          <div
+            class="slds-modal__content slds-p-around_medium"
+            id="modal-content-id-1"
+            style="text-align: center"
+          >
+            <lightning-record-edit-form object-api-name={object} class="myForm">
+              <lightning-messages> </lightning-messages>
+              <lightning-input-field
+                field-name={field}
+                value={value}
+                onchange={handleChange}
+              >
+              </lightning-input-field>
+            </lightning-record-edit-form>
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+  </div>
+</template>

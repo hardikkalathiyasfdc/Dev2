@@ -1,0 +1,28 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName" access="global" controller="CampaignMembershipBannerController" >
+  
+  <!-- attributes -->
+  <aura:attribute name="recordId" type="String" />
+  <aura:attribute name="sObjectName" type="String" default="{!v.sObjectName}"/>
+  <aura:attribute name="myDomainURL" type="String"/>
+  <aura:attribute name="contactId" type="String"/>
+  <aura:attribute name="contactName" type="String"/>
+  <aura:attribute name="userName" type="User"/>
+  <aura:attribute name="isCampaignMember" type="Boolean"/> 
+  <aura:attribute name="toEmailAddress" type="String"/>
+
+  <!-- handlers-->
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+  <aura:if isTrue="{!v.isCampaignMember == true}">
+    <div class="slds-card">
+      <div role="alert" style="background-color:#F47a20;color:#FFFFFF;border-radius:0.25rem;font-size:15px;padding:5px;">
+          <aura:if isTrue="{!v.sObjectName == 'Account'}">
+              Alert! This Organization is linked to a Contact who is a member of active Campaign(s) in the system. Please email the <a href="javascript:void(0)" onclick="{!c.openEmail}">BRM POC</a> with your changes. 
+          </aura:if>     
+          <aura:if isTrue="{!v.sObjectName == 'Contact'}">
+              Alert! This Contact is a member of active Campaign(s) in the system. Please email the <a href="javascript:void(0)" onclick="{!c.openEmail}">BRM POC</a> with your changes.
+          </aura:if>   
+        </div>
+      </div>
+  </aura:if> 
+</aura:component>

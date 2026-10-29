@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Amount__c</fullName>
+    <description>IM-116:</description>
+    <formula>Period_1_Amount__c +  Period_2_Amount__c +  Period_3_Amount__c +  Period_4_Amount__c +  Period_5_Amount__c +  Period_6_Amount__c +  Period_7_Amount__c +  Period_8_Amount__c +  Period_9_Amount__c +  Period_10_Amount__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Total Amount</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

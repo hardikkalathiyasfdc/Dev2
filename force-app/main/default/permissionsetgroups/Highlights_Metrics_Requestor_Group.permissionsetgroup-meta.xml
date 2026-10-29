@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>BRME-6981:Primary permission set for Program Team requestors and designated Data &amp; Reporting users.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Highlights &amp; Metrics: Requestor Group</label>
+    <permissionSets>File_Group_Edit_Access</permissionSets>
+    <permissionSets>Highlights_Metrics_Requestor</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

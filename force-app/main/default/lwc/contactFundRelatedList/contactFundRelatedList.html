@@ -1,0 +1,47 @@
+<template>
+    <div class="slds-card slds-p-around_medium">
+        <template lwc:if={isLoaded}>
+            <div>
+                <p style="font-size: 20px;font-weight: 700;margin-bottom: 1%;">
+                    {recordName}
+                </p>
+            </div>
+            <template lwc:if={isFundraising}>
+                <template lwc:if={accListData}>
+                    <h1 style="font-size: 17px; font-weight: 700; margin-bottom: 1%;">Giving - By Project</h1>
+                    <lightning-datatable data={accListData} columns={columns} key-field="Id" sorted-by={sortBy}
+                        sorted-direction={sortDirection} onsort={doSorting} hide-checkbox-column>
+                    </lightning-datatable>
+                    <h2 style="font-size: 14px;margin: 10px 0px 10px 10px;font-weight:bold;display:inline-block;">
+                        Total Amount (USD) : &nbsp;
+                    </h2>
+                    <label style="font-size: 14px;display:inline">
+                        <lightning-formatted-number value={totalfund} maximum-fraction-digits="0"></lightning-formatted-number>
+                    </label>
+                    <h1 style=" border-bottom: 2pt solid #b3b0b0;"></h1>
+                </template>
+            </template>
+            <template lwc:if={isfundRept}>
+                <template lwc:if={fundRecpData}>
+                    <h2 style="font-size: 17px;font-weight: 700; margin-top: 2%; margin-bottom: 1%;">Receiving - By Project </h2>
+                    <lightning-datatable data={fundRecpData} columns={columns} key-field="Id" sorted-by={sortBy}
+                        sorted-direction={sortedDirectionProj} onsort={sortProject} hide-checkbox-column>
+                    </lightning-datatable>
+                    <h2 style="font-size: 14px;margin: 10px 0px 10px 10px;font-weight:bold;display:inline-block;">
+                        Total Amount (USD) : &nbsp;
+                    </h2>
+                    <label style="font-size: 14px; display: inline">
+                        <lightning-formatted-number value={totalfundrecpt} maximum-fraction-digits="0"></lightning-formatted-number>
+                    </label>
+                    <h1 style=" border-bottom: 2pt solid #b3b0b0;"></h1>
+                </template>
+            </template>
+            <template lwc:if={error}>
+                {error}
+            </template>
+        </template>
+        <template lwc:else>
+            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+        </template>
+    </div>
+</template>

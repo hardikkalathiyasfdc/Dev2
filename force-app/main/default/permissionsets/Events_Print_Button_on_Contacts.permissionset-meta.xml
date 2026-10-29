@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Events_Print_Button_Access</name>
+    </customPermissions>
+    <description>Created as part of BRME-5237. This permission set contains Custom Permission that controls the Print Button on Events widget on the contact record and gives User access to view all Events beyond first 10</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Events - Print Button on Contacts</label>
+</PermissionSet>

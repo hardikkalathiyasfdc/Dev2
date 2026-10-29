@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Non_Programmatic_FC_parent_restriction</fullName>
+    <active>true</active>
+    <description>IM-294: Non Programmatic Foundation code can only be associated with Focus Area or Parent Initiative Foundation Code.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Foundation_Code_Validation__c &amp;&amp;
+AND(
+ISPICKVAL( Type__c ,&apos;Non Programmatic Initiative&apos;),
+NOT(ISBLANK( Parent__c )),
+NOT(ISPICKVAL( Parent__r.Type__c ,&apos;Focus Area&apos;)),
+NOT(ISPICKVAL( Parent__r.Type__c ,&apos;Parent Initiative&apos;))
+)</errorConditionFormula>
+    <errorDisplayField>Parent__c</errorDisplayField>
+    <errorMessage>Non Programmatic Foundation code can only be associated with Focus Area or Parent Initiative Foundation Code.</errorMessage>
+</ValidationRule>

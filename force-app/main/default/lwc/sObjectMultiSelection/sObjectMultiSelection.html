@@ -1,0 +1,84 @@
+<template>
+	<div>
+		<!-- Permission Set search -->
+		<div data-id="searchRes" class="slds-form-element slds-lookup slds-is-close">
+			<!--This part is for display search bar for lookup-->  
+			<div class="slds-form-element__control">
+				<div class="slds-input-has-icon slds-input-has-icon--right">
+					<!-- This markup is for when an record is selected -->
+					<div data-id="lookup-pill" class="slds-pill-container">
+						<div onkeyup={changeContactSearch} onclick={handleFocus}>
+							<lightning-input name="enter-search" label={title} type="search"
+								value={searchString} placeholder={placeholder}>
+							</lightning-input>
+						</div>
+						<!--Selected Records Pills Section-->
+						<div class="slds-var-p-top_x-small">
+							<template for:each={selectedContacts} for:item="item">
+								<lightning-pill key={item.Id} class="slds-var-p-right_x-small" label={item.Name} id={item.Id} onremove={removeSelection}>
+									<lightning-icon icon-name="standard:contact" size="x-small"></lightning-icon>
+								</lightning-pill>
+							</template>
+						</div>
+					</div>
+				</div>
+			</div>
+			<template lwc:if={displayRecords}>
+				<!--This part is for Display typehead lookup result List-->  
+				<div class="slds-dropdown_length-5 slds-dropdown_fluid" role="listbox">
+					<ul class="slds-listbox slds-listbox_vertical" role="presentation">
+						<template for:each={availableContacts} for:item="item">
+							<li key={item.Id} role="presentation" class="slds-listbox__item" id={item.Id} onclick={getSelectedRows}>
+								<div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" 
+									role="option" id={item.Id} onclick={getSelectedRows}>
+									<span class="slds-media__figure slds-listbox__option-icon" id={item.Id} onclick={getSelectedRows}>
+										<span class="slds-icon_container slds-icon-standard-account">
+											<lightning-icon icon-name={iconName} size="small"></lightning-icon>
+										</span>
+									</span>
+									<span class="slds-media__body" id={item.Id} onclick={getSelectedRows}>
+										<template lwc:if={item.contact}>
+											<span class="slds-listbox__option-text slds-listbox__option-text_entity" id={item.Id} onclick={getSelectedRows}>
+												<template lwc:if={item.contact.Preferred_First_Name__c}>
+													{item.contact.FirstName} ({item.contact.Preferred_First_Name__c}) {item.contact.LastName}
+												</template>
+												<template lwc:else>{item.contact.FirstName} {item.contact.LastName}</template>
+												</br>
+												<template lwc:if={item.contact.Title}>
+													<span class="slds-listbox__option-text slds-listbox__option-text_entity" id={item.Id} 
+														onclick={getSelectedRows}>
+														{item.contact.Title}
+													</span>
+												</template>
+												<template lwc:if={item.contact.Organization_Name_formula__c}>
+													<span class="slds-listbox__option-text slds-listbox__option-text_entity" id={item.Id} 
+														onclick={getSelectedRows}>
+														{item.contact.Organization_Name_formula__c}
+													</span>
+												</template>
+												<template lwc:if={item.contact.Email}>
+													<span class="slds-listbox__option-text slds-listbox__option-text_entity" id={item.Id} 
+														onclick={getSelectedRows}>
+														{item.contact.Email}
+													</span>
+												</template>
+											</span>
+										</template>
+										<template lwc:else>
+											<span class="slds-listbox__option-text slds-listbox__option-text_entity" 
+												id={item.Id} onclick={getSelectedRows}>{item.Name}
+											</span>
+											<span class="slds-listbox__option-text slds-listbox__option-text_entity" onclick={getSelectedRows} id={item.Id}>
+												{item.subtitle}
+											</span>
+										</template>
+									</span>
+								</div>
+							</li>
+						</template>
+					</ul>
+				</div>
+			</template>
+		</div>
+	</div>
+</template>

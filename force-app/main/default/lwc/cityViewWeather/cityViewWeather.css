@@ -1,0 +1,22 @@
+.weather-icon {
+    height: 2em;
+    width: 2em;
+    vertical-align: middle;
+    margin-left: 0.1em;
+    margin-top: -0.1em;
+}
+.box {
+    border: 1px solid #98b8f6;
+    border-radius: 15px;
+    border-color: #ccdbf7;
+    width: fit-content;
+    max-width: 100%;             
+    box-sizing: border-box; 
+    padding-top: 1.05em;
+    padding-left: 1.05em;
+    padding-right: 1.05em;
+    padding-bottom: 0.5em;
+    font-size: 1.1em;
+    margin-bottom: 0.8em;
+    box-shadow: 2px 3px 4px 0px #98b8f6; 
+}

@@ -1,0 +1,30 @@
+<template>
+
+
+
+		<header class="slds-modal__header">
+			<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Update Invitation Email From Name</h2>
+		</header>
+
+		<div class="slds-grid">
+			<div class="slds-size_1-of-2 slds-m-right_small">
+	            <lightning-combobox
+		            name="progress"
+		            label="Available Invitation Emails"
+		            value={emailId}
+		            placeholder="Select Invitation Email"
+		            options={invitaitons}
+		            onchange={handleEmailChange} 
+		            ></lightning-combobox>
+		    </div>
+			<div class="slds-size_1-of-2">
+				<lightning-input type="text" label="Display Name" value={displayName} onchange={handleChange}></lightning-input>
+			</div>
+		</div>
+		<footer class="slds-align_absolute-center slds-m-top_large">
+			<button class="slds-button slds-button_neutral" onclick={handleCancel}>Cancel</button>
+			<button class="slds-button slds-button_brand" onclick={handleSave}>Save</button>
+		</footer>
+
+
+</template>

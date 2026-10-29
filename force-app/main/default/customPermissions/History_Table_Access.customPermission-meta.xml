@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This permission controls access to standard and custom history widgets across all objects (BRME-5436 &amp; 5511)</description>
+    <isLicensed>false</isLicensed>
+    <label>History Table Access</label>
+</CustomPermission>

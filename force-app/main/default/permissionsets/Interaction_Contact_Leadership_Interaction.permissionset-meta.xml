@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Create BP Leadership Interaction access. This is part of Power and Political profiles, and this permission set is used for the Advanced profile - mainly for teams such as Events and Fundraising</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Interaction: BP Leadership Interaction Creation</label>
+    <recordTypeVisibilities>
+        <recordType>Interaction__c.Leadership_Touchpoint</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

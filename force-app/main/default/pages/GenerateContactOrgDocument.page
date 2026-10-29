@@ -1,0 +1,22 @@
+<apex:page >
+     <apex:includeLightning />
+    <div id="lightning" />
+        <script>
+         $Lightning.use("c:GenerateContactOrgDocumentApp", function() {
+          $Lightning.createComponent(
+                    "c:generateContactOrgDocumentLWC",
+                    {},
+                    "lightning",
+                    function(cmp) {
+                       // console.log("Component is created!");
+                    });
+        });
+        function navigateToList(url) {
+          if(typeof sforce != 'undefined' && sforce && sforce.one){
+             sforce.one.navigateToURL(url);
+          } else {
+             window.location.href = url;
+          }
+            }
+        </script>
+</apex:page>

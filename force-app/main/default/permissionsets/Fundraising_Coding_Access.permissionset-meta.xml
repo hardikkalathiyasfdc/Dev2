@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>IM-18: Hide the coding section for users who do not have access to view sensitive codes.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Fundraising - Coding Access</label>
+</PermissionSet>

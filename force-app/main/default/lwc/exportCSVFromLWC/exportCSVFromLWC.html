@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title={title}>
+        <template lwc:if={isLoading}>
+            <lightning-spinner alternative-text="Exporting Contacts"></lightning-spinner>
+        </template>
+        <div class="slds-p-around_medium">
+            <template lwc:if={errorMessage}>
+                <div class="slds-text-color_error">
+                    {errorMessage}
+                </div>
+            </template>
+            <template lwc:else>
+                <p>Preparing export...</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

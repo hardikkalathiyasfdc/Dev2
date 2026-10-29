@@ -1,0 +1,22 @@
+<apex:page controller="UploadConfidentialFileCtrl" tabStyle="Account">
+ <apex:sectionHeader title="{!title}" subtitle="Confidential File"/>  
+ <apex:pageBlock >
+  <apex:includeLightning />
+    <div id="lightning" />
+    <script>
+      var recordId = '{!currentRecordId}';
+        $Lightning.use("c:UploadConfidentialFileApp", function() {
+          var attributes = {
+            recordId: recordId
+          };
+          $Lightning.createComponent(
+                    "c:ConfidentialItemUpload",
+                    attributes,
+                    "lightning",
+                    function(cmp) {
+                       // console.log("Component is created!");
+                    });
+        });
+    </script> 
+ </apex:pageBlock>
+</apex:page>

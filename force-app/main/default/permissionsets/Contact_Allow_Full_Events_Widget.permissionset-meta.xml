@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Contact_Allow_Full_Events_Widget</name>
+    </customPermissions>
+    <description>Confidential. Permission set used to control visibility of Events widget on high profile contacts like MRB and PH’s.
+
+BRMS-883</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Contact: Ability to View Events on MRB &amp; PH records</label>
+</PermissionSet>

@@ -1,0 +1,24 @@
+<template>
+  <div class="slds-grid slds-wrap">
+    <div class="slds-col slds-size_1-of-4">
+      <template if:true={hasSaveTheDate}>
+        <button title={saveTitle} type="button" label="S" onclick={onSaveTheDate} class={saveCss}>S</button>
+      </template>
+    </div>
+    <div class="slds-col slds-size_1-of-4">
+      <template if:true={hasInvitation}>        
+        <button title={invTitle} type="button" onclick={onInvitation} class={invCss}>I</button>
+      </template>
+    </div>
+    <div class="slds-col slds-size_1-of-4">
+      <template if:true={hasReminder}>
+        <button title={reminderTitle} type="button" onclick={onReminder} class={reminderCss}>R</button>
+      </template>
+    </div>
+    <div class="slds-col slds-size_1-of-4">
+      <template if:true={hasEmail}>
+        <button title={emailTitle} type="button" onclick={onEmail} class={emailCss}>E</button>
+      </template>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,312 @@
+<template>
+  <div class="slds-backdrop slds-backdrop_open"></div>
+  <section
+    role="dialog"
+    tabindex="-1"
+    aria-labelledby="modal-heading-01"
+    aria-modal="true"
+    aria-describedby="modal-content-id-1"
+    class="slds-modal slds-fade-in-open"
+  >
+    <template if:true={showLoader}>
+      <div class="exampleHolder">
+        <lightning-spinner
+          alternative-text="Loading"
+          size="medium"
+        ></lightning-spinner></div
+    ></template>
+    <div class="slds-modal__container">
+      <header class="slds-modal__header">
+        <h2
+          id="modal-heading-01"
+          class="slds-text-heading_medium slds-hyphenate"
+        >
+          New Donor/Prospect
+        </h2>
+      </header>
+      <lightning-record-edit-form
+        object-api-name="CampaignMember"
+        onsubmit={handleSubmit}
+        onsuccess={handleNewDonationSuccess}
+        onerror={handleError}
+      >
+        <div
+          class="slds-modal__content slds-p-around_medium"
+          style="height: 400px"
+          id="modal-content-id-1"
+        >
+        <div class="slds-col slds-size_1-of-2">
+          <lightning-input-field field-name="Type__c" value={selectedType} onchange={handleTypeChange}></lightning-input-field>
+        </div>
+        <template if:true={isDonation}>
+          <lightning-accordion
+            allow-multiple-sections-open="true"
+            active-section-name={activeSections}
+          >
+            <div class="slds-grid slds-wrap myLine myList">
+              <div class="slds-col slds-size_1-of-2">
+                <lightning-input-field
+                  field-name="CampaignId"
+                  value={listId}
+                  disabled="true"
+                ></lightning-input-field>
+              </div>
+            </div>
+            <lightning-accordion-section
+              name="DonorInformation"
+              label="Donor Information"
+            >
+              <div class="slds-grid slds-wrap myLine">
+                <div class="slds-col slds-size_2-of-2">
+                  <lightning-messages></lightning-messages>
+                </div>
+                <div class="slds-col slds-size_2-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Donor_Type__c"
+                  ></lightning-input-field>
+                </div>
+                <div
+                  class="slds-col slds-size_1-of-2"
+                  style="margin-top: 4px; padding-left: 4px"
+                >
+                  <label for="contactId">Donor Individual</label>
+                  <lightning-input-field
+                    id="contactId"
+                    field-name="ContactId"
+                    variant="label-hidden"
+                    required="true"
+                  ></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Organization__c"
+                  ></lightning-input-field>
+                </div>
+              </div>
+            </lightning-accordion-section>
+
+            <lightning-accordion-section
+              name="PointOfContact"
+              label="Point of Contact"
+            >
+              <div class="slds-grid slds-wrap myLine">
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Point_of_Contact__c"
+                  ></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Email__c"
+                  ></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Point_of_Contact_Title__c"
+                  ></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Phone__c"
+                  ></lightning-input-field>
+                </div>
+              </div>
+            </lightning-accordion-section>
+            <lightning-accordion-section
+              name="giftInformation"
+              label="Gift Information"
+            >
+              <div class="slds-grid slds-wrap myLine">
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Gift_Amount__c"
+                  ></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Tier__c"
+                  ></lightning-input-field>
+                </div>
+              </div>
+            </lightning-accordion-section>
+            <lightning-accordion-section
+              name="listingTextAndLocation"
+              label="Listing Text and Location"
+            >
+              <div class="slds-grid slds-wrap myLine">
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Donor_Listing_Text__c"
+                  ></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2"></div>
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Additional_Location_1__c"
+                  ></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Additional_Listing_Text_1__c"
+                  ></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Additional_Location_2__c"
+                  ></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Additional_Listing_Text_2__c"
+                  ></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Additional_Location_3__c"
+                  ></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Additional_Listing_Text_3__c"
+                  ></lightning-input-field>
+                </div>
+              </div>
+            </lightning-accordion-section>
+            <lightning-accordion-section
+              name="agreements"
+              label="Agreements &amp; Renderings"
+            >
+              <div class="slds-grid slds-wrap myLine">
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Date_Agreement_Sent__c"
+                  ></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Date_Agreement_Received__c"
+                  ></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Date_List_Agreement_Received__c"
+                  ></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Date_List_Agreement_Sent__c"
+                  ></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Rendering_Sample_Needed__c"
+                  ></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Date_Rendering_Sent__c"
+                  ></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2"></div>
+                <div class="slds-col slds-size_1-of-2">
+                  <lightning-input-field
+                    field-name="Fundraising_Date_Rendering_Approved__c"
+                  ></lightning-input-field>
+                </div>
+              </div>
+            </lightning-accordion-section>
+            <lightning-accordion-section name="notes" label="Notes">
+              <div class="slds-grid slds-wrap myLine">
+                <div class="slds-col slds-size_2-of-2">
+                  <lightning-input-field
+                    field-name="UB_Notes__c"
+                  ></lightning-input-field>
+                </div></div
+            ></lightning-accordion-section>
+          </lightning-accordion>
+        </template>
+        <template if:true={isProspect}>
+          <div class="slds-grid slds-wrap myLine myList">
+            <div class="slds-col slds-size_1-of-2">
+              <lightning-input-field field-name="CampaignId" value={listId} disabled="true"></lightning-input-field>
+            </div>
+          </div>
+          <lightning-accordion allow-multiple-sections-open="true" active-section-name={activeProspectSections}>
+            <lightning-accordion-section name="ProspectInformation" label="Prospect Information">
+            <div class="slds-grid slds-wrap myLine">
+              <div class="slds-col slds-size_2-of-2">
+                <lightning-messages></lightning-messages>
+              </div>
+              <div class="slds-col slds-size_2-of-2">
+                <lightning-input-field field-name="Fundraising_Donor_Type__c"></lightning-input-field>
+              </div>
+              <div class="slds-col slds-size_1-of-2" style="margin-top: 4px; padding-left: 4px">
+                <label for="contactId_1">Prospect Individual</label>
+                <lightning-input-field id="contactId_1" field-name="ContactId" variant="label-hidden" required="true"></lightning-input-field>
+              </div>
+              <div class="slds-col slds-size_1-of-2" style="margin-top: 4px; padding-left: 4px">
+                <label for="organizationId">Prospect Organization</label>
+                <lightning-input-field id="organizationId" field-name="Fundraising_Organization__c" variant="label-hidden"></lightning-input-field>
+              </div>
+            </div>
+            <div class="slds-grid slds-wrap myLine">
+            <div class="slds-col slds-size_1-of-2">
+              <lightning-input-field field-name="Status__c"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+              <lightning-input-field field-name="Priority__c"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+              <lightning-input-field field-name="Target__c"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+              <lightning-input-field field-name="Background__c"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+              <lightning-input-field field-name="Key_Contact__c"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+              <lightning-input-field field-name="Source_Suggested__c"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+              <lightning-input-field field-name="Next_Steps__c"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+              <lightning-input-field field-name="Status_with_the_PAC__c"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+              <lightning-input-field field-name="Tour_Status__c"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+              <lightning-input-field field-name="Tour_Date__c"></lightning-input-field>
+            </div>
+          </div>
+          </lightning-accordion-section>
+          <lightning-accordion-section name="notes" label="Notes">
+            <div class="slds-grid slds-wrap myLine">
+              <div class="slds-col slds-size_2-of-2">
+                <label for="prospectNotes">Prospect Notes</label>
+                <lightning-input-field id='prospectNotes' field-name="UB_Notes__c" variant="label-hidden"></lightning-input-field>
+              </div></div
+          ></lightning-accordion-section>
+        </lightning-accordion>
+        </template>
+        </div>
+        <footer class="slds-modal__footer">
+          <lightning-button
+            variant="neutral"
+            label="Cancel"
+            title="Cancel"
+            onclick={closeNewDonation}
+          ></lightning-button>
+          <lightning-button
+            class="slds-m-top_small myBtn"
+            variant="brand"
+            type="submit"
+            name="Create"
+            label="Create"
+          ></lightning-button></footer
+      ></lightning-record-edit-form>
+    </div>
+  </section>
+</template>

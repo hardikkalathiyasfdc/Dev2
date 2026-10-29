@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Start_Date_Validation</fullName>
+    <active>true</active>
+    <description>IM-86: Validation for start date can not be in past calendar year for Initiative included In Projections. IM-392:Start date validation is not relevant for Amendment</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.IM_Initiative_Validation__c &amp;&amp;
+AND( Include_in_Projections__c = TRUE,
+     YEAR(Start_Date__c) &lt;  YEAR(TODAY()),
+     RecordType.DeveloperName  &lt;&gt; &apos;Amendment&apos;
+)</errorConditionFormula>
+    <errorDisplayField>Start_Date__c</errorDisplayField>
+    <errorMessage>Start date can not be in past calendar year for Initiative included In Projections.</errorMessage>
+</ValidationRule>

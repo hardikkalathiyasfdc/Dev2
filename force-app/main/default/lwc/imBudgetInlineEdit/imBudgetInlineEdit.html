@@ -1,0 +1,34 @@
+<template>
+    <div class="slds-inline-edit">
+        <article class="slds-card">
+            <div class="slds-card__header slds-grid slds-m-bottom_none">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure slds-m-top_small slds-m-bottom_small">
+                        <lightning-icon icon-name="custom:custom33" class="slds-icon-color" size="small"></lightning-icon>
+                        <span class="slds-assistive-text">budget periods</span>
+                    </div>
+                    <div class="slds-media__body">
+                      <h2 class="slds-card__header-title">
+                        <a href="#" class="slds-card__header-link slds-truncate" title="Budget Periods">
+                          <span>Budget Periods ({numberOfPeriods})</span>
+                        </a>
+                      </h2>
+                    </div>
+                    <div class="slds-no-flex slds-m-top_x-small slds-m-bottom_x-small slds-m-right_small">
+                    </div>
+                </header>
+            </div>
+            <div class="slds-card__body slds-m-top_none slds-border_top">
+                <lightning-datatable
+                    key-field="Id"
+                    data={records}
+                    columns={columns}
+                    onsave={handleSave}
+                    draft-values={draftValues}
+                    show-row-number-column="true"
+                    hide-checkbox-column="true">
+                </lightning-datatable>
+            </div>
+        </article>
+    </div>
+</template>

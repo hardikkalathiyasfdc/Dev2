@@ -1,0 +1,491 @@
+<template>
+	<lightning-record-view-form object-api-name={objectApiName} record-id={recordId} mode="edit">
+		<lightning-messages></lightning-messages>
+		<div class="slds-box">
+			<div class="slds-form" role="list">
+				<lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+					<lightning-accordion-section name="A" label="Ask/Pledge Information">
+						<div class="slds-var-p-around_x-large">
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-col slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Fundraising_Effort__c" variant=" label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<span class="slds-form-element__label">Recipient Organization</span>
+										<div class="slds-form-element__control">
+											<a href={orgRecordUrl}>{orgSearchDisplayName}</a>
+										</div>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+							</div>
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Pledge_Start_Date__c" variant=" label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Pledge_End_Date__c" variant=" label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+							</div>
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Pledge_Amount__c" variant="label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Pledge_Currency__c" variant=" label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+							</div>
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Pledge_Type__c" variant=" label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Pledge_Type_Details__c" variant=" label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+							</div>
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Fundraising_Mode__c"
+											variant=" label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Status__c" variant=" label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+							</div>
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Source_Contact__c" variant=" label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Source_Program_Team__c" variant="label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+							</div>
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Priority__c" variant=" label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+								<div class="slds-form__item" role="listitem">
+									<div
+										class="slds-form-element slds-form-element_edit slds-form-element_readonly  slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Tier__c" variant=" label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+							</div>
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Rationale__c" variant=" label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+								<div class="slds-form__item" role="listitem">
+									<div
+										class="slds-form-element slds-form-element_edit slds-form-element_readonly  slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Status_with_Recipient_Organization__c"
+											variant=" label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+							</div>
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<div
+										class="slds-form-element slds-form-element_edit slds-form-element_readonly  slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Next_Steps__c" variant=" label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Notes__c" variant="label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+							</div>
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="In_Honor_Of__c" variant="label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Report_Amount_USD__c" variant="label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+							</div>
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<div
+										class="slds-form-element slds-form-element_edit slds-form-element_readonly  slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Anonymous__c" variant="label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+								<div class="slds-form__item" role="listitem">
+									<div
+										class="slds-form-element slds-form-element_edit slds-form-element_readonly  slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Exclude_from_Donor_memo__c" variant="label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+							</div>
+							<div class="slds-form__item" role="listitem">
+								<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+								</div>
+								<div class="slds-col slds-size_1-of-12"></div>
+							</div>
+						</div>
+					</lightning-accordion-section>
+					<lightning-accordion-section name="B" label="Donors">
+						<div class="slds-var-p-around_x-large">
+							<lightning-datatable key-field="id" data={donorsData} columns={donorsColumns}
+								hide-checkbox-column>
+							</lightning-datatable>
+						</div>
+					</lightning-accordion-section>
+					<lightning-accordion-section name="C" label="Pledge Financials">
+						<div class="slds-var-p-around_x-large">
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Target_Amount__c" variant="label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+							</div>
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<template lwc:if={unTracked}>
+										<div
+											class="slds-form-element slds-form-element_edit slds-form-element_readonly  slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+											<lightning-output-field field-name="TotalAmount__c" variant="label-stacked">
+											</lightning-output-field>
+										</div>
+										<div class="slds-col slds-size_1-of-12">
+											<template lwc:if={editAccess}>
+												<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+												</lightning-button-icon>
+											</template>
+										</div>
+									</template>
+									<template lwc:else>
+										<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+											<lightning-output-field field-name="Total_Paid_Amount__c" variant="label-stacked">
+											</lightning-output-field>
+										</div>
+										<div class="slds-col slds-size_1-of-12">
+											<template lwc:if={editAccess}>
+												<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+												</lightning-button-icon>
+											</template>
+										</div>
+									</template>
+								</div>
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="TotalAmount_USD__c" variant="label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+							</div>
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Balance__c" variant="label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12 slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Balance_USD__c" variant="label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+							</div>
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-size_11-of-12  slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Payments_NOT_Tracked__c" variant="label-stacked">
+										</lightning-output-field>
+									</div>
+									<div class="slds-col slds-size_1-of-12">
+										<template lwc:if={editAccess}>
+											<lightning-button-icon class="test slds-m-left_xx-small" variant="bare" icon-name="utility:edit" onclick={handlepledgeEdit}>
+											</lightning-button-icon>
+										</template>
+									</div>
+								</div>
+							</div>
+						</div>
+					</lightning-accordion-section>
+					<lightning-accordion-section name="E" label="Benefits">
+						<div style={benefitsStyle} class="slds-var-p-around_x-large">
+							<lightning-datatable key-field="id" data={benefitsData} columns={benefitsColumns} hide-checkbox-column>
+							</lightning-datatable>
+						</div>
+						<div class="slds-m-left_medium">
+							<p> <b>Total Benefit Value</b>: <lightning-formatted-number value={benifitValue}>
+								</lightning-formatted-number>
+							</p>
+						</div>
+					</lightning-accordion-section>
+					<lightning-accordion-section name="F" label="System Information">
+						<div class="slds-var-p-around_x-large">
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+										<span class="slds-form-element__label">Created By</span>
+										<div class="slds-form-element__control">
+											<lightning-output-field field-name="CreatedById" variant="label-hidden">
+											</lightning-output-field>
+											<lightning-output-field field-name="CreatedDate" variant="label-hidden">
+											</lightning-output-field>
+										</div>
+									</div>
+								</div>
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+										<span class="slds-form-element__label">LastModified By</span>
+										<div class="slds-form-element__control">
+											<lightning-output-field field-name="LastModifiedById" variant="label-hidden">
+											</lightning-output-field>
+											<lightning-output-field field-name="LastModifiedDate" variant="label-hidden">
+											</lightning-output-field>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+										<span class="slds-form-element__label">Source System ID</span>
+										<div class="slds-form-element__control">
+											<lightning-output-field field-name="Source_System_ID__c" variant="label-hidden">
+											</lightning-output-field>
+										</div>
+									</div>
+								</div>
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Pledge_ID18__c" variant="label-stacked">
+										</lightning-output-field>
+									</div>
+								</div>
+							</div>
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="System_Notes__c" variant="label-stacked">
+										</lightning-output-field>
+									</div>
+								</div>
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+										<lightning-output-field field-name="Donor_Count__c" variant="label-stacked">
+										</lightning-output-field>
+									</div>
+								</div>
+							</div>
+						</div>
+					</lightning-accordion-section>
+				</lightning-accordion>
+			</div>
+		</div>
+	</lightning-record-view-form>
+</template>

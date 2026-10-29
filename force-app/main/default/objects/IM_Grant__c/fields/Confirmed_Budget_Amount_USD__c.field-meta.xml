@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Confirmed_Budget_Amount_USD__c</fullName>
+    <description>IM-126: Confirmed Budget Amount in USD for all associated Budget Grants</description>
+    <label>Confirmed Budget Amount (USD)</label>
+    <summarizedField>IM_Budget_Grant__c.Confirmed_Budget_Amount_USD__c</summarizedField>
+    <summaryFilterItems>
+        <field>IM_Budget_Grant__c.Is_Active__c</field>
+        <operation>equals</operation>
+        <value>True</value>
+    </summaryFilterItems>
+    <summaryFilterItems>
+        <field>IM_Budget_Grant__c.Deleted__c</field>
+        <operation>notEqual</operation>
+        <value>True</value>
+    </summaryFilterItems>
+    <summaryForeignKey>IM_Budget_Grant__c.IM_Grant__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

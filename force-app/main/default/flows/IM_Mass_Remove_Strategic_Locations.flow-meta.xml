@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>IM-XXX: Invoke apex action to mark the selected Strategic Locations as Pending Removal.</description>
+        <name>Mark_Records_For_Removal</name>
+        <label>Mark Records for Removal</label>
+        <locationX>259</locationX>
+        <locationY>204</locationY>
+        <actionName>IMStrategicLocationRemovalController</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_if_any_error_Occured</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>ids</name>
+            <value>
+                <elementReference>ids</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>IMStrategicLocationRemovalController</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>67.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customProperties>
+        <name>ScreenProgressIndicator</name>
+        <value>
+            <stringValue>{&quot;location&quot;:&quot;top&quot;,&quot;type&quot;:&quot;simple&quot;}</stringValue>
+        </value>
+    </customProperties>
+    <decisions>
+        <description>IM-XXX: Checks if any error occurred while marking the records for removal</description>
+        <name>Check_if_any_error_Occured</name>
+        <label>Check if any error Occured</label>
+        <locationX>251</locationX>
+        <locationY>430</locationY>
+        <defaultConnector>
+            <targetReference>Success_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Error</defaultConnectorLabel>
+        <rules>
+            <name>HasError</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Mark_Records_For_Removal.hasError</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_Screen</targetReference>
+            </connector>
+            <label>Has Error</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>IM-XXX: Checks if any records are selected for removal.</description>
+        <name>Check_if_any_records_are_selected</name>
+        <label>Check if any records are selected</label>
+        <locationX>564</locationX>
+        <locationY>204</locationY>
+        <defaultConnector>
+            <targetReference>No_Records_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Ids Selected</defaultConnectorLabel>
+        <rules>
+            <name>Ids_Present</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ids</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Mark_Records_For_Removal</targetReference>
+            </connector>
+            <label>Ids Present</label>
+        </rules>
+    </decisions>
+    <description>IM-XXX: Flow to mark Strategic Locations as Pending Removal from List View or Related List using ids.</description>
+    <environments>Default</environments>
+    <interviewLabel>Mass Remove Strategic Locations {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Mass Remove Strategic Locations</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <screens>
+        <description>IM-XXX: Error Screen</description>
+        <name>Error_Screen</name>
+        <label>Error Screen</label>
+        <locationX>597</locationX>
+        <locationY>428</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Error_Message</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(240, 0, 0);&quot;&gt;{!Mark_Records_For_Removal.errorMessage}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <description>IM-XXX: Shows no records screen if the ids are null</description>
+        <name>No_Records_Screen</name>
+        <label>No_Records_Screen</label>
+        <locationX>934</locationX>
+        <locationY>201</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>No_Records_Selected</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(208, 0, 0);&quot;&gt;No records were selected. Please select records, using the checkbox.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <description>IM-XXX: Confirmation screen shown when the selected locations were marked for removal.</description>
+        <name>Success_Screen</name>
+        <label>Success Screen</label>
+        <locationX>597</locationX>
+        <locationY>560</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Success_Message</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(0, 128, 0);&quot;&gt;The selected locations have been marked for removal and will be reviewed by the committee.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>446</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Check_if_any_records_are_selected</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>ids</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

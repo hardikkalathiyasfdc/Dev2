@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Annual_Website_Visits__c</fullName>
+    <description>BRME-4575: BConnects - Add New fields to an Organization record &amp; preserve snapshots of set of fields that should update together on Org record (Annual Attendance)</description>
+    <externalId>false</externalId>
+    <label>Annual Website Visits</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

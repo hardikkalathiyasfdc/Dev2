@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Population_Non_Hispanic_white__c</fullName>
+    <description>BRME-4575: BConnects - Add New fields to an Organization record &amp; preserve snapshots of set of fields that should update together on Org record (Annual Attendance)</description>
+    <label>Population: Non-Hispanic white (%)</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Percent</type>
+</CustomField>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>IM-380:Custom Permission to grant access to Grants tab.</description>
+    <isLicensed>false</isLicensed>
+    <label>IM: Grants Tab Access</label>
+</CustomPermission>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Tags_Widget_Access_on_Org</name>
+    </customPermissions>
+    <description>Used to conditionally grant users access to the Tags widget on the Organization object. Mainly used to hide this widget from Base Users since all profiles now use the same page layout.(BRME-5651)</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Tags: Widget Access on Org</label>
+</PermissionSet>

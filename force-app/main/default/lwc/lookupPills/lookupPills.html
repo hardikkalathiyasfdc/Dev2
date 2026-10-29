@@ -1,0 +1,17 @@
+<template>
+    <div class="slds-m-top_xx-small">
+        <ul class="slds-listbox slds-listbox_horizontal" role="listbox" aria-orientation="horizontal">
+            <template for:each={selectedRecords} for:item="record">
+                <li key={record.Id} class="slds-listbox-item" role="presentation">
+                    <c-lookup-pill
+                        record={record}
+                        display-field={displayField}
+                        icon={icon}
+                        disabled={disabled}
+                        onremove={handleRemove}>
+                    </c-lookup-pill>
+                </li>
+            </template>
+        </ul>
+    </div>
+</template>

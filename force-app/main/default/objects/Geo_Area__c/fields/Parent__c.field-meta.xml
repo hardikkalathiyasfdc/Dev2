@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Parent__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Parent</label>
+    <lookupFilter>
+        <active>true</active>
+        <booleanFilter>(1 AND 2) OR (3 AND 4) OR (5 AND 6) OR (7 AND 8) OR 9</booleanFilter>
+        <filterItems>
+            <field>$Source.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>City</value>
+        </filterItems>
+        <filterItems>
+            <field>Geo_Area__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>State, Dummy State</value>
+        </filterItems>
+        <filterItems>
+            <field>$Source.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>State, Dummy State</value>
+        </filterItems>
+        <filterItems>
+            <field>Geo_Area__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Country</value>
+        </filterItems>
+        <filterItems>
+            <field>$Source.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Country</value>
+        </filterItems>
+        <filterItems>
+            <field>Geo_Area__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Continent</value>
+        </filterItems>
+        <filterItems>
+            <field>$Source.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Borough</value>
+        </filterItems>
+        <filterItems>
+            <field>Geo_Area__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>City</value>
+        </filterItems>
+        <filterItems>
+            <field>$Source.Deleted__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Geo_Area__c</referenceTo>
+    <relationshipLabel>Geo Areas</relationshipLabel>
+    <relationshipName>Geo_Areas</relationshipName>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

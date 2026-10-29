@@ -1,0 +1,118 @@
+<template>
+    <lightning-card>
+        <template lwc:if={isLoading}>
+            <lightning-spinner alternative-text="Loading Photo Book Builder" size="large">
+            </lightning-spinner>
+        </template>
+        <template lwc:else>
+            <div class="slds-p-horizontal_large">
+                <section class="slds-var-p-around_medium">
+                    <lightning-radio-group name="layout" label="Choose Existing Template" type="radio"
+                        options={layoutOptions} value={selectedLayout} onchange={handleLayoutChange}>
+                    </lightning-radio-group>
+                </section>
+                <template lwc:if={isNotInternBook}>
+                    <section class="slds-var-p-around_large slds-var-m-top_large section-card">
+                        <div class="section-heading"><b>Who to Include</b></div>
+                        <lightning-layout class="slds-p-bottom_small">
+                            <lightning-layout-item size="6" class="slds-p-top_small slds-p-right_large">
+                                <c-generic-lookup object-api-name="Account" icon="standard:account" placeholder="Search Organizations..."
+                                    required={orgRequired} is-multi-select={isOrgMultiSelect} onchange={lookupOrgRecord}
+                                    label="Organizations" display-fields={orgDisplayFields} search-fields={orgSearchFields}
+                                    allow-new-record="false" custom-search-class="OrganizationLookupSearch" display-field-prefixes={orgDisplayFieldPrefixes}>
+                                </c-generic-lookup>
+                                 <lightning-input class="slds-p-top_large" type="checkbox" label="All Departments" checked={allDepartments}
+                                    onchange={handleAllDepartmentsChange}>
+                                </lightning-input>
+                                <template lwc:if={showDepartmentSelector}>
+                                    <div class="slds-var-p-top_small">
+                                        <lightning-dual-listbox name="departments" label="Select Departments" source-label="Available"
+                                            selected-label="Selected"  options={departmentOptions} value={selectedDepartments}
+                                            onchange={handleDepartmentChange}>
+                                        </lightning-dual-listbox>
+                                    </div>
+                                </template>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" class="slds-p-top_small">
+                                <lightning-combobox name="fromYear" label='Employment & Affiliations From Year' value={fromYear}
+                                    placeholder="Any Year" options={yearOptions} onchange={handleFromYearChange}>
+                                </lightning-combobox>
+                                <c-generic-lookup class="slds-p-top_small" object-api-name="Account" icon="standard:account" search-fields={orgSearchFields}
+                                    placeholder="Search Employment Organizations..." required={orgRequired} is-multi-select={isEmploymentOrgMultiSelect}
+                                    onchange={lookupEmploymentOrgRecord} label="Employment & Affiliations Organization" display-fields={orgDisplayFields}
+                                    allow-new-record="false" custom-search-class="OrganizationLookupSearch" display-field-prefixes={orgDisplayFieldPrefixes}>
+                                </c-generic-lookup>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </section>
+                    <lightning-layout class="slds-m-bottom_large">
+                        <lightning-layout-item size="6" class="slds-p-right_large equal-height-item">
+                            <section class="slds-var-p-around_large slds-m-top_large section-card equal-height-card">
+                                <div class="section-heading"><b>Fields to Show</b></div>
+                                <lightning-checkbox-group class="slds-p-top_small" name="cardFields" label="Fields to display on each contact"
+                                    options={cardFieldOptions} value={selectedCardFields} onchange={handleCardFieldChange}>
+                                </lightning-checkbox-group>
+                            </section>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" class="equal-height-item">
+                            <section class="slds-var-p-around_large slds-m-top_large section-card equal-height-card">
+                                <div class="section-heading"><b>Additional Filters</b></div>
+                                <template for:each={keywordRows} for:item="row">
+                                    <lightning-layout key={row.id} class="slds-p-top_x-small">
+                                        <lightning-layout-item size="4">
+                                            <lightning-combobox name="keywordField" label="Field" variant="label-hidden"
+                                                value={row.field} placeholder="Select field" options={keywordFieldOptions}
+                                                data-id={row.id} onchange={handleKeywordFieldChange}>
+                                            </lightning-combobox>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="6" class="slds-p-left_x-small">
+                                            <lightning-input type="text" label="Contains" variant="label-hidden"
+                                                value={row.value} placeholder="Contains..."
+                                                data-id={row.id} onchange={handleKeywordValueChange}>
+                                            </lightning-input>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="2" class="slds-p-left_x-small">
+                                            <lightning-button-icon icon-name="utility:delete" alternative-text="Remove filter"
+                                                data-id={row.id} onclick={handleRemoveKeyword}>
+                                            </lightning-button-icon>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                </template>
+                                <div class="slds-p-top_small">
+                                    <lightning-button label="Add Filter" icon-name="utility:add" onclick={handleAddKeyword}>
+                                    </lightning-button>
+                                </div>
+                            </section>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+                <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-p-top_small slds-p-bottom_large">
+                    <div>
+                        <template lwc:if={isNotInternBook}>
+                            <template lwc:if={isCounting}>
+                                <lightning-spinner alternative-text="Updating count" size="small">
+                                </lightning-spinner>
+                            </template>
+                            <template lwc:else>
+                                <span class="match-count-text">{matchCountLabel}</span>
+                            </template>
+                        </template>
+                    </div>
+                    <div class="slds-grid slds-grid_vertical-align-center">
+                        <template lwc:if={errorMessage}>
+                            <div class="slds-var-m-right_medium">
+                                <lightning-formatted-text value={errorMessage} class="slds-text-color_error">
+                                </lightning-formatted-text>
+                            </div>
+                        </template>
+                        <lightning-button label="Reset to Defaults" onclick={handleReset} disabled={isGenerating}>
+                        </lightning-button>
+                        <lightning-button class="slds-var-m-left_small" variant="brand" label="Generate PhotoBook"
+                            disabled={isGenerateDisabled} onclick={handleGenerate}>
+                        </lightning-button>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </lightning-card>
+</template>

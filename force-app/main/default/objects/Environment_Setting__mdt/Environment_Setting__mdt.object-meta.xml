@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>BRME-5293 - This custom metadata will store default configurations for different environments e.g. Prod , Migration or Dev</description>
+    <label>Environment Setting</label>
+    <pluralLabel>Environment Settings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

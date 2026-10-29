@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pending_Review_Requires_Notes</fullName>
+    <active>false</active>
+    <description>(BRME-6823) Ensures Notes are populated when Strategic Location review status is pending addition or pending removal.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.IM_Strategic_Location_Validation__c &amp;&amp;
+AND(
+OR(
+ISPICKVAL(Review_Status__c, &quot;Pending Addition&quot;),
+ISPICKVAL(Review_Status__c, &quot;Pending Removal&quot;)
+),
+ISBLANK(Notes__c)
+)</errorConditionFormula>
+    <errorMessage>Notes are required when Review Status is Pending Addition or Pending Removal.</errorMessage>
+</ValidationRule>

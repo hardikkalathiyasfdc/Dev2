@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Create_Initiative</fullName>
+    <availability>online</availability>
+    <description>BRME-7048:</description>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>Create Initiative</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <url>/lightning/o/Association__c/new?recordTypeId=0124v000001yV3UAAU&amp;defaultFieldValues=Name={!IM_Initiative__c.Name},Description__c={!URLENCODE(IM_Initiative__c.CityView_Description__c)},Focus_Area__c={!URLENCODE(IM_Initiative__c.Focus_AreaId__c)},Foundation_Coding__c={!URLENCODE(IM_Initiative__c.Foundation_CodeId__c)}&amp;navigationLocation=DETAIL</url>
+</WebLink>

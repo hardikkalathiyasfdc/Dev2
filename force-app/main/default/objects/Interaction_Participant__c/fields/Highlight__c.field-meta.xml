@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Highlight__c</fullName>
+    <description>BRME-6950:Master-detail link to the parent Highlight/Interaction record.</description>
+    <label>Highlight</label>
+    <referenceTo>Highlight_Interaction__c</referenceTo>
+    <relationshipName>Interaction_Participants</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

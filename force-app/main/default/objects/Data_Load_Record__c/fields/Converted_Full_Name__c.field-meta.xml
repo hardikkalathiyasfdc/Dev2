@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Converted_Full_Name__c</fullName>
+    <description>Converted Full Name for Comparing with Contact (BRME-6472 &amp; 6242)</description>
+    <externalId>false</externalId>
+    <formula>TRIM(
+Converted_FirstName__c &amp;
+&quot;&quot; &amp;
+IF(
+    ISBLANK(Converted_MiddleName__c),
+    &quot;&quot;,
+    Converted_MiddleName__c &amp; &quot;&quot;
+) &amp;
+Converted_LastName__c
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Converted Full Name</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

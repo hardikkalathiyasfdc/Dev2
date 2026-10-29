@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Non_Initiv_FC_parent_type_restriction</fullName>
+    <active>true</active>
+    <description>IM-76: Non Initiative Foundation Code can only have parent with type as Non Initiative Root or Non Initiative.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Foundation_Code_Validation__c &amp;&amp; 
+AND(
+ISPICKVAL( Type__c ,&apos;Non Initiative&apos;),
+NOT(ISBLANK( Parent__c )),
+NOT(ISPICKVAL( Parent__r.Type__c ,&apos;Non Initiative Root&apos;))
+)</errorConditionFormula>
+    <errorDisplayField>Parent__c</errorDisplayField>
+    <errorMessage>Non Initiative Foundation Codes can only be assigned to Non Initiative Parent.</errorMessage>
+</ValidationRule>

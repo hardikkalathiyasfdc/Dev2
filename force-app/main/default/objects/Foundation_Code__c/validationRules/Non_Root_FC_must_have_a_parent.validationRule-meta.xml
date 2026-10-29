@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Non_Root_FC_must_have_a_parent</fullName>
+    <active>true</active>
+    <description>IM-76: Parent must be set on Foundation Codes where the type is not initiative root.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Foundation_Code_Validation__c &amp;&amp; 
+AND(
+OR(
+ISPICKVAL( Type__c ,&apos;Focus Area&apos;),
+ISPICKVAL( Type__c ,&apos;Non Initiative&apos;),
+ISPICKVAL( Type__c ,&apos;Parent Initiative&apos;),
+ISPICKVAL( Type__c ,&apos;Budgeted Initiative&apos;),
+ISPICKVAL( Type__c ,&apos;Breakout&apos;),
+ISPICKVAL( Type__c ,&apos;Non Programmatic Initiative&apos;)
+),
+ISBLANK( Parent__c )
+)</errorConditionFormula>
+    <errorDisplayField>Parent__c</errorDisplayField>
+    <errorMessage>Please set the parent for the Foundation Code.</errorMessage>
+</ValidationRule>

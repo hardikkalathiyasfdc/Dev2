@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type__c</fullName>
+    <description>IM-76: Created this field as a part of Foundation Code - Business needs an ability to tag “Type“ on Foundation Code to differentiate between parent or budgeted initiative or breakout, Non Programmatic Code etc.,</description>
+    <label>Type</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Initiative Root</fullName>
+                <default>false</default>
+                <label>Initiative Root</label>
+            </value>
+            <value>
+                <fullName>Focus Area</fullName>
+                <default>false</default>
+                <label>Focus Area</label>
+            </value>
+            <value>
+                <fullName>Parent Initiative</fullName>
+                <default>false</default>
+                <label>Parent Initiative</label>
+            </value>
+            <value>
+                <fullName>Budgeted Initiative</fullName>
+                <default>false</default>
+                <label>Budgeted Initiative</label>
+            </value>
+            <value>
+                <fullName>Breakout</fullName>
+                <default>false</default>
+                <label>Breakout</label>
+            </value>
+            <value>
+                <fullName>Non Initiative</fullName>
+                <default>false</default>
+                <label>Non Initiative</label>
+            </value>
+            <value>
+                <fullName>Non Initiative Root</fullName>
+                <default>false</default>
+                <label>Non Initiative Root</label>
+            </value>
+            <value>
+                <fullName>Miscellaneous Initiative</fullName>
+                <default>false</default>
+                <label>Miscellaneous Initiative</label>
+            </value>
+            <value>
+                <fullName>Focus Area Misc</fullName>
+                <default>false</default>
+                <label>Focus Area Misc</label>
+            </value>
+            <value>
+                <fullName>Non Programmatic Initiative</fullName>
+                <default>false</default>
+                <label>Non Programmatic Initiative</label>
+            </value>
+            <value>
+                <fullName>Sub Breakout</fullName>
+                <default>false</default>
+                <label>Sub Breakout</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

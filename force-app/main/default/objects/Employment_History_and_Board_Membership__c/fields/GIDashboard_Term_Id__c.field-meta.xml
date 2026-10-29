@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GIDashboard_Term_Id__c</fullName>
+    <description>(BRME-6536) Data sharing of Mayors data with Delivery Associates (DA) for the Government Innovation Dashboard.</description>
+    <externalId>false</externalId>
+    <formula>Contact_Name__r.GIDashboard_Contact_Id__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>GIDashboard Term Id</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

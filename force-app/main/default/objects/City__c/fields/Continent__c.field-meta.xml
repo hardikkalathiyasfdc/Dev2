@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Continent__c</fullName>
+    <label>Continent</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>North America</fullName>
+                <default>false</default>
+                <label>North America</label>
+            </value>
+            <value>
+                <fullName>Europe</fullName>
+                <default>false</default>
+                <label>Europe</label>
+            </value>
+            <value>
+                <fullName>Africa</fullName>
+                <default>false</default>
+                <label>Africa</label>
+            </value>
+            <value>
+                <fullName>Asia</fullName>
+                <default>false</default>
+                <label>Asia</label>
+            </value>
+            <value>
+                <fullName>International</fullName>
+                <default>false</default>
+                <label>International</label>
+            </value>
+            <value>
+                <fullName>Latin America</fullName>
+                <default>false</default>
+                <label>Latin America</label>
+            </value>
+            <value>
+                <fullName>Middle East</fullName>
+                <default>false</default>
+                <label>Middle East</label>
+            </value>
+            <value>
+                <fullName>Oceans</fullName>
+                <default>false</default>
+                <label>Oceans</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

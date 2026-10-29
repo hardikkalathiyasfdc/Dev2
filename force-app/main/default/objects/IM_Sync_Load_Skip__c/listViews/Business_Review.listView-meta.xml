@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Business_Review</fullName>
+    <columns>NAME</columns>
+    <columns>BGive_Entity__c</columns>
+    <columns>Skip_Code_Category__c</columns>
+    <columns>Skip_Description__c</columns>
+    <columns>Bgive_Name__c</columns>
+    <columns>BGive_Contig_Id__c</columns>
+    <columns>IM_Entity__c</columns>
+    <columns>IM_Entity_Name__c</columns>
+    <columns>IM_Entity_Link__c</columns>
+    <columns>Related_Info__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>Business Review</label>
+</ListView>

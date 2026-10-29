@@ -1,0 +1,11 @@
+.THIS.myBtn,
+.THIS .myBtn {
+  margin: 0;
+  margin-left: 1%;
+}
+
+.THIS.myList,
+.THIS .myList {
+  margin-left: 2%;
+  margin-bottom: 2%;
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>BRME-5256 - This custom permission is used to bypass validation on Interaction related to new Foundation Coding field.</description>
+    <isLicensed>false</isLicensed>
+    <label>Manage Foundation Codes Access</label>
+</CustomPermission>

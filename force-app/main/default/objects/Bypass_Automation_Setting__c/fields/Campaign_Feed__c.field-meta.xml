@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Campaign_Feed__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Setting to disable the automation that creates chatter feed on List(Campaign) object</description>
+    <label>Campaign Feed</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

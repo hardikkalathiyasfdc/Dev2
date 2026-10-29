@@ -1,0 +1,190 @@
+<template>
+    <div class={containerClass} onfocusout={handleFocusOut}>
+        <template lwc:if={label}>
+            <label class="slds-form-element__label">
+                {label}
+                <template lwc:if={required}>
+                    <abbr class="slds-required" title="required">*</abbr>
+                </template>
+            </label>
+        </template>
+
+        <div class="slds-form-element__control">
+            <div class="slds-combobox_container">
+                <div class={comboboxClass} aria-expanded={dropdownOpen} aria-haspopup="listbox" role="combobox">
+                    <template lwc:if={isSingleSelectWithSelection}>
+                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left-right" role="none">
+                            <span class="slds-icon_container slds-combobox__input-entity-icon">
+                                <lightning-icon icon-name={selectedIcon} size="x-small"></lightning-icon>
+                            </span>
+                            <input 
+                                type="text"
+                                class="slds-input slds-combobox__input slds-combobox__input-value"
+                                readonly
+                                value={selectedRecordName}
+                                disabled={disabled}
+                            />
+                            <template lwc:if={showClearButton}>
+                                <button 
+                                    class="slds-button slds-button_icon slds-input__icon slds-input__icon_right"
+                                    title="Clear Selection"
+                                    onclick={handleClearSelection}
+                                    disabled={disabled}>
+                                    <lightning-icon icon-name="utility:close" size="x-small" alternative-text="Clear"></lightning-icon>
+                                </button>
+                            </template>
+                        </div>
+                    </template>
+
+                    <template lwc:if={showInputArea}>
+                        <c-lookup-input
+                            search-key= {searchKey}
+                            placeholder={placeholder}
+                            disabled={disabled}
+                            onfocus={handleInputFocus}
+                            onsearch={handleSearch}
+                            onclear={handleInputClear}>
+                        </c-lookup-input>
+                    </template>
+
+                    <template lwc:if={showDropdown}>
+                        <div class="slds-dropdown slds-dropdown_fluid dropdown-container" role="listbox" onmousedown={handleDropdownMouseDown} onmouseup={handleDropdownMouseUp}>
+                            <template lwc:if={showRecentlyViewedHeader}>
+                                <div class="dropdown-header slds-p-around_x-small">
+                                    <div class="slds-text-title_caps slds-p-bottom_xx-small">Recently Viewed</div>
+                                    <span class="slds-text-body_small slds-text-color_weak">{selectedCount} selected &bull; {recentUnselectedCount} remaining</span>
+                                </div>
+                            </template>
+
+                            <div class="dropdown-content" onscroll={handleDropdownScroll}>
+                                <template lwc:if={showDefaultResults}>
+                                    <c-lookup-results
+                                        results={displayDefaultResults}
+                                        display-fields={displayFields}
+                                        display-field-prefixes={displayFieldPrefixes}
+                                        icon={icon}
+                                        is-multi-select={isMultiSelect}
+                                        selected-ids={selectedIdsSet}
+                                        is-loading={isSearching}
+                                        allow-new-record={disallowNewInResults}
+                                        object-label={objectLabel}
+                                        onselect={handleRecordSelect}
+>
+                                    </c-lookup-results>
+                                </template>
+                                <template lwc:if={showRecentlyViewedSection}>
+                                    <c-lookup-recently-viewed
+                                        object-api-name={objectApiName}
+                                        display-fields={displayFields}
+                                        display-field-prefixes={displayFieldPrefixes}
+                                        filter-clause={filterClause}
+                                        max-results={maxResults}
+                                        icon={icon}
+                                        selected-ids={selectedIdsSet}
+                                        access-mode={accessMode}
+                                        without-sharing={withoutSharing}
+                                        is-multi-select={isMultiSelect}
+                                        hide-header={isMultiSelect}
+                                        onselect={handleRecordSelect}
+                                        onload={handleRecentLoad}
+>
+                                    </c-lookup-recently-viewed>
+                                </template>
+
+                                <template lwc:if={showSearchResultsHeader}>
+                                    <div class="dropdown-header slds-p-around_x-small">
+                                        <span class="slds-text-body_small slds-text-color_weak">{selectedCount} selected &bull; {searchUnselectedCount} remaining</span>
+                                    </div>
+                                </template>
+                                <template lwc:if={showSearchSpinner}>
+                                    <div class="slds-align_absolute-center slds-p-around_x-small">
+                                        <lightning-spinner alternative-text="Loading" size="x-small"></lightning-spinner>
+                                    </div>
+                                </template>
+                                <template lwc:if={showSearchResults}>
+                                    <c-lookup-results
+                                        results={displayResults}
+                                        display-fields={displayFields}
+                                        display-field-prefixes={displayFieldPrefixes}
+                                        icon={icon}
+                                        is-multi-select={isMultiSelect}
+                                        selected-ids={selectedIdsSet}
+                                        is-loading={isSearching}
+                                        allow-new-record={disallowNewInResults}
+                                        object-label={objectLabel}
+                                        onselect={handleRecordSelect}
+                                        onnewrecord={handleNewRecord}>
+                                    </c-lookup-results>
+                                </template>
+
+                                <template lwc:if={showNoResults}>
+                                    <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                        <li role="presentation" class="slds-listbox__item">
+                                            <div class="slds-media slds-listbox__option slds-p-around_small">
+                                                <span class="slds-text-body_small slds-text-color_weak">No results found</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </template>
+
+
+                                <template lwc:if={hasMoreResults}>
+                                    <div class="slds-align_absolute-center slds-p-around_x-small">
+                                        <span class="slds-text-body_small slds-text-color_weak">Scroll for more results</span>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <template lwc:if={showFooter}>
+                                <div class="dropdown-footer slds-p-around_x-small">
+                                    <template lwc:if={allowNewRecord}>
+                                        <div class="slds-text-align_center slds-p-vertical_xx-small">
+                                            <lightning-button
+                                                label={newButtonLabel}
+                                                variant="base"
+                                                icon-name="utility:add"
+                                                onclick={handleNewRecord}>
+                                            </lightning-button>
+                                        </div>
+                                    </template>
+                                    <template lwc:if={showDoneButton}>
+                                        <div class="slds-text-align_center slds-p-vertical_xx-small">
+                                            <lightning-button 
+                                                label="Done" 
+                                                variant="brand" 
+                                                onclick={handleDone}>
+                                            </lightning-button>
+                                        </div>
+                                    </template>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <template lwc:if={showPills}>
+                <c-lookup-pills
+                    selected-records={selectedRecords}
+                    display-field={primaryDisplayField}
+                    icon={selectedIcon}
+                    disabled={disabled}
+                    onremove={handlePillRemove}>
+                </c-lookup-pills>
+            </template>
+        </div>
+
+        <template lwc:if={errorMessage}>
+            <div class="slds-form-element__help" aria-live="assertive">{errorMessage}</div>
+        </template>
+    </div>
+
+    <template lwc:if={showFieldSetModal}>
+        <c-lookup-new-record
+            object-api-name={objectApiName}
+            new-record-settings={_effectiveNewRecordSettings}
+            onsuccess={handleModalSuccess}
+            oncancel={handleModalClose}>
+        </c-lookup-new-record>
+    </template>
+</template>

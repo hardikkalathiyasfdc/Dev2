@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Current_BRM_Value__c</fullName>
+    <description>(BRME-6787) Value present in BRM when the difference was detected</description>
+    <externalId>false</externalId>
+    <label>Current BRM Value</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

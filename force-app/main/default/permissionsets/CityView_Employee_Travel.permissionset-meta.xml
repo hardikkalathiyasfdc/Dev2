@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>CityView_Employee_Travel_Custom_Permission</name>
+    </customPermissions>
+    <description>This permission set provides the ability to view the Employee Travel section on the CityView. (BRME-6007)</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>CityView: Employee Travel</label>
+</PermissionSet>

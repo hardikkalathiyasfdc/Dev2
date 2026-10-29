@@ -1,0 +1,23 @@
+.slds-section-custom {
+	border: 2px solid rgb(150 189 190);
+	border-radius: 15px;
+	padding: 5px;
+}
+
+.slds-section-custom > h3 {
+	background: rgb(212 239 240);
+	height: 20px;
+	margin-top: -15px;
+	margin-left: 15px;
+	padding: 0 10px;
+	font-weight: bold;
+	width: 170px;
+	text-align: center;
+	border-radius: 21px;
+	vertical-align: middle;
+	padding-top: 2px;
+}
+
+.slds-section-custom_fixed-height {
+	height: 310px;
+}

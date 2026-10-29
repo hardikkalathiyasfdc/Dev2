@@ -1,0 +1,187 @@
+<!--
+  @description       :
+  @author            : Paddy
+  @group             :
+  @last modified on  : 03-03-2026
+  @last modified by  : Nishant Bakhrey
+-->
+<template>
+    <template lwc:if={showSpinner}>
+        <lightning-spinner size="large" variant="brand" alternative-text="Saving"></lightning-spinner>
+    </template>
+    <template lwc:else>
+        <div class="c-container slds-theme_default">
+            <template lwc:if={showSearchSection}>
+                <div class="slds-border_bottom">
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item padding="around-small" size="2">
+                            <lightning-input type="text" label="First/Preferred Name" value={searchKeyFirstName}
+                                onchange={handleSearchKeyFirstInputChange}></lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item padding="around-small" size="2">
+                            <lightning-input type="text" label="Last Name" value={searchKeyLastName}
+                                onchange={handleSearchKeyLastInputChange}></lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item padding="around-small" size="4">
+                            <div class="slds-p-top_large">
+                                <lightning-button variant="brand" label="Search" title="Search"
+                                    onclick={handleSearch} disabled={disableSearch}></lightning-button>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+                </br>
+            </template>
+            <template lwc:if={showSearchResults}>
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item padding="around-small" size="12">
+                        <div class="slds-section-custom slds-section-custom_fixed-height">
+                            <!--BRM Contact Card-->
+                            <template lwc:if={showLinkedStatus}>
+                                <h3>BRM Contact</h3>
+                                <template lwc:if={brmContactDetails}>
+                                    <c-blink-contact-card contact-details={brmContactDetails}
+                                        brm-contact-organization-name={brmContactOrganizationName}
+                                        is-brm-contact="true"></c-blink-contact-card>
+                                </template>
+                            </template>
+                            <!-- BRM Search Results-->
+                            <template lwc:else>
+                                <h3>BRM Search Results</h3>
+                                <template lwc:if={isBRMData}>
+                                    <br />
+                                    <label style="margin-bottom:10px;font-size: 12px;"> Please select BRM contact to
+                                        link
+                                    </label>
+                                    <div style="margin-top:5px;height:250px;">
+                                        <lightning-datatable key-field="Id" data={brmData} columns={brmColumns}
+                                            max-row-selection="1" onrowselection={handleBRMRowSelection} selected-rows={preSelectedRow}>
+                                        </lightning-datatable>
+                                    </div>
+                                </template>
+                                <template lwc:else>
+                                    <br />
+                                    <div class="slds-text-color_error">{noBRMContactsMessage}</div>
+                                </template>
+                            </template>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="12">
+                        <div class="slds-section-custom slds-section-custom_fixed-height">
+                            <!--Bgive card-->
+                            <template lwc:if={showBgiveContactCard}>
+                                <template lwc:if={bgiveContact}>
+                                    <h3>Bgive Contact</h3>
+                                    <c-blink-contact-card contact-details={bgiveContact}></c-blink-contact-card>
+                                </template>
+                            </template>
+                            <template lwc:else>
+                                <h3>Bgive Search Results</h3>
+                                <template lwc:if={isBgiveData}>
+                                    <br />
+                                    <!--BGive Search Results-->
+                                    <label style="margin-bottom:10px;font-size: 12px;"> Please select Bgive contact to
+                                        link
+                                    </label>
+                                    <div style="margin-top:5px;height:250px;">
+                                        <lightning-datatable key-field="Id" data={bgiveData} columns={bgiveColumns}
+                                            max-row-selection="1" onrowselection={handleBgiveRowSelection}>
+                                        </lightning-datatable>
+                                    </div>
+                                </template>
+                                <template lwc:else>
+                                    <br />
+                                    <div class="slds-text-color_error">{noBgiveContactsMessage}</div>
+                                </template>
+                            </template>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </template>
+            <template lwc:if={isBgiveMasterContactInfoEnabled}>
+                <template lwc:if={showMasterContactInfo}>
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item padding="around-small" size="12">
+                            <div class="slds-section-custom" style="margin-top:20px;">
+                                <h3>Master Contact Info</h3>
+                                <lightning-layout multiple-rows="true">
+                                    <lightning-layout-item padding="around-small" size="2">
+                                        <lightning-combobox name="solicitorStatus" label="Solicitor History Status: "
+                                            value={solicitorStatus} placeholder="Select Status"
+                                            options={solicitorHistoryOptions} onchange={handleSolicitorChange}>
+                                        </lightning-combobox>
+                                    </lightning-layout-item>
+                                    <template lwc:if={isFromContact}>
+                                        <lightning-layout-item padding="around-small" size="3">
+                                            <lightning-combobox name="bgiveLinkedStatus" label="Bgive Linked Status: "
+                                                value={bgiveLinkedStatusValue} placeholder="Select Status"
+                                                options={bgiveLinkedStatusOptions} onchange={handleBgiveLinkedChange}
+                                                required="true">
+                                            </lightning-combobox>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item padding="around-small"
+                                            size="7">&nbsp;</lightning-layout-item>
+                                    </template>
+                                    <lightning-layout-item padding="around-small"
+                                        size="10">&nbsp;</lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="3">
+                                        <lightning-input label="First Name" name="firstName" value={firstName}
+                                            onchange={handleFirstNameChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="3">
+                                        <lightning-input label="Middle Name" name="middleName" value={middleName}
+                                            onchange={handleMiddleNameChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="3">
+                                        <lightning-input label="Last Name" name="lastName" value={lastName}
+                                            onchange={handleLastNameChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="3">
+                                        <lightning-input label="Preferred First Name" name="preferredFirstName"
+                                            value={preferredFirstName}
+                                            onchange={handlePreferredFirstNameChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small" size="12">
+                                        <div class="slds-text-color_error">Note - Updates made to these fields will
+                                            update
+                                            the contact in both BRM and Bgive.</div>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+            </template>
+            <template lwc:else>
+                <template lwc:if={fromContactMasterInfo}>
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item padding="around-small" size="12">
+                            <div class="slds-section-custom" style="margin-top:20px;">
+                                <h3>Master Contact Info</h3>
+                                <lightning-layout multiple-rows="true">
+                                    <lightning-layout-item padding="around-small" size="3">
+                                        <lightning-combobox name="bgiveLinkedStatus" label="Bgive Linked Status: "
+                                            value={bgiveLinkedStatusValue} placeholder="Select Status"
+                                            options={bgiveLinkedStatusOptions} onchange={handleBgiveLinkedChange}
+                                            disabled={isBgiveLinkButtonDisabled} required="true">
+                                        </lightning-combobox>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item padding="around-small"
+                                        size="7">&nbsp;
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+            </template>
+            <template lwc:if={showSaveButton}>
+                <div slot="footer" class="slds-align_absolute-center">
+                    <lightning-button variant="brand" data-name={buttonLabel} label={buttonLabel}
+                        disabled={isButtonDisabled} class="slds-m-left_x-small" onclick={handleSave}>
+                    </lightning-button>
+                </div>
+            </template>
+        </div>
+    </template>
+</template>

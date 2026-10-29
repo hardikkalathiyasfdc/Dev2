@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Scheduled_Amount_USD__c</fullName>
+    <description>IM-189:Total Scheduled Amount in USD currency for given budget grant.</description>
+    <label>Total Scheduled Amount (USD)</label>
+    <precision>15</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

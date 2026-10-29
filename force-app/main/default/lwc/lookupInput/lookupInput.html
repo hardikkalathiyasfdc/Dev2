@@ -1,0 +1,31 @@
+<template>
+    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+        <input
+            type="text"
+            class="slds-input slds-combobox__input"
+            role="textbox"
+            placeholder={placeholder}
+            disabled={disabled}
+            value={inputValue}
+            onfocus={handleFocus}
+            oninput={handleInput}
+            onkeydown={handleKeyDown}
+            aria-autocomplete="list"
+            autocomplete="on"
+        />
+        <template lwc:if={showClearIcon}>
+            <button
+                class="slds-button slds-button_icon slds-input__icon slds-input__icon_right"
+                title="Clear"
+                onclick={handleClear}
+                disabled={disabled}>
+                <lightning-icon icon-name="utility:close" size="x-small" alternative-text="Clear"></lightning-icon>
+            </button>
+        </template>
+        <template lwc:if={showSearchIcon}>
+            <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                <lightning-icon icon-name="utility:search" size="x-small" alternative-text="Search"></lightning-icon>
+            </span>
+        </template>
+    </div>
+</template>

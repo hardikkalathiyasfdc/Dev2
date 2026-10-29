@@ -1,0 +1,12 @@
+.THIS.myCard, .THIS .myCard {
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+.THIS.exportBtn, .THIS .exportBtn {
+    float: right;
+}
+
+.THIS.slds-pill_container, .THIS .slds-pill_container{
+    border: none;
+}

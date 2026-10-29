@@ -1,0 +1,30 @@
+<template>
+    <template lwc:if={hasDataLoaded}>
+        <template lwc:if={isFundraising}>
+            <template lwc:if={accListData}>
+                <h1 style="font-size: 17px;font-weight: 700;margin-bottom: 1%;">Giving - By Project</h1>
+                <div class="datatable-container">
+                    <lightning-datatable data={accListData} columns={columns} key-field="Id" sorted-by={sortBy}
+                        sorted-direction={sortDirection} onsort={doSorting} hide-checkbox-column>
+                    </lightning-datatable>
+                </div>
+            </template>
+        </template>
+        <template lwc:if={isFundRept}>
+            <template lwc:if={fundRecpData}>
+                <h2 style="font-size: 17px;font-weight: 700; margin-top: 2%;margin-bottom: 1%;">Receiving - By Project</h2>
+                <div class="datatable-container">
+                    <lightning-datatable data={fundRecpData} columns={columns} key-field="Id" sorted-by={sortBy}
+                        sorted-direction={sortedDirectionProject} onsort={sortProject} hide-checkbox-column>
+                    </lightning-datatable>
+                </div>
+            </template>
+        </template>
+        <lightning-button variant="base" class="slds-align_absolute-center" label="View All" onclick={viewAllData}>
+        </lightning-button>
+        <template lwc:if={error}>{error}</template>
+    </template>
+    <template lwc:else>
+        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+    </template>
+</template>

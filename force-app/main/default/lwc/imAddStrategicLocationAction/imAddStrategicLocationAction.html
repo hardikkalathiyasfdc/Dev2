@@ -1,0 +1,7 @@
+<template>
+    <template if:true={hasRecordId}>
+        <lightning-flow flow-api-name="IM_Add_Strategic_Location_Request" flow-input-variables={inputVariables}
+            onstatuschange={handleStatusChange}>
+        </lightning-flow>
+    </template>
+</template>

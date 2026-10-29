@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Association_Count__c</fullName>
+    <description>BRME-5789: Represents the number of associations linked to a geo area. If a focus area is specified, the count is grouped by focus area</description>
+    <externalId>false</externalId>
+    <label>Association Count</label>
+    <precision>4</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

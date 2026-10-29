@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>External_Milestone_Explanation_Required</fullName>
+    <active>true</active>
+    <description>IM-61: External Milestone Explanation is required when External Milestone date has a value.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.IM_Initiative_Validation__c &amp;&amp;
+AND(NOT(ISNULL(External_Milestone_Date__c)), LEN( External_Milestone_Explanation__c )&lt;=0)</errorConditionFormula>
+    <errorDisplayField>External_Milestone_Explanation__c</errorDisplayField>
+    <errorMessage>External milestone explanation is needed when external milestone date is populated.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,79 @@
+.myLookup .slds-form-element__label {
+  display: none !important;
+}
+.myLookup .slds-dropdown-trigger_click .slds-dropdown {
+  display: none !important;
+}
+
+.myView .slds-form-element__label {
+  display: none !important;
+}
+
+lightning-button-menu {
+  z-index: 3 !important;
+}
+.slds-docked-form-footer {
+  margin-bottom: 14px;
+}
+
+.slds-is-sorted .slds-is-sortable__icon {
+  display: none;
+}
+
+.stickyTop .slds-table_header-fixed_container {
+  height: 65vh !important;
+}
+
+.myTable > div {
+  display: flex;
+}
+
+.secondTable tr > td[data-label="First Name"],
+.secondTable tr > th[aria-label="First Name"],
+.secondTable tr > td[data-label="Last Name"],
+.secondTable tr > th[aria-label="Last Name"],
+.secondTable tr > td:nth-child(1),
+.secondTable tr > th:nth-child(1),
+.secondTable tbody tr th[scope="row"] button lightning-primitive-icon {
+  display: none;
+}
+.secondTable thead tr th[style="40px;"] {
+  width: 0 !important;
+}
+.secondTable tbody tr th[scope="row"] button {
+  border: none;
+}
+
+td:last-child[role="gridcell"]:hover {
+  z-index: 9999;
+}
+
+.secondTable td:nth-last-child(-n + 2):hover {
+  z-index: 9999;
+}
+
+.myHtml caption,
+.myHtml th,
+.myHtml td {
+  text-align: -webkit-center;
+  padding: 0;
+}
+
+.myHtml .slds-rich-text-editor__textarea table,
+.myHtml .slds-rich-text-editor__output table {
+  width: 100%;
+}
+
+.myHtml .slds-rich-text-editor__textarea p,
+.myHtml .slds-rich-text-editor__output p {
+  padding-bottom: 20px;
+}
+
+.slds-popover_tooltip {
+  z-index: 9999;
+}
+
+.secondTable.slds-input, .secondTable .slds-input{
+  height: 24px;
+  min-height: 0px;
+}

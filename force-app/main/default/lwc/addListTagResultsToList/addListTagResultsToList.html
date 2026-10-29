@@ -1,0 +1,47 @@
+<template>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" 
+        aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={handleCloseModal}>
+                    <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add to List</h2>
+            </header>
+            <!-- Modal/Popup Box LWC body starts here -->
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <lightning-spinner lwc:if={isLoading} alternative-text="Loading" variant="brand" size="large"></lightning-spinner>
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item padding="around-small" size="12">
+                        <c-generic-lookup
+                            object-api-name="Campaign"
+                            icon="standard:campaign"
+                            label="List"
+                            placeholder="Search Lists..."
+                            display-fields={listDisplayFields}
+                            display-field-prefixes={listDisplayFieldPrefixes}
+                            search-fields={listSearchFields}
+                            custom-search-class="WeightedFieldLookupSearch"
+                            search-config={listSearchConfig}
+                            required
+                            onchange={handleLookupChange}>
+                        </c-generic-lookup>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="12">&nbsp;</lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="12">&nbsp;</lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="12">&nbsp;</lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="12">&nbsp;</lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="12">&nbsp;</lightning-layout-item>
+                </lightning-layout>
+            </div>
+            <footer class="slds-modal__footer">
+                <lightning-button variant="brand" onclick={handleCloseModal} title="Cancel" label="Cancel"></lightning-button>
+                <lightning-button disabled={shallDisableSubmitButton} class="slds-var-p-left_large" variant="brand" onclick={handleAddToList} 
+                    title="Submit" label="Submit">
+                </lightning-button>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>  
+</template>

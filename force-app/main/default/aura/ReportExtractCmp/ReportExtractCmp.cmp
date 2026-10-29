@@ -1,0 +1,95 @@
+<aura:component
+  implements="force:appHostable,flexipage:availableForAllPageTypes,lightning:isUrlAddressable"
+  controller="ReportExtractCmpController"
+  access="global"
+>
+  <aura:attribute name="reportExtract" type="Map" default="{}" />
+  <aura:attribute name="columns" type="List" />
+  <aura:attribute name="startTime" type="DateTime" />
+  <aura:attribute name="endTime" type="DateTime" />
+  <aura:attribute name="isLoading" type="Boolean" default="true" />
+  <aura:attribute name="curPage" type="Integer" default="0" />
+  <aura:attribute name="showNext" type="Boolean" default="false" />
+  <aura:attribute name="showPrev" type="Boolean" default="false" />
+  <aura:attribute name="filterCols" type="Map" default="{}" access="PRIVATE" />
+  <aura:attribute
+    name="curFilter"
+    type="String"
+    default="all"
+    access="PRIVATE"
+  />
+  <ltng:require scripts="{!$Resource.cmputil}" afterScriptsLoaded="{!c.init}" />
+  <lightning:card class="myCard">
+    <aura:set attribute="title">
+      <lightning:icon iconName="action:following" size="small" />
+      Report Extract Monitoring
+    </aura:set>
+
+    <aura:if isTrue="{!v.isLoading}">
+      <div style="height: 50px">
+        <lightning:spinner alternativeText="Loading" size="large" />
+      </div>
+    </aura:if>
+    <div class="slds-grid slds-grid_vertical">
+      <div class="slds-col">
+        <div class="slds-grid slds-gutters">
+          <div class="slds-col slds-size_1-of-4">
+            <lightning:input
+              type="datetime"
+              name="startTime"
+              label="Start Date"
+              onchange="{!c.handleTimeChange}"
+              value="{!v.startTime}"
+            />
+          </div>
+          <div class="slds-col slds-size_1-of-4">
+            <lightning:input
+              type="datetime"
+              name="endTime"
+              label="End Date"
+              onchange="{!c.handleTimeChange}"
+              value="{!v.endTime}"
+            />
+          </div>
+          <div class="slds-col slds-size_2-of-4">
+            <lightning:button
+              variant="brand"
+              label="Export"
+              title="Export"
+              class="exportBtn"
+              onclick="{! c.export }"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="slds-col" style="margin-top: 1%">
+        <lightning:datatable
+          keyField="id"
+          data="{! v.reportExtract.rows }"
+          columns="{! v.columns }"
+          hideCheckboxColumn="true"
+          showRowNumberColumn="true"
+          rowNumberOffset="{!v.reportExtract.offset}"
+          onheaderaction="{!c.handleHeaderAction}"
+        />
+      </div>
+    </div>
+
+    <aura:set attribute="footer">
+      <aura:if isTrue="{!v.showPrev}">
+        <lightning:button
+          label="prev"
+          iconName="utility:left"
+          iconPosition="left"
+          onclick="{!c.prevPage}"
+        />
+      </aura:if>
+      <aura:if isTrue="{!v.showNext}">
+        <lightning:button
+          label="next"
+          iconName="utility:right"
+          onclick="{!c.nextPage}"
+      /></aura:if>
+    </aura:set>
+  </lightning:card>
+</aura:component>

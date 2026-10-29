@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>IM_Strategic_Location_Review_Committee</name>
+    </customPermissions>
+    <description>Assign to committee users who can approve/reject Strategic Location requests.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>IM Strategic Location Review Committee</label>
+</PermissionSet>

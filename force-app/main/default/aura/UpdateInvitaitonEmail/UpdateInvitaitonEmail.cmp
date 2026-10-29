@@ -1,0 +1,18 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId">
+	<aura:html tag="style">
+        .slds-modal__container{
+        width: 50%;
+        max-width: 50rem;
+        }
+        .modal-body{
+        height : 300px !important;
+        max-height: 300px !important;
+        }
+        
+        .customFooter{
+        display: inline !important;
+        }
+    </aura:html> 
+	<aura:attribute name="recordId" type="String" />
+	<c:updateInvitationEmails recordId="{!v.recordId}" oncancel="{!c.closeButton}"></c:updateInvitationEmails>
+</aura:component>

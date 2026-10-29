@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BP_Role__c</fullName>
+    <description>This Field is to differentiate those BP manage vs. other</description>
+    <label>BP Role</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Managed</fullName>
+                <default>false</default>
+                <label>Managed</label>
+            </value>
+            <value>
+                <fullName>Re-Grantor</fullName>
+                <default>false</default>
+                <label>Re-Grantor</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

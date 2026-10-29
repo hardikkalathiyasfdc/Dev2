@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>ConfidentialItemUploadController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>LP_Leadership_Access_to_Confidential_Background_File</name>
+    </customPermissions>
+    <description>Confidential. To give access to the Confidential Background fields and Confidential Attachments (section) to key teams: Leadership LP Teams, plus on BP side to Executive, Briefings, Scheduling/advance, Grants, and Data</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ConfidentialAttachment__c.Attachment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ConfidentialAttachment__c.InteractionRecordType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ConfidentialAttachment__c.Interaction__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ConfidentialAttachment__c.View__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Interaction__c.LPLeadershipConfidentialBackground__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Interaction: LP Leadership Access to Confidential Background &amp; File</label>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>ConfidentialAttachment__c</object>
+        <viewAllFields>false</viewAllFields>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <pageAccesses>
+        <apexPage>UploadConfidentialAttachment</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+</PermissionSet>

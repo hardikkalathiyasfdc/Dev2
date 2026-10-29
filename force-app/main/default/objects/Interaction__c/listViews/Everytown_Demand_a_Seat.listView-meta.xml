@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Everytown_Demand_a_Seat</fullName>
+    <columns>NAME</columns>
+    <columns>Contact__c</columns>
+    <columns>Interaction_Type__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Interaction__c.MRB_Interaction</value>
+    </filters>
+    <filters>
+        <field>NAME</field>
+        <operation>contains</operation>
+        <value>Everytown Demand a Seat</value>
+    </filters>
+    <label>Everytown Demand a Seat</label>
+    <sharedTo>
+        <group>Correspondence_Team</group>
+        <group>Data_Team</group>
+    </sharedTo>
+</ListView>

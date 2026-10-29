@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Organization_if_not_GCOM_Rectype</fullName>
+    <active>true</active>
+    <description>Ensures that the Organization__c field is filled in when the Record Type is not &quot;GCOM&quot;. (BRME-5398)</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Organization_Association_Validation__c &amp;&amp;
+(AND(
+  RecordType.DeveloperName == &quot;City_View&quot;,
+  ISBLANK(Organization__c)
+))</errorConditionFormula>
+    <errorDisplayField>Organization__c</errorDisplayField>
+    <errorMessage>Organization is required</errorMessage>
+</ValidationRule>

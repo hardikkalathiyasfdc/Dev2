@@ -1,0 +1,86 @@
+<template>
+    <div class="slds-card_boundary">
+        <lightning-card title={cardTitle} icon-name="standard:metrics">
+            <template if:true={hasRows}>
+                <div slot="actions" class="slds-grid slds-grid_vertical-align-center">
+                    <span class="slds-text-body_small slds-text-color_weak slds-m-right_small">
+                        {progressLabel}
+                    </span>
+
+                    <template if:false={isEditing}>
+                        <template if:true={canEditMetrics}>
+                            <lightning-button
+                                label="Edit Metrics"
+                                disabled={isLoading}
+                                onclick={handleEdit}>
+                            </lightning-button>
+                        </template>
+                    </template>
+
+                    <template if:true={isEditing}>
+                        <lightning-button
+                            label="Cancel"
+                            disabled={isLoading}
+                            onclick={handleCancelEdit}>
+                        </lightning-button>
+                        <lightning-button
+                            class="slds-m-left_x-small"
+                            variant="brand"
+                            label="Save Metrics"
+                            disabled={isLoading}
+                            onclick={handleSaveClick}>
+                        </lightning-button>
+                    </template>
+                </div>
+            </template>
+
+            <div class="slds-is-relative">
+                <template if:true={isLoading}>
+                    <lightning-spinner alternative-text="Saving" size="small"></lightning-spinner>
+                </template>
+
+                <template if:true={loadError}>
+                    <div class="slds-p-around_medium">
+                        <p class="slds-text-color_error">{loadError}</p>
+                    </div>
+                </template>
+
+                <template if:false={loadError}>
+                    <template if:false={hasTeam}>
+                        <div class="slds-p-around_medium slds-text-align_center">
+                            <p class="slds-text-body_regular">
+                                Set a team on this highlight to see the metrics it reports on.
+                            </p>
+                        </div>
+                    </template>
+
+                    <template if:true={hasTeam}>
+                        <template if:false={hasRows}>
+                            <div class="slds-p-around_medium slds-text-align_center">
+                                <p class="slds-text-body_regular">
+                                    No metrics are set up for {teamName} yet.
+                                </p>
+                            </div>
+                        </template>
+
+                        <template if:true={hasRows}>
+                            <div class="slds-border_top">
+                                <lightning-datatable
+                                    key-field="metricId"
+                                    data={rows}
+                                    columns={columns}
+                                    draft-values={draftValues}
+                                    errors={tableErrors}
+                                    oncellchange={handleCellChange}
+                                    hide-checkbox-column
+                                    suppress-bottom-bar
+                                    column-widths-mode="fixed">
+                                </lightning-datatable>
+                            </div>
+                        </template>
+                    </template>
+                </template>
+            </div>
+        </lightning-card>
+    </div>
+</template>

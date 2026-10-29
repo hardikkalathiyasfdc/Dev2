@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Reception at 1015 Madison</label>
+    <protected>false</protected>
+    <values>
+        <field>CellPhone__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Email__c</field>
+        <value xsi:type="xsd:string">1015reception@bloomberg.org</value>
+    </values>
+    <values>
+        <field>HomePageEligible__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>OfficeName__c</field>
+        <value xsi:type="xsd:string">Reception at 1015 Madison</value>
+    </values>
+    <values>
+        <field>OfficePhone__c</field>
+        <value xsi:type="xsd:string">+1 212-205-0200</value>
+    </values>
+    <values>
+        <field>Order__c</field>
+        <value xsi:type="xsd:double">3.0</value>
+    </values>
+</CustomMetadata>

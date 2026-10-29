@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>BRME-6288: Custom Permission to show/hide the Follow button on all objects</description>
+    <isLicensed>false</isLicensed>
+    <label>General: Access to Files Object and Follow Feature for Chatter</label>
+</CustomPermission>

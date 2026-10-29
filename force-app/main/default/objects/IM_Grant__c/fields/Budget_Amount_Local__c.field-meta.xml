@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Budget_Amount_Local__c</fullName>
+    <description>IM-126: Budget Amount in Local currency for all associated Budget Grants</description>
+    <label>Budget Amount (Local)</label>
+    <summarizedField>IM_Budget_Grant__c.Budget_Amount_Local__c</summarizedField>
+    <summaryFilterItems>
+        <field>IM_Budget_Grant__c.Is_Active__c</field>
+        <operation>equals</operation>
+        <value>True</value>
+    </summaryFilterItems>
+    <summaryFilterItems>
+        <field>IM_Budget_Grant__c.Deleted__c</field>
+        <operation>notEqual</operation>
+        <value>True</value>
+    </summaryFilterItems>
+    <summaryForeignKey>IM_Budget_Grant__c.IM_Grant__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

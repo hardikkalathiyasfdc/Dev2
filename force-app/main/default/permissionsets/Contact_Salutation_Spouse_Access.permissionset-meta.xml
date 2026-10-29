@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Originally for Correspondence Team.  Expanded to Events, London Events, Scheduling &amp; Advance, and Executive. Grants access to the &quot;Salutation Spouse&quot; checkbox field on Contact record page.</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CampaignMember.Salutation_Spouse__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Primary_Spouse__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.Salutation_Spouse_on_Significant_Other__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Contact: Salutation Spouse Access</label>
+</PermissionSet>

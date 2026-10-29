@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Budget_Categories__c</fullName>
+    <description>IM-42: Stores different categories of budget</description>
+    <label>Budget Categories</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Component</fullName>
+                <default>false</default>
+                <label>Component</label>
+            </value>
+            <value>
+                <fullName>Component, SubComponent</fullName>
+                <default>false</default>
+                <label>Component, SubComponent</label>
+            </value>
+            <value>
+                <fullName>Component, SubComponent, Geography</fullName>
+                <default>false</default>
+                <label>Component, SubComponent, Geography</label>
+            </value>
+            <value>
+                <fullName>Component, Geography</fullName>
+                <default>false</default>
+                <label>Component, Geography</label>
+            </value>
+            <value>
+                <fullName>Geography</fullName>
+                <default>false</default>
+                <label>Geography</label>
+            </value>
+            <value>
+                <fullName>Geography, Component</fullName>
+                <default>false</default>
+                <label>Geography, Component</label>
+            </value>
+            <value>
+                <fullName>Geography, Component, SubComponent</fullName>
+                <default>false</default>
+                <label>Geography, Component, SubComponent</label>
+            </value>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>None</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

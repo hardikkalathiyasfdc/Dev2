@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Strategy_Current_Reviewer__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>IM-38 : Created this field as a part of Create Initiative Object.
+
+Responsible for Strategy Review.</description>
+    <label>Strategy Current Reviewer</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>Initiatives_Strategy_Current_Reviewer</relationshipName>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

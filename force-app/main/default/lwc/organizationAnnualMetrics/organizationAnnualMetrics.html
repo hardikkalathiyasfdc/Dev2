@@ -1,0 +1,45 @@
+<template>
+    <template lwc:if={organizationAnnualMetrics}>
+        <lightning-record-view-form object-api-name={objectApiName} record-id={organizationAnnualMetrics.Id}>
+            <lightning-accordion active-section-name="A">
+                <lightning-accordion-section name="A" label="Census">
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="7" padding="around-small">
+                            <lightning-output-field field-name={yearField}> </lightning-output-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="7" padding="around-small">
+                            <lightning-output-field field-name={regionField}> </lightning-output-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="7" padding="around-small">
+                            <lightning-output-field field-name={populationField}> </lightning-output-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="7" padding="around-small">
+                            <lightning-output-field field-name={populationMinorityMajorityField}> </lightning-output-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="7" padding="around-small">
+                            <lightning-output-field field-name={populationNonHispanicField}> </lightning-output-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="7" padding="around-small">
+                            <lightning-output-field field-name={populationCensusDataField}> </lightning-output-field>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-accordion-section>
+            </lightning-accordion>
+            <lightning-accordion active-section-name="A">
+                <lightning-accordion-section name="A" label="Bloomberg Connects">
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="7" padding="around-small">
+                            <lightning-output-field field-name={organizationAnnualAttendanceField}> </lightning-output-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="7" padding="around-small">
+                            <lightning-output-field field-name={numberOfOrganizationField}> </lightning-output-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="7" padding="around-small">
+                            <lightning-output-field field-name={annualWebsiteVisitsField}> </lightning-output-field>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-accordion-section>
+            </lightning-accordion>
+        </lightning-record-view-form>
+    </template>
+</template>

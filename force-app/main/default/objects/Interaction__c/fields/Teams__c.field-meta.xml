@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Teams__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>BRME-6854 Links the record to a Team from the Teams object, replacing the legacy picklist for consistency.</description>
+    <label>Team</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Team__c.Enabled_for_BRM__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Team__c</referenceTo>
+    <relationshipLabel>Interactions</relationshipLabel>
+    <relationshipName>Interactions</relationshipName>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

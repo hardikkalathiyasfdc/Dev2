@@ -1,0 +1,24 @@
+<apex:page controller="PhotoBookController" renderAs="pdf" readOnly="true" showHeader="false" sidebar="false" title="Photo Book">
+	<apex:stylesheet value="{!$Resource.PhotoBook}"/>
+	<apex:image url="{!$Resource.Building}" width="800px" height="770px"/>
+	<div style="page-break-after:always">
+        &nbsp;
+    </div>
+    <apex:variable value="{!contactsByFirstName}" var="pbd"/>
+    <apex:dataTable value="{!pbd.personnel}" var="p" width="100%" style="text-align:center;color:#FFFFFF;background:gray">
+        <apex:column width="50%" html-valign="top">
+            <div style="padding-bottom:5px;padding-top:20px"><apex:image value="{!p[0].imageUrl}" width="200" height="200"/></div>
+            <div style="font-weight: bold;">{!p[0].c.FirstName}&nbsp;{!p[0].c.LastName}</div>
+            <apex:outputPanel rendered="{!p[0].orgName!=null}" layout="block">{!p[0].orgName}</apex:outputPanel>
+            <apex:outputPanel rendered="{!p[0].isNewAddition}" layout="block" style="font-weight: bold;color:yellow">**NEW ADDITION**</apex:outputPanel>
+            <div style="padding-left:20px;padding-right:20px;padding-bottom:100px;padding-top:20px;white-space:pre-wrap;">{!p[0].c.Fun_Fact__c}</div>
+        </apex:column>
+        <apex:column width="50%" html-valign="top">
+            <div style="padding-bottom:5px;padding-top:20px"><apex:image value="{!p[1].imageUrl}" width="200" height="200" rendered="{!p[1].rendered}"/></div>
+            <div style="font-weight: bold;">{!p[1].c.FirstName}&nbsp;{!p[1].c.LastName}</div>
+            <apex:outputPanel rendered="{!p[1].orgName!=null}" layout="block"> {!p[1].orgName}</apex:outputPanel>
+            <apex:outputPanel rendered="{!p[1].isNewAddition}" layout="block" style="font-weight: bold;color:yellow">**NEW ADDITION**</apex:outputPanel>
+            <div style="padding-left:20px;padding-right:20px;padding-bottom:50px;padding-top:20px;white-space:pre-wrap;">{!p[1].c.Fun_Fact__c}</div>
+        </apex:column>
+    </apex:dataTable>
+</apex:page>

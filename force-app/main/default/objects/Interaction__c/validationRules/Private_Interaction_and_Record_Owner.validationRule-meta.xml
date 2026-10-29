@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Private_Interaction_and_Record_Owner</fullName>
+    <active>true</active>
+    <description>Created by Slalom. Only the Record Owner and System Administrator may change the value of &quot;Private Interaction&quot; checkbox.</description>
+    <errorConditionFormula>AND(  
+!$Setup.Bypass_Automation_Setting__c.Interaction_Validation__c,
+ISCHANGED(Private_Interaction__c),
+$User.Id &lt;&gt; OwnerId,
+NOT( $Permission.Interaction_Private_Checkbox_Override_Edit )
+)</errorConditionFormula>
+    <errorDisplayField>Private_Interaction__c</errorDisplayField>
+    <errorMessage>Please reach out to a member of the BRM team at bpsalesforceteam@bloomberg.org to resolve.</errorMessage>
+</ValidationRule>

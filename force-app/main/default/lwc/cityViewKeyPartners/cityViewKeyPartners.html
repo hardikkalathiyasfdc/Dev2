@@ -1,0 +1,54 @@
+<template>
+    <template lwc:if={isGeoAreaIdAvailable}>
+        <template lwc:if={isLoading}>
+            <lightning-spinner variant="brand" size="large"></lightning-spinner>
+        </template>
+        <template lwc:else>
+            <div class="slds-m-top_medium box slds-p-around_x-small" id={geoAreaId}>
+                <h3>{keyPartnersLabel}</h3>
+                <div style={tableStyle} data-id="KeyPartners">
+                    <table class="slds-table">
+                        <tbody>
+                            <!-- Display Key Partners if available -->
+                            <template lwc:if={showOrgGeoArea}>
+                                <template for:each={orgGeoAreas} for:item="area">
+                                    <tr key={area.Id} class="table-border">
+                                        <td>
+                                            <div class="slds-truncate key-partner-container">
+                                                <p>
+                                                    <!-- Check for permission and display organization name accordingly -->
+                                                    <template lwc:if={hasPermission}>
+                                                        <template lwc:if={area.Organization__c}>
+                                                            <lightning-icon icon-name="utility:groups" size="x-small"
+                                                                class="company-icon"></lightning-icon>
+                                                            <label class="slds-m-left_x-small">
+                                                                <a href="javascript:void(0);" data-id={area.Organization__c} onclick={handleOrgClick}>
+                                                                    {area.Organization__r.Name}
+                                                                </a> 
+                                                            </label>
+                                                        </template>
+                                                    </template>
+                                                    <template lwc:else>
+                                                        <template lwc:if={area.Organization__c}>
+                                                            <lightning-icon icon-name="utility:groups" size="x-small"
+                                                                class="company-icon"></lightning-icon>
+                                                            <label class="slds-m-left_x-small">{area.Organization__r.Name}</label>
+                                                        </template>
+                                                    </template>
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </template>
+                            <!-- If no geo areas available, display message -->
+                            <template lwc:else>
+                                <td>No Partners</td>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </template>
+    </template>
+</template>

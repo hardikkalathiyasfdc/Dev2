@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Paid_Amount_USD__c</fullName>
+    <description>IM-126:Roll up of Total Paid Amount(USD) from Budget Period</description>
+    <label>Total Paid Amount (USD)</label>
+    <summarizedField>IM_Budget_Period__c.Total_Paid_Amount_USD__c</summarizedField>
+    <summaryForeignKey>IM_Budget_Period__c.Budget__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

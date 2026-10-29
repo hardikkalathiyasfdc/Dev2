@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>View_Required_Docs__c</fullName>
+    <description>BRME-7038: Formula field that renders clickable hyperlinks to the Final Memo, Budget Narrative, and Approval Email documents on the Final Docs tab. Each link opens in a new browser tab and is omitted from the output when its URL field is blank.</description>
+    <externalId>false</externalId>
+    <formula>IF(NOT(ISBLANK(Final_Memo_Link__c)), HYPERLINK(Final_Memo_Link__c, &quot;Final Memo&quot;, &quot;_blank&quot;) &amp; BR(), &quot;&quot;) &amp;
+IF(NOT(ISBLANK(Budget_Narrative_Link__c)), HYPERLINK(Budget_Narrative_Link__c, &quot;Budget Narrative&quot;, &quot;_blank&quot;) &amp; BR(), &quot;&quot;) &amp;
+IF(NOT(ISBLANK(Approval_Email_Link__c)), HYPERLINK(Approval_Email_Link__c, &quot;Email confirmation of Approval&quot;, &quot;_blank&quot;), &quot;&quot;)</formula>
+    <label>View Required Docs</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

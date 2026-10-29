@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>ManageFoundationCodesCntrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Foundation_Codes_Tab_Access_Read_Only</name>
+    </customPermissions>
+    <description>IM-487:This permission set is used to give read only access to Foundation Code Tab.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Foundation Codes Tab Access (Read Only)</label>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>false</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Foundation_Code__c</object>
+        <viewAllFields>true</viewAllFields>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <tabSettings>
+        <tab>Foundation_Code__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>View_Foundation_Codes_Hierarchy</tab>
+        <visibility>Available</visibility>
+    </tabSettings>
+</PermissionSet>

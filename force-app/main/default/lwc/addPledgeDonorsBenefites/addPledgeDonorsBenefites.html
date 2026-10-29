@@ -1,0 +1,136 @@
+<template>
+	<lightning-card title={cardTitle} icon-name={cardIcon}>
+		<lightning-button label={addRowButtonName} icon-name="utility:add" slot="actions" onclick={addRow1}>
+		</lightning-button>
+		<!--lightning-button-icon icon-name="utility:add" slot="actions" onclick={addRow1}></lightning-button-icon>
+		<lightning-button label={toggleSaveLabel} icon-name="utility:save" slot="actions" onclick={addRow1}>
+		</lightning-button>
+		<lightning-button label="Clear All" icon-name="utility:clear" slot="actions" onclick={accountTempRecords}>
+		</lightning-button-->
+		<table class="slds-table slds-table_cell-buffer slds-table_bordered">
+			<thead>
+				<tr class="">
+					<template if:true={fileds} for:each={fileds} for:item="field" for:index="index">
+					   <th key={field} class="slds-size_3-of-10" scope="col">
+						   <div class="slds-truncate" title="Name">{field.label}</div>
+					   </th>
+					</template>					
+				</tr>
+			</thead>
+			<tbody>
+				<template if:true={tempRecords} for:each={tempRecords} for:item="rec" for:index="indexVar">
+					<tr key={rec.key} class="slds-hint-parent">						
+						<template if:true={fileds} for:each={fileds} for:item="field" for:index="index">
+							<template if:true={field.fieldName} key={field} >
+								<td key={field} class="slds-size_3-of-10" data-label={field.label}>
+									<div key={field} title={field.label}>
+										<lightning-record-edit-form record-id={rec.Id} object-api-name={objectName}>
+											<template if:true={field.isvalueshow} key={field} > 
+											<lightning-input-field key={rec.key} data-id={rec.key} field-name={field.fieldName}
+												variant="label-hidden" name={field.fieldName} onchange={handlefieldChange} required={field.required} value={rec.Amount__c}>
+											</lightning-input-field> 
+										</template>
+										<template if:true={field.isCreditshow} key={field} > 
+											<lightning-input-field key={rec.key} data-id={rec.key} field-name={field.fieldName}
+												variant="label-hidden" name={field.fieldName} onchange={handlefieldChange} required={field.required} value={rec.Credit_Type__c}>
+											</lightning-input-field> 
+										</template>
+										<template if:true={field.isDonorTypeShow} key={field} >
+											<lightning-input-field key={rec.key} data-id={rec.key} field-name={field.fieldName}
+												variant="label-hidden" name={field.fieldName} onchange={handlefieldChange} required={field.required} value={rec.Donor_Type__c}>
+											</lightning-input-field>
+										</template>
+										<template if:true={field.isvaluerest} key={field} > 
+											<lightning-input-field key={rec.key} data-id={rec.key} field-name={field.fieldName}
+												variant="label-hidden" name={field.fieldName} onchange={handlefieldChange} required={field.required} >
+											</lightning-input-field>
+										</template>
+										</lightning-record-edit-form>  
+									</div>
+								</td>
+							</template>
+							<template if:false={field.fieldName} key={field}>
+								<template if:true={isPledgeBenifits}>
+									<td key={field} class="slds-size_3-of-10" data-label="Prospecting">
+										<div title="Prospecting">
+											<div if:true={rec.Benefits__c}>
+												<c-generic-lookup icon="standard:account" key={rec.key} data-id={rec.key}
+															object-api-name="Possible_Benefits__c" label=""
+															onchange={lookupFpmRecord} default-selected-ids={rec.benefitsDefaultIds}
+															filter-clause={benefitsFilterClause} show-recently-viewed placeholder="Search..."
+															display-fields={benefitsDisplayFields}
+															search-fields={benefitsSearchFields}
+															>
+												</c-generic-lookup>
+											</div>
+											<div if:false={rec.Benefits__c}>
+												<c-generic-lookup icon="standard:account" key={rec.key} data-id={rec.key}
+															object-api-name="Possible_Benefits__c" label=""
+															onchange={lookupFpmRecord} default-selected-ids={rec.benefitsDefaultIds}
+															filter-clause={benefitsFilterClause} show-recently-viewed placeholder="Search..."
+															display-fields={benefitsDisplayFields}
+															search-fields={benefitsSearchFields}
+															
+															>
+												</c-generic-lookup>
+												<div if:true={rec.Recipient_Organization__c}>
+												<c-generic-lookup icon="standard:account" key={rec.key} data-id={rec.key}
+															object-api-name="Recipient_Organization__c" label=""
+															onchange={lookupFpmRecord} default-selected-ids={rec.benefitsDefaultIds}
+															filter-clause={recipientOrgFilterClause} show-recently-viewed placeholder="Search..."
+															display-fields={accountDisplayFields}
+															search-fields={accountSearchFields}
+															
+															>
+												</c-generic-lookup>
+											</div>
+											</div>
+										</div>
+									</td>
+								</template>
+								<template if:true={hasDonorSpecific}>
+									<td key={field} class="slds-size_3-of-10" data-label={field.label}>
+										<div if:true={rec.isShowContact} key={field} title={field.label}>
+											<!--<lightning-record-edit-form record-id={rec.Id} object-api-name={objectName}>
+												<lightning-input-field key={rec.key} data-id={rec.key} field-name="Contact__c"
+													variant="label-hidden" name="Contact__c" onchange={handlefieldChange} required={isdonorRequired}>
+												</lightning-input-field>
+											</lightning-record-edit-form>  -->
+												<c-generic-lookup key={rec.key} data-id={rec.key}
+        object-api-name="Contact" icon="standard:contact"
+        display-fields={contactDisplayFields}
+        search-fields={contactSearchFields}
+        default-selected-ids={rec.contactDefaultIds}
+		
+        onchange={handleValueSelectedOnAccount} show-recently-viewed placeholder="Search...">
+												</c-generic-lookup>
+												
+										</div>
+										<div if:false={rec.isShowContact} key={field} title={field.label}>
+											<c-generic-lookup key={rec.key} data-id={rec.key}
+												object-api-name="Account" icon="standard:account"
+												display-fields={accountDisplayFields}
+															search-fields={accountSearchFields}
+												default-selected-ids={rec.organizationDefaultIds}
+												
+												onchange={handleOrganizationSelected} show-recently-viewed placeholder="Search..." required>
+											</c-generic-lookup>
+										</div>
+									</td>
+								</template>
+						    </template>
+						</template>	
+						<td class="slds-size_1-of-10" data-label="Prospecting">
+							<!--a if:true={rec.isDelete} name={indexVar} data-id={rec.key} onclick={removeRow1}>
+								<lightning-icon icon-name="utility:delete" alternative-text="delete" size="small">
+								</lightning-icon>
+							</a-->
+							<lightning-button-icon icon-name="utility:delete" id={rec.Id} name={indexVar} data-id={rec.key} slot="actions" onclick={removeRow1}></lightning-button-icon>							
+							<!--lightning-button-icon icon-name="utility:add" slot="actions" onclick={addRow1}></lightning-button-icon-->
+						</td>
+					</tr>
+				</template>
+			</tbody>
+		</table>
+	</lightning-card>
+</template>

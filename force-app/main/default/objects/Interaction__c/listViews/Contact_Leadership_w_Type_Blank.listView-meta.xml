@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contact_Leadership_w_Type_Blank</fullName>
+    <columns>Interaction_Date__c</columns>
+    <columns>NAME</columns>
+    <columns>Interaction_Type__c</columns>
+    <columns>Description__c</columns>
+    <columns>Background__c</columns>
+    <columns>Contact__c</columns>
+    <columns>RECORDTYPE</columns>
+    <columns>Type__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Interaction_Type__c</field>
+        <operation>notEqual</operation>
+        <value>Call,Meeting,Email,Text,Event,Press,Letter</value>
+    </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Interaction__c.X2020_Touch_Point</value>
+    </filters>
+    <label>Contact Interaction w/Type Blank</label>
+    <sharedTo>
+        <role>Power_User</role>
+    </sharedTo>
+</ListView>

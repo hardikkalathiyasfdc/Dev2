@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Focus_Area_Trigger__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>IM-101: Bypass automation for Focus Area Object Trigger</description>
+    <label>Focus Area Trigger</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,4 @@
+.THIS .duplicateAccountsDialogStyle  { /*.slds-modal__container*/
+    max-width: 85rem !important;
+    width:90% !important;
+}

@@ -1,0 +1,73 @@
+<template>
+    <article class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <lightning-icon icon-name="custom:custom16" size="small" title="Fundraising - Receiving"></lightning-icon>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <span class="slds-text-heading_small">Fundraising - Receiving ({displayCount})</span>
+                    </h2>
+                </div>
+            </header>
+        </div>
+        <div class="slds-card__body card-body-flush">
+            <template lwc:if={loaded}>
+                <template lwc:if={hasRecords}>
+                    <ul>
+                        <template for:each={rows} for:item="row">
+                            <li key={row.Id} class="slds-item slds-p-bottom_small">
+                                <article class="slds-tile slds-tile_board">
+                                    <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+                                        <h3 class="slds-tile__title slds-truncate" title={row.tileTitle}>
+                                            <a href={row.recordUrl}>{row.tileTitle}</a>
+                                        </h3>
+                                        <div class="slds-shrink-none">
+                                            <lightning-button-menu
+                                                alternative-text="Show Actions"
+                                                icon-name="utility:down"
+                                                icon-size="x-small"
+                                                variant="border-filled"
+                                                menu-alignment="auto"
+                                                data-record-id={row.Id}
+                                                onselect={handleRowAction}>
+                                                <lightning-menu-item value="view" label="View"></lightning-menu-item>
+                                            </lightning-button-menu>
+                                        </div>
+                                    </div>
+                                    <div class="slds-tile__detail">
+                                        <dl class="slds-list_horizontal slds-wrap">
+                                            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Fundraising Project">Fundraising Project:</dt>
+                                            <dd class="slds-item_detail slds-truncate">
+                                                <a href={row.projectUrl}>{row.projectName}</a>
+                                            </dd>
+                                            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Pledge Year(s)">Pledge Year(s):</dt>
+                                            <dd class="slds-item_detail slds-truncate">{row.Pledge_Year_s__c}</dd>
+                                            <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Focus Area/Initiative">Focus Area/Initiative:</dt>
+                                            <dd class="slds-item_detail slds-truncate">{row.focusAreaInitiative}</dd>
+                                        </dl>
+                                    </div>
+                                </article>
+                            </li>
+                        </template>
+                    </ul>
+                </template>
+                <template lwc:else>
+                    <div class="slds-p-around_medium">No receiving pledges found.</div>
+                </template>
+                <template lwc:if={error}>
+                    <div class="slds-p-around_medium slds-text-color_error">Unable to load receiving pledges.</div>
+                </template>
+            </template>
+            <template lwc:else>
+                <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+            </template>
+        </div>
+        <template lwc:if={showViewAll}>
+            <footer class="slds-card__footer">
+                <a href="#" onclick={handleViewAll}>View All</a>
+            </footer>
+        </template>
+    </article>
+</template>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Personal__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This Field Determines the Type of Fundraising project</description>
+    <label>Founder&apos;s</label>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

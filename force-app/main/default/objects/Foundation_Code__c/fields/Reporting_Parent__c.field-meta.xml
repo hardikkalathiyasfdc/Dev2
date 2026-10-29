@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reporting_Parent__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>IM-214:This field is used to identify the reporting parent for Foundation Code. This information will be used for reporting purpose.</description>
+    <label>Reporting Parent</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Foundation_Code__c.Type__c</field>
+            <operation>equals</operation>
+            <value>Parent Initiative, Focus Area Misc</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Foundation_Code__c</referenceTo>
+    <relationshipLabel>Foundation Codes (Reporting Parent)</relationshipLabel>
+    <relationshipName>Reporting_Foundation_Codes</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

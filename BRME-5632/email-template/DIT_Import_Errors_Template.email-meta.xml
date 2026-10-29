@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>BRME-5632: DRAFT — Notify the importing user that a DIT import had errors and to
+        review the attached error report. Email delivery/recipients/CC/attachment are OUT OF SCOPE
+        for this ticket; this template is the reusable wording only. Awaiting Data Team approval (as
+        of 2026-10-19).</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>DIT Import Errors Detected</name>
+    <style>none</style>
+    <subject>Action Required: DIT Import Errors Detected</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

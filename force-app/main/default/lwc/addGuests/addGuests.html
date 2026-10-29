@@ -1,0 +1,56 @@
+<template>
+	<template lwc:if={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+	<header class="slds-modal__header">
+		<div>
+			<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Add Guests</h2>
+		</div>
+	</header>
+	<template lwc:if={error}>
+		<div>
+			<lightning-formatted-rich-text value={error}></lightning-formatted-rich-text>
+		</div>
+	</template>
+	<div style="height:450px;">
+		<lightning-tabset>
+			<lightning-tab label="Add Contacts" value="contact" onactive={handleActive}>
+				<c-generic-lookup onchange={handleContactUpdateViaLookup} is-multi-select="true" icon="standard:contact"
+					label="Search Contact" display-field-prefixes={contactDisplayFieldPrefixes} custom-search-class="ContactLookupSearch"
+					display-fields={contactDisplayFields} object-api-name="Contact" search-fields={contactSearchFields} allow-new-record="false">
+				</c-generic-lookup>
+	            <div class="slds-m-top_medium">
+					<lightning-input type="text" label="Source" onchange={handleInputChange}></lightning-input>
+	            </div>
+	        </lightning-tab>
+	        <lightning-tab label="Add Lists" value="list" onactive={handleActive}>
+	            <c-generic-lookup data-id="list-lookup" object-api-name="Campaign" icon="standard:campaign" onchange={handleListUpdate}
+					label="Select List(s)" display-fields={listDisplayFields} display-field-prefixes={listDisplayFieldPrefixes} filter-clause={listFilterClause}
+					custom-search-class="WeightedFieldLookupSearch" search-config={listSearchConfig} is-multi-select="true">
+				</c-generic-lookup>
+	        </lightning-tab>
+	        <lightning-tab label="Add Tags" value="Tags" onactive={handleActive}>
+            	<c-multi-select-lookup  data-id="tag-lookup" label-name="Select Tag(s)" object-api-name= "Tag__c"
+            		field-api-names="Id,Name" filter-field-api-name="Name"
+            		hide-cancel onretrieve={tagSelected} onremove={tagSelected}>
+                </c-multi-select-lookup>
+			</lightning-tab>
+	    </lightning-tabset>
+		<div>
+			<lightning-checkbox-group name="options" options={items} value={value} onchange={handleChange}
+                variant="label-hidden">
+			</lightning-checkbox-group>
+		</div>
+		<div class="slds-var-p-vertical_large">
+			<c-custom-group-dropdown options-map={rsvpAttendanceOptions} onselectionchange={handleRSVPAndAttendanceSelectionChange}
+				label="RSVP and Attendance">
+			</c-custom-group-dropdown>
+		</div>
+		<div class="slds-var-p-top_medium slds-var-p-bottom_medium slds-align_absolute-center">
+			<lightning-button variant="brand-outline" onclick={handleCancel} label="Close"></lightning-button>
+			<lightning-button variant="brand" class="slds-var-p-left_x-small" disabled={shallDisableSaveButton} onclick={handleSave}
+				label={actionLabel}>
+			</lightning-button>
+		</div>
+	</div>
+</template>

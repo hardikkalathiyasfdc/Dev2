@@ -1,0 +1,56 @@
+<!--
+  @description       : 
+  @author            : Gauri S
+  @group             : 
+  @last modified on  : 07-23-2025
+  @last modified by  : Sai Bhargav Thotakura
+-->
+<template>
+	<template lwc:if={hasEditAccess}>
+		<lightning-modal-header label="Options"></lightning-modal-header>
+		<lightning-modal-body>
+			<lightning-record-edit-form
+				density="compact"
+				object-api-name={objectApiName}
+				record-id={recordId}
+				onsubmit={handleSubmit}
+				class="slds-form-element_horizontal">
+				<div class="slds-grid slds-wrap">
+					<div class="slds-col slds-size_6-of-12">
+						<div class="slds-col slds-size_12-of-12 slds-border_bottom slds-p-bottom_medium slds-p-top_small">
+							<lightning-input-field field-name="Budget_Categories__c"> </lightning-input-field>
+						</div>
+						<div class="slds-col slds-size_12-of-12 slds-border_bottom slds-p-bottom_small slds-p-top_small">
+							<lightning-input-field field-name="Partner_Partner_Role__c" disabled={disablePartner}> </lightning-input-field>
+						</div>
+						<div class="slds-col slds-size_12-of-12 slds-border_bottom slds-p-bottom_small slds-p-top_small">
+							<lightning-input-field field-name="Unique_Identifier__c" disabled={disableUniqueIdentifier}> </lightning-input-field>
+						</div>
+						<div class="slds-col slds-size_12-of-12 slds-border_bottom slds-p-bottom_small slds-p-top_small">
+							<lightning-input-field field-name="Payee_Fiscal_Sponsor__c" disabled={disablePayeeFiscalSponsor}> </lightning-input-field>
+						</div>
+					</div>
+					<div class="slds-col slds-size_1-of-12"></div>
+					<div class="slds-col slds-size_5-of-12">
+						<div class="slds-col slds-size_12-of-12 slds-border_bottom slds-p-bottom_medium slds-p-top_small">
+							<lightning-input-field field-name="SubPartner_SubPartner_Type__c" disabled={disableSubPartnerType}> </lightning-input-field>
+						</div>
+						<template if:true={isPartnerFund}>
+							<div class="slds-col slds-size_12-of-12 slds-border_bottom slds-p-bottom_small slds-p-top_small">
+								<lightning-input-field field-name="Partner_Fund__c" disabled={disablePartnerFund}> </lightning-input-field>
+							</div>
+						</template>
+						<div class="slds-col slds-size_12-of-12 slds-border_bottom slds-p-bottom_small slds-p-top_small">
+							<lightning-input-field field-name="Duration_Run_Rate__c" disabled={disableDurationRunRate}> </lightning-input-field>
+						</div>
+						<div class="slds-col slds-size_12-of-12 slds-border_bottom slds-p-bottom_small slds-p-top_small">
+							<lightning-input-field field-name="Type_of_Work__c" disabled={disableTypeOfWork}> </lightning-input-field>
+						</div>
+					</div>
+				</div>
+				<lightning-button class="slds-float_right slds-m-top_medium" type="submit" label="Save" variant="brand"></lightning-button>
+				<lightning-button class="slds-float_right slds-m-right_small slds-m-top_medium" label="Cancel" onclick={handleClose}></lightning-button>
+			</lightning-record-edit-form>
+		</lightning-modal-body>
+	</template>
+</template>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Event</label>
+    <protected>false</protected>
+    <values>
+        <field>Default_Headers__c</field>
+        <value xsi:type="xsd:string">UB_FirstName__c,UB_LastName__c,Contact_Private__c,RSVPStatus__c,RSVPNotes__c,RSVP_Event_Note_Complete__c,PartySize__c,AttendedStatus__c,Table__c,Seat__c,EventEmailBody__c,Last_Email_Status__c,Last_Email_Sent_Errors__c,Invitation_Sent__c,Source__c,UB_Notes__c,GuestOf__c,Full_Name__c,Contact_Title__c,Organization_Company__c,Guest_Email__c,Guest_Email_Type__c,Latest_Email_Subject__c,Business_Phone__c,Mobile_Phone__c,CC_Assistant__c,CC_Addresses__c,BCC_Addresses__c,AssistantName__c,Assistant_Email__c,Assistant_Business_Phone__c,Spouse_Link__c,SpouseInvited__c,Significant_Other_Title__c,RSVPUpdateDate__c,Save_the_Date_Last_Modified__c,Invitation_Last_Modified__c,Reminder_Last_Modified__c,Email_Last_Modified__c</value>
+    </values>
+    <values>
+        <field>Export_Headers__c</field>
+        <value xsi:type="xsd:string">UB_Salutation__c,UB_FirstName__c,First_Preferred_First_Name__c,Contact_Preferred_Name__c,MiddleName,Middle_Name__c,UB_LastName__c,Last_Preferred_Last_Name__c,Full_Name__c,Contact_Private__c,Contact_Title__c,Organization_Company__c,Contact_Priority_email__c,ContactBusinessEmail__c,Contact_Personal_Email__c,Additional_Email__c,Confidential_Email__c,Business_Phone_Country_Code__c,,Business_Phone__c,Mobile_Phone_Country_Code__c,Mobile_Phone__c,Business_Street__c,Business_City__c,Business_State_Province__c,Business_Zip_Postal_Code__c,Business_Country__c,Home_Street__c,Home_City__c,Home_State_Province__c,Home_Zip_Postal_Code__c,Home_Country__c,Confidential_Address_Type__c,Confidential_Street__c,Confidential_Street_2__c,Confidential_Street_3__c,Confidential_City__c,Confidential_State_Province__c,Confidential_Zip_Postal_Code__c,Confidential_Country__c,AssistantName__c,Assistant_Email__c,LP_London_Dear_Line__c,Do_Not_Contact__c,Contact_Alert_Reason__c,Salutation_Spouse__c,UUID__c,Significant_Other_ID_18__c,Significant_Other__c,Significant_Other_Name_Preferred__c,Significant_Other_Salutation__c,Significant_Other_Title__c,Significant_Other_Email__c,SpouseInvited__c,Guest_Email__c,Guest_Email_Type__c,Assistant_Personal_Email__c,Assistant_Business_Phone__c,Assistant_Mobile_Phone__c,CC_Assistant__c,CC_Addresses__c,BCC_Addresses__c,RSVPStatus__c,RSVPNotes__c,RSVP_Event_Note_Complete__c,PartySize__c,Dietary__c,RSVPUpdateDate__c,Save_the_Date_Last_Modified__c,Invitation_Last_Modified__c,Reminder_Last_Modified__c,Email_Last_Modified__c,LastModifiedDate,AttendedStatus__c,EventEmailBody__c,Event_From_Email__c,Last_Email_Status__c,Last_Email_Sent_Errors__c,Invitation_Sent__c,Latest_Email_Subject__c,EmailSubjectLine__c,Source__c,UB_Notes__c,Invitation_Status__c,GuestOfLink__c,EventTier__c,Contact_Alert__c,Table__c,Seat__c,Contact_ID__c,List_Member_ID__c</value>
+    </values>
+    <values>
+        <field>Highlight_Contacts_Updated_Hours__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>Page_Size__c</field>
+        <value xsi:type="xsd:double">200.0</value>
+    </values>
+    <values>
+        <field>Record_Type__c</field>
+        <value xsi:type="xsd:string">Pre_Event</value>
+    </values>
+    <values>
+        <field>Update_Info_Fields__c</field>
+        <value xsi:type="xsd:string">EventTier__c,GuestOf__c</value>
+    </values>
+</CustomMetadata>

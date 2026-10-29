@@ -1,0 +1,21 @@
+.icon-container {
+    display: inline-block;
+    position: relative; /* Allows popover to be positioned relative to the icon */
+}
+
+.slds-popover {
+    position: absolute;
+    top: 0; /* Adjust this value to fine-tune vertical positioning */
+    left: 50%; /* Centers the popover horizontally */
+    transform: translate(-50%, -110%); /* Translates the popover up and horizontally aligns */
+    z-index: 1;
+    width: 20rem; /* Adjust width as needed */
+}
+
+.warning-icon {
+    cursor: pointer;
+    color: #FFB75D; /* Optional: custom color */
+}
+.custom-popover {
+    border-radius: 8px; /* Adjust the value to make the corners as rounded as you need */
+}

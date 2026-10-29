@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Used to display &apos;Confidential Files&apos; related list on Lists and the &apos;Confidential Files&apos; icon on Event History widget on Contacts</description>
+    <isLicensed>false</isLicensed>
+    <label>Confidential Files Access</label>
+</CustomPermission>

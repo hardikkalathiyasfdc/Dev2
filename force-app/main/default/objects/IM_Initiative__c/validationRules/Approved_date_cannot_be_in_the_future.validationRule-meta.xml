@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approved_date_cannot_be_in_the_future</fullName>
+    <active>true</active>
+    <description>IM-52: Approved date cannot be in the future.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.IM_Initiative_Validation__c &amp;&amp;
+Approved_Date__c  &gt; TODAY()</errorConditionFormula>
+    <errorMessage>Approved date cannot be in future.</errorMessage>
+</ValidationRule>

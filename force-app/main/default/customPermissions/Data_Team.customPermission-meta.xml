@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Grants Users access to Sharing Button on Lists, Tags, My Notes, Interactions. Used to display a second &apos;Highlights Panel (with the Sharing button)&apos; on List record page only for the data team.(BRME-5669)</description>
+    <isLicensed>false</isLicensed>
+    <label>Sharing Access Button</label>
+</CustomPermission>

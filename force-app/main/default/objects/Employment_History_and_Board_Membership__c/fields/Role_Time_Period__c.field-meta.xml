@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Role_Time_Period__c</fullName>
+    <description>BRME-5498: Formula field that combines Role, From, and To values into a single display text (e.g., “Role (Start - End)”). Created to reduce field clutter in related lists and optimize available space for additional columns.</description>
+    <externalId>false</externalId>
+    <formula>IF(
+  ISBLANK(TEXT(Role__c)),
+  &quot;&quot;,
+  IF(
+    AND(ISPICKVAL(From__c, &quot;&quot;), ISPICKVAL(To__c, &quot;&quot;)),
+    TEXT(Role__c),
+    IF(
+      ISPICKVAL(From__c, &quot;&quot;),
+      TEXT(Role__c) &amp; &quot; (End: &quot; &amp; TEXT(To__c) &amp; &quot;)&quot;,
+      IF(
+        ISPICKVAL(To__c, &quot;&quot;),
+        TEXT(Role__c) &amp; &quot; (Start: &quot; &amp; TEXT(From__c) &amp; &quot;)&quot;,
+        TEXT(Role__c) &amp; &quot; (&quot; &amp; TEXT(From__c) &amp; &quot; - &quot; &amp; TEXT(To__c) &amp; &quot;)&quot;
+      )
+    )
+  )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Role</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

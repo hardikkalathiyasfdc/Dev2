@@ -1,0 +1,25 @@
+<template>
+    <div class="box slds-p-around_x-small map-container">
+        <template lwc:if={isLoading}>
+            <lightning-spinner alternative-text="Loading..." size="medium"></lightning-spinner>
+        </template>
+        <lightning-map map-markers={mapMarkers} markers-title="Cities" list-view='hidden' options={mapOptions}
+            center={detailPageCenter} onmarkerselect={handleMarkerSelect} zoom-level={zoomLevel}
+            fit-bounds={fitAllMarkers}>
+        </lightning-map>
+        <div class="legend-box">
+            <div class="legend-item">
+                <div class="circle-icon"></div>
+                <span>City</span>
+            </div>
+            <div class="legend-item">
+                <div class="square-icon"></div>
+                <span>State</span>
+            </div>
+            <div class="legend-item">
+                <div class="triangle-icon"></div>
+                <span>Country</span>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,15 @@
+.slds-pill_container {
+    border: 1px solid #c9c9c9;
+    border-radius: 0.25rem;
+    padding: 2px;
+}
+
+.slds-pill_container .slds-listbox {
+    padding: 0;
+    margin: 0;
+    gap: 2px;
+}
+
+.slds-pill_container .slds-listbox-item {
+    padding: 0;
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type__c</fullName>
+    <description>Type of the org. (BRME-5617)</description>
+    <label>Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Cultural Access</fullName>
+                <default>false</default>
+                <label>Cultural Access</label>
+            </value>
+            <value>
+                <fullName>Cultural Implicit</fullName>
+                <default>false</default>
+                <label>Cultural Implicit</label>
+            </value>
+            <value>
+                <fullName>Key Partner</fullName>
+                <default>false</default>
+                <label>Key Partner</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,42 @@
+<template>
+	<template if:true={contacts}>
+		<article class="slds-card slds-card_boundary">
+			<div class="slds-card__header slds-grid slds-page-header slds-page-header_joined slds-page-header_bleed slds-shrink-none test-headerRegion slds-is-relative slds-page-header--object-home">
+			    <header class="slds-media slds-media_center slds-has-flexi-truncate" style="min-height: 50px;">
+			      <div class="slds-media__figure"> 
+			        <lightning-icon icon-name="standard:contact" size="small"></lightning-icon>
+			      </div>
+			      <div class="slds-media__body">
+			        <h2 class="slds-card__header-title">
+			            <span>Contacts with Role</span>
+			        </h2>
+			      </div>
+			    </header>
+			  </div>
+			  <div class="slds-card__body">
+				<table class="slds-table slds-table_cell-buffer slds-table_bordered" style="background-color: #FFFFFF;">
+					<thead>
+						<tr class="slds-line-height_reset">
+							<th class="" scope="col">
+						       <div class="slds-truncate" title="Role">Role</div>
+						    </th>
+						    <th class="" scope="col">
+						       <div class="slds-truncate slds-m-left_medium" title="Role">Contact Name</div>
+						    </th>
+						</tr>
+					</thead>
+					<tbody>
+						<template for:each={contacts} for:item="contact">
+							<tr key={contact.role}>
+								<td>{contact.role} ({contact.count})</td>
+								<td>
+									<c-org-contacts-display contacts={contact.contacts}></c-org-contacts-display>
+								</td>
+							</tr>
+						</template>
+					</tbody>
+				</table>
+			</div>
+		</article>
+	</template>
+</template>

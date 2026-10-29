@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RSVP__c</fullName>
+    <description>(BRME-3673) Field created to update value on created List Member Record</description>
+    <label>RSVP</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Pend</fullName>
+                <default>false</default>
+                <label>Pend</label>
+            </value>
+            <value>
+                <fullName>Yes</fullName>
+                <default>false</default>
+                <label>Yes</label>
+            </value>
+            <value>
+                <fullName>Yes - Cocktails Only</fullName>
+                <default>false</default>
+                <label>Yes - Cocktails Only</label>
+            </value>
+            <value>
+                <fullName>Yes - In Person</fullName>
+                <default>false</default>
+                <label>Yes - In Person</label>
+            </value>
+            <value>
+                <fullName>Yes - Virtually</fullName>
+                <default>false</default>
+                <label>Yes - Virtually</label>
+            </value>
+            <value>
+                <fullName>No</fullName>
+                <default>false</default>
+                <label>No</label>
+            </value>
+            <value>
+                <fullName>Waitlist 1</fullName>
+                <default>false</default>
+                <label>Waitlist 1</label>
+            </value>
+            <value>
+                <fullName>Waitlist 2</fullName>
+                <default>false</default>
+                <label>Waitlist 2</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,857 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X2020_HQ_Leadership_Touch_Point</fullName>
+    <active>true</active>
+    <label>MB2020 Interaction</label>
+    <picklistValues>
+        <picklist>Associated_to_an_MRB_Event__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Category__c</picklist>
+        <values>
+            <fullName>0214_Volunteer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Active Military Personnel or Leader</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Advocate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agricultural Services Representative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Arts and Culture Leader</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Big Business Leader</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Celebrity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Community Leader</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Constituent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Construction or Infrastructure Leader</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Donor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Education Advocate or Educator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emergency Services Representative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FoM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gun Control Advocate%2FGrassroots Supporter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Influencer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LGBT Advocate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mayor or Local Leader</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>None</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nonprofit Leader</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Personal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Political Leader</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Public Health Leader</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Religious Leader</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Small Business Owner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sustainability Advocate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tourism Expert</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Union Leader or Representative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Veteran</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Youth Services Advocate</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CityView_Review_Status__c</picklist>
+        <values>
+            <fullName>Publish to CityView</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retract from CityView</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Courtesy_Gift_Outgoing_from_MRB__c</picklist>
+        <values>
+            <fullName>Book</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Challenge Coin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gift Basket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tiffany Compass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tiffany Keychain</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tiffany Magnifying Glass</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tiffany Protractor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tiffany Ruler</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tiffany T Ruler</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tiffany Triangle Ruler</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Event_Location__c</picklist>
+        <values>
+            <fullName>Alabama</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Alaska</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Arizona</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Arkansas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>California</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Colorado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Connecticut</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Delaware</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>District of Colombia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Florida</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Georgia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hawaii</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Idaho</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Illinois</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Indiana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iowa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kansas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kentucky</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Louisiana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Maine</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Maryland</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Massachusetts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Michigan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Minnesota</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mississippi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Missouri</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Montana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nebraska</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nevada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Hampshire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Jersey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Mexico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New York</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>North Carolina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>North Dakota</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ohio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oklahoma</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oregon</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pennsylvania</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rhode Island</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>South Carolina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>South Dakota</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tennessee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Texas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utah</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vermont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Virginia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Washington</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>West Virginia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wisconsin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wyoming</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>File_Attached_New__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>InteractionTypeCorresponence__c</picklist>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invitation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Letter</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Interaction_Type__c</picklist>
+        <values>
+            <fullName>Art Installation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Breakfast</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Coffee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commencement Speech</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cultivation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dinner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Event</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lunch</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partner Courtesy Call%2FMeeting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Press</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Program Highlight</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Speaking Engagement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Text</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tour</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Virtual Event</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Virtual Meeting</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Internal_PoC__c</picklist>
+        <values>
+            <fullName>Alli</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MRB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Patti</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Primary_Focus__c</picklist>
+        <values>
+            <fullName>Arts and Culture</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Criminal Justice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Environment and Energy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Foreign Policy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Government Innovation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gun Control</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Homeland Security</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Housing and Urban Development</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Immigration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Infrastructure</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LGBT Equality</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Labor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>None</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Parks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Politics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Public Health</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Social Services and Community Development</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tourism and Marketing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transportation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Veterans Affairs</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Youth Development</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Sentiment__c</picklist>
+        <values>
+            <fullName>Favorable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Neutral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non_Favorable</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Source__c</picklist>
+        <values>
+            <fullName>Email to info%40bloomberg%2Eorg</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email_to_BP_Employee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incoming_Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Letter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Social Media</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spoke to MRB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spoke to Staff</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Team__c</picklist>
+        <values>
+            <fullName>Advocacy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Arts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Arts Bloomberg Connects</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BP Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bloomberg Associates</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Communications</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Communications Briefings</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Communications Content</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Communications External</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Communications Social Media</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Communications Speechwriting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Communications Video</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Correspondence</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data %26 Reporting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Environment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Events</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finance %26 Accounting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Founder%27s Greenwood Init%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Founder%27s JHU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Founder%27s Projects</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Founder%27s Women%27s Economic Dev%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fundraising%2FPartnerships</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Government Innovation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grants Management %28BP%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Human Resources</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IT Bgive %26 Reporting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LP BMIA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LP Baltimore Community Dev%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LP Corp Phil Asia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LP Corp Phil London</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LP Corp Phil NY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LP Events</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LP Executive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LP Global Corp Phil</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LP Mithraeum</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Legal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other - Archived %28Do not use%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Public Health</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scheduling %26 Advance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>System Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Willett Advisors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workplace Operations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Workplace Operations Reception</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

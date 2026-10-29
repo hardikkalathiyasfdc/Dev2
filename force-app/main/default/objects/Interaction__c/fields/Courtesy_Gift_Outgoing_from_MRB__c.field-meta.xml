@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Courtesy_Gift_Outgoing_from_MRB__c</fullName>
+    <description>BRME-4788</description>
+    <label>Courtesy Gift (Outgoing from MRB)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Book</fullName>
+                <default>false</default>
+                <label>Book</label>
+            </value>
+            <value>
+                <fullName>Challenge Coin</fullName>
+                <default>false</default>
+                <label>Challenge Coin</label>
+            </value>
+            <value>
+                <fullName>Gift Basket</fullName>
+                <default>false</default>
+                <label>Gift Basket</label>
+            </value>
+            <value>
+                <fullName>Tiffany Compass</fullName>
+                <default>false</default>
+                <label>Tiffany Compass</label>
+            </value>
+            <value>
+                <fullName>Tiffany Keychain</fullName>
+                <default>false</default>
+                <label>Tiffany Keychain</label>
+            </value>
+            <value>
+                <fullName>Tiffany Magnifying Glass</fullName>
+                <default>false</default>
+                <label>Tiffany Magnifying Glass</label>
+            </value>
+            <value>
+                <fullName>Tiffany Protractor</fullName>
+                <default>false</default>
+                <label>Tiffany Protractor</label>
+            </value>
+            <value>
+                <fullName>Tiffany Ruler</fullName>
+                <default>false</default>
+                <label>Tiffany Ruler</label>
+            </value>
+            <value>
+                <fullName>Tiffany T Ruler</fullName>
+                <default>false</default>
+                <label>Tiffany T Ruler</label>
+            </value>
+            <value>
+                <fullName>Tiffany Triangle Ruler</fullName>
+                <default>false</default>
+                <label>Tiffany Triangle Ruler</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

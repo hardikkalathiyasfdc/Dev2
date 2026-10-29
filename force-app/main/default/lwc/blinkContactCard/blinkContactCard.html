@@ -1,0 +1,61 @@
+<template>
+    <template lwc:if={contactDetails}>
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="3">
+                <label class="slds-form-element__label slds-form-element__legend slds-p-top_medium" for="horizontal-input-id-01">Name</label>
+            </lightning-layout-item>
+            <lightning-layout-item size="9">
+                <div class=" slds-p-top_medium">
+                    <template lwc:if={isBrmContact}>
+                        <lightning-formatted-url value={brmContactURL} tooltip={contactDetails.Name} label={contactName} target="_blank"></lightning-formatted-url>
+                    </template>
+                    <template lwc:else>
+                        <span>{contactDetails.first_name} {contactDetails.last_name}</span>
+                    </template>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="3">
+                <label class="slds-form-element__label slds-form-element__legend" for="horizontal-input-id-01">Organization</label>
+            </lightning-layout-item>
+            <lightning-layout-item size="9">
+                <span>{organizationName}</span>
+            </lightning-layout-item>
+            <lightning-layout-item size="3">
+                <label class="slds-form-element__label slds-form-element__legend" for="horizontal-input-id-01">Title</label>
+            </lightning-layout-item>
+            <lightning-layout-item size="9">
+                <span>{title}</span>
+            </lightning-layout-item>
+            <lightning-layout-item size="3">
+                <label class="slds-form-element__label slds-form-element__legend" for="horizontal-input-id-01">Email</label>
+            </lightning-layout-item>
+            <lightning-layout-item size="9">
+                <span>{email}</span>
+            </lightning-layout-item>
+            <lightning-layout-item size="3">
+                <label class="slds-form-element__label slds-form-element__legend" for="horizontal-input-id-01">Phone Number</label>
+            </lightning-layout-item>
+            <lightning-layout-item size="9">
+                <span>{phone}</span>
+            </lightning-layout-item>
+            <lightning-layout-item size="3">
+                <label class="slds-form-element__label slds-form-element__legend" for="horizontal-input-id-01">{brmIdLabel}</label>
+            </lightning-layout-item>
+            <lightning-layout-item size="9">
+                <span>{brmIdValue}</span>
+            </lightning-layout-item>
+            
+            <template lwc:if={isBrmContact}>
+                <template lwc:if={canReadRestricted}>
+                    <lightning-layout-item size="3">
+                        <label class="slds-form-element__label slds-form-element__legend" for="horizontal-input-id-01">Private</label>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="9">
+                        <lightning-input type="checkbox" checked={isRestricted} disabled>
+                        </lightning-input>
+                    </lightning-layout-item>
+                </template>
+            </template>
+        </lightning-layout>
+    </template>
+</template>

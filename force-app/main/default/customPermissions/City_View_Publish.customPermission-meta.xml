@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Used to restrict users from updating the &apos;CityView Review Status&apos; to &apos;Publish to City View&apos; on an interaction record.</description>
+    <isLicensed>false</isLicensed>
+    <label>City View Publish</label>
+</CustomPermission>

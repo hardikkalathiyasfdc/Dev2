@@ -1,0 +1,27 @@
+<template>
+    <section>
+        <div class="slds-m-top_medium slds-m-bottom_medium">
+            <template if:true={noAccess}>
+                <div class="slds-text-body_small slds-text-color_error">You don't have permission to add confidential attachment for this Interaction. Please click Cancel to return to the previous page. </div>
+            </template>
+            <!-- Single file -->
+            <div class=" lgc-bg">
+                <lightning-input type="file" label="Confidential Attachments" onchange={handleFilesChange} variant="label-hidden" disabled={noAccess}></lightning-input>
+            </div>
+            <template if:true={fileName}>
+                <div class="slds-text-body_small slds-text-color_error">{fileName} </div>
+            </template>
+            <template if:true={showSpinner}>
+                <!--<lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>-->
+                <div class="slds-text-body_small slds-text-color_error">Uploading... 
+                    <img src="/auraFW/resources/aura/images/spinner.gif" class="spinner-img" alt="Loading"/>'
+                </div>
+            </template>
+            <div class="slds-m-top_medium">
+                <lightning-button variant="brand" label="Upload" onclick={handleUpload} class="slds-m-left_x-small" disabled={showUpload}></lightning-button>
+                <lightning-button label="Cancel" onclick={handleCancel} class="slds-m-left_x-small"></lightning-button>
+            </div>
+        </div>
+    </section>
+
+</template>

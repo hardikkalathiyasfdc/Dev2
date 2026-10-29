@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>IMInitiativeReadyForApprovalController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>IM_Ready_For_Approval_Access</name>
+    </customPermissions>
+    <description>BRME-7043: Grants access to components related to &apos;Ready for Approval&apos; feature on Initiative</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>IM: Ready For Approval Access</label>
+</PermissionSet>

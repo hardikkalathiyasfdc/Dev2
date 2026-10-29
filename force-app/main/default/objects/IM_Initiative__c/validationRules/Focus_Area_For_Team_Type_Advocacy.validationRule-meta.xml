@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Focus_Area_For_Team_Type_Advocacy</fullName>
+    <active>true</active>
+    <description>IM-418: Focus Area is required for Team Advocacy</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.IM_Initiative_Validation__c &amp;&amp;
+        AND(Team__r.Name = &apos;Team Advocacy&apos;,  OR(ISNULL(Focus_Area__c ),ISBLANK(Focus_Area__c )) )</errorConditionFormula>
+    <errorDisplayField>Focus_Area__c</errorDisplayField>
+    <errorMessage>Please Select a Focus Area if Team is Team Advocacy</errorMessage>
+</ValidationRule>

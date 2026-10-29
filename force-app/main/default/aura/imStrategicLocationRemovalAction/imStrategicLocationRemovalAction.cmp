@@ -1,0 +1,5 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId"
+    access="global"
+    controller="IMStrategicLocationRemovalActionCtrl">
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+</aura:component>

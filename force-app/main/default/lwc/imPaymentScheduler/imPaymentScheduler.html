@@ -1,0 +1,117 @@
+<!--
+  @description       : IM-396:Reset Payments
+  @author            : Sai Bhargav Thotakura
+  @group             : 
+  @last modified on  : 10-22-2025
+  @last modified by  : Paddy
+-->
+<template>
+    <lightning-card>
+        <div class="slds-grid slds-grid_vertical">
+            <div class="slds-col">
+                <div class="slds-var-m-bottom_medium slds-float_left">
+                    <template lwc:if={showSchedule}>
+                    </template>
+                    <template lwc:else>
+                        <lightning-button variant="brand" label="Reset" title="Reset" onclick={handleReset}
+                            class="slds-m-left_x-small">
+                        </lightning-button>
+                    </template>
+                </div>
+                <template lwc:if={showPayments}>
+                    <div class="slds-var-m-bottom_medium slds-float_right" style="margin-right:0.5rem">
+                        <lightning-button variant="brand" label="Add Payment" title="Add Payment"
+                            onclick={handleNewPayment} class="slds-m-left_x-small">
+                        </lightning-button>
+                    </div>
+                </template>
+            </div>
+            <div class="slds-col">
+                <template lwc:if={showPayments}>
+                    <lightning-card>
+                        <div class="slds-var-m-around_medium">
+                            <table
+                                class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer slds-border_left slds-border_right slds-table_overflow">
+                                <thead>
+                                    <tr class="slds-text-title_caps slds-box slds-theme_shade">
+                                        <th class="slds-cell-wrap">Scheduled Date</th>
+                                        <th class="slds-cell-wrap">Fund</th>
+                                        <template lwc:if={showFundingPartner}>
+                                            <th class="slds-cell-wrap">Funding Partner</th>
+                                        </template>
+                                        <template lwc:if={showPersonalSubfund}>
+                                            <th class="slds-cell-wrap">Personal Subfund</th>
+                                        </template>
+                                        <th class="slds-cell-wrap">Scheduled Amount(Local)</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={data} for:item="record">
+                                        <tr key={record}>
+                                            <td class="slds-cell-wrap">
+                                                <lightning-input type="date" name="scheduledDate" label="Scheduled Date"
+                                                    required="true" value={record.due_at} data-id={record.id}
+                                                    variant="label-hidden" date-style="short"
+                                                    onchange={handleDateChange}>
+                                                </lightning-input>
+                                            </td>
+                                            <td class="slds-cell-wrap">
+                                                <lightning-record-picker label="Select a Fund"
+                                                    placeholder="Search Fund..." object-api-name="Fund__c"
+                                                    onchange={handleFundSelection} data-id={record.id}
+                                                    variant="label-hidden" value={record.fund}>
+                                                </lightning-record-picker>
+                                            </td>
+                                            <template lwc:if={showFundingPartner}>
+                                                <td class="slds-cell-wrap">
+                                                    <lightning-combobox name="Funding Partner" label="Funding Partner"
+                                                        value={record.partner_name}
+                                                        placeholder="Select Funding Partner" options={fundingPartnerValues}
+                                                        onchange={handleFundingPartnerSel} variant="label-hidden"
+                                                        data-id={record.id} required={record.isFundingPartnerRequired}
+                                                        disabled={record.partnerFundDisabled}>
+                                                    </lightning-combobox>
+                                                </td>
+                                            </template>
+                                            <template lwc:if={showPersonalSubfund}>
+                                                <td class="slds-cell-wrap">
+                                                    <lightning-combobox name="Personal Subfund" label="Personal Subfund"
+                                                        value={record.personal_subfund}
+                                                        placeholder="Select Personal Subfund"
+                                                        options={personalSubFundValues}
+                                                        onchange={handlePersonalSubFundChange} variant="label-hidden"
+                                                        data-id={record.id}>
+                                                    </lightning-combobox>
+                                                </td>
+                                            </template>
+                                            <td class="slds-cell-wrap">
+                                                <lightning-input type="number" name="scheduledAmount"
+                                                    label="Scheduled Amount(Local)" data-id={record.id}
+                                                    value={record.amount_due_local} step={inputAmountAttributes.step}
+                                                    max={inputAmountAttributes.max}
+                                                    message-when-range-overflow={inputAmountAttributes.messageWhenRangeOverflow}
+                                                    message-when-step-mismatch={inputAmountAttributes.messageWhenStepMismatch}
+                                                    variant="label-hidden" required="true"
+                                                    onchange={handleScheduledAmount}>
+                                                </lightning-input>
+                                            </td>
+                                            <td>
+                                                <lightning-button-icon icon-name="action:delete"
+                                                    alternative-text="Delete" 
+                                                    title="Delete"
+                                                    onclick={handleDelete}
+                                                    data-id={record.id}>
+                                                </lightning-button-icon>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </lightning-card>
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,15 @@
+<template>
+  <div class="myLookup">
+    <template if:true={hasObject}>
+      <lightning-record-edit-form object-api-name={object} class="myForm">
+        <lightning-messages> </lightning-messages>
+        <lightning-input-field
+          field-name={field}
+          value={value}
+           variant='label-hidden'
+          onchange={handleChange}
+        >
+        </lightning-input-field> </lightning-record-edit-form
+    ></template>
+  </div>
+</template>

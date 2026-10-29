@@ -1,0 +1,260 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 02-13-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<apex:page controller="MayorAndCityViewInteractionCntrl" renderAs="pdf" applyBodyTag="false" readOnly="true" showHeader="false" sidebar="false" title="Board Interactions">
+    
+    <head>
+        <style>
+            @page { 
+                size: A4;
+                margin: 15mm 8mm;
+                @top-center {
+                    content: "";
+                }
+           
+                @bottom-right {
+                    font-size : 14px;
+                    content: counter(page) " of " counter(pages);
+                }
+                @bottom-left {
+                    content: element(footer);
+                }
+            }
+            
+            div.footer {
+                display: block;
+                padding: 5px;
+                font-size : 14px;
+                position: running(footer);
+            }
+           
+            .page-break {
+                display:block;
+                page-break-after:always;
+            }
+           
+            .page-header{
+                font-size : 18px;
+                color:#2f5496;
+            }
+            
+            .text-bold{
+            	font-weight: bold;
+            }
+            
+            .section-header{
+                font-size : 16px;
+                color:#2f5496;
+                font-weight: bold;
+                margin-top: 5%; 
+            }
+            
+            .section-text{
+                font-size : 16px;
+                margin-top: 20px; 
+            }
+            
+            
+            table {
+            	border-left:1px solid;
+                margin-top: 20px; 
+                border-bottom: 1px solid;
+                width:700px;
+            	-fs-table-paginate: paginate;
+            	border-collapse: collapse;border-spacing: 0;
+            }
+            
+            tr {
+             	page-break-inside: auto !important;
+            }
+
+			table thead {display: table-header-group;}            
+            table td {
+                border-top: solid 1px;
+                border-right : solid 1px;
+                font-size : 14px;
+                vertical-align : top;
+            }
+            
+             table td+td+td {
+                border-top: solid 1px;
+                font-size : 14px;
+                vertical-align : top;
+            }
+            
+            table th {
+                border-top: solid 1px;
+                border-right: solid 1px;
+                text-align: center;
+                font-size : 14px;
+                padding : 10px;
+            }
+            
+            .mayor-interaction-table th {
+            	background-color: #c0d6ac;
+            }
+            
+            .cityview-interaction-table th {
+            	background-color: #98c8ef;
+            }
+            
+            table td:first-child ,table th:first-child , table td:nth-child(2) {
+            	border-left: 1px solid;
+            	border-right:0;
+            }
+        </style>
+    </head>
+    
+    <body>
+        
+        <div class="page-header">
+            <span class="text-bold">{!title}</span>
+        </div>
+        
+        <div class="footer">
+            <div>Created On {!currentDateLocal} (via BRM)
+            </div>
+        </div>
+        
+        <div id="content">
+        <div>
+            <div class="section-header">
+                Interactions with Mayors
+            </div>
+            
+            <apex:outputPanel rendered="{!!isMayorInteractionsPresent}" styleClass="section-text" layout="block">There were no interactions with Mayors reported this month. </apex:outputPanel> 
+             
+            <apex:outputPanel rendered="{!isMayorInteractionsPresent}"  layout="block" style="width:700px;">
+            <table border="0" width="100%" cellspacing="0" cellpadding="5" class="mayor-interaction-table">
+                <thead>
+                    <tr>
+                        <th>
+                            Team
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Mayor
+                        </th>
+                        <th>
+                            City
+                        </th>
+                        <th>
+                            Country
+                        </th>
+                        <th>
+                            Interaction Subject
+                        </th>
+                        <th>
+                            Created By
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!mayorInteractionsList}" var="wrapper">
+                        <tr>
+                            <td rowspan="{!wrapper.interactionCountByTeam}" style="{!if(wrapper.interactionCountByTeam != 0 ,'border-right:0px;','display:none;')}">
+                                {!wrapper.team}
+                            </td>
+                            <td style="border-left: 1px solid;">
+                               <apex:outputText value="{0,date,M'/'d'/'yyyy}">
+                                        <apex:param value="{!wrapper.iDate}" /> 
+                                </apex:outputText>
+                            </td>
+                            <td rowspan="{!wrapper.interactionCountByCity}" Style="{!if(wrapper.interactionCountByCity != 0 ,'','display:none;')}">
+                                {!wrapper.mayorName}
+                            </td>
+                            <td rowspan="{!wrapper.interactionCountByCity}" Style="{!if(wrapper.interactionCountByCity != 0 ,'','display:none;')}">
+                                {!wrapper.city}
+                            </td>
+                            <td rowspan="{!wrapper.interactionCountByCity}" Style="{!if(wrapper.interactionCountByCity != 0 ,'','display:none;')}">
+                                {!wrapper.country}
+                            </td>
+                            <td>
+                                {!wrapper.subject}
+                            </td>        
+                            <td>
+                                {!wrapper.createdBy}
+                            </td>
+                            
+                        </tr>
+                    </apex:repeat>
+                    
+                </tbody>
+                
+            </table>
+            </apex:outputPanel>
+        </div>
+        
+        <div>
+            <div class="section-header">
+                CityView Highlights
+            </div>
+             <apex:outputPanel rendered="{!!isCityViewInteractionsPresent}" styleClass="section-text" layout="block">There were no CityView Highlights reported this month. </apex:outputPanel> 
+             
+            <apex:outputPanel rendered="{!isCityViewInteractionsPresent}"  layout="block" style="width:700px;">
+            <table border="0" width="100%" cellspacing="0" cellpadding="5" class="cityview-interaction-table" style="width:700px;">
+                <thead>
+                    <tr>
+                        <th>
+                            Team
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            City
+                        </th>
+                        <th>
+                            Country
+                        </th>
+                        <th style="width:30%">
+                            Highlight
+                        </th>
+                        <th>
+                            Created By
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!cityViewInteractionsList}" var="wrapper">
+                        <tr>
+                            
+                            <td rowspan="{!wrapper.interactionCountByTeam}" style="{!if(wrapper.interactionCountByTeam != 0 ,'border-right:0px;','display:none;')}">
+                                {!wrapper.team}
+                            </td>
+                            
+                            <td style="border-left: 1px solid;">
+                               <apex:outputText value="{0,date,M'/'d'/'yyyy}">
+                                        <apex:param value="{!wrapper.iDate}" /> 
+                                </apex:outputText>
+                                
+                            </td>
+                            <td rowspan="{!wrapper.interactionCountByCity}" style="{!if(wrapper.interactionCountByCity != 0 ,'width:25%','display:none;width:25%')}">
+                                {!wrapper.city}
+                            </td>
+                            <td rowspan="{!wrapper.interactionCountByCity}" style="{!if(wrapper.interactionCountByCity != 0 ,'','display:none;')}">
+                                {!wrapper.country}
+                            </td>
+                            <td style="width:40%">
+                                {!wrapper.subject}
+                            </td>
+                            <td>
+                                {!wrapper.createdBy}
+                            </td>
+                            
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+            </apex:outputPanel>
+        </div>
+        </div>
+    </body>
+    
+</apex:page>

@@ -1,0 +1,14 @@
+.THIS {
+  overflow: auto;
+  height: 500px;
+}
+.THIS .tableFixHead .tablec {
+  border-collapse: inherit;
+  width: 100%;
+}
+.THIS .tableFixHead .thc {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 2;
+}

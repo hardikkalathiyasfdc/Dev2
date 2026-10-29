@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GCom_Associations</fullName>
+    <columns>NAME</columns>
+    <columns>Active__c</columns>
+    <columns>Publish_to_CityView__c</columns>
+    <columns>Show_Org_Assoc_Dates_on_CityView__c</columns>
+    <columns>RECORDTYPE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Association__c.GCOM</value>
+    </filters>
+    <label>GCom Associations</label>
+</ListView>

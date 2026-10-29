@@ -1,0 +1,38 @@
+<template>
+	<section class="slds-modal slds-fade-in-open slds-modal_small slds-align_absolute-center">
+		<div class="slds-modal__container">
+			<header class="slds-modal__header">
+				<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Manage Columns</h2>
+			</header>
+			<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="height: 500px;">
+				<lightning-record-edit-form onsuccess={handleSuccess} onsubmit={handleSubmit}
+					object-api-name="Custom_List_View__c" record-id={listrecordId}>
+					<lightning-messages></lightning-messages>
+					<lightning-input-field field-name="Name" style="display:none" variant="label-stacked" readonly value={listViewName}>
+					</lightning-input-field>
+					<lightning-dual-listbox name="columns" label="Select column" source-label="Available"
+						selected-label="Selected" field-level-help="Manage the columns displayed below by adding or removing them as needed." 
+						options={allOptions} value={selectedOptions} onchange={handleChangeDual}>
+					</lightning-dual-listbox>
+					<lightning-input-field style="display:none" field-name="Column__c" variant="label-stacked"
+						value={columnsField}>
+					</lightning-input-field>
+					<div class="slds-align_absolute-center">
+						<lightning-button class="slds-m-top_small slds-m-right_small" variant="neutral" name="cancel"
+							label="Cancel" onclick={handleCancel}>
+						</lightning-button>
+						<lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update"
+							label="Save">
+						</lightning-button>
+						<template lwc:if={listrecordId}>
+							<lightning-button variant="brand" label="Reset Column Order" title="Reset Column Order"
+								class="slds-p-around_small slds-m-top_small" onclick={resetListView}>
+							</lightning-button>
+						</template>
+					</div>
+				</lightning-record-edit-form>
+			</div>
+		</div>
+	</section>
+	<div class="slds-backdrop slds-backdrop_open"></div>
+</template>

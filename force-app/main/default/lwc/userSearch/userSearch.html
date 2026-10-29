@@ -1,0 +1,58 @@
+<template>
+	<div data-id="searchRes" class="slds-form-element slds-lookup slds-is-close">
+        <!--This part is for display search bar for lookup-->  
+        <div class="slds-form-element__control">
+            <div class="slds-input-has-icon slds-input-has-icon--right">
+                <!-- This markup is for when an record is selected -->
+                <div data-id="lookup-pill" class="slds-pill-container">
+                    <div onkeyup={handleSearchChange} >
+				        <lightning-input
+				        	data-id="user-copy-to"
+				            name="enter-search"
+				            label={lookupLabel}
+				            type="search"
+				            value={searchString}
+				        ></lightning-input>
+				    </div>
+                <!--Selected Records Pills Section-->
+                <template for:each={selectedUsers} for:item="item">
+			        <lightning-pill key={item.Id} class="slds-m-around_xx-small" label={item.Name} id={item.Id} onremove={removeSelection}>
+                        <lightning-icon icon-name="standard:user" size="x-small"></lightning-icon>
+                    </lightning-pill>
+			    </template>
+                </div>
+            </div>
+        </div>
+ 
+        <!--This part is for Display typehead lookup result List-->  
+        <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+            <center> {message}</center>
+            <li role="presentation" class="slds-listbox__item">
+                <span id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                    <span class="slds-media__figure">
+                        <span class="slds-icon_container" title="Description of icon when needed">
+                            <lightning-icon icon-name="standard:user" size="small"></lightning-icon>
+                        </span>
+                    </span>    
+                    <span class="slds-media__body">  
+                        <span class="slds-listbox__option-text slds-listbox__option-text_entity slds-m-top_x-small"><b>Name</b></span>
+                    </span>
+                </span>
+            </li>
+            <template for:each={availableUsers} for:item="item">
+              <li key={item.Id} role="presentation" class="slds-listbox__item" >
+                <div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                  <span class="slds-media__figure slds-listbox__option-icon">
+                    <span class="slds-icon_container slds-icon-standard-account">
+                    	<lightning-icon icon-name="standard:user" size="small"></lightning-icon>
+                    </span>
+                  </span>
+                  <span class="slds-media__body">
+                    <span class="slds-listbox__option-text slds-listbox__option-text_entity slds-m-top_x-small" id={item.Id} onclick={getSelectedRows}>{item.Name}</span>
+                  </span>
+                </div>
+              </li>
+          </template>
+        </ul>
+    </div>
+</template>

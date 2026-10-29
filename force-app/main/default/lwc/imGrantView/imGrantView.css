@@ -1,0 +1,9 @@
+.slds-error{
+    color:#b22e2e;
+    display:flex;
+    font-weight: 600;
+}
+
+.custom-modal-height {
+    min-height:58vh;
+}

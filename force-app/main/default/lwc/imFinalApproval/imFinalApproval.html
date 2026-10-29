@@ -1,0 +1,162 @@
+<!--
+@description       : IM-52 : Final Approval Form, IM-382
+@author            : Sai Bhargav Thotakura
+@group             : Initiative Management
+@last modified on  : 09-08-2025
+@last modified by  : Paddy
+-->
+<template>
+    <!--Display Spinner while Saving-->
+    <template lwc:if={showSpinner}>
+        <lightning-spinner size="large" variant="brand" alternative-text="Saving"></lightning-spinner>
+    </template>
+    <lightning-modal-header class="slds-theme_default" label={approvalLabel}></lightning-modal-header>
+    <lightning-modal-body>
+
+        <lightning-record-edit-form object-api-name={objectApiName} record-id={recordId} onsuccess={handleSuccess}
+            onload={handleLoad} onsubmit={handleSubmit} onerror={handleError} density=comfy>
+            <lightning-messages> </lightning-messages>
+            <!--Details-->
+            <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-truncate slds-var-p-horizontal_small" title="Section Title">Details</span>
+                </h3>
+                <div class="slds-section__content">
+                    <lightning-layout multiple-rows>
+                        <template lwc:if={isBudgetedInitiative}>
+                            <lightning-layout-item size="6">
+                                <lightning-input-field name="name" data-id="name" field-name={nameField}
+                                    required="true">
+                                </lightning-input-field>
+                                <!--Error message display for Name field-->
+                                <template lwc:if={nameFieldError}>
+                                    <div class="slds-form-element__help slds-text-color_error">
+                                        {nameFieldError}
+                                    </div>
+                                </template>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6">
+                                <lightning-input-field name="team" data-id="team" field-name={teamField}
+                                    onchange={handleTeamChange} required="true">
+                                </lightning-input-field>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6">
+                                <lightning-input-field data-id="segment" name="segment" field-name={segmentField}
+                                    required="true">
+                                </lightning-input-field>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6">
+                                <lightning-input-field name="parentInitiative" data-id="parentInitiative"
+                                    field-name={parentInitiativeField} required="true"> </lightning-input-field>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                </div>
+            </div>
+            <!--Budget Details-->
+            <div class="slds-section slds-is-open">
+                <template lwc:if={isBudgetedInitiative}>
+                    <h3 class="slds-section__title slds-theme_shade">
+                        <span class="slds-truncate slds-var-p-horizontal_small" title="Section Title">&nbsp;</span>
+                    </h3>
+                </template>
+                <div class="slds-section__content">
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="6">
+                            <lightning-combobox data-id="currentBudgets" name="currentBudgets" label="Current Budget"
+                                value={currentBudgetFieldValue} options={currentBudgetOptions}
+                                onchange={handleCurrentBudgetChange} required="true"></lightning-combobox>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6">
+                            <h1 class="customLabel">Budget Term (months)</h1>
+                            <div class="slds-box slds-box_x-small marginClass"><lightning-formatted-number
+                                    name="budgetTerm" value={budgetTermMonthsFieldValue} maximum-fraction-digits="2">
+                                </lightning-formatted-number></div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6">
+                            <!--Field intentionally left Empty to leave blank space-->
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6">
+                            <h1 class="customLabel">Approved Amount</h1>
+                            <div class="slds-box slds-box_x-small marginClass"><lightning-formatted-number
+                                    name="approvedAmount" value={approvedAmountValue} format-style="currency"
+                                    currency-code="USD">
+                                </lightning-formatted-number></div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+            </div>
+            <!--Initiative Details-->
+            <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-truncate slds-var-p-horizontal_small" title="Section Title">&nbsp;</span>
+                </h3>
+                <div class="slds-section__content">
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="6">
+                            <lightning-input-field name="startDate" data-id="startDate" disabled={isStartDateDisabled}
+                                field-name={startDateField} required="true" onchange={handleStartDateChange}
+                                value={startDateFieldValue}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6">
+                            <lightning-input-field name="approver" data-id="approver" field-name={approverField}
+                                required="true" value={approverFieldValue}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6">
+                            <lightning-input-field name="endDate" data-id="endDate" field-name={endDateField}
+                                required="true" onchange={handleEndDateChange} value={endDateFieldValue}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6">
+                            <lightning-input-field name="approvedDate" data-id="approvedDate"
+                                field-name={approvedDateField} value={approvedDateValue} required="true">
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6">
+                            <h1 class="customLabel">Initiative Term (months)</h1>
+                            <div class="slds-box slds-box_x-small marginClass"><lightning-formatted-number name="term"
+                                    value={termValue} maximum-fraction-digits="2">
+                                </lightning-formatted-number></div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+            </div>
+            <template lwc:if={hideSection}>
+                <lightning-layout-item size="6">
+                    <lightning-input-field name="approved" field-name={approvedField}>
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field name="status" field-name={statusField}>
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field name="includeInProjections" field-name={includeInProjectionsField}>
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field name="focusArea" field-name={focusAreaField}>
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input-field name="originalApprovedDate" field-name={originalApprovedDateField}>
+                    </lightning-input-field>
+                </lightning-layout-item>
+            </template>
+            <br />
+            <div class="slds-hide">
+                <lightning-button data-id="customSave" variant="brand" type="submit" label="Save"></lightning-button>
+            </div>
+        </lightning-record-edit-form>
+
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <div class="slds-align_absolute-center">
+            <lightning-button label="Cancel" onclick={handleCancel}></lightning-button>
+            &nbsp;&nbsp;&nbsp;
+            <lightning-button variant="brand" label="Save" onclick={customHandleSubmit}></lightning-button>
+        </div>
+    </lightning-modal-footer>
+</template>

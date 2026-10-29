@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Payee_Fiscal_Sponsor__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>IM-46: Payee specified in Budget Template for a row</description>
+    <label>Payee/Fiscal Sponsor</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>IM_Budget_Org__c.Type__c</field>
+            <operation>equals</operation>
+            <value>Payee</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>IM_Budget_Org__c</referenceTo>
+    <relationshipLabel>Budget Rows (Payee/Fiscal Sponsor)</relationshipLabel>
+    <relationshipName>Budget_Rows2</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rollup_in_Reporting_Validation</fullName>
+    <active>true</active>
+    <description>IM-214: This field is used to mark Level 2 Foundation Codes for roll up in reporting.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Foundation_Code_Validation__c &amp;&amp;
+Rollup_In_Reporting__c  = true
+&amp;&amp;
+Code_Level__c != 2</errorConditionFormula>
+    <errorDisplayField>Rollup_In_Reporting__c</errorDisplayField>
+    <errorMessage>Rollup in Reporting can only be enabled for Level 2 Parent or Non Programmatic Foundation Codes.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Foundation_Coding__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>BRME-5264</description>
+    <inlineHelpText>Relates to BGIVE initiative coding</inlineHelpText>
+    <label>Foundation Coding</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Foundation_Code__c.Status__c</field>
+            <operation>notEqual</operation>
+            <value>Deleted</value>
+        </filterItems>
+        <filterItems>
+            <field>Foundation_Code__c.Enabled_for_Fundraising__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Foundation_Code__c</referenceTo>
+    <relationshipLabel>Fundraising Projects</relationshipLabel>
+    <relationshipName>Fundraising_Projects</relationshipName>
+    <required>true</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

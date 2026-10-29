@@ -1,0 +1,16 @@
+{"forms":[
+{
+	"Email Address":"chera@hawkfish.us",
+	"First Name":"Chera",
+	"Last Name":"Pillai",
+	"Can Host Events":"123",
+	"Date":"xyz",
+	"All Data Sources":"committee_for_mike",
+	"Coalition: Asian American & Pacific Islander":"TRUE",
+	"Coalition: Faith Based":"FALSE",
+	"Zip Code":"55420",
+	"State":"MN",
+	"City":"Minneapolis",
+	"Mobile Phone Number":"6468233545"
+}
+]}

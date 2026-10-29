@@ -1,0 +1,21 @@
+<template>
+	<lightning-quick-action-panel header="Add Contact to List">
+		<template lwc:if={errMsg}>
+			<div><span class="slds-text-color_error">{errMsg}</span></div>
+		</template>
+		<div style="height:400px;">
+			<c-generic-lookup onchange={handleListUpdate} icon="standard:campaign"
+				label="Search List" display-fields={campaignDisplayFields} search-fields={campaignSearchFields}
+				object-api-name="Campaign" filter-clause={filterClause} 
+				custom-search-class="WeightedFieldLookupSearch" display-field-prefixes={campaignDisplayFieldPrefixes}
+				search-config={campaignSearchConfig}>
+			</c-generic-lookup>
+		</div>
+		<div slot="footer">
+			<lightning-button variant="neutral" label="Cancel" onclick={closeAction}></lightning-button>
+			<lightning-button variant="brand" label="Add to List" class="slds-m-left_x-small" disabled={btnDisabled} 
+				onclick={saveCampaignMember}>
+			</lightning-button>
+		</div>
+  	</lightning-quick-action-panel>
+</template>

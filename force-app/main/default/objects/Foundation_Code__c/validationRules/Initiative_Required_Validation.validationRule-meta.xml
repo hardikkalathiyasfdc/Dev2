@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Initiative_Required_Validation</fullName>
+    <active>true</active>
+    <description>IM-47: Initiative is required if the type is Parent Initiative or Budgeted Initiative or Miscellaneous Initiative or Focus Area Misc.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Foundation_Code_Validation__c &amp;&amp;
+OR(
+AND(
+ISPICKVAL(Type__c ,&apos;Parent Initiative&apos;),ISBLANK(Initiative__c) 
+),
+AND(
+ISPICKVAL(Type__c ,&apos;Budgeted Initiative&apos;),ISBLANK(Initiative__c) 
+),
+AND(
+ISPICKVAL(Type__c ,&apos;Focus Area Misc&apos;),ISBLANK(Initiative__c) 
+),
+AND(
+ISPICKVAL(Type__c ,&apos;Miscellaneous Initiative&apos;),ISBLANK(Initiative__c) 
+)
+
+)</errorConditionFormula>
+    <errorDisplayField>Initiative__c</errorDisplayField>
+    <errorMessage>Initiative is required for Parent or Budgeted or Miscellaneous Initiative or Focus Area Misc foundation codes.</errorMessage>
+</ValidationRule>

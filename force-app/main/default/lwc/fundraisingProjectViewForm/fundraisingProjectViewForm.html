@@ -1,0 +1,261 @@
+<template>
+    <lightning-record-view-form object-api-name={objectApiName} record-id={recordId}>
+            <lightning-messages></lightning-messages>
+            <div class="slds-box">
+                <div class="slds-form" role="list">
+                    <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+                        <lightning-accordion-section name="A" label="Information">
+                            <div class="slds-var-p-around_x-large">
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <lightning-output-field field-name="Name"
+                                                variant=" label-stacked">
+                                            </lightning-output-field>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <lightning-output-field field-name="Status__c"
+                                                variant=" label-stacked">
+                                            </lightning-output-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <lightning-output-field field-name="Political__c"
+                                                variant=" label-stacked">
+                                            </lightning-output-field>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <lightning-output-field field-name="Personal__c"
+                                                variant=" label-stacked">
+                                            </lightning-output-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <lightning-output-field field-name="Advocacy__c"
+                                                variant=" label-stacked">
+                                            </lightning-output-field>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </lightning-accordion-section>
+                        <lightning-accordion-section name="B" label="Recipient Organization">
+						    <div style={donorsStyle} class="slds-var-p-around_x-large">
+                                <lightning-datatable key-field="id" data={organizationsData} columns={organizationColumns}
+                                    hide-checkbox-column sorted-by={sortBy}
+                                    sorted-direction={sortDirection}
+                                    onsort={doSorting}
+                                >
+                                </lightning-datatable>
+						    </div>
+					</lightning-accordion-section>
+                        <lightning-accordion-section name="C" label="Project Details">
+                            <div class="slds-var-p-around_x-large">
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <lightning-output-field field-name="Fundraising_Project_Owner__c"
+                                                variant=" label-stacked">
+                                            </lightning-output-field>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <lightning-output-field field-name="BP_Role__c" variant=" label-stacked">
+										    </lightning-output-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <lightning-output-field field-name="Start_Date__c"
+                                                variant=" label-stacked">
+                                            </lightning-output-field>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <lightning-output-field field-name="End_Date__c"
+                                                variant=" label-stacked">
+                                            </lightning-output-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <lightning-output-field field-name="Currency__c"
+                                                variant=" label-stacked">
+                                            </lightning-output-field>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <lightning-output-field field-name="Goal_Target__c"
+                                                variant=" label-stacked">
+                                            </lightning-output-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <lightning-output-field field-name="Payments_NOT_Tracked__c"
+                                                variant=" label-stacked">
+                                            </lightning-output-field>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <lightning-output-field field-name="Total_Pledge_Amount__c"
+                                                variant=" label-stacked">
+                                            </lightning-output-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <lightning-output-field field-name="Notes__c"
+                                                variant=" label-stacked">
+                                            </lightning-output-field>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <lightning-output-field field-name="Outstanding_Amount__c"
+                                                variant=" label-stacked">
+                                            </lightning-output-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </lightning-accordion-section>
+                        <template lwc:if={hasFundraisingCodingAccess}>
+                            <lightning-accordion-section name="D" label="Coding">
+                                <div class="slds-var-p-around_x-large">
+                                    <div class="slds-form__row">
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent slds-size_6-of-12">
+                                                <lightning-output-field field-name="Foundation_Coding__c"
+                                                    variant=" label-stacked">
+                                                </lightning-output-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__row">
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent slds-size_6-of-12">
+                                                <lightning-output-field field-name="FC_Focus_Area__c"
+                                                    variant=" label-stacked">
+                                                </lightning-output-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__row">
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent slds-size_6-of-12">
+                                                <lightning-output-field field-name="FC_Initiative__c"
+                                                    variant=" label-stacked">
+                                                </lightning-output-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__row">
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent slds-size_6-of-12">
+                                                <lightning-output-field field-name="FC_Sub_Initiative__c"
+                                                    variant=" label-stacked">
+                                                </lightning-output-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__row">
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent slds-size_6-of-12">
+                                                <lightning-output-field field-name="FC_Sub_Sub_Initiative__c"
+                                                    variant=" label-stacked">
+                                                </lightning-output-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__row">
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent slds-size_6-of-12">
+                                                <lightning-output-field field-name="FC_Sub_Sub_Sub_Initiative__c"
+                                                    variant=" label-stacked">
+                                                </lightning-output-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-accordion-section>
+                        </template>
+                        <lightning-accordion-section name="E" label="System Information">
+						<div class="slds-var-p-around_x-large">
+							<div class="slds-form__row">
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+										<span class="slds-form-element__label">Created By</span>
+										<div class="slds-form-element__control">
+											<lightning-output-field field-name="CreatedById" variant="label-hidden">
+											</lightning-output-field>
+											<lightning-output-field field-name="CreatedDate" variant="label-hidden">
+											</lightning-output-field>
+										</div>
+									</div>
+								</div>
+								<div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+										<span class="slds-form-element__label">LastModified By</span>
+										<div class="slds-form-element__control">
+											<lightning-output-field field-name="LastModifiedById"
+												variant="label-hidden">
+											</lightning-output-field>
+											<lightning-output-field field-name="LastModifiedDate"
+												variant="label-hidden">
+											</lightning-output-field>
+										</div>
+									</div>
+								</div>
+                                
+							</div>
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+									<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+										<span class="slds-form-element__label">Source System ID</span>
+										<div class="slds-form-element__control">
+											<lightning-output-field field-name="Source_System_ID__c"
+												variant="label-hidden">
+											</lightning-output-field>
+										</div>
+									</div>
+								</div>
+                                <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                            <lightning-output-field field-name="Fundraising_Project_ID18__c"
+                                                variant=" label-stacked">
+                                            </lightning-output-field>
+                                        </div>
+                                    </div>
+							</div>
+						</div>
+					</lightning-accordion-section>
+                    </lightning-accordion>
+                </div>
+            </div>
+    </lightning-record-view-form>
+</template>

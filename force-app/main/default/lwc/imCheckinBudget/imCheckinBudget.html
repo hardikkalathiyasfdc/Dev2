@@ -1,0 +1,144 @@
+<!--
+@description       : Invoked on the click of Checkin button on Budget Record Detail Page, processes Excel file into Budget Data
+@author            : Sai Bhargav Thotakura
+@group             : Initiative Management 
+@last modified on  : 08-22-2025
+@jira              : IM-51 : Initiative Budget Checkin
+@last modified by  : Sai Bhargav Thotakura
+-->
+<template>
+	<!--Modal Header-->
+	<lightning-modal-header label={checkinBudgetLabel}></lightning-modal-header>
+	<!--Modal Body-->
+	<lightning-modal-body>
+		<!--Spinner for any long running operations-->
+		<template lwc:if={showSpinner}>
+			<lightning-spinner size="medium" variant="brand" alternative-text="Loading"></lightning-spinner>
+		</template>
+		<template lwc:else>
+			<div class="slds-var-m-around_medium slds-theme_default">
+				<lightning-progress-indicator class="readOnly" current-step={currentStep} type="path" variant="base">
+					<lightning-progress-step label={step1Label} value="1"></lightning-progress-step>
+					<lightning-progress-step label={step2Label} value="2"></lightning-progress-step>
+					<lightning-progress-step label={step3Label} value="3"></lightning-progress-step>
+				</lightning-progress-indicator>
+				<br />
+				<br />
+				<!--STEP 1-->
+				<template lwc:if={showUploadBudget}>
+					<lightning-card title={uploadTitle}>
+						<div class="slds-var-m-left_medium slds-box">
+							<lightning-file-upload
+								record-id={_recordId}
+								class="slds-theme_default slds-align_absolute-center"
+								name="fileUploader"
+								accept={acceptedFormats}
+								onuploadfinished={handleUploadFinished}>
+							</lightning-file-upload>
+						</div>
+					</lightning-card>
+				</template>
+				<!--STEP 2 START-->
+				<template lwc:if={showValidations}>
+					<br />
+					<div style="display: flex">
+						<div style="width: 25%">
+							<template for:each={validations} for:item="validationItem">
+								<div key={validationItem}>
+									<div style="display: flex" class="slds-var-p-around_xx-small slds-var-m-bottom_medium">
+										<div class={validationItem.pillClass}>{validationItem.Name}</div>
+										<lightning-progress-ring
+											value={validationItem.progressValue}
+											variant={validationItem.variant}
+											class="slds-var-m-left_small"></lightning-progress-ring>
+									</div>
+								</div>
+							</template>
+
+						</div>
+						<div
+							style="padding: 5px; width: 75%; height: 300px; border: 1px solid #d2cfcf; border-radius: 5px; margin-left: 10px; overflow: scroll">
+							<template for:each={messages} for:item="message">
+								<div key={message}>
+									<div style="color: #9d1010; display: flex; font-weight: 600" class="slds-var-p-around_xx-small slds-var-m-bottom_medium">
+										{message}
+									</div>
+								</div>
+							</template>
+						</div>
+
+					</div>
+				</template>
+				<!--STEP 2 END-->
+				<!--STEP 3 START-->
+				<template lwc:if={showConfirmData}>
+					<template lwc:if={showConfirmPartners}>
+						<lightning-card title="Confirm Unmapped Partners">
+							<lightning-button slot="actions" label="Create New Org(s)" onclick={handleNewOrgCreation} disabled={isCreateNewDisabled}></lightning-button>
+							<div class="slds-var-m-around_medium">
+								<table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_cell-buffer slds-border_left slds-border_right">
+									<thead>
+										<tr class="slds-text-title_caps slds-box slds-theme_shade">
+											<th class="slds-cell-wrap">Excel Value</th>
+											<th class="slds-cell-wrap">BRM Org</th>
+										</tr>
+									</thead>
+									<tbody>
+										<template for:each={uniqueOrgs} for:item="partner">
+											<tr key={partner}>
+												<td class="slds-cell-wrap">{partner.Name}</td>
+												<td class="slds-cell-wrap">
+													<lightning-record-picker
+														label="Select an Org"
+														placeholder="Search Organization..."
+														object-api-name="Account"
+														value={partner.Id}
+														data-id={partner.Name}
+														required="true"
+														onchange={handlePartnerChange}
+														display-info={displayInfo}
+														matching-info={matchingInfo}
+														variant="label-hidden"></lightning-record-picker>
+														<template lwc:if={partner.AKA}>
+															<div class="slds-var-m-top_xx-small slds-text-body_small slds-text-color_weak">AKA: {partner.AKA}</div>
+														</template>
+												</td>
+											</tr>
+										</template>
+                                       
+									</tbody>
+								</table>
+							</div>
+						</lightning-card>
+					</template>
+
+					<template lwc:else>
+						<label> Please click on "Save" to save the budget.</label>
+					</template>
+					<br />
+                   
+				</template>
+				<!--STEP 3 END-->
+			</div>
+		</template>
+	</lightning-modal-body>
+	<!--Modal Footer-->
+	<lightning-modal-footer>
+		<div class="slds-float_left">
+			<lightning-button
+				disabled={isPrevDisabled}
+				class="slds-button slds-var-m-bottom_xx-small"
+				variant="neutral"
+				label="Previous"
+				onclick={handlePrevious}></lightning-button>
+		</div>
+		<lightning-button
+			lwc:if={isSaveDisabled}
+			disabled
+			class="slds-button slds-var-m-bottom_xx-small"
+			variant="brand"
+			label="Save"
+			onclick={handleSave}></lightning-button>
+		<lightning-button lwc:else class="slds-button slds-var-m-bottom_xx-small" variant="brand" label="Save" onclick={handleSave}></lightning-button>
+	</lightning-modal-footer>
+</template>

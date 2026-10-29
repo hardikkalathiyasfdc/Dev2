@@ -1,0 +1,4 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,flexipage:availableForRecordHome,forceCommunity:availableForAllPageTypes,lightning:isUrlAddressable,force:hasRecordId" access="global">
+	<aura:attribute name="isLoaded" type="Boolean" default="false"/>
+    <c:listEditCmp recordId="{!v.recordId}" aura:id="editCmp"/>
+</aura:component>

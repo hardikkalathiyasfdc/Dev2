@@ -1,0 +1,38 @@
+<apex:page standardController="Campaign" recordSetVar="orgIds" extensions="ExportOrganizationHighlightsController" tabStyle="Campaign">
+
+    <apex:includeLightning />
+    <div id="LightningComponentid"/>
+
+    <script>
+       if ({!validOrganizationIds} == false) {
+            alert('Organization Highlights can only be exported from Organization Lists');
+            navigateToList('lightning/o/Campaign/list?filterName=Recent');
+       } else {
+        $Lightning.use(
+            "c:ExportOrganizationHighlightsApp",
+            function() { 
+                $Lightning.createComponent(
+                    "c:exportOrganizationHighlights", 
+                    {
+                        "exportFromList" : {!exportFromList},
+                        "organizationIds": "{!organizationIdsString}",
+                        "navigateToList" : navigateToList
+                    }, // attribute parameters
+                    "LightningComponentid",
+                    function(cmp) {
+                        console.log('#######LWC Componenet added in VF page');
+                    }
+                );
+            }
+        );
+       }
+       
+       function navigateToList(url) {
+         if(typeof sforce != 'undefined' && sforce && sforce.one){
+            sforce.one.navigateToURL(url);
+         } else {
+            window.location.href = url;
+         }
+       }
+    </script>
+</apex:page>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Eng_Initial_Load</fullName>
+    <columns>NAME</columns>
+    <columns>Initiative__c</columns>
+    <columns>Geo_Area__c</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>CREATEDBY_USER</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CREATEDBY_USER</field>
+        <operation>equals</operation>
+        <value>IM System</value>
+    </filters>
+    <label>Eng Initial Load</label>
+</ListView>

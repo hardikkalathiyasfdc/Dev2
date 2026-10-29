@@ -1,0 +1,48 @@
+<template>
+	<section class="slds-modal slds-fade-in-open slds-modal_small slds-align_absolute-center">
+		<template if:true={showCreation}>
+			<c-contact-creation oncancelation={handleCreationCancel} oncreate={handleCreationSuccess}></c-contact-creation>
+		</template>
+		<div class="slds-modal__container">
+			<header class="slds-modal__header">
+				<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Add Guest</h2>
+			</header>
+			<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="overflow: visible;">
+				<lightning-record-edit-form onsuccess={handleSuccess} onsubmit={handleSubmit} object-api-name="CampaignMember">
+			        <lightning-messages></lightning-messages>
+			        <lightning-input-field field-name="CampaignId" value={recordId} variant="label-stacked">
+					</lightning-input-field>
+			        <div class="slds-grid slds-p-horizontal_xx-small slds-m-bottom_x-small">
+						<span style="width:100%; margin-top:2px;" class="slds-var-p-right_x-small">
+							<c-contact-search onupdate={handleContactChange} multiple="false" section-label="Contact" 
+								selected-contacts={selectedContacts} show-significant-other="true">
+							</c-contact-search>
+						</span>
+				        <lightning-button-icon icon-name="utility:add" alternative-text="Add new Contact" 
+							class="slds-m-top_large" onclick={createNewContact}>
+						</lightning-button-icon>
+				    </div>
+			        <lightning-input-field field-name="Guest_Email__c" variant="label-stacked" value={contactEmail}>
+					</lightning-input-field>
+					<div class="slds-p-horizontal_xx-small slds-m-bottom_x-small">
+						<c-contact-search onupdate={handleGuestOfChange} multiple="false" section-label="Guest Of">
+						</c-contact-search>
+					</div>
+			        <lightning-input-field field-name="Source__c"  variant="label-stacked"></lightning-input-field>
+					<div class="slds-p-horizontal_xx-small slds-m-bottom_x-small slds-m-top_small">
+						<c-custom-group-dropdown options-map={rsvpAttendanceOptions} onselectionchange={handleSelectionChange} label="RSVP and Attendance">
+						</c-custom-group-dropdown>
+					</div>
+			        <div class="slds-align_absolute-center">
+			        	<lightning-button class="slds-m-top_small slds-m-right_small" variant="neutral" name="cancel"
+				            label="Cancel" onclick={handleCancel}>
+				        </lightning-button>
+				        <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Add" disabled={shallDisableSaveButton}>
+				        </lightning-button>
+				    </div>
+			    </lightning-record-edit-form>
+			</div>
+		</div>
+	</section>
+	<div class="slds-backdrop slds-backdrop_open"></div>
+</template>

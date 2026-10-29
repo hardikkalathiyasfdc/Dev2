@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>System_Triggered__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>IM-47: Set to true when Parent or Budgeted Initiative Foundation Code is created via apex</description>
+    <label>System Triggered</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

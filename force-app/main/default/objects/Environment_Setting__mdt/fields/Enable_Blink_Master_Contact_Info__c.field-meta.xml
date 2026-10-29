@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enable_Blink_Master_Contact_Info__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>BRME-6074: Checkbox to enable the visibility of &apos;Master Contact Info&apos; section in Blink tab.</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Enable Blink Master Contact Info</label>
+    <type>Checkbox</type>
+</CustomField>

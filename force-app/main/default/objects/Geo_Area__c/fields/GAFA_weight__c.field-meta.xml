@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GAFA_weight__c</fullName>
+    <description>This field stores the total combined weight from all GAFA records related to this Geo Area. It is automatically calculated and updated by a batch job that runs after the GAFA processing is complete. This value is used as a secondary sort criterion in search results involving Geo Areas. BRME-5847</description>
+    <externalId>false</externalId>
+    <label>GAFA weight</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

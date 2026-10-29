@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Include_In_Pipeline__c</fullName>
+    <description>IM-192: Formula field to show Initiative in Pipeline list view</description>
+    <formula>AND(
+OR(
+ISPICKVAL(Initiative_Type__c, &apos;New&apos;) ,
+ISPICKVAL(Initiative_Type__c, &apos;Renewal&apos;) ,
+ISPICKVAL(Initiative_Type__c, &apos;Amendment&apos;) 
+), 
+OR( 
+ISPICKVAL( Status__c , &apos;In Development&apos;) , 
+ISPICKVAL(Status__c, &apos;Ready for Approval&apos;) 
+) 
+)</formula>
+    <label>Include In Pipeline</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

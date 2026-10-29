@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recipient_Soft_Credit__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This Gives the contact associated to the Recipient organization.</description>
+    <label>Recipient - Soft Credit</label>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Recipient Organizations</relationshipLabel>
+    <relationshipName>Recipient_Organizations</relationshipName>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

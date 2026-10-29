@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Gives Access to Users who could be able to create Board Member Interactions report - this custom report lives on Dashboard(s)</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Generate: Board Member Interactions Report</label>
+    <pageAccesses>
+        <apexPage>BoardMemberInteractions</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+</PermissionSet>

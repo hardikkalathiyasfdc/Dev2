@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionSubtype>ScreenAction</actionSubtype>
+    <description>BRME-7045: Allows the Pipeline Manager to send an Initiative/Amendment back to In
+        Development with a Revisions Reason.</description>
+    <label>Request Revisions</label>
+    <lightningWebComponent>imRequestRevision</lightningWebComponent>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>LightningWebComponent</type>
+</QuickAction>

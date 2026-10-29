@@ -1,0 +1,148 @@
+<template>
+    <div class="slds-section slds-is-open">
+        <h3 class="slds-section__title slds-theme_shade">
+            <span class="slds-truncate slds-var-p-horizontal_small" title="Section Title">Bgive Grant Info</span>
+        </h3>
+        <div class="slds-grid">
+            <div class="slds-col slds-size_5-of-12">
+                <div class="slds-form-element_horizontal">
+                    <template lwc:if={isContigIdEditable}>
+                        <div class="slds-m-bottom_medium slds-m-top_small">
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item size="11">
+                                    <lightning-input type="text" label="Bgive Request Id" placeholder="Enter request id"
+                                        class="contigId" field-level-help="Please only use the numbers after BP-XXXX-">
+                                    </lightning-input>
+
+                                    <div lwc:if={isError} style="margin-left: 33%;color: #b22e2e;">
+                                        {grantErrorMessage}
+                                    </div>
+
+                                </lightning-layout-item>
+                                <lightning-layout-item size="1">
+                                    <lightning-button-icon icon-name="utility:search" variant="brand"
+                                        alternative-text="Search" title="Search" onclick={handleGrantSearch}
+                                        class="slds-m-left_small">
+                                    </lightning-button-icon>
+
+                                </lightning-layout-item>
+                            </lightning-layout>
+
+                        </div>
+                    </template>
+                    <template lwc:else>
+                        <div class="slds-grid slds-m-bottom_medium slds-m-top_small">
+                            <div class="slds-col slds-size_4-of-12">
+                                <p><lightning-formatted-text value="Bgive Request Id"
+                                        class="slds-font-style"></lightning-formatted-text></p>
+                            </div>
+                            <div class="slds-col slds-size_5-of-12">
+                                <template lwc:if={hasBgiveURL}>
+                                    <p>
+                                        <a href={bgiveGrantURL} target="_blank" rel="noopener noreferrer">
+                                            {imGrant.Bgive_Contig_Id__c}
+                                        </a>
+                                    </p>
+                                </template>
+                                <template lwc:else>
+                                    <p><lightning-formatted-text
+                                            value={imGrant.Bgive_Contig_Id__c}></lightning-formatted-text></p>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                    <div class="slds-grid slds-m-bottom_medium">
+                        <div class="slds-col slds-size_4-of-12">
+                            <p><lightning-formatted-text value="Bgive Grant Status"
+                                    class="slds-font-style"></lightning-formatted-text></p>
+                        </div>
+                        <div class="slds-col slds-size_5-of-12">
+                            <p><lightning-formatted-text value={grantRequest.state}></lightning-formatted-text></p>
+                        </div>
+                    </div>
+                    <template if:false={isSingleBeforeCreation}>
+                        <div class="slds-grid slds-m-top_small">
+                            <div class="slds-col slds-size_4-of-12">
+                                <p><lightning-formatted-text value="Project Title (internal)"
+                                        class="slds-font-style"></lightning-formatted-text></p>
+                            </div>
+                            <div class="slds-col slds-size_5-of-12">
+                                <p><lightning-formatted-text
+                                        value={grantRequest.project_title_internal}></lightning-formatted-text></p>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-12"></div>
+            <div class="slds-col slds-size_5-of-12">
+                <div class="slds-form-element_horizontal">
+                    <div class="slds-grid slds-m-bottom_medium slds-m-top_x-small">
+                        <div class="slds-col slds-size_4-of-12">
+                            <p><lightning-formatted-text value="Bgive Grantee Name"
+                                    class="slds-font-style"></lightning-formatted-text></p>
+                        </div>
+                        <div class="slds-col slds-size_5-of-12">
+                            <p>
+                                <lightning-formatted-text value={grantRequest.program_org_name} class="slds-font-style">
+                                </lightning-formatted-text>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-m-bottom_medium slds-m-top_x-small">
+                        <div class="slds-col slds-size_4-of-12">
+                            <p><lightning-formatted-text value="Current Bgive Amount (Local)"
+                                    class="slds-font-style"></lightning-formatted-text></p>
+                        </div>
+                        <div class="slds-col slds-size_5-of-12">
+                            <p>
+                                <lightning-formatted-number value={grantRequest.amount_recommended_local}
+                                    minimum-fraction-digits="2">
+                                </lightning-formatted-number>
+                            </p>
+                        </div>
+                    </div>
+                    <template if:true={isFutureAmount}>
+                        <div class="slds-grid slds-m-bottom_medium slds-m-top_small">
+                            <div class="slds-col slds-size_4-of-12">
+                                <p><lightning-formatted-text value="Future Bgive Amount(Local)"
+                                        class="slds-font-style"></lightning-formatted-text></p>
+                            </div>
+                            <div class="slds-col slds-size_5-of-12">
+                                <p>
+                                    <lightning-formatted-number value={futureAmount} minimum-fraction-digits="2">
+                                    </lightning-formatted-number>
+                                </p>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={isAmendment}>
+                        <div class="slds-grid slds-m-bottom_medium slds-m-top_small">
+                            <div class="slds-col slds-size_4-of-12">
+                                <p><lightning-formatted-text value="New Total Amount Recommended (Local)"
+                                        class="slds-font-style"></lightning-formatted-text></p>
+                            </div>
+                            <div class="slds-col slds-size_5-of-12">
+                                <p>
+                                    <lightning-formatted-number value={imGrant.Amendment_Future_Amount_Local__c}
+                                        minimum-fraction-digits="2">
+                                    </lightning-formatted-number>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-m-top_small">
+                            <div class="slds-col slds-size_4-of-12">
+                                <p><lightning-formatted-text value="Amendment Id"
+                                        class="slds-font-style"></lightning-formatted-text></p>
+                            </div>
+                            <div class="slds-col slds-size_5-of-12">
+                                <p><lightning-formatted-text
+                                        value={imGrant.Amendment_Bgive_Id__c}></lightning-formatted-text></p>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

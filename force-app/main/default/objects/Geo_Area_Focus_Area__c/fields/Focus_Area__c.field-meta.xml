@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Focus_Area__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Lookup to Focus Area</description>
+    <label>Focus Area</label>
+    <referenceTo>Focus_Area__c</referenceTo>
+    <relationshipLabel>Geo Area Focus Areas</relationshipLabel>
+    <relationshipName>Geo_Area_Focus_Areas</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

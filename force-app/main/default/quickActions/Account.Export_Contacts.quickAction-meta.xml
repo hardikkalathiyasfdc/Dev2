@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Surfaces the &quot;Contacts Export on Account&quot; flow to call it via url. (BRME-5682)</description>
+    <flowDefinition>Contacts_Exports_on_Account</flowDefinition>
+    <label>Export Contacts</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>

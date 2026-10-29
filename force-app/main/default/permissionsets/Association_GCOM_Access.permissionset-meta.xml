@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Grants Access to the Bloomberg Connects Recordtype from the Organization Association object (BRME-5656).  Allows users to Create, Edit, Delete, and Clone Bloomberg Connects Organiztion Association</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Associations: Organization Association Create/Edit Bloomberg Connects</label>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Org_Association__c</object>
+        <viewAllFields>false</viewAllFields>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <recordTypeVisibilities>
+        <recordType>Org_Association__c.Bloomberg_Connects</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>QUESTION FOR ENG -- DO WE NEED THIS OR COVERED WITH DASHBOARD MANAGEMENT PERM SET? 
+To give out Edit permission for people to edit existing dashboard</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Dashboard: Edit permission &quot;View As&quot;</label>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ManageDynamicDashboards</name>
+    </userPermissions>
+</PermissionSet>

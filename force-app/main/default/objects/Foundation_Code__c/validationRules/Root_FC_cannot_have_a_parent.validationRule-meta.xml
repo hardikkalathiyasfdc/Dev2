@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Root_FC_cannot_have_a_parent</fullName>
+    <active>true</active>
+    <description>IM-76: Parent must be blank if Type contains root.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Foundation_Code_Validation__c &amp;&amp; 
+AND(
+OR(
+ISPICKVAL( Type__c ,&apos;Initiative Root&apos;),
+ISPICKVAL( Type__c ,&apos;Non Initiative Root&apos;)
+),
+NOT(ISBLANK( Parent__c ))
+)</errorConditionFormula>
+    <errorDisplayField>Parent__c</errorDisplayField>
+    <errorMessage>Parent can not be set for Root Foundation Codes.</errorMessage>
+</ValidationRule>

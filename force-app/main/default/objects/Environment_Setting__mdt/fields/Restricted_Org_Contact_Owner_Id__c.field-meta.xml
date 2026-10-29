@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restricted_Org_Contact_Owner_Id__c</fullName>
+    <description>User Id of the owner for Restricted Orgs/Contacts(BRME-5511)</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>User Id of the owner for Restricted Orgs/Contacts</inlineHelpText>
+    <label>Restricted Org/Contact Owner Id</label>
+    <length>255</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Highlight__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>BRME-6972: Stores the Highlight Interaction record to which file group is associated</description>
+    <label>Highlight</label>
+    <referenceTo>Highlight_Interaction__c</referenceTo>
+    <relationshipLabel>File Groups</relationshipLabel>
+    <relationshipName>File_Groups</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

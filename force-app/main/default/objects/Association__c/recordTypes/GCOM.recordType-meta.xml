@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GCOM</fullName>
+    <active>true</active>
+    <label>CityView (GCOM)</label>
+    <picklistValues>
+        <picklist>Association_Category__c</picklist>
+        <values>
+            <fullName>Finalist</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Participant</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Winner</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Association_Type__c</picklist>
+        <values>
+            <fullName>Bloomberg Connects</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>City View</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Team__c</picklist>
+        <values>
+            <fullName>Advocacy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Arts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Environment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finance %26 Accounting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Founder%27s Greenwood Init%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Founder%27s Projects</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Founder%27s Women%27s Economic Dev%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Government Innovation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LP Global Corp Phil</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Public Health</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

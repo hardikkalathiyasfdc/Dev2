@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>New_Contact_Participant</fullName>
+    <availability>online</availability>
+    <description>BRME-6956: New Related List URL Button for Contact participant .</description>
+    <displayType>massActionButton</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <height>600</height>
+    <linkType>url</linkType>
+    <masterLabel>New</masterLabel>
+    <openType>noSidebar</openType>
+    <protected>false</protected>
+    <requireRowSelection>false</requireRowSelection>
+    <url>/lightning/o/Interaction_Participant__c/new?defaultFieldValues=Highlight__c={!Highlight_Interaction__c.Id},Type__c=Contact&amp;navigationLocation=RELATED_LIST</url>
+</WebLink>

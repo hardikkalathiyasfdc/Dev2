@@ -1,0 +1,67 @@
+<aura:component
+  implements="flexipage:availableForRecordHome,force:hasRecordId"
+  controller="TagsCmpController"
+  access="global"
+>
+  <aura:attribute name="isLoading" type="Boolean" default="true" />
+  <aura:attribute name="whereClause" type="string" default="" />
+  <aura:attribute name="helpText" type="string" default="" />
+  <aura:attribute name="tags" type="List" default="[]" />
+  <aura:attribute
+    name="listOfSearchRecords"
+    type="List"
+    description="Use,for store the list of search records which returns from apex class"
+  />
+  <aura:handler
+    name="oSelectedRecordEvent"
+    event="c:SelectedsObjectRecordEvent"
+    action="{!c.addTag}"
+  />
+  <ltng:require scripts="{!$Resource.cmputil}" afterScriptsLoaded="{!c.init}" />
+
+  <article
+    class="slds-card myCard"
+    data-aura-rendered-by="486:0"
+    data-aura-class="cTagsCmp"
+  >
+    <div class="slds-card__body" style="height:120px;overflow-y:scroll;">
+      <aura:if isTrue="{!v.isLoading}">
+        <lightning:spinner alternativeText="Loading" size="medium" />
+      </aura:if>
+      <div class="slds-grid slds-grid_vertical">
+        <div class="slds-col">
+          <h2 class="slds-text-heading--small header">
+            <lightning:icon
+              iconName="standard:topic2"
+              size="small"
+              alternativeText="Tags"
+            />
+            <span class="headerTitleTopics">
+              Tags ({!v.tags.length})
+              <lightning:helptext
+                content="{!v.helpText}"
+                class="helpText"
+            /></span>
+          </h2>
+        </div>
+        <div class="slds-col">
+          <c:CustomLookup
+            objectAPIName="tag__c"
+            whereClause="{!v.whereClause}"
+            IconName="standard:topic2"
+            enableEnter="true"
+            placeHolder="Just start typing"
+          />
+        </div>
+      </div>
+      <aura:if isTrue="{!not(empty(v.tags))}">
+        <div class="slds-col" style="margin-top: 2%">
+          <lightning:pillContainer
+            items="{!v.tags}"
+            onitemremove="{!c.removeTag}"
+          />
+        </div>
+      </aura:if>
+    </div>
+  </article>
+</aura:component>

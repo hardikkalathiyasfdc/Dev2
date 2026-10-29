@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Initiative_Type_Validation</fullName>
+    <active>true</active>
+    <description>IM-47: The Initiative should not be populated if Foundation code type is not Parent or Budgeted or Miscellaneous Initiative or Focus Area Misc</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Foundation_Code_Validation__c &amp;&amp;
+AND(
+ AND(
+ NOT( ISPICKVAL( Type__c , &apos;Parent Initiative&apos;) ) ,
+ NOT( ISPICKVAL( Type__c , &apos;Budgeted Initiative&apos;) ),
+ NOT( ISPICKVAL( Type__c , &apos;Miscellaneous Initiative&apos;)),
+ NOT( ISPICKVAL( Type__c , &apos;Focus Area Misc&apos;))
+ ) ,
+ NOT(ISBLANK(Initiative__c)) 
+)</errorConditionFormula>
+    <errorDisplayField>Initiative__c</errorDisplayField>
+    <errorMessage>Initiative cannot be set for this foundation code type.</errorMessage>
+</ValidationRule>

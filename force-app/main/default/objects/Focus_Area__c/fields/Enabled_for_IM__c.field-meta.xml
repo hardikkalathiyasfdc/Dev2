@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enabled_for_IM__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>BRME - 6152: Indicates whether a given Focus Area is enabled for use in Initiative Management</description>
+    <label>Enabled for IM</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

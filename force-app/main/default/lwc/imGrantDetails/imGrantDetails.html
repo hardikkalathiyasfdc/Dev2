@@ -1,0 +1,143 @@
+<!--
+  @description       : 
+  @author            : Gauri S
+  @group             : 
+  @last modified on  : 08-14-2025
+  @last modified by  : Sai Bhargav Thotakura
+-->
+<template>
+	<div class="slds-section slds-is-open">
+		<h3 class="slds-section__title slds-theme_shade">
+			<span class="slds-truncate slds-var-p-horizontal_small" title="Section Title">Grant Details</span>
+		</h3>
+		<div class="slds-grid">
+			<!-- Fields in the left column on UI -->
+			<div class="slds-col slds-size_5-of-12">
+				<div class="slds-form-element_horizontal">
+					<div class="slds-grid slds-m-bottom_small slds-m-top_small">
+						<div class="slds-col slds-size_4-of-12">
+							<p><lightning-formatted-text value="Fiscal Sponsor" class="slds-font-style"></lightning-formatted-text></p>
+						</div>
+						<!--IM-316: Show Not B-Linked if the org is not B-Linked-->
+						<template lwc:if={isFiscalSponsorNotBlinked}>
+							<lightning-layout class="slds-m-around_none" vertical-align="center">
+								<lightning-layout-item flexibility="auto">
+									<div class="display-class">
+										<p><lightning-formatted-text value={fiscalSponsor}></lightning-formatted-text></p>
+										<div class="not-blinked-class">
+											<lightning-formatted-text class="custom-bold" value="(Not B-Linked)"></lightning-formatted-text>
+										</div>
+									</div>
+								</lightning-layout-item>
+							</lightning-layout>
+						</template>
+						<template lwc:else>
+							<p><lightning-formatted-text value={fiscalSponsor}></lightning-formatted-text></p>
+						</template>
+					</div>
+					<div class="slds-grid slds-m-bottom_medium slds-m-top_medium">
+						<div class="slds-col slds-size_4-of-12">
+							<p><lightning-formatted-text value="Team" class="slds-font-style"></lightning-formatted-text></p>
+						</div>
+						<div class="slds-col slds-size_5-of-12">
+							<p><lightning-formatted-text value={budgetGrant.Budget__r.Initiative__r.Team__r.Name}></lightning-formatted-text></p>
+						</div>
+					</div>
+					<div class="slds-m-top_small">
+						<lightning-record-picker label="Segment" placeholder="Search Segments..."
+							object-api-name="Segment__c" value={dataJSON.IM_Grant__c.segment_id}
+							onchange={handleSegmentChange} disabled={isReadOnly}>
+						</lightning-record-picker>
+					</div>
+					<lightning-combobox name="theme" label="Theme" value={dataJSON.IM_Grant__c.model_theme_id}
+						options={themeOptions} placeholder="Select" class="slds-m-top_small" disabled="true">
+					</lightning-combobox>
+					<div class="slds-m-top_small slds-m-bottom_x-small">
+						<lightning-record-picker label="Program Contact" placeholder="Search program contacts"
+							object-api-name="User" value={dataJSON.IM_Grant__c.program_lead_id} disabled={isReadOnly}
+							onchange={handleProgramContactChange}>
+						</lightning-record-picker>
+					</div>
+					<lightning-record-picker label="Grants Contact" placeholder="Search grant contacts"
+						object-api-name="User" value={dataJSON.IM_Grant__c.operations_contact} disabled={isReadOnly}
+						onchange={handleGrantContactChange}>
+					</lightning-record-picker>
+					<template lwc:if={isSingleBeforeCreation}>
+						<div class="slds-m-top_small">
+							<p>
+								<lightning-input type="text" value={imGrant.Project_Title_Internal__c}
+									label="Project Title (internal)" onchange={handleProjectTitleChange}
+									disabled={isReadOnly}>
+								</lightning-input>
+							</p>
+						</div>
+					</template>
+					<lightning-combobox name="Request Type" label="Request Type"
+						value={dataJSON.IM_Grant__c.request_type} options={requestTypeValues} placeholder="Select"
+						disabled={isReadOnly} class="slds-m-top_x-small" onchange={handleRequestTypeChange}>
+					</lightning-combobox>
+					<lightning-combobox name="typeOfSupport" label="Type of Support"
+						value={dataJSON.IM_Grant__c.type_of_support} options={supportOptions} placeholder="Select"
+						disabled={isReadOnly} class="slds-m-top_x-small" onchange={handleSupportTypeChange}>
+					</lightning-combobox>
+				</div>
+			</div>
+			<div class="slds-col slds-size_1-of-12"></div>
+			<!-- Fields in the right column on UI -->
+			<div class="slds-col slds-size_5-of-12">
+				<div class="slds-form-element_horizontal">
+					<div class="slds-grid slds-m-bottom_small slds-m-top_small">
+						<div class="slds-col slds-size_4-of-12">
+							<p><lightning-formatted-text value="State" class="slds-font-style"></lightning-formatted-text></p>
+						</div>
+						<div class="slds-col slds-size_5-of-12">
+							<p><lightning-formatted-text value={dataJSON.IM_Grant__c.state}></lightning-formatted-text></p>
+						</div>
+					</div>
+					<lightning-combobox name="grantAgreementRequired" label="Agreement Required"
+						value={dataJSON.IM_Grant__c.grant_agreement_required} options={agreementRequiredOptions}
+						disabled={isReadOnly} placeholder="Select" class="slds-m-top_x-small"
+						onchange={handleAgreementRequiredChange}>
+					</lightning-combobox>
+					<template lwc:if={isAgreementRequired}>
+						<lightning-combobox name="typeOfAgreement" label="Type of Agreement"
+							value={dataJSON.IM_Grant__c.type_of_agreement} options={agreementTypeOptions}
+							disabled={isReadOnly} placeholder="Select" class="slds-m-top_x-small"
+							onchange={handleTypeOfAgreementChange}>
+						</lightning-combobox>
+					</template>
+					<lightning-combobox name="restricted" label="Is this Grant Restricted?"
+						value={dataJSON.IM_Grant__c.is_this_grant_restricted} options={restrictionOptions}
+						disabled={isReadOnly} placeholder="Select" class="slds-m-top_x-small"
+						onchange={handleGrantRestrictionChange}>
+					</lightning-combobox>
+					<lightning-combobox name="businessUnit" label="Business Unit on Behalf Of"
+						value={dataJSON.IM_Grant__c.bbg_department_on_behalf_of} options={BusinessUnitOptions}
+						disabled={isReadOnly} placeholder="Select" class="slds-m-top_x-small"
+						onchange={handleBusinessUnitChange}>
+					</lightning-combobox>
+					<div class="slds-grid slds-m-bottom_x-small"></div>
+					<lightning-record-picker label="Fund" placeholder="Search funds" value={imGrant.Fund__c}
+						object-api-name="Fund__c" disabled={isReadOnly} onchange={handleFundChange}>
+					</lightning-record-picker>
+					<template lwc:if={isPersonalFund}>
+						<div class="slds-grid slds-grid_vertical">
+							<div class="slds-col">
+								<lightning-combobox name="campaign" label={campaignLabel} value={campaign}
+									options={campaignOptions} class="slds-m-top_x-small" disabled={isReadOnly}
+									onchange={handleCampaignChange}>
+								</lightning-combobox>
+							</div>
+							<div class="slds-col">
+								<lightning-combobox name="advocacy" label={advocacyLabel} value={advocacy}
+									options={advocacyOptions} class="slds-m-top_x-small" disabled={isReadOnly}
+									onchange={handleAdvocacyChange}>
+								</lightning-combobox>
+							</div>
+						</div>
+					</template>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

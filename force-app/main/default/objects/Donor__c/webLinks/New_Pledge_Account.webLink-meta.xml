@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>New_Pledge_Account</fullName>
+    <availability>online</availability>
+    <description>BRME-5815: Opens the New Pledge form pre-populated with the Organization as the primary donor.</description>
+    <displayType>massActionButton</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <height>600</height>
+    <linkType>url</linkType>
+    <masterLabel>New Pledge</masterLabel>
+    <openType>sidebar</openType>
+    <protected>false</protected>
+    <requireRowSelection>true</requireRowSelection>
+    <url>/lightning/action/quick/Account.New_Pledge?context=RECORD_DETAIL&amp;recordId={!CASESAFEID(Account.Id)}&amp;backgroundContext=/lightning/r/Account/{!CASESAFEID(Account.Id)}/view</url>
+</WebLink>

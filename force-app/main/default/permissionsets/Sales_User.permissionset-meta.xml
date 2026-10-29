@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Enables Campaign Influence functionality in the Sales app for eligible users (Opportunity ↔ Campaign influence association and reporting)</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Sales User</label>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>CampaignInfluence2</name>
+    </userPermissions>
+</PermissionSet>

@@ -1,0 +1,42 @@
+<template>
+    <template if:true={isGeoAreaIdAvailable}>
+        <div class="slds-m-top_small box slds-p-around_x-small" style="background-color: white; clear: both;"
+            id={geoAreaId}>
+            <h3>Employee Travel</h3>
+            <div style={tableStyle}>
+                <table class="slds-table">
+                    <tbody>
+                        <template if:true={showTravelDetails}>
+                            <template for:each={travelDetails} for:item="city">
+                                <tr key={city.Id} class="table-border">
+                                    <td>
+                                        <div class="wrapped-content">
+                                            <a href="javascript:void(0);" data-id={city.Id}
+                                                onclick={handleShowDescription}>
+                                                {city.formattedStartDate} - {city.formattedEndDate}: {city.ContactNames}
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <template if:true={city.showDescription}>
+                                    <tr key={city.descKey} class="table-border">
+                                        <td class="wrapped-content">
+                                            <lightning-formatted-rich-text value={city.displayDescription}
+                                                class="wrapped-content">
+                                            </lightning-formatted-rich-text>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </template>
+                        </template>
+                        <template if:false={showTravelDetails}>
+                            <tr>
+                                <td>No Travel Detail(s)</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </template>
+</template>

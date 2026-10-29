@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Foundation_Code__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>IM-78: Used to capture the Foundation Code under which this Initiative falls.</description>
+    <label>Foundation Code</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Foundation_Code__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Active, Retired</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Foundation_Code__c</referenceTo>
+    <relationshipLabel>Initiatives (Foundation Code)</relationshipLabel>
+    <relationshipName>Initiatives_Foundation_Code</relationshipName>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

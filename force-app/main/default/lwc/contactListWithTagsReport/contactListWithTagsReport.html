@@ -1,0 +1,174 @@
+<!--
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @last modified on  : 05-01-2025
+  @last modified by  : Nishant Bakhrey
+-->
+<template>
+    <lightning-spinner lwc:if={isLoading} alternative-text="Loading" variant="brand" size="large">
+    </lightning-spinner>
+    <lightning-card>
+        <lightning-layout multiple-rows="true" class="slds-var-p-horizontal_xx-large">
+            <lightning-layout-item class="slds-var-p-horizontal_small slds-var-p-vertical_large" size="12">
+                <div class="slds-box slds-theme_default slds-var-p-vertical_medium">
+                <lightning-layout multiple-rows="true">
+                        <lightning-layout-item class="slds-var-p-top_large slds-var-p-horizontal_xx-large" size="12">
+
+                            <div class="slds-grid slds-wrap slds-grid_vertical-align-end slds-m-bottom_medium">
+
+                                <div class="slds-col slds-size_11-of-12 slds-p-right_x-small">
+                                    <lightning-combobox 
+                                        name="savedSearch" 
+                                        label="Load Saved Search Criteria"
+                                        value={selectedSavedSearchId} 
+                                        placeholder="Select Saved Search" 
+                                        options={savedSearchOptions} 
+                                        onchange={handleSavedSearchChange}>
+                                    </lightning-combobox>
+                                </div>
+
+                                <div class="slds-col slds-size_1-of-12 slds-text-align_right">
+                                    <lightning-button 
+                                        label="Delete" 
+                                        variant="destructive" 
+                                        onclick={handleDeleteSavedSearch}
+                                        disabled={disableDeleteButton}>
+                                    </lightning-button>
+                                </div>
+
+                            </div>
+
+                            <c-generic-lookup 
+                                data-id="campaign-lookup" 
+                                label="Select List(s)" 
+                                object-api-name="Campaign" 
+                                display-fields={campaignDisplayFields}
+                                display-field-prefixes={campaignDisplayFieldPrefixes}
+                                search-fields={campaignSearchFields}
+                                icon="standard:campaign"
+                                is-multi-select="true"
+                                custom-search-class="WeightedFieldLookupSearch"
+                                search-config={campaignSearchConfig}
+                                default-selected-ids={campaignDefaultIds}
+                                onchange={listSelected}>
+                            </c-generic-lookup>
+                            <lightning-dual-listbox class="slds-var-p-top_x-large slds-var-p-bottom_xx-large" name="lists" label="Select Lists"
+                                selected-label="Selected" field-level-help="Available lists" options={listOptions} 
+                                onchange={handleOrderedListChange} value={listValues} source-label="Available">
+                            </lightning-dual-listbox>
+                            <div class="slds-var-p-top_x-large slds-var-p-bottom_xx-large">
+                                <c-generic-lookup 
+                                    data-id="tag-lookup" 
+                                    label="Select Tag(s)" 
+                                    object-api-name="Tag__c"
+                                    allow-new-record={disableNewRecord}
+                                    display-fields={tagDisplayFields}
+                                    display-field-prefixes={tagDisplayFieldPrefixes}
+                                    search-fields={tagSearchFields}
+                                    icon="standard:topic2"
+                                    is-multi-select="true"
+                                    default-selected-ids={tagDefaultIds}
+                                    onchange={tagSelected}>
+                                </c-generic-lookup>
+                            </div>
+                            <c-generic-lookup 
+                                data-id="contact-lookup" 
+                                label="Select Additional Contact(s)" 
+                                object-api-name="Contact"
+                                display-fields={contactDisplayFields}
+                                allow-new-record={disableNewRecord}
+                                display-field-prefixes={contactDisplayFieldPrefixes}
+                                search-fields={contactSearchFields}
+                                icon="standard:contact"
+                                is-multi-select="true"
+                                custom-search-class="ContactLookupSearch"
+                                default-selected-ids={contactDefaultIds}
+                                onchange={contactSelected}>
+                            </c-generic-lookup>
+                        </lightning-layout-item>
+                        <lightning-layout-item class="slds-var-p-bottom_medium slds-var-p-top_xx-large" size="10">
+                            <div class="slds-align_absolute-center">
+                                <lightning-helptext style="margin-top: -1.2rem" content="Removes duplicate list sources after generating results based on selected list hierarchy">
+                                </lightning-helptext>
+                                <lightning-input class="slds-var-p-left_small" type="toggle" label="Narrow Lists to Display Top List Only" 
+                                    onchange={handleRemoveDuplicates} checked={removeDuplicates}>
+                                </lightning-input>  
+                                <lightning-button class="slds-var-p-left_xx-large" variant="brand" label="Generate Results" title="Generate Results" onclick={handleRunReport}>
+                                </lightning-button> 
+                                <lightning-button class="slds-var-p-left_large" variant="brand" label="Save Search" title="Save Search" onclick={handleOpenSaveSearch}>
+                                </lightning-button>
+                                <lightning-button class="slds-var-p-left_large" variant="brand" label="Clear" title="Clear" onclick={handleClear}>
+                                </lightning-button>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+                        </lightning-layout-item>
+            <lightning-layout-item size="12" class="slds-var-p-horizontal_small slds-var-p-top_xx-large slds-var-p-bottom_large">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <span class="slds-text-heading_small">{totalCount}</span><br>
+                        <span class="slds-text-heading_small slds-text-color_error">{totalDoNotContactCount}</span>
+                    </div>
+                    <div>
+                        <c-custom-pagination lwc:if={shallShowPagination} total-pages={totalPages} current-page={currentPage} 
+                            onpagechange={handlePageChange}>
+                        </c-custom-pagination>
+                    </div>
+                    <div>
+                        <lightning-button variant="brand" label="Export Results" title="Export Results" 
+                            onclick={handleExportReport} disabled={addToListdisabled}>
+                        </lightning-button>
+                        <lightning-button class="slds-var-p-left_large" variant="brand" label="Add to List" title="Add to List" 
+                            onclick={handleAddToList} disabled={addToListdisabled}>
+                        </lightning-button>
+                    </div>
+                </div>
+                        </lightning-layout-item>
+            <lightning-layout-item class="slds-var-p-horizontal_small" size="12">
+                <div style="height: 400px;" lwc:if={showTable}>
+                    <lightning-datatable key-field="id" data={paginatedData} columns={columns} hide-checkbox-column="true">
+                    </lightning-datatable>
+                            </div>
+                        </lightning-layout-item>
+                </lightning-layout>            
+            </lightning-card>
+    <c-add-list-tag-results-to-list lwc:if={isShowAddToListModal} onclosemodal={handleCloseModal} onshownewmodal={handleShowNewModal} 
+        contact-list-tag-data={contactIds} contact-sources={contactSources}>
+    </c-add-list-tag-results-to-list>
+    <c-add-list-tag-results-to-new-list lwc:if={isShowNewModal} onclosemodal={handleCloseNewModal} 
+        contact-list-tag-data={contactIds} contact-sources={contactSources}>
+    </c-add-list-tag-results-to-new-list>
+    <c-export-contacts-from-list-tag-tools lwc:if={showExport} additional-contact-ids={selectedContactIds} contact-ids={contactIds} 
+        list-ids={listValues} tag-ids={selectedTagIds} is-remove-duplicates ={removeDuplicates} oncloseexport={handleCloseExport}>
+    </c-export-contacts-from-list-tag-tools>
+
+    <c-list-tag-saved-search-popup data-id="saved-search-popup" 
+        selected-saved-search={selectedSavedSearch} 
+        available-lists={availableListsString} 
+        list-ids={listIdsString} selected-additional-contacts={selectedAdditionalContactsString} selected-lists={selectedListsString} selected-tags={selectedTagsString} onsaved={handleSearchSaved}
+    >
+    </c-list-tag-saved-search-popup>
+
+    <template if:true={showDeleteModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">Delete Saved Search</h2>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium">
+                    Are you sure you want to delete this saved search?
+                </div>
+
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="neutral" label="Cancel" onclick={cancelDelete}></lightning-button>
+                    <lightning-button variant="destructive" label="Delete" class="slds-m-left_small" onclick={confirmDelete}></lightning-button>
+                </footer>
+
+            </div>
+        </section>
+
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

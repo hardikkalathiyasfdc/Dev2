@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recipient_Organization_Lookup__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This is the Backend field Used to create Related list (or) (Widget) of Fundraising - Recipient Summary on Organization records</description>
+    <label>Recipient Organization</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Fundraising - Receiving</relationshipLabel>
+    <relationshipName>Donors1</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

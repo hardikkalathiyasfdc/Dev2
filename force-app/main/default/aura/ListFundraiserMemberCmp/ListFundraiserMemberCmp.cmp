@@ -1,0 +1,298 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId">
+  <aura:html tag="style">
+    section .slds-modal__container{ width:800px !important;}
+  </aura:html>
+  <aura:attribute name="listId" type="String" default=""></aura:attribute>
+  <aura:attribute name="recordTypeId" type="String" default=""></aura:attribute>
+  <aura:attribute name="selectedRecordTypeId" type="String" default=""></aura:attribute>
+  <aura:attribute name="selectedTypeName" type="String" default=""></aura:attribute>
+  <aura:attribute name="recordTypeMap" type="List" default=""></aura:attribute>
+  <aura:attribute
+    name="activeSections"
+    type="List"
+    default="['DonorInformation','PointOfContact','giftInformation','listingTextAndLocation','agreements','notes']"
+  ></aura:attribute>
+  <aura:attribute name="isLoading" type="Boolean" default="true" />
+  <aura:attribute name="titleInfo" type="String" default="Information"></aura:attribute>
+  <aura:attribute name="donorTypeLabel" type="String" default="Type"></aura:attribute>
+  <aura:attribute name="contactLabel" type="String" default="Individual"></aura:attribute>
+  <aura:attribute name="organizationLabel" type="String" default="Organization"></aura:attribute>
+  <aura:attribute name="notesLabel" type="String" default="Notes"></aura:attribute>
+  <aura:attribute name="statusLabel" type="String" default="Status"></aura:attribute>
+  <aura:attribute name="priorityLabel" type="String" default="Priority"></aura:attribute>
+  <ltng:require scripts="{!$Resource.cmputil}" afterScriptsLoaded="{!c.init}" />
+  <section
+    role="dialog"
+    tabindex="-1"
+    aria-labelledby="modal-heading-01"
+    aria-modal="true"
+    aria-describedby="modal-content-id-1"
+    class="slds-modal slds-fade-in-open"
+  >
+    <div class="slds-modal__container">
+      <header class="slds-modal__header">
+        <lightning:buttonIcon iconName="utility:close" onclick="{! c.close }" alternativeText="close" variant="bare-inverse" class="slds-modal__close"/>
+        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">New Donor/Prospect</h2>
+      </header>            
+      <lightning:recordEditForm aura:id="listMemberCreateForm" objectApiName="CampaignMember" onsuccess="{!c.handleSuccess}" onerror="{!c.handleError}">
+        <!--<lightning:inputField fieldName="RecordTypeId" value="{!v.recordTypeId}"/>-->
+      <div class="slds-modal__content slds-p-around_medium" style="height: 400px" id="modal-content-id-1">
+        
+        <div class="slds-grid slds-wrap myLine">
+          <div class="slds-col slds-size_1-of-2">            
+            <!--<lightning:combobox name="selectRecordType" label="Select a Record Type" placeholder="Select an Option" value="{!v.recordTypeId}" options="{!v.recordTypeMap}" required="true" onchange="{!c.handleChange}"/>            -->
+            <lightning:inputField fieldName="Type__c" onchange="{!c.handleTypeChange}" required="true"/>
+          </div>
+        </div>
+        <br></br>
+        
+          <!-- Fundraising record type-->
+          <!--<aura:if isTrue="{!v.selectedRecordTypeName == 'Donor'}">-->
+            <lightning:accordion allowMultipleSectionsOpen="true" activeSectionName="{! v.activeSections }">
+              <div class="slds-grid slds-wrap myLine myList">
+                <div class="slds-col slds-size_1-of-2 ">
+                  <lightning:inputField fieldName="CampaignId" value="{!v.listId}" disabled="true"/>
+                </div>
+              </div>
+              <lightning:accordionSection name="DonorInformation" label="{!v.titleInfo}">
+                <div class="slds-grid slds-wrap myLine">
+                  <div class="slds-col slds-size_2-of-2">
+                    <lightning:messages />
+                  </div>
+                  <div class="slds-col slds-size_2-of-2">
+                    <label for="fundraisingDonarType" class="slds-form-element__label">{!v.donorTypeLabel}</label>
+                    <lightning:inputField fieldName="Fundraising_Donor_Type__c" aura:id="fundraisingDonarType" variant="label-hidden"/>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2" style="margin-top: 12px;">
+                    <label for="contactId" class="slds-form-element__label">{!v.contactLabel}</label>
+                    <lightning:inputField aura:id="contactId" fieldName="ContactId" variant="label-hidden" required="true"/>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2" style="margin-top: 12px; padding-left: 8px">
+                    <label for="organizationId" class="slds-form-element__label">{!v.organizationLabel}</label>
+                    <lightning:inputField aura:id="organizationId" fieldName="Fundraising_Organization__c" variant="label-hidden"/>
+                  </div>
+                  <aura:if isTrue="{!v.selectedTypeName == 'Prospect'}">
+                    <div class="slds-col slds-size_1-of-2" style="margin-top: 12px;">
+                      <!--<label for="statusId">{!v.statusLabel}</label>
+                      <lightning:inputField aura:id="statusId" fieldName="Status__c" variant="label-hidden"/>-->
+                      <lightning:inputField aura:id="statusId" fieldName="Status__c"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="margin-top: 12px; padding-left: 8px">
+                      <!--<label for="priorityId">{!v.priorityLabel}</label>
+                      <lightning:inputField aura:id="priorityId" fieldName="Priority__c" variant="label-hidden"/>-->
+                      <lightning:inputField aura:id="priorityId" fieldName="Priority__c"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="margin-top: 12px;">
+                      <!--<label for="targetId">Target</label>
+                      <lightning:inputField aura:id="targetId" fieldName="Target__c" variant="label-hidden"/>-->
+                      <lightning:inputField aura:id="targetId" fieldName="Target__c"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="margin-top: 12px; padding-left: 8px">
+                      <!--<label for="targetId">Background</label>
+                      <lightning:inputField aura:id="targetId" fieldName="Background__c" variant="label-hidden"/>-->
+                      <lightning:inputField aura:id="targetId" fieldName="Background__c"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="margin-top: 12px;">
+                      <!--<label for="targetId">Key Contact</label>
+                      <lightning:inputField aura:id="targetId" fieldName="Key_Contact__c" variant="label-hidden"/>-->
+                      <lightning:inputField aura:id="targetId" fieldName="Key_Contact__c"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="margin-top: 12px; padding-left: 4px">
+                      <lightning:inputField aura:id="statusWithPACId" fieldName="Source_Suggested__c"/>
+                    </div>                   
+                    <div class="slds-col slds-size_1-of-2" style="margin-top: 12px;">
+                      <!--<label for="nextStepsId">Next Steps</label>
+                      <lightning:inputField aura:id="nextStepsId" fieldName="Next_Steps__c" variant="label-hidden"/>-->
+                      <lightning:inputField aura:id="nextStepsId" fieldName="Next_Steps__c"/>                      
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="margin-top: 12px; padding-left: 8px">
+                      <!--<label for="statusWithPACId">Status with the PAC</label>
+                      <lightning:inputField aura:id="statusWithPACId" fieldName="Status_with_the_PAC__c" variant="label-hidden"/>-->
+                      <lightning:inputField aura:id="statusWithPACId" fieldName="Status_with_the_PAC__c"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="margin-top: 12px;">
+                      <!--<label for="tourId">Tour Status</label>
+                      <lightning:inputField aura:id="tourId" fieldName="Tour_Status__c" variant="label-hidden"/>-->
+                      <lightning:inputField aura:id="tourId" fieldName="Tour_Status__c"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2" style="margin-top: 12px; padding-left: 4px">
+                      <!--<label for="tourDateId">Tour Date</label>                    
+                      <lightning:inputField aura:id="tourDateId" fieldName="Tour_Date__c" variant="label-hidden"/>-->
+                      <lightning:inputField aura:id="tourDateId" fieldName="Tour_Date__c"/>
+                    </div>
+                  </aura:if>
+                </div>
+              </lightning:accordionSection>
+              
+              <aura:if isTrue="{!v.selectedTypeName == 'Donor'}">
+              <lightning:accordionSection name="PointOfContact" label="Point of Contact">              
+                <div class="slds-grid slds-wrap myLine">
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Fundraising_Point_of_Contact__c"/>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Fundraising_Email__c" />
+                  </div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Point_of_Contact_Title__c" /></div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Fundraising_Phone__c" />
+                  </div>
+                </div>
+              </lightning:accordionSection>
+              <lightning:accordionSection name="giftInformation" label="Gift Information">
+                <div class="slds-grid slds-wrap myLine">
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Fundraising_Gift_Amount__c"/>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Fundraising_Tier__c" />
+                  </div>
+                </div>
+              </lightning:accordionSection>
+              <lightning:accordionSection name="listingTextAndLocation" label="Listing Text and Location">
+                <div class="slds-grid slds-wrap myLine">
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Fundraising_Donor_Listing_Text__c"/>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2"></div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Fundraising_Additional_Location_1__c"/>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField
+                      fieldName="Fundraising_Additional_Listing_Text_1__c"
+                    />
+                  </div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Fundraising_Additional_Location_2__c"/>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Fundraising_Additional_Listing_Text_2__c"/>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Fundraising_Additional_Location_3__c"/>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Fundraising_Additional_Listing_Text_3__c"/>
+                  </div>
+                </div>
+              </lightning:accordionSection>
+              <lightning:accordionSection name="agreements" label="Agreements &amp; Renderings">
+                <div class="slds-grid slds-wrap myLine">
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Fundraising_Date_Agreement_Sent__c"/>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Fundraising_Date_Agreement_Received__c"/>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Fundraising_Date_List_Agreement_Received__c"/>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Fundraising_Date_List_Agreement_Sent__c"/>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Fundraising_Rendering_Sample_Needed__c"/>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Fundraising_Date_Rendering_Sent__c"/>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2"></div>
+                  <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Fundraising_Date_Rendering_Approved__c"/>
+                  </div>
+                </div>
+              </lightning:accordionSection>
+            </aura:if>
+              <lightning:accordionSection name="notes" label="Notes">
+                <div class="slds-grid slds-wrap myLine">
+                  <label for="notesId">{!v.notesLabel}</label>
+                  <div class="slds-col slds-size_2-of-2">
+                    <lightning:inputField aura:id="notesId" fieldName="UB_Notes__c" variant="label-hidden"/>
+                  </div></div
+              ></lightning:accordionSection>
+            </lightning:accordion>
+        <!--</aura:if> --> 
+        <!-- Prospect record type-->
+        <!--<aura:if isTrue="{!v.selectedRecordTypeName == 'Prospect'}">
+          <div class="slds-grid slds-wrap myLine myList">
+            <div class="slds-col slds-size_1-of-2 ">
+              <lightning:inputField fieldName="CampaignId" value="{!v.listId}" disabled="true"/>
+            </div>
+          </div>
+          <div class="slds-grid slds-wrap myLine">
+            <div class="slds-col slds-size_2-of-2">
+              <lightning:messages />
+            </div>
+          </div>
+          <lightning:accordion activeSectionName="ProspectInformation">
+            <lightning:accordionSection name="ProspectInformation" label="Prospect Information">
+              
+              <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName='Prospect_Type__c' variant="label-stacked"></lightning:inputField>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName='Fundraising_Organization__c' variant="label-stacked"></lightning:inputField>
+                </div>
+              </div>
+              <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName='ContactId' variant="label-stacked"></lightning:inputField>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName='Target__c' variant="label-stacked"></lightning:inputField>
+                </div>
+              </div>
+              <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName='Prospect_Notes__c' variant="label-stacked"></lightning:inputField>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName='Background__c' variant="label-stacked"></lightning:inputField>
+                </div>
+              </div>
+              <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName='Prospect_Status__c' variant="label-stacked"></lightning:inputField>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName='Status_with_the_PAC__c' variant="label-stacked"></lightning:inputField>
+                </div>
+              </div>
+              <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName='Prospect_Priority__c' variant="label-stacked"></lightning:inputField>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName='Tour__c' variant="label-stacked"></lightning:inputField>
+                </div>
+              </div>
+              <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName='Key_Contact__c' variant="label-stacked"></lightning:inputField>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName='Tour_Date__c' variant="label-stacked"></lightning:inputField>
+                </div>
+              </div>
+              <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName='Next_Steps__c' variant="label-stacked"></lightning:inputField>
+                </div>           
+              </div>
+            </lightning:accordionSection>
+          </lightning:accordion>
+        </aura:if>-->
+
+        
+        </div>
+        <footer class="slds-modal__footer">
+          <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{! c.close }"/>
+          <lightning:button class="slds-m-top_small myBtn" variant="brand" type="submit" name="Create" label="Create"/>
+        </footer>
+      </lightning:recordEditForm>
+    </div>
+  </section>
+</aura:component>

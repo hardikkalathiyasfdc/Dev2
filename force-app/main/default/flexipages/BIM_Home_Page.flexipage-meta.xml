@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p&gt;&lt;img src=&quot;https://bbrm.file.force.com/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&amp;amp;versionId=068KZ00000A56n4&amp;amp;operationContext=CHATTER&amp;amp;contentId=05TKZ00000xEhfr&quot;&gt;&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <identifier>flexipage_richText3</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p&gt;&lt;strong style=&quot;color: rgb(28, 28, 28); font-size: 16px;&quot;&gt;Welcome to BIM!&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;BIM (Bloomberg Initiative Management) is Bloomberg Philanthropies’ central platform for managing initiatives. It standardizes and streamlines initiative budgeting, tracking, approvals, and reporting across programs. BIM integrates with existing systems to automate data flows, provide real-time dashboards, and serve as a single source of truth for initiative data—improving efficiency, transparency, and collaboration. &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://bloombergdotorg.sharepoint.com/:v:/r/Shared%20Documents/CityView%20%26%20BRM/Bloomberg%20Initiative%20Management.mp4?csf=1&amp;amp;web=1&amp;amp;e=QfNDvj&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(1, 118, 211); font-size: 14px;&quot;&gt;Watch this short introduction&lt;/a&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt; to understand why BIM was created and how it supports stronger initiative planning and management.&lt;/span&gt;&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <identifier>flexipage_richText</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;New to BIM?&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Below are some ways to learn more about the tool, get up to speed on how to use it, and where to find answers to your questions.&lt;/span&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Help yourself to robust resources!&lt;/strong&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://bloomberg.csod.com/samldefault.aspx?ouid=6&amp;amp;returnUrl=%252fDeepLink%252fProcessRedirect.aspx%253fmodule%253dlaunchtraining%2526lo%253dbd1dd0b1-16dd-44de-b61d-89790b309049&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px;&quot;&gt;BIM Training&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://bloombergdotorg.sharepoint.com/Shared%20Documents/Forms/AllItems.aspx?id=%2FShared%20Documents%2FCityView%20%26%20BRM%2FInitiative%20Management%20User%20Guide%2Epdf&amp;amp;parent=%2FShared%20Documents%2FCityView%20%26%20BRM&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px;&quot;&gt;User Manual&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://bloombergdotorg.sharepoint.com/:b:/r/Shared%20Documents/CityView%20%26%20BRM/IM%20Glossary.pdf?csf=1&amp;amp;web=1&amp;amp;e=tWSLnk&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px;&quot;&gt;Glossary&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://chatgpt.com/g/g-69556705ff0881918aef7a70e56973d5-initiaitive-management-support-bot&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px;&quot;&gt;GPT Bot&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Reach out to Sara Ginsberg or Kelly Mehlenbacher directly&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt; – we are here to support you on this new journey in Initiative Management.&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <identifier>flexipage_richText8</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Click &lt;/strong&gt;&lt;a href=&quot;https://bbrm.lightning.force.com/lightning/app/06m6g0000009XpdAAE&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 16px;&quot;&gt;&lt;strong&gt;here&lt;/strong&gt;&lt;/a&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt; to toggle to BRM&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Tip:&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt; To toggle between BIM and BRM if you are not on the home page, you can click on the nine dots in the top left corner (aka the App Launcher) and select the App from the available dropdown options.&lt;/span&gt;&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <identifier>flexipage_richText4</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>top</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <name>bottomLeft</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <name>bottomRight</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <name>sidebar</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <masterLabel>BIM Home Page</masterLabel>
+    <template>
+        <name>home:desktopTemplate</name>
+    </template>
+    <type>HomePage</type>
+</FlexiPage>

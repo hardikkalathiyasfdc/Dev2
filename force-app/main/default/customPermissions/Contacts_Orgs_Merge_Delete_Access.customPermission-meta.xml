@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This Custom permision grants access to Merge and Delete for Contacts and Orgs (BRME-5437)</description>
+    <isLicensed>false</isLicensed>
+    <label>Contacts &amp; Orgs: Merge/Delete Access</label>
+</CustomPermission>

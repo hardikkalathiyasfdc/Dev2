@@ -1,0 +1,5 @@
+@import "c/blinkEntityStyleSheets";
+
+.slds-section-custom_fixed-height {
+    height: 150px;
+}

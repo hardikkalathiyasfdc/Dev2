@@ -1,0 +1,55 @@
+.custom-scroll{
+    max-height:calc(100vh - 380px); 
+    overflow-y: auto;
+}
+
+.outer-div-styling{
+    background-color:white; 
+    border-bottom-left-radius: 10px; 
+    border-bottom-right-radius: 10px; 
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.record-picker-styling{
+    width:80vh;
+    background-color:white;
+    position:relative;
+}
+
+.bold-with-padding{
+    font-weight:bold; 
+    padding-left:5px;
+}
+
+.margin-class{
+    margin-top:30px;
+    margin-left:300px;
+}
+
+.focus-area-display{
+    margin-top:30px;
+    margin-left:auto;
+    margin-right: 30px;
+}
+
+.page-container{
+    contain: layout;
+}
+
+.flex-display{
+    display: flex;
+}
+
+.green-success{
+    --sds-c-icon-color-foreground-default: green;
+}
+
+.copy-link-icon{
+     margin-top:28px;
+     margin-left:15px !important;
+}
+
+.slds-icon-color {
+    --sds-c-icon-color-foreground-default: #297bff;
+}

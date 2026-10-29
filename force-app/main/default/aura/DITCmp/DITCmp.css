@@ -1,0 +1,26 @@
+.THIS.myCard,
+.THIS .myCard {
+  height: 100%;
+
+  overflow: auto;
+}
+
+.THIS.fullWidth,
+.THIS .fullWidth {
+  width: 100%;
+}
+
+.THIS .myFileSelect {
+  float: left;
+  width: 50%;
+  margin-left: 2%;
+}
+
+.THIS .myFileUpload {
+  float: left;
+}
+
+.THIS .myActions {
+  text-align: right;
+  padding-right: 2%;
+}

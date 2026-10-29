@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Other_field_must_have_picklist_value</fullName>
+    <active>true</active>
+    <description>&quot;Other Primary Focus Specified&quot; text field cannot be populated if Other is not the value in Primary Focus</description>
+    <errorConditionFormula>AND(
+!$Setup.Bypass_Automation_Setting__c.Interaction_Validation__c,
+NOT(ISPICKVAL( Primary_Focus__c, &quot;Other&quot;)), 
+OR( 
+NOT(ISBLANK(Other_Primary_Focus_Specified__c )))
+)</errorConditionFormula>
+    <errorDisplayField>Other_Primary_Focus_Specified__c</errorDisplayField>
+    <errorMessage>&quot;Other Primary Focus Specified&quot; cannot be populated if &quot;Primary Focus&quot; field does not equal &quot;Other&quot;</errorMessage>
+</ValidationRule>

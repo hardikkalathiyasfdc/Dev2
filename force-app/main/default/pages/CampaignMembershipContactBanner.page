@@ -1,0 +1,20 @@
+<apex:page standardController="Contact" standardStylesheets="false" showHeader="false">
+  <apex:includeLightning />
+    <div id="lightning"/>
+    <script>
+      var recordId = '{!Contact.id}';
+        $Lightning.use("c:CampaignMembershipBannerApp", function() {
+          var attributes = {
+            recordId: recordId,
+            sObjectName: 'Contact'
+          };
+          $Lightning.createComponent(
+                    "c:CampaignMembershipBanner",
+                    attributes,
+                    "lightning",
+                    function(cmp) {
+                        console.log("Component is created!");
+                    });
+        });
+    </script>
+</apex:page>

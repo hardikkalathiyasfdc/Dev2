@@ -1,0 +1,151 @@
+<template>
+    <lightning-card icon-name="standard:campaign_members" class="slds-p-around_medium">
+        <h2 slot="title" class="card-title-wrap"><a onclick={handleTitleClick}>{title}</a></h2>
+        <div class="slds-p-left_small slds-p-right_small">
+            <lightning-badge label={guestLabel} class="guest-badge"></lightning-badge>
+            <div class="status-card">
+                <div class="status-card__header" onclick={toggleRsvpSection}>
+                    <div class="status-card__title-row">
+                        <span class="status-card__title">RSVP Statuses</span>
+                    </div>
+                    <lightning-icon icon-name={iconRsvpSection} size="x-small"></lightning-icon>
+                </div>
+                <div class="progress-bar-wrap slds-m-bottom_small">
+                    <div class="progress-bar" style={rsvpProgressStyle}></div>
+                </div>
+                <template lwc:if={showRsvpSection}>
+                    <div class="status-card__body">
+                        <div class="slds-grid slds-wrap filter-grid">
+                            <template for:each={eventSummary} for:item="sum">
+                                <div key={sum.label} class="slds-col slds-size_1-of-4 filter-cell">
+                                    <div class={sum.cardClass} data-filter={sum.filterKey} data-section="rsvp" onclick={handleFilterBoxClick}>
+                                        <span class="fb-label">{sum.label}</span>
+                                        <span class="fb-count">{sum.count}</span>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <div class="status-card slds-m-top_small">
+                <div class="status-card__header" onclick={toggleAttendenceSection}>
+                    <div class="status-card__title-row">
+                        <span class="status-card__title">Attendance Statuses</span>
+                    </div>
+                    <lightning-icon icon-name={iconAttendenceSection} size="x-small"></lightning-icon>
+                </div>
+                <div class="progress-bar-wrap slds-m-bottom_small">
+                    <div class="progress-bar" style={attendanceProgressStyle}></div>
+                </div>
+                <template lwc:if={showAttendenceSection}>
+                    <div class="status-card__body">
+                        <div class="slds-grid slds-wrap filter-grid">
+                            <template for:each={attendenceSummary} for:item="sum">
+                                <div key={sum.label} class="slds-col slds-size_1-of-3 filter-cell">
+                                    <div class={sum.cardClass} data-filter={sum.filterKey} data-section="attendance" onclick={handleFilterBoxClick}>
+                                        <span class="fb-label">{sum.label}</span>
+                                        <span class="fb-count">{sum.count}</span>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <template lwc:if={hasActiveFilters}>
+                <div class="filter-bar slds-p-top_small">
+                    <span class="filter-bar__label">Filtered:</span>
+                    <div class="filter-bar__pills">
+                        <template for:each={activeFilterList} for:item="f">
+                            <span key={f.key} class={f.pillClass}>
+                                {f.label}
+                                <span class="pill-x" data-filter={f.filterKey} data-section={f.section} onclick={removeFilter}>✕</span>
+                            </span>
+                        </template>
+                    </div>
+                    <span class="filter-bar__clear" onclick={clearAllFilters}>Clear all</span>
+                </div>
+            </template>
+            <lightning-input type="search" placeholder="Search Guest..." onchange={handleSearch}>
+            </lightning-input>
+            <div class="edit-btn slds-p-top_x-small slds-p-bottom_x-small">
+                <lightning-button stretch label="Edit Column Order" onclick={openModal}></lightning-button>
+            </div>
+            <div>
+                <lightning-datatable key-field="Id" data={filteredData} columns={columns} hide-checkbox-column>
+                </lightning-datatable>
+            </div>
+        </div>
+        <template lwc:if={showModal}>
+            <section class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Header -->
+                    <header class="slds-modal__header">
+                        <h2><strong>Select Columns</strong></h2>
+                    </header>
+                    <!-- Body -->
+                    <div class="slds-modal__content slds-p-around_small">
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <center>
+                                    <strong>Selected</strong>
+                                </center>
+                                <div class="divider-label">Tap × to Remove</div>
+                                <div class="slds-box list-box slds-m-around_x-small">
+                                    <template for:each={selectedItems} for:item="item" for:index="index">
+                                        <div key={item.value} class="slds-grid slds-grid_align-spread list-item">
+                                            <span class="slds-truncate">{item.label}</span>
+                                            <div class="icon-group">
+                                                <span class="icon-btn slds-m-right_x-small" data-index={index} onclick={moveUp}>
+                                                    <lightning-icon icon-name="utility:arrowup" size="x-small">
+                                                    </lightning-icon>
+                                                </span>
+                                                <span class="icon-btn slds-m-right_x-small" data-index={index} onclick={moveDown}>
+                                                    <lightning-icon icon-name="utility:arrowdown" size="x-small">
+                                                    </lightning-icon>
+                                                </span>
+                                                <span class="icon-btn" data-value={item.value} onclick={removeItem}>
+                                                    <lightning-icon icon-name="utility:close" size="x-small">
+                                                    </lightning-icon>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <center>
+                                    <strong>Available</strong>
+                                </center>
+                                <div class="divider-label">Tap on row to Add</div>
+                                <div class="slds-box list-box slds-m-around_x-small">
+                                    <template for:each={availableOptions} for:item="opt">
+                                        <div key={opt.value} class="list-item" data-value={opt.value} onclick={addItem}>
+                                            {opt.label}
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Footer Buttons -->
+                        <div class="slds-align_absolute-center slds-m-top_medium">
+                            <lightning-button label="Cancel" class="slds-m-right_small" onclick={closeModal}>
+                            </lightning-button>
+                            <lightning-button variant="brand" label="Save" class="slds-m-right_small"
+                                onclick={handleSave}>
+                            </lightning-button>
+                            <template lwc:if={selectedViewId}>
+                                <lightning-button variant="brand" label="Reset" onclick={resetListView}>
+                                </lightning-button>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </lightning-card>
+</template>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IM_Budget_Row_Trigger__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>IM-129: ByPass automation for Budget Row object trigger</description>
+    <label>IM Budget Row Trigger</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

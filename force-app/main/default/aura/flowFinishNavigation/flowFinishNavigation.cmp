@@ -1,0 +1,7 @@
+<aura:component implements="lightning:availableForFlowScreens,lightning:availableForFlowActions,force:hasRecordId"
+    access="global">
+    <lightning:navigation aura:id="navService" />
+    <aura:attribute name="recordId" type="String" access="global" />
+    <aura:attribute name="toastMessage" type="String" access="global" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+</aura:component>

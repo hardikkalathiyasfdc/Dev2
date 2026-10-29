@@ -1,0 +1,20 @@
+.modal-width {
+    max-width: 60rem;
+    width: 60rem;
+}
+.sort-row {
+    border: 1px solid #d8dde6;
+    border-radius: 0.25rem;
+    padding: 0.75rem;
+}
+.button-group {
+    margin-top: 0.8em;
+}
+.column-select {
+    margin-top: -0.4em;
+    width: 45%;
+}
+.radio-group {
+    scale: 94%;
+    margin-top: 0.35em;
+}

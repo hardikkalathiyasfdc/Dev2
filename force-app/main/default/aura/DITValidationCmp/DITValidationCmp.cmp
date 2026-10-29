@@ -1,0 +1,264 @@
+<aura:component controller="DITCmpController">
+    <aura:attribute name="dataLoaderId" type="String" default="" />
+    <aura:attribute name="showDupe" type="Boolean" default="false" />
+    <aura:attribute name="showOrgCreate" type="Boolean" default="false" />
+    <aura:attribute name="showContactCreate" type="Boolean" default="false" />
+    <aura:attribute name="selectedType" type="String" />
+    <aura:attribute name="selectedOrg" type="Map" />
+    <aura:attribute name="selectedContact" type="Map" />
+    <aura:attribute name="selectedDup" type="object" />
+    <aura:attribute name="curCell" type="Map" default="{}" />
+    <aura:attribute name="dataLoad" type="Map" />
+    <aura:attribute name="fileName" type="String" default="" />
+    <aura:attribute name="isLoading" type="Boolean" default="false" />
+    <aura:attribute name="isLoading2" type="Boolean" default="false" />
+    <aura:attribute name="dupeList" type="List" default="[]" />
+    <aura:attribute name="uploadColumns" type="List" default="[]" />
+    <aura:attribute name="uploadData" type="List" default="[]" />
+    <aura:attribute name="excelColumns" type="List" default="[]" />
+    <aura:attribute name="previewColumns" type="List" default="[]" />
+    <aura:attribute name="previewData" type="List" default="[]" />
+    <aura:attribute name="oldPreviewData" type="List" default="[]" />
+    <ltng:require scripts="{!$Resource.cmputil}" afterScriptsLoaded="{!c.init}" />
+    <aura:attribute name="duplicateAccountsColumns" type="List" default="[]" />
+    <aura:attribute name="isSignificantOther" type="Boolean" default="false" />
+    <aura:handler
+                  name="changeEvent"
+                  event="c:MyTableEvent"
+                  action="{!c.handleCellChange}"
+                  phase="capture"
+                  />
+    <div style="height: 60vh;">
+        <aura:if isTrue="{!v.isLoading2}">
+            <lightning:spinner alternativeText="Loading" size="medium" />
+        </aura:if>
+        <aura:if isTrue="{!not(empty(v.previewData))}">
+
+           <c:NewMyTable
+                       aura:id="myTable"
+                       tableId="previewTable"
+                       columns="{!v.previewColumns}"
+                       data="{!v.previewData}"
+                       />
+        </aura:if>
+    </div>
+
+    <aura:if isTrue="{!v.showDupe}">
+
+        <!--Use "slds-m-around_xx-large" class to add standard X-Large padding to the component-->
+        <div class="slds-m-around_xx-large">
+            <!--Use aura:if tag to display Model Box, on the bese of conditions. [duplicateAccountsDialogOpen boolean attribute] -->
+            <!--###### MODAL BOX Start######-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container duplicateAccountsDialogStyle">
+                    <!-- ###### MODAL BOX HEADER Start ######-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"   onclick="{! c.closeDupeModal }" alternativeText="close" variant="bare-inverse" class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Potential Duplicate Records</h2>
+                    </header>
+                    <!--###### MODAL BOX BODY Part Start######-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p class="slds-align_absolute-center">You are creating a duplicate record. We recommend you use an existing record instead.</p> 
+                        <br />
+                        <aura:if isTrue="{!not(empty(v.dupeList))}">
+                            <lightning:datatable
+                                                 aura:id="duplicateAccountTable"
+                                                 keyField="id"
+                                                 data="{! v.dupeList }"
+                                                 columns="{! v.duplicateAccountsColumns }"
+                                                 hideCheckboxColumn="false" 
+                                                 maxRowSelection="1" 
+                                                 showRowNumberColumn="true" 
+                                                 onrowselection="{!c.handleDupeAction}"/>
+                        </aura:if>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start ######-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button
+                                          variant="neutral"
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeDupeModal }"
+                                          />
+                        <lightning:button
+                                          variant="brand"
+                                          label="Use Existing"
+                                          title="Use Existing"
+                                          onclick="{!c.handleUseExisting}"
+                                          />            
+                        <lightning:button
+                                          variant="brand"
+                                          label="Create New"
+                                          title="Create New"
+                                          onclick="{!c.handleDupeCreate}"
+                                          /> </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </div>
+    </aura:if>
+
+    <aura:if isTrue="{!v.isSignificantOther}">
+        <c:contactCreation firstName="{!v.selectedContact.FirstName}" 
+                           lastName="{!v.selectedContact.LastName}"
+                           oncreate="{!c.handleSignificantCreate}"
+                           oncancelation="{!c.closeCreateContact }" >
+        </c:contactCreation>
+    </aura:if>
+
+    <aura:if isTrue="{!v.showOrgCreate}">
+        <section
+                 role="dialog"
+                 tabindex="-1"
+                 aria-labelledby="modal-heading-01"
+                 aria-modal="true"
+                 aria-describedby="modal-content-id-1"
+                 class="slds-modal slds-fade-in-open"
+                 >
+            <aura:if isTrue="{!v.isLoading}">
+                <lightning:spinner alternativeText="Loading" size="medium" />
+            </aura:if>
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon
+                                          iconName="utility:close"
+                                          onclick="{! c.closeCreateOrg }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"
+                                          />
+                    <h2
+                        id="modal-heading-01"
+                        class="slds-text-heading_medium slds-hyphenate"
+                        >
+                        Create New Org
+                    </h2>
+                </header>
+                <div
+                     class="slds-modal__content slds-p-around_medium"
+                     id="modal-content-id-1"
+                     >
+                    <lightning:input
+                                     name="Name"
+                                     label="Name"
+                                     aura:id="orgName"
+                                     value="{!v.selectedOrg.Name}"
+                                     />
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button
+                                      variant="neutral"
+                                      label="Cancel"
+                                      title="Cancel"
+                                      onclick="{! c.closeCreateOrg }"
+                                      />
+                    <lightning:button
+                                      variant="brand"
+                                      label="Create New"
+                                      title="Create New"
+                                      onclick="{! c.handleOrgCreate }"
+                                      />
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    <aura:if isTrue="{!v.showContactCreate}">
+        <section
+                 role="dialog"
+                 tabindex="-1"
+                 aria-labelledby="modal-heading-01"
+                 aria-modal="true"
+                 aria-describedby="modal-content-id-1"
+                 class="slds-modal slds-fade-in-open"
+                 >
+            <aura:if isTrue="{!v.isLoading}">
+                <lightning:spinner alternativeText="Loading" size="medium" />
+            </aura:if>
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon
+                                          iconName="utility:close"
+                                          onclick="{! c.closeCreateContact }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"
+                                          />
+                    <h2
+                        id="modal-heading-01"
+                        class="slds-text-heading_medium slds-hyphenate"
+                        >
+                        Create New Contact (Staff)
+                    </h2>
+                </header>
+                <div
+                     class="slds-modal__content slds-p-around_medium"
+                     id="modal-content-id-1"
+                     >
+                    <lightning:input
+                                     name="Staff Role"
+                                     label="Staff Role"
+                                     aura:id="contactTitle"
+                                     value="{!v.selectedContact.Title}"
+                                     />
+                    <lightning:input
+                                     name="First Name"
+                                     label="First Name"
+                                     aura:id="contactFirstName"
+                                     value="{!v.selectedContact.FirstName}"
+                                     />
+                    
+                    <lightning:input
+                                     name="Last Name"
+                                     label="Last Name"
+                                     aura:id="contactLastName"
+                                     value="{!v.selectedContact.LastName}"
+                                     />
+                    
+                    <lightning:input
+                                     name="Email"
+                                     label="Staff Email"
+                                     aura:id="contactEmail"
+                                     value="{!v.selectedContact.Email}"
+                                     />
+                    
+                    <lightning:select
+                                      label="Staff Phone (Country Code)"
+                                      aura:id="AssistentPhone"
+                                      value="{!v.selectedContact.Assistant_Business_Phone_Code}"  
+                                      >
+                        <option value="">choose one...</option>
+                        <aura:iteration items="{!v.selectedContact.options}" var="opt">
+                            <option value="{!opt.value}">{!opt.label}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                    
+                    <lightning:input
+                                     name="AssistentPhone"
+                                     label="Staff Phone"
+                                     aura:id="AssistentPhone"
+                                     value="{!v.selectedContact.Assistant_Business_Phone}"
+                                     />
+                    
+                    
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button
+                                      variant="neutral"
+                                      label="Cancel"
+                                      title="Cancel"
+                                      onclick="{! c.closeCreateContact }"
+                                      />
+                    <lightning:button
+                                      variant="brand"
+                                      label="Create New"
+                                      title="Create New"
+                                      onclick="{! c.handleContactCreate }"
+                                      />
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>

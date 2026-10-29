@@ -1,0 +1,147 @@
+<template>
+    <template lwc:if={shallShowSpinner}>
+        <lightning-spinner alternative-text="Loading..." size="large"></lightning-spinner>
+    </template>
+    <!-- Search By label + combobox in same row -->
+    <div class="slds-p-around_small search-by-row">
+        <div class="search-label">Search By :</div>
+        <lightning-button-menu alternative-text="Search by" label={searchBy} icon-name="utility:down" disabled={disableSearchBy}
+            onselect={handleTabChange} menu-alignment="right">
+            <lightning-menu-item value="City" checked={isCitySelected} label="City">
+            </lightning-menu-item>
+            <lightning-menu-item value="State" checked={isStateSelected} label="State">
+            </lightning-menu-item>
+            <lightning-menu-item value="Country" checked={isCountrySelected} label="Country">
+            </lightning-menu-item>
+            <lightning-menu-item value="BP Work" checked={isInitiativeSelected} label="BP Work">
+            </lightning-menu-item>
+        </lightning-button-menu>
+
+        <template lwc:if={shouldShowGrantFilter}>
+            <lightning-button-menu alternative-text="Filters" icon-name="utility:filterList" label="" disabled={disableSearchBy}
+                menu-alignment="right" onselect={handleFilterSelect}>
+                <lightning-menu-item value="showGrants" label="Include Grants" checked={showGrants}>
+                </lightning-menu-item>
+            </lightning-button-menu>
+        </template>
+    </div>
+    <div class="search-container">
+        <div style="width: 100% !important;">
+            <c-city-view-geo-area-search label="" placeholder={searchPlaceHolder} object-api-name="Geo_Area__c"
+                field-api-name="Name" sub-field-api-name="Geo_Name__c" selected-filter={searchBy} sort-field={sortField}
+                selected-city={selectedCities} icon-name="standard:account" onselect={handleSelected}  onrecordfetched={handleRecordfetched}>
+            </c-city-view-geo-area-search>
+        </div>
+    </div>
+    <template lwc:if={showListView}>
+        <div class="slds-p-around_small">
+            <c-city-view-list-view-for-mobile city-raw-data={cityData} country-raw-data={countryData}
+                state-raw-data={stateData} ongeoareaselected={handleGeoAreaSelected} shall-show-grants={showGrants}
+                selected-initiative-id={selectedInitiativeId} list-view-global-title={listViewGlobalTitle}>
+            </c-city-view-list-view-for-mobile>
+        </div>
+    </template>
+
+    <template lwc:if={showGeoAreaDetails}>
+        <template lwc:if={selectedRecordName}>
+            <div style="padding: 5px 0 10px 10px; font-size: 15px;">
+                <lightning-icon lwc:if={isInitiativeSearch} icon-name="utility:back" alternative-text="More Info"
+                    size="x-small" class="slds-p-right_medium" onclick={navigateBack}
+                    title="Click here to navigate back."
+                    style="cursor: pointer; vertical-align: text-bottom; padding-left: 4px; flex-shrink: 0; display: inline-block;">
+                </lightning-icon>
+                <!-- City name + new_window icon inline -->
+                <div style="padding-right: 8px; font-weight: bold;">
+                    <span style="white-space: normal; word-wrap: break-word;">
+                        {selectedRecordName}
+                    </span>
+                    <template lwc:if={hasPermission}>
+                        <lightning-icon icon-name="utility:new_window" alternative-text="More Info" size="x-small"
+                            style="cursor: pointer; vertical-align: text-bottom; padding-left: 4px; flex-shrink: 0; display: inline-block;"
+                            onclick={openOrgDetails}
+                            title="Click here to view city details and add Organization Highlights">
+                        </lightning-icon>
+                    </template>
+                </div>
+                <div style="padding-top: 4px" lwc:if={notShowStateCountryData}>
+                    <c-city-view-weather latitude={latitude} longitude={longitude}></c-city-view-weather>
+                </div>
+            </div>
+        </template>
+        <template lwc:if={showDetails}>
+            <div class="tabs-container mobile-view">
+                <lightning-tabset variant="scoped">
+                    <!-- Summary Tab -->
+                    <lightning-tab label="Summary">
+                        <template lwc:if={notShowStateCountryData}>
+                            <div>
+                                <c-city-view-recent-mayor geo-area-id={selectedGeoArea} form-factor={formFactor}>
+                                </c-city-view-recent-mayor>
+                            </div>
+                        </template>
+                        <div>
+                            <c-city-view-city-level-work geo-area-id={selectedGeoArea} form-factor={formFactor}
+                                shall-show-grants={showGrants} is-country-selected={isCountrySelected}
+                                is-state-selected={isStateSelected}>
+                            </c-city-view-city-level-work>
+                            <template lwc:if={showStateCountryData}>
+                                <div style="margin-top: -6px;">
+                                    <c-city-level-work-for-selected-country geo-area-id={selectedGeoArea}
+                                        shall-show-grants={showGrants} form-factor={formFactor}
+                                        show-detail-page="false">
+                                    </c-city-level-work-for-selected-country>
+                                </div>
+                            </template>
+                            <c-city-view-key-partners geo-area-id={selectedGeoArea} form-factor={formFactor}
+                                is-country-selected={isCountrySelected} is-state-selected={isStateSelected}>
+                            </c-city-view-key-partners>
+                        </div>
+
+                        <div>
+                            <c-city-view-bloomberg-office geo-area-id={selectedGeoArea} form-factor={formFactor}>
+                            </c-city-view-bloomberg-office>
+                        </div>
+
+                        <div>
+                            <c-city-view-office-map geo-area-id={selectedGeoArea} marker-office-icon={markerOfficeIcon}
+                                is-country-selected={isCountrySelected} is-state-selected={isStateSelected}>
+                            </c-city-view-office-map>
+                        </div>
+
+                        <template lwc:if={isNotCountrySelected}>
+                            <template lwc:if={displayEmployeeTravel}>
+                                <div>
+                                    <c-city-view-travel-calendar geo-area-id={selectedGeoArea}>
+                                    </c-city-view-travel-calendar>
+                                </div>
+                            </template>
+                        </template>
+                    </lightning-tab>
+
+                    <!-- Cultural Access Tab -->
+                    <lightning-tab label="Cultural">
+                        <div>
+                            <c-city-view-cultural-access geo-area-id={selectedGeoArea} form-factor={formFactor}
+                                is-country={isCountrySelected} is-state-selected={isStateSelected}>
+                            </c-city-view-cultural-access>
+                        </div>
+                    </lightning-tab>
+
+                    <!-- Highlights Tab -->
+                    <lightning-tab label="Highlights">
+                        <div>
+                            <c-city-view-highlights geo-area-id={selectedGeoArea} form-factor={formFactor}
+                                is-country-selected={isCountrySelected} is-state-selected={isStateSelected}
+                                selected-highlight-sort={selectedHighlightSort}></c-city-view-highlights>
+                        </div>
+                    </lightning-tab>
+                </lightning-tabset>
+            </div>
+        </template>
+    </template>
+    <template lwc:if={showImage}>
+        <div class="image-container">
+            <img src={cityViewImageUrl} class="cityview-logo" />
+        </div>
+    </template>
+</template>

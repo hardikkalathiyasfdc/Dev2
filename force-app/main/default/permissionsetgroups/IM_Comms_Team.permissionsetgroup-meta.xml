@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>IM-253: Permission set group to give permissions to the Comms Team</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>IM: Comms Team</label>
+    <permissionSets>File_Group_Edit_Access</permissionSets>
+    <permissionSets>IM_Apex_Classes</permissionSets>
+    <permissionSets>IM_Comms_Tab_Edit_Access</permissionSets>
+    <permissionSets>IM_IM_Access</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

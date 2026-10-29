@@ -1,0 +1,323 @@
+<!--
+  @last modified on  : 09-29-2025
+  @last modified by  : Nishant Bakhrey
+-->
+<template>
+	<template lwc:if={isMobile}>
+		<c-list-edit-mobile record-id={recordId}></c-list-edit-mobile>
+	</template>
+	<div lwc:else>
+		<c-multi-sort-modal is-open={showSortModal} columns={sortableColumns} onapply={handleSortApply}
+			oncancel={closeSortModal} onclear={handleSortClear}>
+		</c-multi-sort-modal>
+		<template lwc:if={showRSVPSelection}>
+			<c-rsvp-selection-pop oncancel={handlePopClose} onselected={handlePopSelection}></c-rsvp-selection-pop>
+		</template>
+		<template lwc:if={showNewGuestCreation}>
+			<c-event-guest-creation record-id={recordId} oncancel={handlePopClose} onsave={handleNewGuestSave}>
+			</c-event-guest-creation>
+		</template>
+		<template lwc:if={showNewListViewCreation}>
+			<c-event-list-view-creation listrecord-id={selectedViewId} selected-options={selectedOptions}
+				oncancel={handlePopClose} onsave={handleListViewSave}>
+			</c-event-list-view-creation>
+		</template>
+		<template lwc:if={showEmailSummary}>
+			<c-event-summary-cmp record-id={recordId} oncloseemail={handleEmailSummaryClose}></c-event-summary-cmp>
+		</template>
+		<template lwc:if={showExport}>
+			<c-export-list-members export-fields={exportFields} selected-fields={selectedExportFields}
+				oncloseexport={handleExport}>
+			</c-export-list-members>
+		</template>
+		<template lwc:if={showEventEmail}>
+			<c-list-email-viewer record-id={emailId} email-field={emailField} email-title={emailTitle}
+				email-subject-field={emailSubjectField} email-status={emailStatus} email-sent={emailSent}
+				show-cc={emailShowCC} oncloseemail={handleEmailClose}
+				email-template-last-modified={emailTemplateLastModified}>
+			</c-list-email-viewer>
+		</template>
+		<template lwc:if={showAssistant}>
+			<c-list-assistant record-ids={selectedRowIds} total={myList.data.length}
+				oncloseassistant={handleAssistantClose} oncloseassistantrefresh={handleAssistantUpdate}>
+			</c-list-assistant>
+		</template>
+		<template lwc:if={showInvitation}>
+			<c-send-event-invitations record-ids={selectedRowIds} selected-members={selectedMembers}
+				email-options={selectedEmailOptions} email-type={selectedEmailType} total={myList.data.length}
+				oncloseinvitation={handleInvitationClose}></c-send-event-invitations>
+		</template>
+		<template lwc:if={showDeleteConfirmation}>
+			<c-delete-confirmation message="Are you sure you want to delete selected guest(s)?" cancel-button-label="No"
+				confirm-button-label="Yes" oncancel={handlePopClose} onconfirm={handleDeletionConfirm}>
+			</c-delete-confirmation>
+		</template>
+		<template lwc:if={showAddSignificantOtherMessage}>
+			<c-information-dialog message={addSignificantOtherMessage} oncancel={handleShowAddSignificantOtherMessage}
+				header="Add Significant Other">
+			</c-information-dialog>
+		</template>
+		<template lwc:if={showDonation}>
+			<c-new-donation-cmp list-id={recordId} show-modal={showDonation} onclose={handleDonoClose}
+				onsave={handleDonoSave}>
+			</c-new-donation-cmp>
+		</template>
+		<template lwc:if={generateBio}>
+			<section class="slds-modal slds-fade-in-open slds-modal_small slds-align_absolute-center">
+				<div class="slds-modal__container">
+					<header class="slds-modal__header">
+						<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+							{generateBioHeader}
+						</h2>
+					</header>
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+						<div class="slds-box" style="margin:2%;">
+							<div class="slds-p-top_large">
+								<c-multi-select-lookup data-id="campaign-lookup" label-name="Group By Source"
+									is-list-member-source={isListMemberSource} campaign-id={recordId}
+									icon-name="standard:campaign" onretrieve={listSelected} onremove={listSelected}>
+								</c-multi-select-lookup>
+							</div>
+						</div>
+					</div>
+					<footer class="slds-modal__footer">
+						<lightning-button variant="neutral" label="Cancel" title="Cancel" onclick={closeBioGeneration}>
+						</lightning-button>
+						<lightning-button class="slds-m-top_small myBtn " variant="brand" onclick={generateBioDoc}
+							name="Generate" label="Generate">
+						</lightning-button>
+					</footer>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</template>
+		<lightning-card icon-name="standard:campaign_members">
+			<h2 slot="title"><a onclick={handleTitleClick}>{title}</a></h2>
+			<div class="slds-grid slds-grid_vertical myBody">
+				<template lwc:if={isEventList}>
+					<div class="slds-col">
+						<div>
+							<h1>Expected Attendance: {expectedGuestCount}</h1>
+						</div>
+					</div>
+					<div class="slds-col">
+						<div class="slds-grid slds-m-top_xx-small">
+							<h1>Guests: {guestCount}</h1>
+						</div>
+					</div>
+					<div class="slds-col" style="margin-top: 0.5%">
+						<div class="slds-grid">
+							<div class="slds-col slds-size_1-of-12">
+								<div>
+									<h1>RSVP Statuses:</h1>
+								</div>
+							</div>
+							<template for:each={eventSummary} for:item="sum">
+								<div class="slds-col slds-size_1-of-8" key={sum.label}>
+									<div>
+										<h1>{sum.label}: {sum.count}</h1>
+									</div>
+								</div>
+							</template>
+						</div>
+					</div>
+					<div class="slds-col" style="margin-top: 0.5%">
+						<div class="slds-grid slds-m-top_xx-small">
+							<div class="slds-col slds-size_4-of-12">
+								<div>
+									<h1>Attendance Statuses:</h1>
+								</div>
+							</div>
+							<template for:each={attendenceSummary} for:item="sum">
+								<div class="slds-col slds-size_1-of-8" key={sum.label}>
+									<div>
+										<h1>{sum.label}: {sum.count}</h1>
+									</div>
+								</div>
+							</template>
+						</div>
+					</div>
+					<div class="slds-col" style="margin-top: 0.5%">
+						<div class="slds-grid slds-m-top_xx-small">
+							<h1>
+								Contacts With Missing Email:
+								<template lwc:if={hasMissingEmailContacts}>
+									<a href={missingEmailExportUrl} target="_blank" class="slds-m-left_xx-small">
+										{contactsMissingEmailCount}
+									</a>
+								</template>
+								<template lwc:else>
+									<span class="slds-m-left_xx-small">0</span>
+								</template>
+							</h1>
+						</div>
+					</div>
+				</template>
+				<template lwc:else>
+					<div class="slds-col">
+						<div>
+							<h1>Number of List Members: {memberCount}</h1>
+						</div>
+					</div>
+				</template>
+				<!-- menu items start-->
+				<lightning-layout>
+					<lightning-layout-item class="slds-var-p-vertical_large" size="12" small-device-size="12"
+						large-device-size="4">
+						<div onkeyup={handleSearch} class="lgc-bg">
+							<lightning-input name="enter-search" label="Search" type="search"></lightning-input>
+						</div>
+					</lightning-layout-item>
+				</lightning-layout>
+				<lightning-layout multiple-rows="true" horizontal-align="spread">
+					<template lwc:if={isEventList}>
+						<lightning-layout-item>
+							<lightning-button-menu alternative-text="Update Guest(s)" variant="border-filled"
+								onselect={handleOnMenuItem} class="slds-button_brand" label="Update Guest(s)">
+								<lightning-menu-item value="addGuest" label="Add Guest"></lightning-menu-item>
+								<lightning-menu-item value="addSignificantOthers" label="Add Significant Other(s)">
+								</lightning-menu-item>
+								<lightning-menu-item value="deleteGuests" label="Delete Guest(s)"></lightning-menu-item>
+								<lightning-menu-item value="updateRSVPAttendance" label="Update RSVP/Attendance">
+								</lightning-menu-item>
+								<lightning-menu-item value="updateCCAssistants" label="Update CC Staff/Addresses">
+								</lightning-menu-item>
+								<lightning-menu-item lwc:if={hasCreateInteractionsAccess} value="createInteractions"
+									label="Create Interactions">
+								</lightning-menu-item>
+								<lightning-menu-item value="updateGuestInfo" label="Update Event Tier/Guest Of">
+								</lightning-menu-item>
+							</lightning-button-menu>
+						</lightning-layout-item>
+						<lightning-layout-item>
+							<lightning-button-menu alternative-text="Sync to/from Zkipster" variant="border-filled"
+								onselect={handleOnMenuItem} class="slds-button_brand" label="Sync to/from Zkipster">
+								<lightning-menu-item value="syncGuestsToZkipster" label="Sync Guests to Zkipster">
+								</lightning-menu-item>
+								<lightning-menu-item value="syncGuestsFromZkipster" label="Sync Guests from Zkipster">
+								</lightning-menu-item>
+							</lightning-button-menu>
+						</lightning-layout-item>
+						<lightning-layout-item>
+							<lightning-button-menu alternative-text="Generate Guest Exports" variant="border-filled"
+								onselect={handleOnMenuItem} class="slds-button_brand" label="Generate Guest Exports">
+								<lightning-menu-item value="guestList" label="Export Guest List"></lightning-menu-item>
+								<lightning-menu-item value="guestSummaryEmail" label="Guest Summary Email">
+								</lightning-menu-item>
+								<lightning-menu-item lwc:if={hasGenerateBioAccess} value="bio" label="Bio">
+								</lightning-menu-item>
+								<lightning-menu-item lwc:if={hasGenerateShortBioAccess} value="shortBio"
+									label="Short Bio">
+								</lightning-menu-item>
+							</lightning-button-menu>
+						</lightning-layout-item>
+						<template lwc:if={showInvitationBtn}>
+							<lightning-layout-item>
+								<lightning-button variant="brand" label="Send Invitation(s)" title="Send Invitation(s)"
+									class="topBtn" onclick={handleInvitation}>
+								</lightning-button>
+							</lightning-layout-item>
+						</template>
+						<lightning-layout-item>
+							<template lwc:if={myViewExists}>
+								<lightning-button variant="brand" label="Edit Column Order" title="Edit Column Order"
+									class="slds-p-around_small slds-m-top_large" onclick={createListView}>
+								</lightning-button>
+							</template>
+							<template lwc:else>
+								<lightning-button variant="brand" label="Create Column Order"
+									title="Create Column Order" class="slds-p-around_small slds-m-top_large"
+									onclick={createListView}>
+								</lightning-button>
+							</template>
+						</lightning-layout-item>
+					</template>
+					<lightning-layout-item>
+						<lightning-button variant="brand" icon-name="utility:sort" label="Sort Columns"
+							title="Sort Columns" class="slds-p-around_small slds-m-top_large" onclick={openSortModal}>
+						</lightning-button>
+					</lightning-layout-item>
+				</lightning-layout>
+				<!-- menu items end-->
+				<div class="slds-col" style="margin-top: 1%">
+					<template lwc:if={isPagination}>
+						<template lwc:if={isPrev}>
+							<lightning-button variant="brand" label="Prev" title="Prev" icon-name="utility:left"
+								icon-position="left" class="slds-m-left_x-small" onclick={handlePrev}>
+							</lightning-button>
+						</template>
+						<template lwc:if={isNext}>
+							<lightning-button variant="brand" label="Next" title="Next" icon-name="utility:right"
+								icon-position="right" class="slds-m-left_x-small" onclick={handleNext}>
+							</lightning-button>
+						</template>
+						<template lwc:if={isEventList}>
+							<span style="margin-left: 10px">
+								<lightning-icon icon-name="utility:warning" alternative-text="Connected" size="x-small"
+									title="x-small size">
+								</lightning-icon>
+								<h1 style="display: inline; margin-left: 5px">
+									Please note that select all only selects the records displayed
+									on page.
+								</h1>
+							</span>
+						</template>
+					</template>
+				</div>
+				<div class="tableSize">
+					<template lwc:if={showSpinner}>
+						<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+					</template>
+					<template lwc:if={hasNotLoaded}>
+						<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+					</template>
+					<template lwc:if={isEventList}>
+						<div style="height: 40rem;">
+							<c-inline-data-table key-field="Id" data={data} columns={stickyColumns3} onsave={handleSave}
+								oncancel={handleCancel} onpicklistchanged={picklistChanged} oniconclicked={handleEmail}
+								draft-values={draftValues} onsort={handleSort} show-row-number-column
+								row-number-offset={rowOffset} oncellchange={handleCellChanged}
+								onrowaction={handleRowAction} onrowselection={getSelectedItems}
+								onheaderaction={handleHeaderAction} hide-checkbox-column={isHideCheckbox}
+								onemaillookupchanged={picklistChanged}>
+							</c-inline-data-table>
+						</div>
+					</template>
+				</div>
+				<template lwc:if={isNotEventList}>
+					<div class="tableSize" style="height: 40rem;">
+						<c-inline-data-table key-field="Id" data={data} columns={columns} onsave={handleSave}
+							oncancel={handleCancel} onpicklistchanged={picklistChanged} draft-values={draftValues}
+							onsort={handleSort} show-row-number-column row-number-offset={rowOffset}
+							oncellchange={handleCellChanged} onrowaction={handleRowAction}
+							onrowselection={getSelectedItems} onheaderaction={handleHeaderAction}
+							hide-checkbox-column={isHideCheckbox} class="stickyTop"
+							onemaillookupchanged={picklistChanged} max-height="65vh" header-top-offset="48">
+						</c-inline-data-table>
+					</div>
+				</template>
+			</div>
+			<div class="slds-col">
+				<template lwc:if={isPagination}>
+					<template lwc:if={isPrev}>
+						<lightning-button variant="brand" label="Prev" title="Prev" icon-name="utility:left"
+							icon-position="left" class="slds-m-left_x-small" onclick={handlePrev}>
+						</lightning-button>
+					</template>
+					<template lwc:if={isNext}>
+						<lightning-button variant="brand" label="Next" title="Next" icon-name="utility:right"
+							icon-position="right" class="slds-m-left_x-small" onclick={handleNext}>
+						</lightning-button>
+					</template>
+				</template>
+				<template lwc:if={showSave}>
+					<div style="position: fixed; bottom: 5px; left: 40%; z-index: 99999; background-color: orange;">
+						<lightning-button variant="brand" label="Save" title="Save" class="hoverSaveBtn"
+							onclick={handleSave}>
+						</lightning-button>
+					</div>
+				</template>
+			</div>
+		</lightning-card>
+	</div>
+</template>

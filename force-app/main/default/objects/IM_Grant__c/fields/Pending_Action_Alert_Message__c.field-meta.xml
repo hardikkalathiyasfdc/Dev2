@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pending_Action_Alert_Message__c</fullName>
+    <description>IM-156:Used to store pending action messages.</description>
+    <externalId>false</externalId>
+    <formula>IF(
+AND(ISPICKVAL(Bgive_IM_Connection__c,&apos;IM Managed&apos;),ISPICKVAL(Funded_By_Multiple_Initiatives__c,&apos;No&apos;),ISBLANK(Bgive_Id__c)),
+&apos;Not yet pushed to Bgive.&apos;,
+IF(AND(Partner_Org__r.Bgive_Id__c!=Bgive_Program_Organization_Id__c, NOT(ISBLANK(Bgive_Program_Organization_Id__c))), &apos;Partner Org does not match with Bgive.;&apos;, &apos;&apos;) 
+&amp;
+IF( AND( Confirmed_Budget_Amount_USD__c != 0, 
+Confirmed_Budget_Amount_USD__c  != Budget_Amount_USD__c) ,
+&apos;Change in amount. Please review and confirm.&apos;,
+IF( AND(ISBLANK(Amendment_Bgive_Id__c), Total_Amount_Local__c  !=  Bgive_Amount_Local__c),
+&apos;Amount in Bgive is different from IM.&apos;,&apos;&apos;)))</formula>
+    <label>Pending Action Alert Message</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

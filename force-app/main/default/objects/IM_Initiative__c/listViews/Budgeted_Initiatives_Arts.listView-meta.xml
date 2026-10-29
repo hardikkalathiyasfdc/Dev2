@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Budgeted_Initiatives_Arts</fullName>
+    <columns>Status__c</columns>
+    <columns>Initiative_Type__c</columns>
+    <columns>NAME</columns>
+    <columns>Amount_Term__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Team__c</field>
+        <operation>equals</operation>
+        <value>Arts</value>
+    </filters>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>IM_Initiative__c.Budgeted_Initiative</value>
+    </filters>
+    <label>Budgeted Initiatives - Arts</label>
+    <sharedTo>
+        <group>IM_Program_Team_Arts</group>
+    </sharedTo>
+</ListView>

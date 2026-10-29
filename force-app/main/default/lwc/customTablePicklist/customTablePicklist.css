@@ -1,0 +1,9 @@
+.picklist button {
+  width: 90%;
+  color: var(--lwc-brandTextLinkActive, rgb(0, 95, 178));
+}
+
+.myText {
+  min-height: 15px;
+  width: 900%;
+}

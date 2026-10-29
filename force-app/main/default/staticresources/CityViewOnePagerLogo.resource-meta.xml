@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StaticResource xmlns="http://soap.sforce.com/2006/04/metadata">
+    <cacheControl>Public</cacheControl>
+    <contentType>image/png</contentType>
+    <description>BRME-5227 - This logo is used in City View One Pager word document. Created a separate one as this logo has a different background whereas the City View UI has a transparent background</description>
+</StaticResource>

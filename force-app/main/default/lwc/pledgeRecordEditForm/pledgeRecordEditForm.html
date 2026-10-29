@@ -1,0 +1,252 @@
+<template>
+	<div lwc:if={isLoading} style="position:relative">
+		<lightning-spinner variant="brand" size="large"></lightning-spinner>
+	</div>
+	<div lwc:else class="slds-m-top_x-large slds-m-bottom_x-large slds-m-left_x-large slds-m-right_x-large">
+		<lightning-card variant="narrow">
+			<h1 class="slds-align_absolute-center slds-m-top_medium">
+				<span class="slds-page-header__title slds-truncate" title={header}>{header}</span>
+			</h1>
+			<div style="background-color:white;" class="slds-m-top_large slds-m-bottom_xx-large slds-m-left_xx-large slds-m-right_xx-large">
+				<lightning-record-edit-form object-api-name="Pledge__c" record-id={pledgeRecordId}
+					onsuccess={handleSuccess} onsubmit={handleSubmit} onerror={handleError}>
+					<lightning-messages></lightning-messages>
+					<div class="slds-box">
+						<lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+							<lightning-accordion-section name="A" label="Ask/Pledge Information">
+								<div class="slds-grid slds-wrap slds-p-around--medium">
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="Fundraising_Effort__c"
+											onchange={handleFEChange} variant="label-stacked" value={FEId} required>
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<c-generic-lookup object-api-name="Account" icon="standard:account"
+											label="Recipient Organization" display-fields={orgDisplayFields} search-fields={orgSearchFields}
+											default-selected-ids={reciRecDefaultIds} filter-clause={recipientOrgFilterClause}
+											default-results-filter-clause={recipientOrgFilterClause} onchange={lookupReciRecord}
+											placeholder="Search..." required={orgRequired}>
+										</c-generic-lookup>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="Pledge_Start_Date__c" variant="label-stacked">
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="Pledge_End_Date__c" variant="label-stacked">
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field name="pledgeAmount" field-name="Pledge_Amount__c"
+											variant="label-stacked" onchange={handlePledgeAmount} required={pledgeamountRequired}>
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="Pledge_Currency__c" variant="label-stacked"
+											value={FECurr} onchange={handlePledgeReport}>
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="Pledge_Type__c" variant="label-stacked" onchange={handlePledgeType}>
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="Pledge_Type_Details__c" variant="label-stacked">
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<div lwc:if={FModeRecId}>
+											<c-custom-single-select-lookup-lwc icon-name="standard:account"
+												s-object-api-name="Fundraising_Activity__c" label="Appeal"
+												onlookupupdate={lookupFpmRecord} default-record-id={FModeRecId}
+												parentfield-api-name="Fundraising_Effort_Id__c" parent-record-id={FEId}
+												is-parent-required={isParentRequired} placeholder="Search..."
+												is-required={modeRequired} class="lookupcomp1appeal">
+											</c-custom-single-select-lookup-lwc>
+										</div>
+										<div lwc:else>
+											<c-custom-single-select-lookup-lwc icon-name="standard:account"
+												s-object-api-name="Fundraising_Activity__c" label="Appeal"
+												onlookupupdate={lookupFpmRecord} default-record-id={FModeRecId}
+												parentfield-api-name="Fundraising_Effort_Id__c" parent-record-id={FEId}
+												is-parent-required={isParentRequired} placeholder="Search..."
+												is-required={modeRequired} class="lookupcomp1appeal">
+											</c-custom-single-select-lookup-lwc>
+										</div>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="Status__c" variant="label-stacked" onchange={handleMandatory}>
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="Source_Contact__c" variant="label-stacked">
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="Source_Program_Team__c" variant="label-stacked">
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="Priority__c" variant="label-stacked">
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<div lwc:if={tierRecordId}>
+											<c-custom-single-select-lookup-lwc icon-name="standard:account"
+												s-object-api-name="Possible_Tiers__c" label="Tier"
+												onlookupupdate={lookupTRecord} default-record-id={tierRecordId}
+												parentfield-api-name="Fundraising_Effort__c" parent-record-id={FEId}
+												is-parent-required={isParentRequired} placeholder="Search..."
+												class="lookupcomp">
+											</c-custom-single-select-lookup-lwc>
+										</div>
+										<div lwc:else>
+											<c-custom-single-select-lookup-lwc icon-name="standard:account"
+												s-object-api-name="Possible_Tiers__c" label="Tier"
+												onlookupupdate={lookupTRecord} default-record-id={tierRecordId}
+												parentfield-api-name="Fundraising_Effort__c" parent-record-id={FEId}
+												is-parent-required={isParentRequired} placeholder="Search..."
+												class="lookupcomp">
+											</c-custom-single-select-lookup-lwc>
+										</div>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="Rationale__c" variant="label-stacked">
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="Status_with_Recipient_Organization__c" variant="label-stacked">
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="Next_Steps__c" variant="label-stacked">
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="Notes__c" variant="label-stacked">
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="In_Honor_Of__c" variant="label-stacked">
+										</lightning-input-field>
+									</div>
+									<template lwc:if={pledgeReportAmount}>
+										<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+											<lightning-input-field field-name="Report_Amount_USD__c" variant=" label-stacked" value={pledgeValueUSD} required>
+											</lightning-input-field>
+										</div>
+									</template>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="Anonymous__c" variant="label-stacked">
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="Exclude_from_Donor_memo__c" variant="label-stacked">
+										</lightning-input-field>
+									</div>
+								</div>
+							</lightning-accordion-section>
+							<lightning-accordion allow-multiple-sections-open active-section-name="B">
+								<lightning-accordion-section name="B" label="Donors">
+									<template lwc:if={adddonor}>
+										<div style="color:red">Please add Donor.</div>
+									</template>
+									<div>
+										<template lwc:if={donorsData}>
+											<c-add-pledge-donors-benefites add-row-button-name="Add Donor"
+												fileds={donorsColumns} card-icon="" all-records={donorsData}
+												object-name='Donor__c' class="donorClass" card-title=""
+												has-donor-specific="true" pledge-amount={pledgeAmount}>
+											</c-add-pledge-donors-benefites>
+										</template>
+										<template lwc:else>
+											<c-add-pledge-donors-benefites add-row-button-name="Add Donor"
+												fileds={donorsColumns} card-icon="" all-records={donorsData}
+												object-name='Donor__c' class="donorClass" card-title=""
+												has-donor-specific="true" pledge-amount={pledgeAmount}>
+											</c-add-pledge-donors-benefites>
+										</template>
+									</div>
+								</lightning-accordion-section>
+							</lightning-accordion>
+							<lightning-accordion-section name="C" label="Pledge Financials">
+								<div class="slds-grid slds-wrap slds-p-around--medium">
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="Target_Amount__c" variant="label-stacked">
+										</lightning-input-field>
+									</div>
+									<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+										<lightning-input-field field-name="Payments_NOT_Tracked__c"
+											value={PaymentNotTracked} variant="label-stacked" onchange={handlePaymentSchedule}>
+										</lightning-input-field>
+									</div>
+								</div>
+							</lightning-accordion-section>
+							<template lwc:if={paymentNotScheduled}>
+								<lightning-accordion allow-multiple-sections-open active-section-name="E">
+									<lightning-accordion-section name="E" label="Payment Schedule">
+										<div class="slds-grid slds-wrap slds-p-around--medium">
+											<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+												<lightning-input-field field-name="Number_of_payments__c" variant="label-stacked">
+												</lightning-input-field>
+											</div>
+											<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+												<lightning-input-field field-name="Frequency_Months__c" variant="label-stacked">
+												</lightning-input-field>
+											</div>
+											<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+												<lightning-input-field field-name="First_Payment_Date__c" variant=" label-stacked">
+												</lightning-input-field>
+											</div>
+										</div>
+									</lightning-accordion-section>
+								</lightning-accordion>
+							</template>
+							<lightning-accordion-section name="D" label="Benefits">
+								<div lwc:if={benefitsData}>
+									<c-add-pledge-donors-benefites add-row-button-name="Add Benefit"
+										fileds={benefitsColumns} card-icon="" f-e-id={FEId} all-records={benefitsData}
+										object-name='Pledge_Benefit__c' class="benefitClass" card-title=""
+										is-pledge-benifits={modeRequired}>
+									</c-add-pledge-donors-benefites>
+								</div>
+								<div lwc:else>
+									<c-add-pledge-donors-benefites add-row-button-name="Add Benefit"
+										fileds={benefitsColumns} card-icon="" f-e-id={FEId} all-records={benefitsData}
+										object-name='Pledge_Benefit__c' class="benefitClass" card-title=""
+										is-pledge-benifits={modeRequired}>
+									</c-add-pledge-donors-benefites>
+								</div>
+							</lightning-accordion-section>
+							<lightning-accordion-section name="F" label="System Information">
+								<div class="slds-var-p-around_x-large">
+									<div class="slds-form__row">
+										<div class="slds-form__item" role="listitem">
+											<div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+												<span class="slds-form-element__label">Source System ID</span>
+												<div class="slds-form-element__control">
+													<lightning-input-field field-name="Source_System_ID__c" variant="label-hidden">
+													</lightning-input-field>
+												</div>
+											</div>
+											<div class="slds-col slds-size_6-of-12 slds-p-horizontal_medium">
+												<lightning-input-field field-name="System_Notes__c" variant="label-stacked">
+												</lightning-input-field>
+											</div>
+										</div>
+									</div>
+								</div>
+							</lightning-accordion-section>
+						</lightning-accordion>
+					</div>
+					<div class="slds-clearfix slds-align_absolute-center slds-m-top_medium">
+						<lightning-button type="submit" variant="brand" label="Save" class="slds-m-around_xx-small" onerror={handleError}>
+						</lightning-button>
+						<lightning-button label="Cancel" onclick={handleCancel} class="slds-m-around_xx-small">
+						</lightning-button>
+					</div>
+				</lightning-record-edit-form>
+			</div>
+		</lightning-card>
+	</div>
+</template>

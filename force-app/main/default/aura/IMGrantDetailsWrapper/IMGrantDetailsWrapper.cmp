@@ -1,0 +1,3 @@
+<aura:component implements="force:hasRecordId,force:hasSObjectName,lightning:actionOverride">
+    <c:imGrantView recordId="{!v.recordId}" objectApiName="{!v.sObjectName}"></c:imGrantView>
+</aura:component>

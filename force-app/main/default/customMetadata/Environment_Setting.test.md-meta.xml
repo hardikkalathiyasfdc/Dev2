@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>test</label>
+    <protected>false</protected>
+    <values>
+        <field>BPInternListName__c</field>
+        <value xsi:type="xsd:string">Bloomberg Philanthropies Interns (Current)</value>
+    </values>
+    <values>
+        <field>BRME_Email_Address__c</field>
+        <value xsi:type="xsd:string">bpsalesforceteam@e.bloomberg.org</value>
+    </values>
+    <values>
+        <field>BRM_Help_Email_Address__c</field>
+        <value xsi:type="xsd:string">salesforcehelp@bloomberg.org</value>
+    </values>
+    <values>
+        <field>BaseURLPrefix__c</field>
+        <value xsi:type="xsd:string">https://bbrm--test.sandbox.file.force.com/servlet</value>
+    </values>
+    <values>
+        <field>BoardReportSenderEmail__c</field>
+        <value xsi:type="xsd:string">dianam@bloomberg.org</value>
+    </values>
+    <values>
+        <field>BoardReporterDefaultSender__c</field>
+        <value xsi:type="xsd:string">Diana Meyer</value>
+    </values>
+    <values>
+        <field>Business_Email_Address__c</field>
+        <value xsi:type="xsd:string">dianam@bloomberg.org</value>
+    </values>
+    <values>
+        <field>Default_Event_Coordinator__c</field>
+        <value xsi:type="xsd:string">0056g000002O6LmAAK</value>
+    </values>
+    <values>
+        <field>Enable_BGive_Org_Creation__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Enable_Blink_Master_Contact_Info__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Fluxx_Base_URL__c</field>
+        <value xsi:type="xsd:string">https://bloomberg-test.fluxx.io</value>
+    </values>
+    <values>
+        <field>Fluxx_Named_Credential__c</field>
+        <value xsi:type="xsd:string">Fluxx_OAuth_Test</value>
+    </values>
+    <values>
+        <field>Fluxx_User_Id__c</field>
+        <value xsi:type="xsd:string">64424</value>
+    </values>
+    <values>
+        <field>Foundation_Code_Model_Attribute_Ids__c</field>
+        <value xsi:type="xsd:string">57688,56133,58412,58417,58483</value>
+    </values>
+    <values>
+        <field>IM_Bgive_Helpdesk_Email__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>IM_Org_Wide_Email__c</field>
+        <value xsi:type="xsd:string">bim@e.bloomberg.org</value>
+    </values>
+    <values>
+        <field>LastBoardMeeting__c</field>
+        <value xsi:type="xsd:date">2021-06-14</value>
+    </values>
+    <values>
+        <field>ListContactQueryId__c</field>
+        <value xsi:type="xsd:string">a0L6g000000EKvsEAG</value>
+    </values>
+    <values>
+        <field>MultiContactQueryId__c</field>
+        <value xsi:type="xsd:string">a0L6g000003ZhTLEA0</value>
+    </values>
+    <values>
+        <field>MultiContactTemplateId__c</field>
+        <value xsi:type="xsd:string">a0T6g000001oTkSEAU</value>
+    </values>
+    <values>
+        <field>OrgWillet__c</field>
+        <value xsi:type="xsd:string">0016g000005xSdOAAU</value>
+    </values>
+    <values>
+        <field>Restricted_Org_Contact_Owner_Id__c</field>
+        <value xsi:type="xsd:string">0056g000001Mc3SAAS</value>
+    </values>
+    <values>
+        <field>SiteOperationListName__c</field>
+        <value xsi:type="xsd:string">Staff PhotoBook</value>
+    </values>
+    <values>
+        <field>Unrestricted_Org_Contact_Owner_Id__c</field>
+        <value xsi:type="xsd:string">0057x00000S9O4bAAF</value>
+    </values>
+    <values>
+        <field>Weather_API_Key__c</field>
+        <value xsi:type="xsd:string">50becede62d64b1abecede62d63b1adb</value>
+    </values>
+    <values>
+        <field>Weather_API_URL__c</field>
+        <value xsi:type="xsd:string">https://api.weather.com/v3</value>
+    </values>
+</CustomMetadata>

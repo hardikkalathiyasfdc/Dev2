@@ -1,0 +1,52 @@
+<template>
+	<template if:true={showGuests}>
+		<lightning-card title={title}>
+			<div slot="actions">
+				<lightning-button class="slds-m-top_small slds-m-right_small" variant="destructive" name="Remove"
+					label="Remove" onclick={handleDelete}></lightning-button>
+				<lightning-button class="slds-m-top_small" variant="brand" name="Add to Event" label="Add to Event"
+					onclick={handleAdd}></lightning-button>
+			</div>
+			<div class="slds-m-around_small">
+				<template if:true={showContactCreate}>
+					<c-contact-creation first-name={selectedRow.FirstName__c} last-name={selectedRow.LastName__c}
+						email={selectedRow.Email__c} oncreate={handleCreationSuccess}
+						oncancelation={handleCreationCancel}>
+					</c-contact-creation>
+				</template>
+
+				<div>
+					<div style="height: 300px;">
+						<template if:true={guests}>
+
+							<lightning-datatable key-field="Id" data={guests} max-row-selection='1'
+								onrowselection={getSelectedRow} columns={columns}>
+							</lightning-datatable>
+						</template>
+					</div>
+				</div>
+			</div>
+		</lightning-card>
+	</template>
+	<template if:true={isModalOpen}>
+		
+			<section class="slds-modal slds-fade-in-open slds-modal_small slds-align_absolute-center" style=" width: 50%;">
+				<div class="slds-modal__container">
+					<header class="slds-modal__header">
+						<h2 id="modal-heading-02" class="slds-modal__title slds-hyphenate">Remove Guest</h2>
+					</header>
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2" style="height: 60px;">
+						<p class="slds-text-align_center">Are you sure you want to remove this guest?</p>
+					</div>
+					<footer class="slds-modal__footer slds-text-align_center">
+
+					<lightning-button class="slds-m-top_small slds-m-right_small" name="Cancel" label="Cancel"
+						onclick={closeModal}></lightning-button>
+					<lightning-button class="slds-m-top_small slds-m-left_small" variant="destructive" name="Remove"
+						label="Remove" onclick={handleDeleteFromModal}></lightning-button>
+					</footer>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+</template>

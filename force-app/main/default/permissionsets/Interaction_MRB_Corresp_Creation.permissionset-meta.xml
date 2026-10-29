@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Gives access to create Interaction Correspondence (MRB) records.(BRME-5409)</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Interaction: MRB Corresp. Creation</label>
+    <recordTypeVisibilities>
+        <recordType>Interaction__c.MRB_Interaction</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

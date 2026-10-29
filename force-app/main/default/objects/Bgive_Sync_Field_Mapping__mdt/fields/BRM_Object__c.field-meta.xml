@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BRM_Object__c</fullName>
+    <description>IM-49: The Object name in BRM for the BGive field Sync mapping.</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>BRM Object</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>IM_Initiative__c</fullName>
+                <default>false</default>
+                <label>IM_Initiative__c</label>
+            </value>
+            <value>
+                <fullName>IM_Grant__c</fullName>
+                <default>false</default>
+                <label>IM_Grant__c</label>
+            </value>
+            <value>
+                <fullName>IM_Payment</fullName>
+                <default>false</default>
+                <label>IM_Payment</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

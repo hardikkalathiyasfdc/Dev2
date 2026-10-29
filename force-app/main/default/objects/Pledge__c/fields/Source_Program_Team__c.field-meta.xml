@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Source_Program_Team__c</fullName>
+    <label>Source: Program Team</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Arts</fullName>
+                <default>false</default>
+                <label>Arts</label>
+            </value>
+            <value>
+                <fullName>Bloomberg Associates</fullName>
+                <default>false</default>
+                <label>Bloomberg Associates</label>
+            </value>
+            <value>
+                <fullName>Bloomberg Connects</fullName>
+                <default>false</default>
+                <label>Bloomberg Connects</label>
+            </value>
+            <value>
+                <fullName>BMIA</fullName>
+                <default>false</default>
+                <label>BMIA</label>
+            </value>
+            <value>
+                <fullName>BP Grants Team</fullName>
+                <default>false</default>
+                <label>BP Grants Team</label>
+            </value>
+            <value>
+                <fullName>Briefings</fullName>
+                <default>false</default>
+                <label>Briefings</label>
+            </value>
+            <value>
+                <fullName>Communications</fullName>
+                <default>false</default>
+                <label>Communications</label>
+            </value>
+            <value>
+                <fullName>Correspondence</fullName>
+                <default>false</default>
+                <label>Correspondence</label>
+            </value>
+            <value>
+                <fullName>Creative</fullName>
+                <default>false</default>
+                <label>Creative</label>
+            </value>
+            <value>
+                <fullName>Data</fullName>
+                <default>false</default>
+                <label>Data</label>
+            </value>
+            <value>
+                <fullName>Education</fullName>
+                <default>false</default>
+                <label>Education</label>
+            </value>
+            <value>
+                <fullName>Environment</fullName>
+                <default>false</default>
+                <label>Environment</label>
+            </value>
+            <value>
+                <fullName>Events</fullName>
+                <default>false</default>
+                <label>Events</label>
+            </value>
+            <value>
+                <fullName>Executive</fullName>
+                <default>false</default>
+                <label>Executive</label>
+            </value>
+            <value>
+                <fullName>Founder’s Projects</fullName>
+                <default>false</default>
+                <label>Founder’s Projects</label>
+            </value>
+            <value>
+                <fullName>Government Innovation</fullName>
+                <default>false</default>
+                <label>Government Innovation</label>
+            </value>
+            <value>
+                <fullName>Greenwood Initiative</fullName>
+                <default>false</default>
+                <label>Greenwood Initiative</label>
+            </value>
+            <value>
+                <fullName>Human Resources</fullName>
+                <default>false</default>
+                <label>Human Resources</label>
+            </value>
+            <value>
+                <fullName>IT</fullName>
+                <default>false</default>
+                <label>IT</label>
+            </value>
+            <value>
+                <fullName>LP Briefings</fullName>
+                <default>false</default>
+                <label>LP Briefings</label>
+            </value>
+            <value>
+                <fullName>LP Executive</fullName>
+                <default>false</default>
+                <label>LP Executive</label>
+            </value>
+            <value>
+                <fullName>LP Grants Asia - Standard</fullName>
+                <default>false</default>
+                <label>LP Grants Asia - Standard</label>
+            </value>
+            <value>
+                <fullName>LP Grants London - Leadership</fullName>
+                <default>false</default>
+                <label>LP Grants London - Leadership</label>
+            </value>
+            <value>
+                <fullName>LP Grants London - Standard</fullName>
+                <default>false</default>
+                <label>LP Grants London - Standard</label>
+            </value>
+            <value>
+                <fullName>LP Grants NY - Leadership</fullName>
+                <default>false</default>
+                <label>LP Grants NY - Leadership</label>
+            </value>
+            <value>
+                <fullName>LP Grants NY - Standard</fullName>
+                <default>false</default>
+                <label>LP Grants NY - Standard</label>
+            </value>
+            <value>
+                <fullName>Mithraeum</fullName>
+                <default>false</default>
+                <label>Mithraeum</label>
+            </value>
+            <value>
+                <fullName>Partnership &amp; Fundraising</fullName>
+                <default>false</default>
+                <label>Partnership &amp; Fundraising</label>
+            </value>
+            <value>
+                <fullName>Political</fullName>
+                <default>false</default>
+                <label>Political</label>
+            </value>
+            <value>
+                <fullName>Public Health</fullName>
+                <default>false</default>
+                <label>Public Health</label>
+            </value>
+            <value>
+                <fullName>Reception</fullName>
+                <default>false</default>
+                <label>Reception</label>
+            </value>
+            <value>
+                <fullName>Scheduling and Advance</fullName>
+                <default>false</default>
+                <label>Scheduling and Advance</label>
+            </value>
+            <value>
+                <fullName>Speechwriting</fullName>
+                <default>false</default>
+                <label>Speechwriting</label>
+            </value>
+            <value>
+                <fullName>Workplace-Operations</fullName>
+                <default>false</default>
+                <label>Workplace-Operations</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

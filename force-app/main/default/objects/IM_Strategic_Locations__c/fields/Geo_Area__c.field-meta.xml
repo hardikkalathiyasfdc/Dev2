@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Geo_Area__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>IM-44: DAMA locations for Initiatives</description>
+    <label>Geo Area</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Geo_Area__c.BP_Active__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </filterItems>
+        <filterItems>
+            <field>Geo_Area__c.Enabled_For_Grants__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Geo_Area__c</referenceTo>
+    <relationshipLabel>Strategic Locations</relationshipLabel>
+    <relationshipName>Strategic_Locations</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

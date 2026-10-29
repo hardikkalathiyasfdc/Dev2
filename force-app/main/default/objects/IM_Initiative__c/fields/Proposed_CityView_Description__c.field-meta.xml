@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Proposed_CityView_Description__c</fullName>
+    <description>Captures the proposed description for the CityView Initiative to be used when creating or linking the associated CityView Initiative.(BRME-6856)</description>
+    <label>Proposed CityView Description</label>
+    <length>32768</length>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

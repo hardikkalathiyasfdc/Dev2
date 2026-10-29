@@ -1,0 +1,559 @@
+<aura:component controller="DITCmpController">
+    <aura:attribute name="selectedContact" type="Map" default="{}"/>
+    <aura:attribute name="contactList" type="List" default="[]"/>
+    <aura:attribute name="isMergeReady" type="Boolean" default="false"/>
+    <aura:attribute name="isLoading" type="Boolean" default="false"/>
+    <aura:attribute name="showDuplicatesModal" type="Boolean" default="false"/>
+    <aura:attribute name="renderTable" type="Boolean" default="false"/>
+    <aura:attribute name="confirmNumber" type="Integer" default="0"/>
+    <aura:attribute name="totalRecordCount" type="Integer" default="0"/>
+    <aura:attribute name="dataLoaderId" type="String" default=""/>
+    <aura:attribute name="rawResult" type="Map" default="{}"/> 
+    <aura:attribute name="dupesData" type="List" default="[]"/> 
+    <aura:attribute name="columns" type="List" default="[]"/>
+    <aura:attribute name="isStageChange" type="Boolean" default="false"/>
+    <aura:attribute name="disabledCreateAsNew" type="Boolean" default="true"/>
+      <aura:attribute name="disabledConfirm" type="Boolean" default="false"/>
+    <aura:attribute name="convertedNameMap" type="Map" default="{}"/>
+    
+    <aura:attribute name="maxRowSelection" type="Integer" default="1"/>
+    <aura:attribute name="tableColumns" type="List" default="[{'api':'Contact_Alert_Reason__c'},{'api':'First_Name__c'},{'api':'Middle_Name__c'},{'api':'Last_Name__c'},
+                                                             {'api':'Preferred_First_Name__c'},
+                                                             {'api':'Title__c'},{'api':'Organization_Name__c'},
+                                                             {'api':'Business_Email__c'},{'api':'Personal_Email__c'},
+                                                             {'api':'Additional_Email__c'},{'api':'Business_Phone__c'},
+                                                             {'api':'Cell__c'},{'api':'AdditionalPhone__c'},{'api':'Significant_Other__c'},{'api':'UUID__c'}]"/>
+    
+    <aura:handler
+                  name="oSelectedRecordEvent"
+                  event="c:SelectedsObjectRecordEvent"
+                  action="{!c.handleLookup}"
+                  />
+    <aura:handler
+                  name="changeEvent"
+                  event="c:MyTableEvent"
+                  action="{!c.handleTableChange}"
+                  phase="capture"
+                  />
+    <aura:attribute name="showDeleteConfirm" type="Boolean" default="false" />
+    <aura:registerEvent name="changeEvent" type="c:MyTableEvent" />
+    <ltng:require scripts="{!$Resource.cmputil}" afterScriptsLoaded="{!c.init}" />
+    <aura:if isTrue="{!v.isLoading}">
+        <lightning:spinner alternativeText="Loading" size="medium" />
+    </aura:if>
+    <aura:if isTrue="{!not(empty(v.selectedContact))}">
+        <div
+             class="slds-grid onesetupSetupFlow runtime_sales_mergeMergeFlow"
+             data-aura-class="onesetupSetupFlow runtime_sales_mergeMergeFlow"
+             >
+            <div class="content slds-col">
+                <div class="slds-p-around--x-large" aria-live="polite">
+                    <h3
+                        class="slds-text-heading--large slds-text-align--center slds-p-bottom--small setupFlowHeader"
+                        >
+                        <span class="icon-container"></span>
+                        <div
+                             dir="ltr"
+                             class="uiOutputRichText"
+                             data-aura-class="uiOutputRichText"
+                             >
+                            <aura:if isTrue="{!not(v.showDuplicatesModal)}">
+                                Compare Potential Duplicates
+                                <aura:set attribute="else">
+                                    Select a duplicate to compare or select new
+                                </aura:set>
+                            </aura:if>
+                        </div>
+                    </h3>
+                    <div
+                         class="slds-text-body--regular slds-text-align--center setupFlowTagline"
+                         >
+                    </div>
+                    <div style="text-align: center; margin-top: 1%">
+                        <aura:if isTrue="{!not(v.showDuplicatesModal)}">
+                            <aura:if isTrue="{!not(v.selectedContact.isConfirmed)}">
+                                <lightning:button
+                                                  onclick="{!c.deleteConfirm}"
+                                                  label="Delete"
+                                                  iconName="utility:delete"
+                                                  iconPosition="left"
+                                                  variant="destructive"
+                                                  />
+                                <lightning:button
+                                                  onclick="{!c.confirmContact}"
+                                                  label="Confirm Existing BRM Contact"
+                                                  iconPosition="left"
+                                                  disabled="{!v.disabledConfirm}"
+                                                  variant="brand"
+                                                  />
+                                <aura:set attribute="else">
+                                    <lightning:button
+                                                      onclick="{!c.unconfirmContact}"
+                                                      label="Remove Confirmation"
+                                                      iconName="utility:close"
+                                                      iconPosition="left"
+                                                      variant="destructive"
+                                                      />
+                                </aura:set>
+                                <lightning:button
+									onclick="{!c.createContact}"
+									label="Create New Contact from Excel"
+									variant="brand"
+									disabled="{!v.disabledCreateAsNew}"
+                                ></lightning:button>
+                            </aura:if>
+                            <aura:set attribute="else">
+                                <lightning:button
+									onclick="{!c.deleteConfirm}"
+                                    label="Delete"
+                                    iconName="utility:delete"
+                                    iconPosition="left"
+                                    variant="destructive"
+                                />
+                                <lightning:button
+									onclick="{!c.createContact}"
+									label="Create New Contact from Excel"
+									variant="brand"
+								>
+                                </lightning:button>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                </div>
+                
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-5">
+                        <div>• <b>{!(v.totalRecordCount-v.contactList.length)} Contact(s) Require No Review</b> <lightning:helptext content="Includes Exact Matches and New Contacts to be Created."></lightning:helptext></div>
+                        <div>• <b>{!v.confirmNumber} of {!v.contactList.length} Contact(s) Confirmed</b></div>
+                        <ul>
+                            <aura:iteration
+                                            items="{!v.contactList}"
+                                            var="contact"
+                                            indexVar="conIdx"
+                                            >
+                                <aura:if isTrue="{!not(contact.isDeleted)}">
+                                    <li>
+                                        <lightning:button
+                                                          label="{!contact.name}"
+                                                          iconName="{!contact.isConfirmed ? 'utility:check' : 'standard:contact'}"
+                                                          iconPosition="left"
+                                                          name="{!conIdx}"
+                                                          onclick="{!c.selectContact}"
+                                                          class="fullWidth"
+                                                          variant="{!contact.isConfirmed ? 'success' : contact.isSelected ? 'brand' : 'base'}"
+                                                          />
+                                    </li>
+                                </aura:if>
+                            </aura:iteration>
+                        </ul>
+                    </div>
+                    <aura:if isTrue="{!v.showDuplicatesModal}">
+                        <div>
+                            
+                            <aura:if isTrue="{!not(empty(v.dupesData))}">
+                                <h3 class="slds-section-title--divider">Excel Field Values</h3>  
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered  slds-table_resizable-cols" aria-label="Example table of Opportunities with vertical borders">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="slds-text-align_right slds-cell_action-mode" scope="col" style="width:3.25rem"></th>
+                                            <aura:iteration
+                                                            items="{!v.tableColumns}"
+                                                            var="field2"
+                                                            indexVar="conIdx2"
+                                                            >
+                                                <aura:iteration
+                                                                items="{!v.selectedContact.fields}"
+                                                                var="field"
+                                                                indexVar="conIdx"
+                                                                >
+                                                    <aura:if isTrue="{!and(equals(field2.api,field.sf.api), field2.api != 'Contact_Alert_Reason__c')}">
+                                                        <th scope="col">{!field.label}</th>
+                                                    </aura:if>
+                                                </aura:iteration>
+                                            </aura:iteration>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                        <tr class="slds-hint-parent">
+                                            <td class="slds-text-align_right slds-cell_action-mode" role="gridcell"></td>
+                                            <aura:iteration
+                                                            items="{!v.tableColumns}"
+                                                            var="field2"
+                                                            indexVar="conIdx2"
+                                                            >
+                                                <aura:iteration
+                                                                items="{!v.selectedContact.fields}"
+                                                                var="field"
+                                                                indexVar="conIdx"
+                                                                >
+                                                    <aura:if isTrue="{!and(equals(field2.api,field.sf.api), field2.api != 'Contact_Alert_Reason__c')}">
+                                                        <td data-label="{!field.label}" scope="row">
+                                                            <div class="slds-truncate" title="{!field.excel.value}"> {!field.excel.value}</div> 
+                                                        </td>
+                                                    </aura:if>
+                                                </aura:iteration>
+                                            </aura:iteration>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br/><br/>
+                                <h3 class="slds-section-title--divider">Potential Duplicate From BRM</h3> 
+                                <c:MyTable
+                                           aura:id="myTable"
+                                           tableId="multipleDupes"
+                                           columns="{!v.columns}"
+                                           hideCheckboxColumn="false"
+                                           singleRowSelection="true"
+                                           hideHeaderCheckbox="false"
+                                           data="{!v.dupesData}"
+                                 />
+                            </aura:if>
+                        </div>
+                        
+                        <aura:set attribute="else">
+                            <div class="slds-col slds-size_4-of-5">
+                                <div style="text-align: right; margin-right: 2%"></div>
+                                <div class="activeStep slds-is-relative">
+                                    <div
+                                         class="runtime_sales_mergeMergePanel"
+                                         data-aura-class="runtime_sales_mergeMergePanel"
+                                         >
+                                        <aura:if isTrue="{!v.selectedContact.isCreate}">
+                                                            <ui:message
+                                                                        title="Confirmation"
+                                                                        severity="confirm"
+                                                                        closable="false"
+                                                                        >
+                                                                {!v.selectedContact.isCreate ? 'New contact will be
+                                                                created.' : 'Contact is confirmed'}
+                                                            </ui:message>
+                                            <aura:set attribute="else">                                            
+                                                <table class="fieldConflicts">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>
+                                                                <aura:if isTrue="{!v.selectedContact.isConfirmed}">
+                                                                    <ui:message
+                                                                                title="Confirmation"
+                                                                                severity="confirm"
+                                                                                closable="false"
+                                                                                >
+                                                                        {!v.selectedContact.isCreate ? 'New contact will be
+                                                                        created.' : 'Contact is confirmed'}
+                                                                    </ui:message>
+                                                                </aura:if>
+                                                            </td>
+                                                            
+                                                            <th scope="col">
+                                                                <aura:if
+                                                                         isTrue="{!not(empty(v.selectedContact.dupeOptions))}"
+                                                                         >
+                                                                    <lightning:select
+                                                                                      name="{!v.selectedContact.idx}"
+                                                                                      label="BRM"
+                                                                                      class="myContactSelect"
+                                                                                      value="{!v.selectedContact.name}"
+                                                                                      onchange="{!c.handleInputChange}"
+                                                                                      >
+                                                                        <option value="">choose one...</option>
+                                                                        <aura:iteration
+                                                                                        items="{!v.selectedContact.dupeOptions}"
+                                                                                        var="opt"
+                                                                                        >
+                                                                            <option value="{!opt.value}">{!opt.label}</option>
+                                                                        </aura:iteration>
+                                                                    </lightning:select>
+                                                                    
+                                                                    <aura:set attribute="else"> 
+                                                                        <span class="recordLabel"
+                                                                              >BRM:  <a onclick="{!c.navigateToRecord}" name="{!v.selectedContact.sfContacts[0].Id}">{!v.selectedContact.sfContacts[0].FirstName +' '+v.selectedContact.sfContacts[0].LastName }</a>
+                                                                                 <br/>
+                                                                            Touchpoint(s):  {!v.selectedContact.sfContacts[0].Touchpoint_sum__c}
+                                                                        </span>
+                                                                    </aura:set>
+                                                                </aura:if>
+                                                                <span
+                                                                      ><a
+                                                                          data-optionnum="0"
+                                                                          href="javascript:void(0);"
+                                                                          onclick="{!c.selectAllSf}"
+                                                                          >Select All<span class="slds-assistive-text"
+                                                                                           >fields from this record</span
+                                                                    ></a
+                                                                    ></span
+                                                                    >
+                                                            </th>
+                                                            <th scope="col">
+                                                                <span class="recordLabel"
+                                                                      > Excel: {!v.selectedContact.name} </span
+                                                                    ><span
+                                                                           ><a
+                                                                               data-optionnum="1"
+                                                                               href="javascript:void(0);"
+                                                                               onclick="{!c.selectAllExcel}"
+                                                                               >Select All<span class="slds-assistive-text"
+                                                                                                >fields from this record</span
+                                                                ></a
+                                                                ></span
+                                                                >
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <aura:iteration items="{!v.selectedContact.fields}" var="field" indexVar="conIdx">
+                                                            <aura:if isTrue="{!field.isShow}">
+                                                                <aura:if isTrue="{!field.api == 'Contact_Alert_Reason__c'}">
+                                                                    <tr class="fieldConflictItem forceRecordsComparisonTemplate">
+                                                                        <th class="fieldLabel" scope="row">
+                                                                            <span class="uiOutputText">
+                                                                                {!field.label}
+                                                                            </span>
+                                                                        </th>
+                                                                        <td colspan="1" class="fieldValue">
+                                                                            <div class="slds-box slds-p-around_small" style="background: #f3ba15">
+                                                                                {!field.sf.value}
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <aura:set attribute="else">
+                                                                        <tr
+                                                                            class="fieldConflictItem forceRecordsComparisonTemplate"
+                                                                            data-aura-class="forceRecordsComparisonTemplate"
+                                                                            >
+                                                                            <th class="fieldLabel" scope="row">
+                                                                                <span
+                                                                                    class="uiOutputText"
+                                                                                    data-aura-class="uiOutputText"
+                                                                                    >{!field.label}</span
+                                                                                    >
+                                                                            </th>
+
+
+                                                                            <td class="fieldValue">
+                                                                                <input
+                                                                                    type="radio"
+                                                                                    name="{!conIdx}"
+                                                                                    aria-describedby=""
+                                                                                    id="{!'sf-'+field.api}"
+                                                                                    class="uiInput uiInputRadio uiInput--default uiInput--radio sfRadio"
+                                                                                    data-aura-class="uiInput uiInputRadio uiInput--default uiInput--radio"
+                                                                                    data-interactive-lib-uid="9"
+                                                                                    checked="{!field.sf.isSelected}"
+                                                                                    onclick="{!c.handleSFSelect}"
+                                                                                    />
+                                                                                <label
+                                                                                    class="field uiLabel"
+                                                                                    for="{!'sf-'+field.api}"
+                                                                                    data-aura-class="uiLabel"
+                                                                                    >
+                                                                                    <span class=""></span>
+                                                                                    <div class="fieldOption">
+                                                                                        <span>{!field.sf.value}</span>
+                                                                                    </div>
+                                                                                </label>
+                                                                            </td>
+
+                                                                            <td class="fieldValue" style="{!field.excel.isDiff ? 'background: yellow;' : ''}">
+                                                                                <input
+                                                                                    type="radio"
+                                                                                    name="{!conIdx}"
+                                                                                    aria-describedby=""
+                                                                                    id="{!'excel-'+field.api}"
+                                                                                    aura:id="{!'excel-'+field.api}"
+                                                                                    class="uiInput uiInputRadio uiInput--default uiInput--radio excelRadio"
+                                                                                    data-aura-class="uiInput uiInputRadio uiInput--default uiInput--radio"
+                                                                                    data-interactive-lib-uid="10"
+                                                                                    checked="{!field.excel.isSelected}"
+                                                                                    onclick="{!c.handleExcelSelect}"
+                                                                                    /><label
+                                                                                                class="field uiLabel"
+                                                                                                for="{!'excel-'+field.api}"
+                                                                                                data-aura-class="uiLabel"
+                                                                                                ><span class=""></span>
+                                                                                <div class="fieldOption">
+                                                                                    <aura:if isTrue="{!field.excel.isEdit}">
+                                                                                        <aura:if
+                                                                                                isTrue="{!field.excel.type == 'STRING'}"
+                                                                                                >
+                                                                                            <lightning:input
+                                                                                                            name="{!field.api}"
+                                                                                                            value="{!field.excel.value}"
+                                                                                                            onblur="{!c.handleInputChange}"
+                                                                                                            variant="label-hidden"
+                                                                                                            />
+                                                                                        </aura:if>
+                                                                                        <aura:if
+                                                                                                isTrue="{!and(field.excel.type == 'PICKLIST', not(empty(field.excel.value)))}"
+                                                                                                >
+                                                                                            <lightning:select
+                                                                                                            name="{!field.api}"
+                                                                                                            variant="label-hidden"
+                                                                                                            class="label-hidden"
+                                                                                                            value="{!field.excel.value}"
+                                                                                                            onchange="{!c.handleInputChange}"
+                                                                                                            >
+                                                                                                <option value="">choose one...</option>
+                                                                                                <aura:iteration
+                                                                                                                items="{!field.excel.options}"
+                                                                                                                var="opt"
+                                                                                                                >
+                                                                                                    <option value="{!opt.value}">
+                                                                                                        {!opt.label}
+                                                                                                    </option>
+                                                                                                </aura:iteration>
+                                                                                            </lightning:select>
+
+                                                                                        </aura:if>
+                                                                                        <aura:if
+                                                                                                isTrue="{!field.excel.type == 'EMAIL'}"
+                                                                                                >
+                                                                                            <lightning:input
+                                                                                                            type="email"
+                                                                                                            name="{!field.api}"
+                                                                                                            value="{!field.excel.value}"
+                                                                                                            onblur="{!c.handleInputChange}"
+                                                                                                            variant="label-hidden"
+                                                                                                            />
+                                                                                        </aura:if>
+                                                                                        <aura:if
+                                                                                                isTrue="{!field.excel.type == 'PHONE'}"
+                                                                                                >
+                                                                                            <lightning:input
+                                                                                                            type="tel"
+                                                                                                            name="{!field.api}"
+                                                                                                            value="{!field.excel.value}"
+                                                                                                            variant="label-hidden"
+                                                                                                            />
+                                                                                        </aura:if>
+                                                                                        <aura:if
+                                                                                                isTrue="{!field.excel.type == 'LOOKUP'}"
+                                                                                                >
+                                                                                            <div
+                                                                                                style="
+                                                                                                        {
+                                                                                                        !field.excel.issticky?'display: inline;width:90%;': 'display: inline;position:absolute;top:10%;width:90%;';
+                                                                                                        }
+                                                                                                        "
+                                                                                                >
+                                                                                                <div>
+                                                                                                    <c:CustomLookup
+                                                                                                                    objectAPIName="{!field.excel.obj}"
+                                                                                                                    IconName="{!field.excel.icon}"
+                                                                                                                    enableEnter="true"
+                                                                                                                    cmpId="{!field.api}"
+                                                                                                                    SearchKeyWord="{!field.excel.value}"
+                                                                                                                    placeHolder="Just start typing"
+                                                                                                                    />
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </aura:if>
+
+                                                                                        <aura:if
+                                                                                                isTrue="{!and(field.excel.type == 'COMPARE',not(empty(field.excel.value)))}"
+                                                                                                >
+                                                                                            <label> {!field.excel.label} </label> <br />
+
+                                                                                            <lightning:button
+                                                                                                            label="{!field.excel.value}"
+                                                                                                            class="fullWidth"
+                                                                                                            variant="{!cellIdx > 0 ? 'neutral' : 'brand'}"
+                                                                                                            />
+
+                                                                                        </aura:if>
+                                                                                        <aura:set attribute="else">
+                                                                                            {!field.excel.value}
+                                                                                        </aura:set>
+                                                                                    </aura:if>
+                                                                                </div>
+                                                                                </label>
+                                                                            </td>
+
+                                                                        </tr>
+                                                                    </aura:set>
+                                                                 </aura:if>
+                                                            </aura:if>
+                                                        </aura:iteration>
+                                                    </tbody>
+										        </table>
+                                                <div style="text-align: center">
+                                                    <aura:if isTrue="{!not(v.selectedContact.showAllFields)}">
+                                                        <a href="javascript:void()" onclick="{!c.showAllFields}">
+                                                            Show All Fields
+                                                        </a>
+
+                                                        <aura:set attribute="else">
+                                                            <a href="javascript:void()" onclick="{!c.hideAllFields}">
+                                                                Hide Fields
+                                                            </a>
+                                                        </aura:set>
+                                                    </aura:if>
+                                                </div>
+                                        	</aura:set>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+        <aura:set attribute="else">
+            <aura:if isTrue="{!not(v.isLoading)}">
+                <h1>There are no contacts to merge. Proceed to next steps.</h1>
+            </aura:if>
+        </aura:set>
+    </aura:if>
+    <aura:if isTrue="{!v.showDeleteConfirm}">
+        <!-- Modal/Popup Box starts here-->
+        <section
+                 role="dialog"
+                 tabindex="-1"
+                 aria-labelledby="modal-heading-01"
+                 aria-modal="true"
+                 aria-describedby="modal-content-id-1"
+                 class="slds-modal slds-fade-in-open"
+                 >
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon
+                                          iconName="utility:close"
+                                          onclick="{! c.closeDelete }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"
+                                          />
+                    <h2
+                        id="modal-heading-01"
+                        class="slds-text-heading_medium slds-hyphenate"
+                        >
+                        Confirm Deletion
+                    </h2>
+                </header>
+                <div
+                     class="slds-modal__content slds-p-around_medium"
+                     id="modal-content-id-1"
+                     >
+                    <h1>Are you sure you want to delete {!v.selectedContact.name}?</h1>
+                    <br />
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button
+                                      variant="neutral"
+                                      label="Yes"
+                                      title="Cancel"
+                                      onclick="{!c.deleteContact}"
+                                      />
+                    <lightning:button
+                                      variant="brand"
+                                      label="No"
+                                      title="Create New"
+                                      onclick="{!c.closeDelete}"
+                                      />
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Organization__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Related org (Cultural Access or Key Partner) for a given Geo Area. (BRME-5617)</description>
+    <label>Organization</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Org Geo Area</relationshipLabel>
+    <relationshipName>Org_Geo_Area</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

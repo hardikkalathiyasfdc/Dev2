@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage">
+            <property name="type" type="String" default="warning" label="Type" required="true" />
+            <property name="header" type="String" default="Alert !" label="Header Label"
+                required="true" />
+            <property name="fieldApiName" type="String" default="" label="Field API Name"
+                required="false" />
+            <property name="errorMessage" type="String" default="" label="Error Message"
+                required="false" />
+        </targetConfig>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="type" type="String" default="warning" label="Type" required="true" />
+            <property name="header" type="String" default="Alert !" label="Header Label"
+                required="true" />
+            <property name="fieldApiName" type="String" default="" label="Field API Name"
+                required="false" />
+            <property name="errorMessage" type="String" default="" label="Error Message"
+                required="false" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

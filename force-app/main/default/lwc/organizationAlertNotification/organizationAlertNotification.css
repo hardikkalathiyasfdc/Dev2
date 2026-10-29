@@ -1,0 +1,14 @@
+/* sample css file */
+.alertSection {
+	background: #f3ba15;
+}
+.emptySection {
+	background: #FFFFFF;
+}
+.alertContent {
+	font-size: 1.1rem;
+}
+.alertLabel {
+	font-size: 1.3rem;
+	color:#ef3e3e;
+}/* sample css file */

@@ -1,0 +1,143 @@
+<apex:page controller="MayorAndCityViewInteractionCntrl" contentType="text/html">
+    <div style="font-size : 16px;
+                color:#2f5496;
+                font-weight: bold;
+                ">
+		{!title}
+	</div>
+     
+    <div style="font-size : 16px;
+                color:#2f5496;
+                font-weight: bold;
+                margin-top: 20px;
+                ">
+		Interactions with Mayors
+	</div>
+            
+	<apex:outputPanel rendered="{!!isMayorInteractionsPresent}" style="font-size : 16px; margin-top: 20px; " layout="block">There were no interactions with Mayors reported this month. </apex:outputPanel>
+    
+    <apex:outputPanel rendered="{!isMayorInteractionsPresent}" layout="block" style="margin-top: 20px;">
+        <table border="1"  cellspacing="0" cellpadding="5" 
+               style="border-collapse: collapse; text-align: left; font-family: Arial, sans-serif;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="background-color: #c0d6ac;">Team</th>
+                    <th style="background-color: #c0d6ac;">Date</th>
+                    <th style="background-color: #c0d6ac;">Mayor</th>
+                    <th style="background-color: #c0d6ac;">City</th>
+                    <th style="background-color: #c0d6ac;">Country</th>
+                    <th style="background-color: #c0d6ac;">Interaction Subject</th>
+                    <th style="background-color: #c0d6ac;">Created By</th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!mayorInteractionsList}" var="wrapper" id="repeat">
+                    <tr>
+                        <!-- TEAM GROUPING -->
+                        <apex:outputPanel rendered="{!wrapper.interactionCountByTeam > 0}">
+                            <td rowspan="{!wrapper.interactionCountByTeam}" 
+                                style="font-weight: bold;">
+                                {!wrapper.team}
+                            </td>
+                        </apex:outputPanel>
+
+                        <!-- DATE -->
+                        <td>
+                            <apex:outputText value="{0,date,M'/'d'/'yyyy}">
+                                <apex:param value="{!wrapper.iDate}" />
+                            </apex:outputText>
+                        </td>
+
+                        <!-- MAYOR, CITY, COUNTRY GROUPING -->
+                        <apex:outputPanel rendered="{!wrapper.interactionCountByCity > 0}">
+                            <td rowspan="{!wrapper.interactionCountByCity}" style="font-weight: bold;">
+                                {!IF(NOT(ISBLANK(wrapper.mayorName)), wrapper.mayorName, '')}
+                            </td>
+                            <td rowspan="{!wrapper.interactionCountByCity}">
+                                {!IF(NOT(ISBLANK(wrapper.city)), wrapper.city, '')}
+                            </td>
+                            <td rowspan="{!wrapper.interactionCountByCity}">
+                                {!IF(NOT(ISBLANK(wrapper.country)), wrapper.country, '')}
+                            </td>
+                        </apex:outputPanel>
+
+                        <!-- INTERACTION SUBJECT -->
+                        <td>{!wrapper.subject}</td>
+
+                        <!-- CREATED BY -->
+                        <td>{!wrapper.createdBy}</td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+    </apex:outputPanel>
+    
+    <div style="font-size : 16px;
+                color:#2f5496;
+                font-weight: bold;
+                margin-top: 20px;
+                ">
+		CityView Highlights
+	</div>
+	<apex:outputPanel rendered="{!!isCityViewInteractionsPresent}" style="font-size : 16px; margin-top: 20px;" layout="block">There were no CityView Highlights reported this month. </apex:outputPanel>
+	
+    <apex:outputPanel rendered="{!isCityViewInteractionsPresent}" layout="block" style="margin-top: 20px;">
+        <table border="1"  cellspacing="0" cellpadding="5" 
+               style="border-collapse: collapse; text-align: left; font-family: Arial, sans-serif;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="background-color: #98c8ef;">Team</th>
+                    <th style="background-color: #98c8ef;">Date</th>
+                    <th style="background-color: #98c8ef;">City</th>
+                    <th style="background-color: #98c8ef;">Country</th>
+                    <th style="background-color: #98c8ef;">Highlight</th>
+                    <th style="background-color: #98c8ef;">Created By</th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!cityViewInteractionsList}" var="wrapper" id="cityrepeat">
+                    <tr>
+                        <!-- TEAM GROUPING -->
+                        <apex:outputPanel rendered="{!wrapper.interactionCountByTeam > 0}">
+                            <td rowspan="{!wrapper.interactionCountByTeam}" 
+                                style="font-weight: bold;">
+                                {!wrapper.team}
+                            </td>
+                        </apex:outputPanel>
+
+                        <!-- DATE -->
+                        <td>
+                            <apex:outputText value="{0,date,M'/'d'/'yyyy}">
+                                <apex:param value="{!wrapper.iDate}" />
+                            </apex:outputText>
+                        </td>
+
+                        <!-- CITY, COUNTRY GROUPING -->
+                        <apex:outputPanel rendered="{!wrapper.interactionCountByCity > 0}">
+                            <td rowspan="{!wrapper.interactionCountByCity}">
+                                {!IF(NOT(ISBLANK(wrapper.city)), wrapper.city, '')}
+                            </td>
+                            <td rowspan="{!wrapper.interactionCountByCity}">
+                                {!IF(NOT(ISBLANK(wrapper.country)), wrapper.country, '')}
+                            </td>
+                        </apex:outputPanel>
+
+                        <!-- Highlight -->
+                        <td>{!wrapper.subject}</td>
+
+                        <!-- CREATED BY -->
+                        <td>{!wrapper.createdBy}</td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+    </apex:outputPanel>
+    <div class="footer">
+            <div >
+                <br/>
+                <p>
+                    Created On {!currentDateLocal} (via BRM)
+                </p>
+            </div>
+        </div>
+</apex:page>

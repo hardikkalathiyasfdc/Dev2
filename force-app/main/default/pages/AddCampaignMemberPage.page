@@ -1,0 +1,39 @@
+<apex:page standardController="Campaign" tabStyle="Campaign" >
+
+    <apex:sectionHeader title="{!Campaign.Name}" subtitle="Add/Edit Members"/>
+ 
+ 
+ <apex:pageBlock >
+
+  <apex:includeLightning />
+
+    <div id="lightning" style="height:600px;"/>
+
+    <script>
+      var recordId = '{!Campaign.id}';
+        $Lightning.use("c:AddCampaignMemberApp", function() {
+          var attributes = {
+            recordId: recordId,
+            fromRelatedList : true
+          };
+          $Lightning.createComponent(
+
+                    "c:AddCampaignMember",
+
+                    attributes,
+
+                    "lightning",
+
+                    function(cmp) {
+
+                        console.log("Component is created!");
+
+                    });
+        });
+    </script>
+ 
+ </apex:pageBlock>
+
+
+
+</apex:page>

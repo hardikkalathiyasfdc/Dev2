@@ -1,0 +1,46 @@
+<template>
+    <lightning-quick-action-panel header="New Association: CityView (Initiative)">
+        <lightning-record-edit-form
+            object-api-name="Association__c"
+            record-type-id={recordTypeId}
+            onsuccess={handleSuccess}
+            onerror={handleError}>
+
+            <lightning-messages></lightning-messages>
+
+            <lightning-input-field
+                field-name="Name"
+                value={recordId}>
+            </lightning-input-field>
+
+            <lightning-input-field
+                field-name="Description__c">
+            </lightning-input-field>
+
+            <lightning-input-field
+                field-name="Focus_Area__c"
+                value="Draft">
+            </lightning-input-field>
+
+            <lightning-input-field
+                field-name="Foundation_Coding__c"
+                value="Draft">
+            </lightning-input-field>
+
+            <div slot="footer">
+                <lightning-button
+                    label="Cancel"
+                    onclick={handleCancel}>
+                </lightning-button>
+
+                <lightning-button
+                    variant="brand"
+                    type="submit"
+                    label="Save"
+                    class="slds-m-left_small">
+                </lightning-button>
+            </div>
+
+        </lightning-record-edit-form>
+    </lightning-quick-action-panel>
+</template>

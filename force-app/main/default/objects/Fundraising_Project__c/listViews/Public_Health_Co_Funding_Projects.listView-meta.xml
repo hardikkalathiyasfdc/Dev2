@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Public_Health_Co_Funding_Projects</fullName>
+    <columns>NAME</columns>
+    <columns>Status__c</columns>
+    <columns>Start_Date_End_Date__c</columns>
+    <columns>Total_Pledge_Amount__c</columns>
+    <columns>Focus_Area_Initiative__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Personal__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>Political__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>FC_Focus_Area__c</field>
+        <operation>equals</operation>
+        <value>Public Health</value>
+    </filters>
+    <label>Public Health Co-Funding Projects</label>
+    <sharedTo>
+        <group>Data_Team</group>
+        <group>Team_Data_Standard</group>
+        <group>Team_Public_Health</group>
+    </sharedTo>
+</ListView>

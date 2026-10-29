@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>BRME-6797 - This action is used to make a foundation code as Projected Total Non Editable</description>
+    <flowDefinition>FC_Disable_As_Projected_Total</flowDefinition>
+    <label>Disable As Projected Total</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>

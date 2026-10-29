@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>BRME-6623: Provides access to &apos;Include Employee Engagement Galas&apos; toggle on the to the Events tab</description>
+    <isLicensed>false</isLicensed>
+    <label>Events: Events-Managed - Gala Details</label>
+</CustomPermission>

@@ -1,0 +1,138 @@
+<apex:page controller="DonorMemoReportController" contentType="text/html" showHeader="false" sidebar="false" standardStylesheets="false">
+    <html>
+        <head>
+            <style>
+                html, body {
+                    margin: 0;
+                    padding: 0;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 14px;
+                    line-height: 1.4;
+                    color: #000;
+                }
+                body {
+                    padding: 18px;
+                }
+                .confidential {
+                    font-size: 14px;
+                    font-weight: bold;
+                    color: red;
+                    letter-spacing: 0.5px;
+                    margin-bottom: 18px;
+                    line-height: 1.3;
+                }
+                .title {
+                    font-size: 25px;
+                    font-weight: bold;
+                    line-height: 1.25;
+                    margin: 0 0 18px 0;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
+                }
+                .subtitle {
+                    font-size: 22px;
+                    color: #2f5496;
+                    line-height: 1.3;
+                    margin: 0 0 28px 0;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
+                }
+                .no-data {
+                    font-size: 15px;
+                    margin-top: 30px;
+                }
+                .donor-row {
+                    margin-bottom: 18px;
+                    page-break-inside: avoid;
+                    break-inside: avoid;
+                }
+                .donor-heading {
+                    font-size: 16px;
+                    font-weight: bold;
+                    line-height: 1.35;
+                    margin: 0 0 6px 0;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
+                }
+                .project-list {
+                    margin: 0 0 0 28px;
+                    padding: 0;
+                }
+                .project-list li {
+                    font-size: 14px;
+                    line-height: 1.35;
+                    margin: 0 0 4px 0;
+                    padding: 0;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
+                }
+                .footer {
+                    margin-top: 36px;
+                    font-size: 13px;
+                    line-height: 1.3;
+                }
+                .footer p {
+                    margin: 0;
+                }
+                .anon-list {
+                    margin-top: 4px;
+                    margin-bottom: 6px;
+                    margin-left: 20px;
+                    padding-left: 15px;
+                }
+                .anon-list li {
+                    font-size: 14px;
+                    line-height: 1.35;
+                    margin-bottom: 3px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="confidential">
+                CONFIDENTIAL DONOR UPDATE/ NOT FOR EXTERNAL DISTRIBUTION
+            </div>
+            <h1 class="title">
+                BRM Monthly Report: Fundraising - {!reportTimeFrame}
+            </h1>
+            <div class="subtitle">
+                Gifts $10k and above received in {!reportTimeFrame}
+                <apex:outputPanel layout="none" rendered="{!hasData}">
+                    (Total: ${!totalAmount})
+                </apex:outputPanel>
+            </div>
+            <apex:outputPanel rendered="{!hasData == false}">
+                <div class="no-data">
+                    There were no new pledges in {!reportTimeFrame}
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!hasData}">
+                <apex:repeat value="{!donors}" var="row">
+                    <div class="donor-row">
+                        <div class="donor-heading">
+                            {!row.donorName} - {!row.totalAmount} for:
+                        </div>
+                        <ul class="project-list">
+                            <apex:repeat value="{!row.projects}" var="p">
+                                <li>
+                                    <span style="display: block;">
+                                        {!p.projectText}
+                                    </span>
+                                    <apex:outputPanel layout="none" rendered="{!p.hasAnonBreakout}">
+                                        <ul class="anon-list">
+                                            <apex:repeat value="{!p.anonBreakoutLines}" var="sub">
+                                                <li>{!sub}</li>
+                                            </apex:repeat>
+                                        </ul>
+                                    </apex:outputPanel>
+                                </li>
+                            </apex:repeat>
+                        </ul>
+                    </div>
+                </apex:repeat>
+            </apex:outputPanel>
+            <div class="footer">
+                <p>Created On {!currentDateLocal} (via BRM)</p>
+            </div>
+        </body>
+    </html>
+</apex:page>

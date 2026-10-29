@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Change_Initiative_Type</fullName>
+    <active>true</active>
+    <description>IM-93: Initiative Type cannot be changed once the record is created.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.IM_Initiative_Validation__c &amp;&amp;
+AND(
+NOT(ISNEW()),
+ISCHANGED( Initiative_Type__c ),
+Approved__c 
+)</errorConditionFormula>
+    <errorMessage>Changing Initiative Type is not allowed.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,55 @@
+<template>
+    <template lwc:if={orgDetails}>
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="3">
+                <label class="slds-form-element__label slds-form-element__legend slds-p-top_medium" for="horizontal-input-id-01">Name</label>
+            </lightning-layout-item>
+            <lightning-layout-item size="9">
+                <div class=" slds-p-top_medium">
+                    <template lwc:if={isBrmOrg}>
+                        <lightning-formatted-url value={brmOrgURL} tooltip={orgDetails.Name} label={orgName}
+                            target="_blank"></lightning-formatted-url>
+                    </template>
+                    <template lwc:else>
+                        <span>{orgDetails.name}</span>
+                    </template>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="3">
+                <label class="slds-form-element__label slds-form-element__legend" for="horizontal-input-id-01">Tax Id</label>
+            </lightning-layout-item>
+            <lightning-layout-item size="9">
+                <span>{taxId}</span>
+            </lightning-layout-item>
+            <lightning-layout-item size="3">
+                <label class="slds-form-element__label slds-form-element__legend" for="horizontal-input-id-01">Tax Status</label>
+            </lightning-layout-item>
+            <lightning-layout-item size="9">
+                <span>{taxStatus}</span>
+            </lightning-layout-item>
+            <lightning-layout-item size="3">
+                <label class="slds-form-element__label slds-form-element__legend" for="horizontal-input-id-01">Legal Name</label>
+            </lightning-layout-item>
+            <lightning-layout-item size="9">
+                <span>{legalName}</span>
+            </lightning-layout-item>
+            <lightning-layout-item size="3">
+                <label class="slds-form-element__label slds-form-element__legend" for="horizontal-input-id-01">AKA</label>
+            </lightning-layout-item>
+            <lightning-layout-item size="9">
+                <span>{aka}</span>
+            </lightning-layout-item>
+            <template lwc:if={isBrmOrg}>
+                <template lwc:if={canReadRestricted}>
+                    <lightning-layout-item size="3">
+                        <label class="slds-form-element__label slds-form-element__legend" for="horizontal-input-id-01">Private</label>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="9">
+                        <lightning-input type="checkbox" checked={isRestricted} disabled>
+                        </lightning-input>
+                    </lightning-layout-item>
+                </template>
+            </template>
+        </lightning-layout>
+    </template>
+</template>

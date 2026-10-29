@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Partner_Org__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>IM-126:Related Organization for IM Grant.</description>
+    <label>Partner Org</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>IM Grants</relationshipLabel>
+    <relationshipName>IM_Grants</relationshipName>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

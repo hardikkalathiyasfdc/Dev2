@@ -1,0 +1,115 @@
+<template>
+	<div data-id="searchRes" class="slds-form-element slds-lookup slds-is-close">
+		<!--This part is for display search bar for lookup-->  
+		<div class="slds-form-element__control">
+			<div class="slds-input-has-icon slds-input-has-icon--right">
+				<!-- This markup is for when an record is selected -->
+				<div data-id="lookup-pill" class="slds-pill-container">
+					<div onkeyup={handleSearchChange}>
+						<lightning-input name="list-search" label={sectionLabel} autocomplete="chrome-off" type="search" >
+						</lightning-input>
+					</div>
+				<!--Selected Records Pills Section-->
+				<template lwc:if={selectedContacts}>
+					<template for:each={selectedContacts} for:item="cnt">
+						<lightning-pill key={cnt.Id} class="slds-m-around_xx-small" label={cnt.Name} id={cnt.Id} onremove={removeSelection}>
+							<lightning-icon icon-name="standard:contact" size="x-small"></lightning-icon>
+						</lightning-pill>
+					</template>
+				</template>
+				</div>
+			</div>
+		</div>
+		<!--This part is for Display typehead lookup result List-->  
+		<template lwc:if={showDropdown}>
+			<ul style="min-height:40px;margin-top:0px !important" role="listbox"
+				class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds">
+				<template lwc:if={isSearching}>
+					<lightning-spinner size="small"></lightning-spinner>
+				</template>
+				<div>
+					<lightning-icon icon-name="utility:close" onclick={handleResultClose} 
+						class="slds-float_right slds-m-right_medium slds-m-top_small" size="x-small">
+					</lightning-icon>
+				</div>
+				<center>{message}</center>
+				<template for:each={availableContacts} for:item="item">
+					<li key={item.Id} role="presentation" class="slds-listbox__item" data-record-id={item.Id} onclick={getSelectedRows}>
+						<div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+							<span class="slds-media__figure slds-listbox__option-icon">
+								<span class="slds-icon_container slds-icon-standard-account">
+									<lightning-icon icon-name="standard:contact" size="small"></lightning-icon>
+								</span>
+							</span>
+							<span class="slds-media__body">
+								<span class="slds-listbox__option-text slds-listbox__option-text_entity slds-m-top_x-small">
+									<template lwc:if={item.Restricted__c}>
+										<template lwc:if={item.Preferred_First_Name__c}>
+											<template lwc:if={item.warning}>
+												{item.RestrictedFirstName__c} ({item.Preferred_First_Name__c}), {item.RestrictedLastName__c}
+												<span class="slds-text-color_error">(Contact Alert: {item.warning})</span>
+											</template>
+											<template lwc:else>
+												{item.RestrictedFirstName__c} ({item.Preferred_First_Name__c}) {item.RestrictedLastName__c}
+											</template>
+										</template>
+										<template lwc:else>
+											<template lwc:if={item.warning}>
+												{item.RestrictedFirstName__c} {item.RestrictedLastName__c}
+												<span class="slds-text-color_error">(Contact Alert: {item.warning})</span>
+											</template>
+											<template lwc:else>
+												{item.RestrictedFirstName__c} {item.RestrictedLastName__c}
+											</template>
+										</template>
+									</template>
+									<template lwc:else>
+										<template lwc:if={item.Preferred_First_Name__c}>
+											<template lwc:if={item.warning}>
+												{item.FirstName} ({item.Preferred_First_Name__c}), {item.LastName}
+												<span class="slds-text-color_error">(Contact Alert: {item.warning})</span>
+											</template>
+											<template lwc:else>
+												{item.FirstName} ({item.Preferred_First_Name__c}) {item.LastName}
+											</template>
+										</template>
+										<template lwc:else>
+											<template lwc:if={item.warning}>
+												{item.FirstName} {item.LastName}
+												<span class="slds-text-color_error">(Contact Alert: {item.warning})</span>
+											</template>
+											<template lwc:else>
+												{item.FirstName} {item.LastName}
+											</template>
+										</template>
+									</template>
+									</br>
+									<template lwc:if={item.Title}>
+										<span class="slds-listbox__option-text slds-listbox__option-text_entity">
+											{item.Title}
+										</span>
+									</template>
+									<template lwc:if={item.Email_Org_Name__c}>
+										<span class="slds-listbox__option-text slds-listbox__option-text_entity">
+											{item.Email_Org_Name__c}
+										</span>
+									</template>
+									<span class="slds-listbox__option-text slds-listbox__option-text_entity">
+										Event Count: {item.Event_Count__c}
+									</span>
+									<template lwc:if={showSignificantOther}>
+										<template lwc:if={item.Significant_Name__c}>
+											<span class="slds-listbox__option-text slds-listbox__option-text_entity">
+												Significant Other: {item.Significant_Name__c}
+											</span>
+										</template>
+									</template>								
+								</span>
+							</span>
+						</div>
+					</li>
+				</template>
+			</ul>
+		</template>
+	</div>
+</template>

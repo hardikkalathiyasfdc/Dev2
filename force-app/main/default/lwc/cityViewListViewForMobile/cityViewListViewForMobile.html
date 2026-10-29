@@ -1,0 +1,124 @@
+<template>
+    <template lwc:if={shallShowSpinner}>
+        <lightning-spinner alternative-text="Loading..." size="large"></lightning-spinner>
+    </template>
+    <!-- CITY TABLE -->
+    <div lwc:if={processedCities.length} class="table-container">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered custom-table">
+            <thead>
+                <tr>
+                    <th class="col-city" data-type="City" data-field="name">
+                        <div class="slds-wrap">
+                            City Level Work <br/> (Total = {cityRowCount},&nbsp; Active = {activeCityRowCount})
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={processedCities} for:item="city">
+                    <tr key={city.Id} class={city.rowClass}>
+                        <td class="col-city">
+                            <div class="slds-truncate clickable" onclick={handleNameClick} data-id={city.Id} data-type="City">
+                                <span> 
+                                    <template for:each={city.iconTypeList} for:item="icon">
+                                        <span key={icon.key}>
+                                            <template lwc:if={shallShowGrants}>
+                                                <lightning-icon lwc:if={icon.showIcon} icon-name={icon.name}
+                                                    title={icon.title} size="x-small" class="slds-m-right_xx-small">
+                                                </lightning-icon>
+                                            </template>
+                                        </span>
+                                    </template> 
+                                </span>
+                                <a href="javascript:void(0);">
+                                    <template lwc:if={city.hasActiveInitiative}><strong>{city.Name}</strong></template>
+                                    <template lwc:else>{city.Name}</template>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+    </br></br>
+    <!-- STATE TABLE -->
+    <div lwc:if={processedStates.length} class="table-container">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered custom-table">
+            <thead>
+                <tr>
+                    <th class="col-city" data-type="State" data-field="name">
+                        <div class="slds-wrap">
+                            State Level Work <br/> (Total = {stateRowCount},&nbsp; Active = {activeStateRowCount})
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={processedStates} for:item="state">
+                    <tr key={state.Id} class={state.rowClass}>
+                        <td class="col-city">
+                            <div class="slds-truncate clickable" onclick={handleNameClick} data-id={state.Id} data-type="State">
+                                <span> 
+                                    <template for:each={state.iconTypeList} for:item="icon">
+                                        <span key={icon.key}>
+                                            <template lwc:if={shallShowGrants}>
+                                                <lightning-icon lwc:if={icon.showIcon} icon-name={icon.name}
+                                                    title={icon.title} size="x-small" class="slds-m-right_xx-small">
+                                                </lightning-icon>
+                                            </template>
+                                        </span>
+                                    </template> 
+                                </span>
+                                <a href="javascript:void(0);">
+                                    <template lwc:if={state.hasActiveInitiative}><strong>{state.Name}</strong></template>
+                                    <template lwc:else>{state.Name}</template>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+    </br></br>
+    <!-- COUNTRY TABLE -->
+    <div lwc:if={processedCountries.length} class="table-container">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered custom-table">
+            <thead>
+                <tr>
+                    <th class="col-city sticky-col" data-type="Country" data-field="name">
+                        <div class="slds-wrap">
+                            Country Level Work <br/> (Total = {countryRowCount},&nbsp; Active = {activeCountryRowCount})
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={processedCountries} for:item="country">
+                    <tr key={country.Id} class={country.rowClass}>
+                        <td class="col-city">
+                            <div class="slds-truncate clickable" onclick={handleNameClick} data-id={country.Id} data-type="Country">
+                                <span> 
+                                    <template for:each={country.iconTypeList} for:item="icon">
+                                        <span key={icon.key}>
+                                            <template lwc:if={shallShowGrants}>
+                                                <lightning-icon lwc:if={icon.showIcon} icon-name={icon.name}
+                                                    title={icon.title} size="x-small" class="slds-m-right_xx-small">
+                                                </lightning-icon>
+                                            </template>
+                                        </span>
+                                    </template> 
+                                </span>
+                                <a href="javascript:void(0);">
+                                    <template lwc:if={country.hasActiveInitiative}><strong>{country.Name}</strong></template>
+                                    <template lwc:else>{country.Name}</template>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+</template>

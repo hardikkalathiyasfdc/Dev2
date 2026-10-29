@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Weight__c</fullName>
+    <description>BRME-5789: Represents a score that prioritizes geo areas based on the number of associations, interactions, cultural access orgs and offices</description>
+    <externalId>false</externalId>
+    <formula>(Association_Count__c*100000) + (Interaction_Count__c*100) + Cultural_Access_Count__c + Office_Count__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Weight</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>
