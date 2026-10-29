@@ -21,10 +21,17 @@
 	scrollTable: function (component, event, helper) {
 		helper.scroll(component);
 	},
+	handleCellClick: function (cmp, event, helper) {
+		// BRME-4862: enter edit mode for the clicked read-only cell.
+		let key = event.currentTarget.getAttribute("data-cell");
+		if (key) {
+			cmp.set("v.editKey", key);
+		}
+	},
 	handleInputChange: function (cmp, event, helper) {
-		console.log('0.1 ::::::::: ');
+		// BRME-4862: leaving the input returns the grid to read-only.
+		cmp.set("v.editKey", "");
 		let name = event.getSource().get("v.name");
-		console.log('0.2 ::::::::: ' + name);
 		if (!name) {
 			return;
 		}

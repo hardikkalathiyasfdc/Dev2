@@ -619,22 +619,46 @@
   getPreviewColumns: function (colMap, columns) {
     let cols = [];
     this.phoneCountryMap = this.getPhoneCountryMap(columns);
+    // BRME-4862: render only columns the file actually mapped (colMap has a header for the
+    // api). Country-code companions are always kept when their phone column is shown, since
+    // they can carry the "Please Enter the country code" error even if not directly mapped.
+    colMap = colMap || {};
+    let mappedApis = {};
+    for (let api in colMap) {
+      if (colMap[api]) {
+        mappedApis[api] = true;
+      }
+    }
+    let showColumn = {};
+    for (let i = 0; i < columns.length; i++) {
+      let col = columns[i];
+      if (mappedApis[col.api]) {
+        showColumn[col.api] = true;
+      }
+    }
+    // keep country-code column whenever its phone column is shown
+    for (let phoneApi in this.phoneColumns) {
+      if (showColumn[phoneApi]) {
+        showColumn[this.phoneColumns[phoneApi]] = true;
+      }
+    }
     let seenMap = {};
     let skipMap = {};
     for (let i = 0; i < columns.length; i++) {
       let col = columns[i];
-     // if (colMap[col.api] && !skipMap[i]) {
-        col.isSticky = this.stickyColumns[col.api];
-        seenMap[col.api] = true;
-        if (this.phoneCountryMap[col.api]) {
-          let countryIdx = this.phoneCountryMap[col.api].countryIdx;
-          skipMap[countryIdx] = true;
-          if (!seenMap[this.phoneColumns[col.api]]) {
-            cols.push(columns[countryIdx]);
-          }
+      if (!showColumn[col.api]) {
+        continue; // BRME-4862: skip unmapped columns
+      }
+      col.isSticky = this.stickyColumns[col.api];
+      seenMap[col.api] = true;
+      if (this.phoneCountryMap[col.api]) {
+        let countryIdx = this.phoneCountryMap[col.api].countryIdx;
+        skipMap[countryIdx] = true;
+        if (!seenMap[this.phoneColumns[col.api]]) {
+          cols.push(columns[countryIdx]);
         }
-        cols.push(col);
-       
+      }
+      cols.push(col);
     }
     this.setColMapCountryIdx(cols);
     return cols;

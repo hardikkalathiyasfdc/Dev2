@@ -17,6 +17,9 @@
 	<aura:attribute name="tableWidth" type="String" default="1000px" />
 	<aura:attribute name="tableHeight" type="String" default="600px" />
 	<aura:attribute name="hideHeaderCheckbox" type="Boolean" default="true" />
+	<!-- BRME-4862: only the clicked cell renders an input; everything else is plain text.
+	     Key "rowIdx-cellIdx" of the cell currently in edit mode, empty = read-only grid. -->
+	<aura:attribute name="editKey" type="String" default="" />
 	<aura:registerEvent name="changeEvent" type="c:MyTableEvent" />
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 	<div id="myTable" style="overflow-x: auto; overflow-y: auto; height: 100%">
@@ -43,41 +46,29 @@
 									id="{!v.tableId+'-'+rowIdx+'-'+cellIdx}" role="gridcell"
 									class="{!cell.requiredError ? 'red':''}">
 									<div class="slds-truncate" title="{!cell.value}">
-										<aura:if isTrue="{!cell.type == 'STRING'}">
-											<lightning:input aura:id="inputUpdate" class="{!rowIdx+'-'+cellIdx}"
-												name="{!rowIdx+'-'+cellIdx}" value="{!cell.value}"
-												onblur="{!c.handleInputChange}" variant="label-hidden" />
-										</aura:if>
-										<aura:if isTrue="{!cell.type == 'TEXTAREA'}">
-											<lightning:input aura:id="inputUpdate" class="{!rowIdx+'-'+cellIdx}"
-												name="{!rowIdx+'-'+cellIdx}" value="{!cell.value}"
-												onblur="{!c.handleInputChange}" variant="label-hidden" />
-										</aura:if>
-										<aura:if isTrue="{!cell.type == 'PICKLIST'}">
-											<lightning:select name="{!rowIdx+'-'+cellIdx}" variant="label-hidden"
-												class="label-hidden" value="{!cell.value}"
-												onchange="{!c.handleInputChange}">
-												<option value="">choose one...</option>
-												<aura:iteration items="{!cell.options}" var="opt">
-													<option value="{!opt.value}">{!opt.label}</option>
-												</aura:iteration>
-											</lightning:select>
-										</aura:if>
-										<aura:if isTrue="{!cell.type == 'EMAIL'}">
-											<lightning:input aura:id="inputUpdate" type="email"
-												name="{!rowIdx+'-'+cellIdx}" class="{!rowIdx+'-'+cellIdx}"
-												value="{!cell.value}" variant="label-hidden"
-												onblur="{!c.handleInputChange}" />
-										</aura:if>
-										<aura:if isTrue="{!cell.type == 'PHONE'}">
-											<lightning:input type="tel" name="{!rowIdx+'-'+cellIdx}"
-												value="{!cell.value}" variant="label-hidden"
-												onblur="{!c.handleInputChange}" />
-										</aura:if>
-										<aura:if isTrue="{!cell.type == 'LOOKUP'}">
-											<lightning:input aura:id="inputUpdate" class="{!rowIdx+'-'+cellIdx}"
-												name="{!rowIdx+'-'+cellIdx}" value="{!cell.value}"
-												onblur="{!c.handleInputChange}" variant="label-hidden" />
+										<!-- BRME-4862: edit mode only for the single clicked cell -->
+										<aura:if isTrue="{!v.editKey == (rowIdx + '-' + cellIdx)}">
+											<aura:if isTrue="{!cell.type == 'PICKLIST'}">
+												<lightning:select name="{!rowIdx+'-'+cellIdx}" variant="label-hidden"
+													class="label-hidden" value="{!cell.value}"
+													onchange="{!c.handleInputChange}">
+													<option value="">choose one...</option>
+													<aura:iteration items="{!cell.options}" var="opt">
+														<option value="{!opt.value}">{!opt.label}</option>
+													</aura:iteration>
+												</lightning:select>
+												<aura:set attribute="else">
+													<lightning:input aura:id="inputUpdate" type="{!cell.type == 'EMAIL' ? 'email' : (cell.type == 'PHONE' ? 'tel' : 'text')}"
+														name="{!rowIdx+'-'+cellIdx}" class="{!rowIdx+'-'+cellIdx}"
+														value="{!cell.value}" variant="label-hidden"
+														onblur="{!c.handleInputChange}" />
+												</aura:set>
+											</aura:if>
+											<aura:set attribute="else">
+												<!-- read-only text; click to edit -->
+												<div class="cellText" data-cell="{!rowIdx+'-'+cellIdx}"
+													onclick="{!c.handleCellClick}">{!cell.value}</div>
+											</aura:set>
 										</aura:if>
 										<aura:if isTrue="{!cell.requiredError}">
 											<aura:if isTrue="{!cell.type != 'LOOKUP'}">
