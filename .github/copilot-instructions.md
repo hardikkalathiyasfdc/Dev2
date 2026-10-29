@@ -6,13 +6,16 @@ Salesforce DX project. See `.github/skills/sfdc-deploy-and-batch/SKILL.md` for A
 
 Goal: every change must be traceable in git history to the instruction that caused it (e.g. "which of the 20 changes on Oct 23 fixed what").
 
+- **git executable**: not on PATH in the terminal. Use `& "C:\Program Files\Git\cmd\git.exe" ...` for all git commands.
+- **Remote / push**: this workspace's remote is **https://github.com/hardikkalathiyasfdc/Dev2** (branch `main`). This is the repo for **dev2 / dev2Current** work — commit AND push here automatically for any dev2 task without asking. Pushing here does NOT require explicit per-task permission (the "never push" rule below is overridden for this dev2 remote only).
+  - **Other orgs (e.g. Dev1) must NOT reuse this repo.** If the current `target-org` is not dev2/dev2Current, STOP and ask the user to create/provide a new repo URL for that org before pushing — each org track gets its own repo.
 - **Repo check first**: if `git status` fails or there is no `.git`, STOP and tell the user — offer to `git init` before making any file changes. Do not make untracked edits.
 - **Before starting a task**: if the working tree is dirty, commit (or, if the changes belong to another unfinished task, ask the user first) so the new task starts from a clean baseline and its diff is attributable.
 - **After completing a task**: stage only the files changed for that task and commit. One commit per instruction/task — do not batch multiple unrelated tasks into one commit.
 - **Commit message format** (compose it yourself from session context — NEVER ask the user for the message):
   - Subject: `BRME-XXXX: <short summary>` (use the ticket folder in play; if no ticket, a short description of the request).
   - Body: a detailed explanation of WHY the change was made and WHAT the user's instruction was (verbatim or close summary from the session), so `git log` alone answers "what was fixed due to which instruction".
-- Never push, amend, rebase, or commit unrelated/pre-existing changes unless the user explicitly asks.
+- Never amend, rebase, or commit unrelated/pre-existing changes unless the user explicitly asks.
 - If the user says to skip the commit for a change, honor that for that change only.
 
 ## Sandbox deploys: detailed message on every deploy (default behavior)
