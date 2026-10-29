@@ -198,6 +198,16 @@
                 <identifier>RecordDescription_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Private__c</fieldItem>
+                <identifier>RecordPrivate_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-2aaff7c2-d5e5-4128-8e31-baee225a0453</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -278,6 +288,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Not_For_External_Use__c</fieldItem>
                 <identifier>RecordNot_For_External_Use_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Private__c</fieldItem>
+                <identifier>RecordPrivate_cField4</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-6b93f994-a19c-4467-97f0-1013abac1351</name>
@@ -445,16 +465,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Reviewer_Notes__c</fieldItem>
                 <identifier>RecordReview_Notes_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Private__c</fieldItem>
-                <identifier>RecordPrivate_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-645d5544-f7f5-4989-9f61-348b87ca6cf8</name>
