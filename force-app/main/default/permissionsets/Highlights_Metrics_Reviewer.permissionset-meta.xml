@@ -12,7 +12,7 @@
         <enabled>true</enabled>
         <name>Highlights_Metrics_Reviewer</name>
     </customPermissions>
-    <description>BRME-6981:Reviewer access builds on the Requestor permission set.</description>
+    <description>BRME-6981:Reviewer access builds on the Requestor permission set. BRME-7020: adds read/edit on Highlight_Interaction__c.Private__c (private highlights for the Highlights Review team).</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>Highlight_Interaction__c.Add_As_Contact_Interaction__c</field>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingOwnerRules>
+        <fullName>Highlights_Sharing_for_All_Users</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>BRME-6952: Sharing rule to grant read/write access to all users.</description>
+        <label>Highlights Sharing for All Users</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

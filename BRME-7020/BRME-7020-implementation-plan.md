@@ -2,7 +2,7 @@
 
 **Ticket:** Program Highlights — Ability to Submit Private Highlights for the Highlights Review Team.
 
-**Status:** Phase 1 investigation complete. Implementation in progress. **Not deployed.**
+**Status:** Phase 1 investigation complete. **Implemented and deployed to dev2Current (2026-10-29).** End-to-end verification passed.
 
 ---
 
@@ -69,7 +69,10 @@ No submission-timestamp/write-back field exists; nothing marks a highlight "sent
   - `Highlights_Metrics_Reviewer` (C/R/E; 15 fields incl. `Publish_To_CityView__c`, MRB/Leadership, `Reviewer_Notes__c`; custom permission `Highlights_Metrics_Reviewer`; member of PSG `Highlights_Metrics_Reviewer_Group`).
   - `Manage_All_Users` (full CRUD + **View/Modify All Records**; no field perms).
   - `sfdcInternalInt__sfdc_a360_sfcrm_data_extract` "Data Cloud Salesforce Connector" (Read + **View All Records + View All Fields**, fields read-only).
-- **No groups, sharingRules, queues, or profiles exist in the repo** — all record sharing beyond OWD Private is org-side only. No Apex-managed sharing (`Highlight_Interaction__Share` never written).
+- **No groups, sharingRules, queues, or profiles exist in the repo.** No Apex-managed sharing (`Highlight_Interaction__Share` never written).
+- **Org-side only (retrieved 2026-10-29 into [other-org/retrieve-brme7020/](../other-org/retrieve-brme7020/)):** the org has ONE owner-based rule not in the repo — `Highlight_Interaction__c.Highlights_Sharing_for_All_Users` (BRME-6952): `allInternalUsers` → `allInternalUsers`, access **Edit**. **Every highlight is currently R/W to all internal users.** This rule would also share *private* records to everyone → it must be deleted for the privacy requirement to hold (see §5 #12 and §9).
+- Org check 2026-10-29: no Group whose label contains "Highlight" exists — no naming conflict for the new group.
+- Example record `a0Xbc000003mcCXEAY` "August Highlights": Status=Submitted, `Include_In_CityView__c=true`, `Publish_To_CityView__c=true` — a published CityView highlight; under the new rule it cannot be made private until unpublished (see §6).
 - Related OWDs: `Interaction__c` Private; `Interaction_Participant__c` ControlledByParent; `Metric_Value__c` ControlledByParent; `Metric__c` ReadWrite; `Team__c` ReadWrite; **`File_Group__c` Read (public read-only)**.
 - Legacy parallel path: `Interaction__c.Add_to_CityView__c` manual clone (`InteractionTriggerHandler`, without sharing) — user-driven on Interactions, not highlight-driven.
 
@@ -85,14 +88,16 @@ No submission-timestamp/write-back field exists; nothing marks a highlight "sent
 | Ownership | Owner always R/W | **Exception:** an owner who is an ordinary user retains access to a private record they own. Mitigation by process: reviewers create/own private highlights |
 | View All / Modify All on object | `Manage_All_Users` perm set | **Privileged exception** (admin tooling) — unchanged |
 | View All Data / Modify All Data | System admins | **Privileged exception** — unchanged |
-| View All Records + View All Fields | Data Cloud connector perm set reads **all** highlights incl. private and will see `Private__c` data regardless of FLS | **Leak path — business decision required** (integration extract scope). Not weakened silently; reported |
+| View All Records + View All Fields | Data Cloud connector perm set reads **all** highlights incl. private and will see `Private__c` data regardless of FLS | **Accepted (2026-10-29):** integration extract continues to see private data — OK per user |
 | Apex `without sharing` / `SYSTEM_MODE` | `HighlightInteractionTriggerHandler` (writes only), `MetricValueTriggerHandler`, `FieldHistoryService` | Do not return highlight data to users; trigger guard added for publish path |
 | User-facing controllers | All `with sharing` + `USER_MODE`/`SECURITY_ENFORCED` (`HighlightSubmitController`, `HighlightMetricsController`, `CityViewDetailPageController`, `FileGroupController`, `FieldHistoryController`, `ExportOrganizationHighlightsController`) | Record sharing enforced; private records invisible to unauthorized users |
 | CityView display / export | Read `Interaction__c`, never `Highlight_Interaction__c`; export field set `Export_Organization_Highlights` has no highlight reference | Safe once publish path is blocked for private (validation + trigger guard) |
 | Reports/dashboards/global search/lookup dialogs | `enableReports=true`, `enableSearch=true`; no report/dashboard metadata in repo | Standard sharing enforcement under OWD Private; org-side "run as" dashboards need review (none in repo) |
-| Files | `File_Group__c` OWD **Read** → file-group records (and potentially attached files) for private highlights are readable by all internal users via API/reports | **Residual leak path — business decision** (do not attach confidential files, or future File_Group sharing work). Out of scope: changing File_Group__c OWD affects Events etc. |
+| Files | `File_Group__c` OWD **Read** → file-group records (and potentially attached files) for private highlights are readable by all internal users via API/reports. Effect: the highlight record stays private, but its attachments area can leak — at minimum the highlight's existence/name via the file group's `Highlight__c` lookup, potentially attached documents (ContentDocument sharing follows the visible group record) | **Residual leak path — accepted with process guidance (2026-10-29):** reviewers should not attach confidential files to private highlights. Changing File_Group__c OWD affects Events etc. — out of scope |
+| Role hierarchy / GAUH | Users above an owner in the role hierarchy keep access to that owner's private records unless "Grant Access Using Hierarchies" is disabled org-side for the object | **Org-level setting — not changed (2026-10-29)** |
+| Ownership | Record owner always has R/W to their own private records | **Agreed process (2026-10-29):** reviewers create/own private highlights |
 | Field history | `customFieldHistoryTable` gated by `History_Table_Access`; controller with sharing | Follows record access; `Private__c` history tracked like other checkboxes |
-| `Private=false` rule effect | Opens **all existing** highlights (Private__c=false after field creation) R/W to all internal users — this is the ticket's requested codification | Confirm against unknown org-side sharing before real deploy (dry-run diff review) |
+| `Private=false` rule effect | Org-side owner rule `Highlights_Sharing_for_All_Users` already gives all internal users R/W on **all** highlights today; the criteria rule formalizes this for `Private__c=false` only. **The owner rule must be deleted or private records stay visible to everyone.** | Deletion staged in `BRME-7020/destructive/` — requires explicit authorization (§9) |
 
 "Only reviewers" cannot be literal because of owners, role hierarchy above owner, and privileged View-All grants above. The smallest viable design = Private OWD (kept) + the two criteria rules + reviewer-only FLS, with the exceptions documented.
 
@@ -111,25 +116,54 @@ No submission-timestamp/write-back field exists; nothing marks a highlight "sent
 | 9 | `classes/HighlightSubmitController.cls` | Private-aware validation: a private highlight satisfies the "at least one option" rule (no MRB requirement added); explicit error if private + `Include_In_CityView__c`. `Private__c` read is FLS-gated (`getDescribe().isAccessible()` + conditional `USER_MODE` query) so requestors without FLS are unaffected by the new field |
 | 10 | `classes/HighlightInteractionTriggerHandlerTest.cls` | New tests: validation both directions; trigger guard with bypass setting (no interactions for private+publish); reviewer perm set grants `Private__c` FLS (FieldPermissions metadata assertion); existing publish flow intact |
 | 11 | `classes/HighlightSubmitControllerTest.cls` | New tests: private-only highlight validates/submits (reviewer user, real FLS via USER_MODE); private+CityView errors; requestor without FLS unaffected |
+| 12 | `BRME-7020/destructive/destructiveChanges.xml` (new) | Deletes the org-side owner rule `Highlight_Interaction__c.Highlights_Sharing_for_All_Users` (`SharingOwnerRule`). **Mandatory for privacy** — with it present, private records remain R/W to all internal users. Run only with explicit authorization: `sf project deploy start --manifest BRME-7020/destructive/package.xml --post-destructive-changes BRME-7020/destructive/destructiveChanges.xml` |
 
 Not changed (deliberately): Requestor perm set, compact layout/list view (would expose the field to non-reviewers), `ExportOrganizationHighlightsController` (no highlight data), CityView LWCs (no highlight data), MRB automation (none exists — MRB reporting is manual/out-of-repo), `Add_As_Contact_Interaction__c` (only takes effect through the publish path, which private blocks).
 
 ## 6. Already-published CityView content — cleanup decision
 
-A highlight already published (`Status=Reviewed`, `Publish_To_CityView__c=true`, Interactions created) **cannot** be marked private (validation). To privatize it, a reviewer must first unpublish (`Publish_To_CityView__c=false`) — but the already-created `Interaction__c` records remain at `CityView_Review_Status__c='Publish to CityView'` (no retraction automation exists; pre-existing gap). **Retraction/deletion of that content is a business decision — not performed.** Manual option: set those Interactions to `Retract from CityView` (requires `City_View_Publish`).
+A highlight already published (`Status=Reviewed`, `Publish_To_CityView__c=true`, Interactions created) **cannot** be marked private (validation). To privatize it, a reviewer must first unpublish (`Publish_To_CityView__c=false`) — but the already-created `Interaction__c` records remain at `CityView_Review_Status__c='Publish to CityView'` (no retraction automation exists; pre-existing gap). **Decision (2026-10-29): no retraction/deletion of existing content — no action.** No sensitive leadership content exists on this object yet; if that changes, the manual option is to unpublish the highlight and set its Interactions to `Retract from CityView` (requires `City_View_Publish`).
 
 ## 7. Security exceptions summary (residual)
 
-1. Record owners and users above them in the role hierarchy (unless org-side GAUH is disabled for the object).
+1. Record owners and users above them in the role hierarchy (GAUH org setting unchanged — agreed 2026-10-29; agreed process: reviewers own private highlights).
 2. `Manage_All_Users` (View/Modify All) and admins with View/Modify All Data.
-3. Data Cloud connector integration user (View All Records + View All Fields) — extract scope decision needed.
-4. `File_Group__c` attachments to private highlights readable org-wide (OWD Read) — process guidance or future work.
+3. Data Cloud connector integration user (View All Records + View All Fields) — accepted, no change (2026-10-29).
+4. `File_Group__c` attachments to private highlights readable org-wide (OWD Read) — process guidance: no confidential attachments on private highlights (2026-10-29).
 
 ## 8. Tests and verification
 
 **Apex (automated):** items 10–11 above. Run: `HighlightInteractionTriggerHandlerTest`, `HighlightSubmitControllerTest`, `HighlightMetricsControllerTest`, `ExportOrganizationHighlightsTest` (regression). Note: `System.runAs` alone is not treated as proof — FLS assertions go through real `USER_MODE` query enforcement and a `FieldPermissions` metadata query; record-sharing behavior is verified manually below (criteria-rule recalc is not reliably assertable in unit tests).
 
-**Deploy validation:** `sf project deploy start --dry-run` for all components (VALIDATE: description), verified via org `DeployRequest`. No real deploy or group-membership change without explicit authorization. Deploying sharing rules triggers sharing recalculation (all existing records become `Private__c=false` → shared R/W to all internal users).
+**Deploy validation (done 2026-10-29):** `sf project deploy start --dry-run` of all 13 components with `RunSpecifiedTests` (HighlightInteractionTriggerHandlerTest, HighlightSubmitControllerTest, HighlightMetricsControllerTest, ExportOrganizationHighlightsTest) — org `DeployRequest 0Afbc00000DJwiLCAT`: **Succeeded, 13/13 components, 29/29 tests passed, 0 errors**.
+
+**Real deploy (done 2026-10-29, authorized):** `DeployRequest 0Afbc00000DJyLxCAL` (13/13 components, 29/29 tests) + destructive `DeployRequest 0Afbc00000DJoCwCAL` deleting `Highlights_Sharing_for_All_Users`. Post-deploy retrieve confirmed only the two criteria rules remain on the object. Note: the installed sf CLI 2.62.6 has no `--description` flag, so no deploy message could be attached to the `DeployRequest`.
+
+### End-to-end verification on dev2Current (2026-10-29)
+
+Scripts: [scripts/brme7020-e2e-a-users.apex](../scripts/brme7020-e2e-a-users.apex) (5 test users), [scripts/brme7020-e2e-b-checks.apex](../scripts/brme7020-e2e-b-checks.apex) (functional + sharing), [scripts/brme7020-e2e-d-keep.apex](../scripts/brme7020-e2e-d-keep.apex) + [scripts/brme7020-e2e-e-shareprobe.apex](../scripts/brme7020-e2e-e-shareprobe.apex) (persistent sharing probe).
+
+Functional (all PASS):
+
+- F1 private + `Include_In_CityView__c` → blocked with "Private highlights cannot be submitted to CityView."
+- F2 private + `Publish_To_CityView__c` → blocked.
+- F3 existing CityView highlight → `Private__c=true` → blocked.
+- F4 private highlight validates + submits with no include flags (MRB optional), reaches Reviewed, **0 auto-created Interactions**.
+- F5 non-private highlight still publishes → Interaction created (regression intact).
+
+Sharing matrix (5 test users: group-only, reviewer-no-group, both, requestor, none) via `UserRecordAccess` after sharing recalculation:
+
+| User | Private record | Non-private record |
+|---|---|---|
+| Group member only (no PS) | **read/edit true** | read/edit true |
+| Reviewer PS, no group | read/edit **false** | read/edit true |
+| Both PS + group | read/edit true | read/edit true |
+| Requestor only | read/edit false | read/edit true |
+| No PS, no group | read/edit false | read/edit true |
+
+This confirms: the group controls record access; the permission set controls the field; neither substitutes for the other; ordinary users cannot see private records. FLS-by-user enforcement (Private__c hidden from requestors, visible/editable to reviewers) is covered by `HighlightSubmitControllerTest` via real `USER_MODE` queries.
+
+Note: criteria-based sharing recalculation is **deferred and asynchronous** in this org — access is not immediate on record create/flag-change; it completed after a forced rule redeploy. For QA, allow recalc time (or re-save a record / wait) before asserting access.
 
 **Manual QA (after authorized deploy):**
 
@@ -147,4 +181,6 @@ A highlight already published (`Status=Reviewed`, `Publish_To_CityView__c=true`,
 ## 9. Deployment dependencies / manual setup
 
 - Deploy order within one package is fine (field → group → sharingRules → validation → permset → layout/flexipage → Apex).
-- Org-side after deploy: populate group **Highlights: Private Highlights Review** membership (not in metadata); verify admin-profile FLS needs none; decide Data Cloud extract scope; decide File_Group attachment guidance; optional GAUH toggle.
+- **Required in the same authorized deploy (post-destructive) — agreed 2026-10-29:** delete org-side owner rule `Highlight_Interaction__c.Highlights_Sharing_for_All_Users` via `BRME-7020/destructive/` — without this, privacy is not enforced. Non-private access is unchanged because the new criteria rule replaces it for `Private__c=false`.
+- Org-side after deploy: populate group **Highlights: Private Highlights Review** membership (user determines members at test time, per 2026-10-29); verify no admin-profile FLS is needed; confirm no "run as" dashboards expose the object (no dashboard metadata in repo — org-side review at QA time). Standard reports need no change: under OWD Private + the criteria rules, private records simply never appear for ordinary users while reviewers see them (matches the ticket's reporting intent).
+- After deploy + recalculation, verify in Setup → Sharing Settings that only the two criteria rules remain for Highlight.
