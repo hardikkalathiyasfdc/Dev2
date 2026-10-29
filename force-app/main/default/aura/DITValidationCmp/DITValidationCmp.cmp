@@ -19,8 +19,7 @@
     <aura:attribute name="previewColumns" type="List" default="[]" />
     <aura:attribute name="previewData" type="List" default="[]" />
     <aura:attribute name="oldPreviewData" type="List" default="[]" />
-    <!-- BRME-4862: full dataset kept for persistence; previewData holds error rows only -->
-    <aura:attribute name="allPreviewData" type="List" default="[]" />
+    <!-- BRME-4862: errorRowCount drives the "N row(s) need review" banner -->
     <aura:attribute name="errorRowCount" type="Integer" default="0" />
     <ltng:require scripts="{!$Resource.cmputil}" afterScriptsLoaded="{!c.init}" />
     <aura:attribute name="duplicateAccountsColumns" type="List" default="[]" />
