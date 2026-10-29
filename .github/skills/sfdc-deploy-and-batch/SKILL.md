@@ -70,3 +70,14 @@ Lessons from the zkipster sync work. Read before editing batch/queueable Apex, `
 - **Review the diff for anything that would overwrite an existing org change before deploying.** If a diff/retrieve shows your change clobbering something already in the org that you didn't intend to replace, STOP and ask the user before deploying. Do not silently push an overwrite.
 - **Ask questions whenever in doubt** — if a dry-run result is ambiguous, the diff looks like it might overwrite org state, or it's unclear whether to actually deploy vs. validate-only, ask the user instead of guessing.
 - The sandbox blocks the sf CLI (`EPERM lstat 'C:\'`); run deploy/retrieve/validate commands with unsandboxed execution.
+
+## 11. Sync every retrieve to git (dated package.xml, auto-push on dev2)
+
+The GitHub repo is the source of truth — not just for changes we author, but for the org's state. **Every** retrieve (manual or automated) must be committed and pushed so GitHub always mirrors the org.
+
+- **Dated package manifest per retrieve**: keep the `package.xml` used for each retrieve under the ticket folder as `package-<YYYY-MM-DD>.xml` (e.g. `BRME-7020/retrieves/package-2026-10-29.xml`) so we can see what was pulled, when, and why. Don't overwrite a single `package.xml` across retrieves.
+- **Retrieve into source, not only `other-org/`**: `other-org/retrieve-*` is scratch/verification. When the retrieved metadata belongs in the project (a component we own), also place it under `force-app/main/default/...` so it's tracked as real source.
+- **Commit + push on dev2/dev2Current without asking** — remote `https://github.com/hardikkalathiyasfdc/Dev2`, branch `main`. Message subject: `BRME-XXXX: retrieve <components>` (or `chore: org sync retrieve <date>` if no ticket); body: what was retrieved and the org it came from.
+- **Other orgs (e.g. Dev1)**: do NOT push here — ask the user for that org's repo URL first (see `.github/copilot-instructions.md`).
+- **git executable**: not on terminal PATH — use `& "C:\Program Files\Git\cmd\git.exe" ...`.
+- Review the retrieved diff before committing; if it would overwrite something unexpected, STOP and ask.
