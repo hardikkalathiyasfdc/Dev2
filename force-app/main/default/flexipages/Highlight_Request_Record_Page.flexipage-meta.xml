@@ -174,6 +174,16 @@
                 <identifier>RecordNameField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Private__c</fieldItem>
+                <identifier>RecordPrivate_cField3</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-3350a668-736a-49ec-804b-1b16d3a939d3</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -196,16 +206,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Description__c</fieldItem>
                 <identifier>RecordDescription_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Private__c</fieldItem>
-                <identifier>RecordPrivate_cField3</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2aaff7c2-d5e5-4128-8e31-baee225a0453</name>
