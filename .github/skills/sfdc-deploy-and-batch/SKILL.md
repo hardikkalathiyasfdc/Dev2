@@ -81,3 +81,11 @@ The GitHub repo is the source of truth — not just for changes we author, but f
 - **Other orgs (e.g. Dev1)**: do NOT push here — ask the user for that org's repo URL first (see `.github/copilot-instructions.md`).
 - **git executable**: not on terminal PATH — use `& "C:\Program Files\Git\cmd\git.exe" ...`.
 - Review the retrieved diff before committing; if it would overwrite something unexpected, STOP and ask.
+
+## 12. Every deployment message lists modified components (one per line)
+
+- **Whenever you report a deployment** (in chat, in a commit body, in a PR, or in a `--description`/DeployRequest note), list the modified components **one below another** — not as an inline comma list.
+- Use workspace-relative paths, one per line, e.g.:
+  - `force-app/main/default/aura/DITCmp/DITCmp.cmp`
+  - `force-app/main/default/aura/DITCmp/DITCmpHelper.js`
+- Applies to both the user-facing summary and the git commit body so anyone can see exactly what changed at a glance.
