@@ -13,6 +13,8 @@
 
 .THIS td{
   background:white;
+  padding: 4px;
+  border: 1px solid #e5e5e5;
 }
 
 .THIS.myThDiv, .THIS .myThDiv{
@@ -43,4 +45,18 @@
 
 .THIS .slds-form-element__help{
   color:black;
+}
+
+/* BRME-4862: read-only cells keep the bordered box the input cells had, so the grid
+   look (cell borders, dividers, spacing) matches the previous all-input version. */
+.THIS .cellText{
+  border: 1px solid #d8dde6;
+  border-radius: 4px;
+  padding: 6px 8px;
+  min-height: 32px;
+  background: #ffffff;
+  cursor: text;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
