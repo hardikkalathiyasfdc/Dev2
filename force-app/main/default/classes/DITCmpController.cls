@@ -1828,6 +1828,9 @@ public with sharing class DITCmpController {
       if (colType == 'PICKLIST' && !picklistContains(col.get('options'), value)) {
         return true;
       }
+      if (colType == 'EMAIL' && !isValidEmail(value)) {
+        return true;
+      }
       if (colType == 'STRING') {
         Integer maxLen = (Integer) col.get('maxLength');
         if (maxLen != null && maxLen > 0 && value.length() > maxLen) {
@@ -1836,6 +1839,11 @@ public with sharing class DITCmpController {
       }
     }
     return false;
+  }
+
+  // BRME-4862: mirror DITWorker.validateEmail (local@domain.tld).
+  private static Boolean isValidEmail(String value) {
+    return Pattern.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$', value);
   }
 
   private static Boolean picklistContains(Object optionsObj, String value) {

@@ -238,12 +238,25 @@ class ValidateWorker {
       this.validateLookup(cell);
     } else if (cell.type == "PICKLIST") {
       this.validatePicklist(cell);
+    } else if (cell.type == "EMAIL") {
+      this.validateEmail(cell);
     } else if (cell.type == "STRING") {
       this.validateText(cell);
     }
     this.validateRequired(cell);
     if (cell.requiredError && cell.requiredError.length) {
       this.requiredErrors[cell.requiredError] = true;
+    }
+  }
+
+  // BRME-4862: flag malformed email addresses at load (type EMAIL cells).
+  validateEmail(cell) {
+    if (!cell.value || !cell.value.length) {
+      return;
+    }
+    let emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    if (!emailRegex.test(cell.value)) {
+      this.setRequiredError(cell, "is not a valid email address.");
     }
   }
 
