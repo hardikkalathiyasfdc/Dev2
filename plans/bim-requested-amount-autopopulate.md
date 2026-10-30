@@ -97,7 +97,16 @@ Grants already pushed have a stale `amount_requested_local` in Bgive (equal to t
 3. **Update-payload assertions must inspect only the `data` form param** — the `cols` param legitimately lists `amount_requested_local` (columns to return); first deploy attempt failed the assertion on `cols`, not on the payload.
 4. **PRE-EXISTING: `IMGrantViewControllerTest` + `IMGrantServiceTest` fail 46/46 in dev2Current on unmodified code** (verified with a standalone test run before this deploy): `@TestSetup` → `TestDataFactory.createBudget` → IMBudgetTrigger AfterInsert → IMInitiativeTrigger AfterUpdate → `IMBudgetHelper.updateActiveStatus` → `AuraHandledException` (the known BRME-7040-chain issue, skill §9). **Not caused by this change.** Deploys in dev2Current must scope `--tests` to unaffected suites (this deploy used `BGiveApiSyncTest` only) until that is fixed.
 5. **Anonymous-apex E2E: `IMGrantService.sync` ends with DML** (`updateGrantRecord`) → any Bgive readback callout in the same script fails with "uncommitted work pending". Sync and readback must run as separate scripts/transactions.
-6. **Live Bgive E2E BLOCKED in dev2Current**: Named Credential `Fluxx_OAuth_Sandbox`'s external credential isn't fully configured ("try reconnecting to the external system") — no Fluxx callouts succeed from this sandbox until an admin re-auths it in Setup. Grant data is prepped (below); after reconnect, run in order: `bim-requested-amount-e2e.apex` → `-e2e-read.apex` → `-e2e-b-change.apex` → `-e2e-c-update.apex` → `-e2e-read.apex`.
+6. ~~**Live Bgive E2E BLOCKED in dev2Current**~~: dev2Current's `Fluxx_OAuth_Sandbox` external credential is broken, so the live E2E ran on **Dev1** (`BBDev1Backup10162026v1`, org `00DOz00000FTu1NMAT`) instead — user deployed the CMDT change there via Flosum first. Dev1 scripts: [bim-requested-amount-dev1-setup.apex](scripts/bim-requested-amount-dev1-setup.apex) → [-dev1-e2e.apex](scripts/bim-requested-amount-dev1-e2e.apex) → [-dev1-read.apex](scripts/bim-requested-amount-dev1-read.apex) → [-dev1-b-change.apex](scripts/bim-requested-amount-dev1-b-change.apex) → [-dev1-c-update.apex](scripts/bim-requested-amount-dev1-c-update.apex) → [-dev1-read.apex](scripts/bim-requested-amount-dev1-read.apex). Bgive create requires `fx_type_id` (grant `Currency__c` must be set — USD record `a0FOz000005w6fXMAQ` = Bgive fx id 1), else `Fx type can't be blank (Code 100)`.
+
+### Live E2E evidence (Dev1, 2026-10-30 — Bgive grant_request `id=52071`)
+
+Test records: Grant `a0oOz000004YgAbIAK` (IMGRANT-289879), Budget Grant `a0ROz0000075RefMAE` (BG-08741), Partner Org `001Oz000010SkxNIAS` (NG Delivery Partner).
+
+| Step | amount_requested_local | amount_recommended_local |
+|---|---|---|
+| Create push (amounts 100,000) | **0.0** ✓ (partner field not populated) | 100000.0 |
+| Amounts changed to 120,000 + re-push | **0.0** ✓ (untouched — the reported bug) | **120000.0** ✓ (still syncs) |
 
 ### Unit-test evidence (from deploy `0Afbc00000DLKYxCAP`)
 
