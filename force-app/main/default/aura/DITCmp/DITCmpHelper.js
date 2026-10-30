@@ -637,7 +637,8 @@
           cmp.set("v.isLoading", false);
           if (results && results.length) {
             cmp.set("v.showPreviewError", true);
-            cmp.set("v.previewErrors", results);
+            // BRME-4862: group identical messages with a count + sample so the modal is readable.
+            cmp.set("v.previewErrors", self.groupPreviewErrors(results));
             return;
           }
           let data = { Id: cmp.get("v.dataLoaderId"), Stage__c: "unconfirm" };
@@ -658,6 +659,50 @@
         cmp.set("v.isLoading2", false);
         self.util.showToastError(errMsg);
       });
+  },
+  // BRME-4862: collapse identical validation messages into one row each, with an
+  // occurrence count and the first offending value as a sample.
+  groupPreviewErrors: function (results) {
+    let groups = [];
+    let byKey = {};
+    for (let i = 0; i < results.length; i++) {
+      let text = String(results[i]);
+      // split "Field: message: value" so identical field+message group across values
+      let parts = text.split(":");
+      let key = parts.length > 2 ? parts[0] + ":" + parts[1] : text;
+      let sample = parts.length > 2 ? parts.slice(2).join(":").trim() : "";
+      if (!byKey[key]) {
+        byKey[key] = { key: key, count: 0, sample: sample };
+        groups.push(byKey[key]);
+      }
+      byKey[key].count++;
+    }
+    for (let g of groups) {
+      g.display = g.key + " — " + g.count + " row(s)" + (g.sample ? " (e.g. " + g.sample + ")" : "");
+    }
+    return groups;
+  },
+  // BRME-4862: collapse identical validation messages into one row each, with an
+  // occurrence count and the first offending value as a sample.
+  groupPreviewErrors: function (results) {
+    let groups = [];
+    let byKey = {};
+    for (let i = 0; i < results.length; i++) {
+      let text = String(results[i]);
+      // split "Field: message: value" so identical field+message group across values
+      let parts = text.split(":");
+      let key = parts.length > 2 ? parts[0] + ":" + parts[1] : text;
+      let sample = parts.length > 2 ? parts.slice(2).join(":").trim() : "";
+      if (!byKey[key]) {
+        byKey[key] = { key: key, count: 0, sample: sample };
+        groups.push(byKey[key]);
+      }
+      byKey[key].count++;
+    }
+    for (let g of groups) {
+      g.display = g.key + " — " + g.count + " row(s)" + (g.sample ? " (e.g. " + g.sample + ")" : "");
+    }
+    return groups;
   },
   unconfirmNext: function (cmp) {
     let unconfirmedRecords = cmp.get("v.unconfirmedRecords");

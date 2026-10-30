@@ -255,7 +255,7 @@
                         <aura:if isTrue="{!not(empty(v.previewErrors))}">
                             <ul>
                                 <aura:iteration items="{!v.previewErrors}" var="errors" indexVar="conIdx">
-                                    <li style="color: red; margin-bottom: 1%">{!errors}</li>
+                                    <li style="color: red; margin-bottom: 1%">{!errors.display}</li>
                                 </aura:iteration>
                             </ul>
                         </aura:if>
