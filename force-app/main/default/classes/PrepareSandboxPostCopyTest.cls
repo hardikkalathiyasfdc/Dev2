@@ -5,7 +5,7 @@
  * Description : Test class for PrepareSandboxPostCopy
  **/
 @isTest
-public with sharing class PrepareSandboxPostCopyTest {
+public class PrepareSandboxPostCopyTest {
 
     @isTest
     static void testSandboxPostCopy() {

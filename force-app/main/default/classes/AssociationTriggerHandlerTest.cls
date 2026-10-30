@@ -4,7 +4,7 @@
  * Description : Test class for AssociationTriggerHandler
  **/
 @isTest
-public with sharing class AssociationTriggerHandlerTest {
+public class AssociationTriggerHandlerTest {
 	
     @testSetup
     static void dataSetup () {

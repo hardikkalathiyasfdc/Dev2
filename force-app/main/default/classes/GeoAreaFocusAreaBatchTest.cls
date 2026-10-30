@@ -3,7 +3,7 @@
 * Description : Test class for GeoAreaFocusAreaBatch
 */
 @isTest
-private with sharing class GeoAreaFocusAreaBatchTest {
+private class GeoAreaFocusAreaBatchTest {
     @testSetup
     static void setupTestData() {
         Geo_Area__c continent = TestDataFactory.createGeoAreaByRecordType('Continent', 'North America');

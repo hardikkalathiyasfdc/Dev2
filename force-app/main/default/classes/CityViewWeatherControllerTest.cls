@@ -1,5 +1,5 @@
 @isTest
-public with sharing class CityViewWeatherControllerTest {
+public class CityViewWeatherControllerTest {
 
     class WeatherHttpMockSuccess implements HttpCalloutMock {
         public HTTPResponse respond(HTTPRequest req) {

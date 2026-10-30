@@ -2,11 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Private__c</fullName>
     <defaultValue>false</defaultValue>
-    <description>BRME-7020: Marks the highlight as private to the Highlights Review team. Private
-        highlights are only visible to members of the &apos;Highlights: Private Highlights
-        Review&apos; public group and cannot be submitted to CityView.</description>
-    <inlineHelpText>Private highlights are visible only to the Highlights Review team and cannot be
-        submitted to CityView.</inlineHelpText>
+    <description>BRME-7020: Marks the highlight as private to the Highlights Review team. Private highlights are only visible to members of the &apos;Highlights: Private Highlights Review&apos; public group and cannot be submitted to CityView.</description>
+    <inlineHelpText>Private highlights are visible only to the Highlights Review team and cannot be submitted to CityView.</inlineHelpText>
     <label>Private</label>
     <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>

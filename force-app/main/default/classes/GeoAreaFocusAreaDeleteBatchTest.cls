@@ -3,7 +3,7 @@
 * Description : Test class for GeoAreaFocusAreaDeleteBatch
 */
 @isTest
-public with sharing class GeoAreaFocusAreaDeleteBatchTest {
+public class GeoAreaFocusAreaDeleteBatchTest {
 	
     @testSetup 
     static void dataSetup () {

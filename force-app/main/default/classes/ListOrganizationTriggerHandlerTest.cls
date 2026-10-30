@@ -3,7 +3,7 @@
 * Description : Test Class for ListOrganizationTriggerHandler
 **/
 @isTest
-public with sharing class ListOrganizationTriggerHandlerTest {
+public class ListOrganizationTriggerHandlerTest {
 
     @testSetup
     static void setupData() {

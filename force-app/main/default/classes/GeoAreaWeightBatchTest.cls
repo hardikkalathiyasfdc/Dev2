@@ -1,5 +1,5 @@
 @isTest
-private with sharing class GeoAreaWeightBatchTest {
+private class GeoAreaWeightBatchTest {
 
     @isTest
     static void testGeoAreaWeightBatch() {

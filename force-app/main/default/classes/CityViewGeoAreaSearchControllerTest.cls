@@ -1,5 +1,5 @@
 @isTest
-public with sharing class CityViewGeoAreaSearchControllerTest {
+public class CityViewGeoAreaSearchControllerTest {
     @testSetup
     static void setupTestData() {
         TestDataFactory.createGeoHierarchy();

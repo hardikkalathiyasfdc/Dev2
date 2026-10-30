@@ -3,7 +3,7 @@
 * Description : Test class for GeoAreaGCOMBatch
 */
 @isTest
-public with sharing class GeoAreaGCOMBatchTest {
+public class GeoAreaGCOMBatchTest {
 	
     @testSetup
     static void setupData() {

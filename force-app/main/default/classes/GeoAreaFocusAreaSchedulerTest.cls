@@ -3,7 +3,7 @@
 * Description : Test class for GeoAreaFocusAreaScheduler
 */
 @isTest
-public with sharing class GeoAreaFocusAreaSchedulerTest {
+public class GeoAreaFocusAreaSchedulerTest {
     
     @isTest
     static void testSchedulerExecution() {

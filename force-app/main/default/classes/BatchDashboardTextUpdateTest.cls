@@ -1,5 +1,5 @@
 @IsTest
-private with sharing class BatchDashboardTextUpdateTest {
+private class BatchDashboardTextUpdateTest {
 
     @testSetup
     static void setupData() {

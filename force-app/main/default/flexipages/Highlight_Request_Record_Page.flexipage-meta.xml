@@ -16,8 +16,7 @@
                                     <rightValue>Draft</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>
-                                        {!$Permission.CustomPermission.Highlights_Metrics_Reviewer}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Highlights_Metrics_Reviewer}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
@@ -43,8 +42,7 @@
                                     <rightValue>Submitted</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>
-                                        {!$Permission.CustomPermission.Highlights_Metrics_Reviewer}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.Highlights_Metrics_Reviewer}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
@@ -1161,8 +1159,7 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>
-                                CustomButton.Interaction_Participant__c.New_Organization_Participant</value>
+                            <value>CustomButton.Interaction_Participant__c.New_Organization_Participant</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

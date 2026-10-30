@@ -17,12 +17,12 @@
         Review team).</description>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Highlight_Interaction__c.Add_As_Contact_Interaction__c</field>
+        <field>File_Group__c.Private__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>File_Group__c.Private__c</field>
+        <field>Highlight_Interaction__c.Add_As_Contact_Interaction__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

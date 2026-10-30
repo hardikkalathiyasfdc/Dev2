@@ -5,7 +5,7 @@
  * Description : Test class for BatchUsersDeactivation
  **/
 @isTest
-public with sharing class BatchUsersDeactivationTest {
+public class BatchUsersDeactivationTest {
 
     @testSetup
     static void setup() {

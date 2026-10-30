@@ -4,7 +4,7 @@
 */
 
 @isTest
-private with sharing class GeoAreaCulturalAccessBatchTest {
+private class GeoAreaCulturalAccessBatchTest {
     @testSetup
     static void setupData() {
         Geo_Area__c continent = TestDataFactory.createGeoAreaByRecordType('Continent', 'North America');

@@ -3,7 +3,7 @@
  * Description : Test class for OrgAssociationTriggerHandler
  **/
 @isTest
-public with sharing class OrgAssociationTriggerHandlerTest {
+public class OrgAssociationTriggerHandlerTest {
     
     @testSetup
     static void setupTestData() {

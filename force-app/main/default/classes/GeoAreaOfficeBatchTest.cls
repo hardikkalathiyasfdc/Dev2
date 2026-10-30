@@ -3,7 +3,7 @@
 * Description : Test class for GeoAreaOfficeBatch
 */
 @isTest
-public with sharing class GeoAreaOfficeBatchTest {
+public class GeoAreaOfficeBatchTest {
     
     @testSetup
     static void setupData() {

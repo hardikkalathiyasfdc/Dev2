@@ -1,5 +1,5 @@
 @isTest
-public with sharing class CityViewControllerTest {
+public class CityViewControllerTest {
     
     @testSetup
     static void setupTestData() {

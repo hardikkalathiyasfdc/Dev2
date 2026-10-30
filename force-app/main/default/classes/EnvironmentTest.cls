@@ -4,7 +4,7 @@
 * Description       : Test class for Environment class
 */
 @isTest
-public with sharing class EnvironmentTest {
+public class EnvironmentTest {
     
     @isTest
     static void testIsSandbox() {

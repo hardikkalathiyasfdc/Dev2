@@ -2,10 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Private_CityView_Validation</fullName>
     <active>true</active>
-    <description>BRME-7020: Prevents a highlight from being private while selected or published for
-        CityView. Covers both submitting an already-private highlight to CityView and marking an
-        existing CityView highlight private.</description>
-    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Highlight_Interaction_Validation__c
-        &amp;&amp; AND(Private__c, OR(Include_In_CityView__c, Publish_To_CityView__c))</errorConditionFormula>
+    <description>BRME-7020: Prevents a highlight from being private while selected or published for CityView. Covers both submitting an already-private highlight to CityView and marking an existing CityView highlight private.</description>
+    <errorConditionFormula>!$Setup.Bypass_Automation_Setting__c.Highlight_Interaction_Validation__c &amp;&amp; AND(Private__c, OR(Include_In_CityView__c, Publish_To_CityView__c))</errorConditionFormula>
     <errorMessage>Private highlights cannot be submitted to CityView.</errorMessage>
 </ValidationRule>

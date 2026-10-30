@@ -5478,6 +5478,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>File_Group__c.Private__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>File_Link__c.Link_URL__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6024,6 +6029,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Highlight_Interaction__c.Not_For_External_Use__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Highlight_Interaction__c.Private__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

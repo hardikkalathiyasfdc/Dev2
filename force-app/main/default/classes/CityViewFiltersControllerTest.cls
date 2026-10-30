@@ -3,7 +3,7 @@
 * Description : Test class for CityViewFiltersController
 */
 @isTest
-public with sharing class CityViewFiltersControllerTest {
+public class CityViewFiltersControllerTest {
     @testSetup
     static void setupTestData() {
         Geo_Area__c continent = TestDataFactory.createGeoAreaByRecordType('Continent', 'North America');
