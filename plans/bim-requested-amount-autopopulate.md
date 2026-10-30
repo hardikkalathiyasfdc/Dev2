@@ -75,6 +75,31 @@ Grants already pushed have a stale `amount_requested_local` in Bgive (equal to t
 
 ## Out of scope / notes
 
-- **Pre-existing static-state risk in [BGiveApiSync.cls](force-app/main/default/classes/BGiveApiSync.cls):** `isInsert` / `performUpdate` are `static` and never reset at the start of `sync()` — a second sync in the same transaction can inherit stale flags (repo lesson #3, static-state confusion). Not caused or worsened by this change; recommend a separate hardening ticket (reset at top of `sync()`).
+- **Pre-existing static-state risk in [BGiveApiSync.cls](force-app/main/default/classes/BGiveApiSync.cls):** `isInsert` / `performUpdate` are `static` and never reset at the start of `sync()` — a second sync in the same transaction can inherit stale flags (repo lesson #3, static-state confusion). ~~Not caused or worsened by this change; recommend a separate hardening ticket (reset at top of `sync()`).~~ **Fixed as part of this work** — deterministic payload tests were impossible without it (see Implementation Log).
 - No changes to the Recommended Amount mapping, the inbound `Bgive_Amount_Local__c` mirror, or any LWC/layout.
 - Rollback: re-deploy the deleted CMDT record (Option A) or restore the original mapping values (Option B) — keep a copy of the current record file in git history; no data migration needed to roll back.
+
+## Implementation Log (deployed to dev2Current 2026-10-30 — Deploy ID `0Afbc00000DLKYxCAP`, Succeeded, 4/4 tests, 0 errors)
+
+**Option B implemented** (user-confirmed 2026-10-30, ahead of Stu's test — $0.00 is safe even if Bgive requires the field on create).
+
+| Component | Files | Notes |
+|---|---|---|
+| CMDT mapping | [Bgive_Sync_Field_Mapping.GrantRequestedBudgetAmountLocal.md-meta.xml](force-app/main/default/customMetadata/Bgive_Sync_Field_Mapping.GrantRequestedBudgetAmountLocal.md-meta.xml) | `BRM_Field_Type__c` Field→`None`, `BRM_Field__c`→null, `Default_Value__c`→`0`; `Sync_Mode__c` stays `BRM To Bgive Initial` → `amount_requested_local` sent as `0` on create only, never on update. Verified in org post-deploy. |
+| Sync engine | [BGiveApiSync.cls](force-app/main/default/classes/BGiveApiSync.cls) | New `resetStaticState()` called at start of `sync()` — `isInsert`/`performUpdate`/data maps are static and leaked between syncs in one transaction (blocked deterministic tests; also a real bug for back-to-back pushes). |
+| Tests | [BGiveApiSyncTest.cls](force-app/main/default/classes/BGiveApiSyncTest.cls) | Grant mock now routes GET/POST/PUT and captures the request body; new `testRequestedAmountSentAsZeroOnCreate` (asserts `"amount_requested_local":"0"` in the create `data` param) and `testRequestedAmountNotSentOnUpdate` (asserts absent from update `data` param, `amount_recommended_local` still sent). |
+| Scripts | [bim-requested-amount-setup.apex](scripts/bim-requested-amount-setup.apex), [bim-requested-amount-e2e.apex](scripts/bim-requested-amount-e2e.apex), [bim-requested-amount-e2e-read.apex](scripts/bim-requested-amount-e2e-read.apex), [bim-requested-amount-e2e-b-change.apex](scripts/bim-requested-amount-e2e-b-change.apex), [bim-requested-amount-e2e-c-update.apex](scripts/bim-requested-amount-e2e-c-update.apex) | E2E data setup + sync/readback steps for grant `a0obc000003FE49AAG`. |
+
+### Gotchas hit during deploy/E2E
+
+1. **CLI 2.62.6 has no `--description` flag** for `sf project deploy start` → the deploy-description convention can't be satisfied at this CLI version; the detail lives in the git commit body instead.
+2. **Statics are not allowed on inner classes** → the mock's capture state lives on the top-level test class (`grantReturnEmptyList` / `grantLastRequestBody` / `grantLastRequestMethod`).
+3. **Update-payload assertions must inspect only the `data` form param** — the `cols` param legitimately lists `amount_requested_local` (columns to return); first deploy attempt failed the assertion on `cols`, not on the payload.
+4. **PRE-EXISTING: `IMGrantViewControllerTest` + `IMGrantServiceTest` fail 46/46 in dev2Current on unmodified code** (verified with a standalone test run before this deploy): `@TestSetup` → `TestDataFactory.createBudget` → IMBudgetTrigger AfterInsert → IMInitiativeTrigger AfterUpdate → `IMBudgetHelper.updateActiveStatus` → `AuraHandledException` (the known BRME-7040-chain issue, skill §9). **Not caused by this change.** Deploys in dev2Current must scope `--tests` to unaffected suites (this deploy used `BGiveApiSyncTest` only) until that is fixed.
+5. **Anonymous-apex E2E: `IMGrantService.sync` ends with DML** (`updateGrantRecord`) → any Bgive readback callout in the same script fails with "uncommitted work pending". Sync and readback must run as separate scripts/transactions.
+6. **Live Bgive E2E BLOCKED in dev2Current**: Named Credential `Fluxx_OAuth_Sandbox`'s external credential isn't fully configured ("try reconnecting to the external system") — no Fluxx callouts succeed from this sandbox until an admin re-auths it in Setup. Grant data is prepped (below); after reconnect, run in order: `bim-requested-amount-e2e.apex` → `-e2e-read.apex` → `-e2e-b-change.apex` → `-e2e-c-update.apex` → `-e2e-read.apex`.
+
+### Unit-test evidence (from deploy `0Afbc00000DLKYxCAP`)
+
+- Create payload `data` param contains `"amount_requested_local":"0"`.
+- Update payload `data` param contains no `amount_requested_local`; `amount_recommended_local` still present.

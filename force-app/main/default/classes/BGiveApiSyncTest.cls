@@ -3,18 +3,34 @@
  * Date        : Jun 24th 2025
  * Jira        : IM-134
  * Description : Test Class for BGiveApiSync
+ * ChangeLog   : Hardik - BIM Requested Amount: grant mock now routes GET/POST/PUT and captures the request body;
+ *               added create/update assertions for amount_requested_local (0 on create, never sent on update).
  */
 @IsTest
 public class BGiveApiSyncTest {
-	//Mock Respons for grant_request
+	//Capture state for the grant mock (statics not allowed on inner classes)
+	public static Boolean grantReturnEmptyList = false;
+	public static String grantLastRequestBody;
+	public static String grantLastRequestMethod;
+
+	//Mock Respons for grant_request - routes by HTTP method and captures the outgoing request body
 	public class GrantMockResponseGenerator implements HttpCalloutMock {
 		public HttpResponse respond(HttpRequest req) {
+			grantLastRequestBody = req.getBody();
+			grantLastRequestMethod = req.getMethod();
 			HttpResponse resp = new HttpResponse();
 			resp.setHeader('Content-Type', 'application/json');
 			resp.setStatusCode(200);
-			List<Object> existingRecords = new List<Object>{ new Map<String, Object>{ 'id' => 'a1' }, new Map<String, Object>{ 'id' => 'a2' } };
-			String mockJson = JSON.serialize(new Map<String, Object>{ 'records' => new Map<String, Object>{ 'grant_request' => existingRecords } });
-			resp.setBody(mockJson);
+			if (req.getMethod() == 'GET') {
+				List<Object> existingRecords = grantReturnEmptyList
+					? new List<Object>()
+					: new List<Object>{ new Map<String, Object>{ 'id' => 'a1' }, new Map<String, Object>{ 'id' => 'a2' } };
+				String mockJson = JSON.serialize(new Map<String, Object>{ 'records' => new Map<String, Object>{ 'grant_request' => existingRecords } });
+				resp.setBody(mockJson);
+			} else {
+				//POST (create) / PUT (update) both return the single grant_request record
+				resp.setBody(JSON.serialize(new Map<String, Object>{ 'grant_request' => new Map<String, Object>{ 'id' => 'g1', 'contig_id' => 'c1' } }));
+			}
 			return resp;
 		}
 	}
@@ -48,6 +64,7 @@ public class BGiveApiSyncTest {
 
 	@IsTest
 	private static void testSyncForGrant() {
+		grantReturnEmptyList = false;
 		Test.startTest();
 		Test.setMock(HttpCalloutMock.class, new GrantMockResponseGenerator());
 		List<String> columns = new List<String>{
@@ -101,6 +118,53 @@ public class BGiveApiSyncTest {
 		Map<String, Object> result = BGiveApiSync.sync(syncRecord, 'IM_Grant__c', columns);
 		Assert.isTrue(result != null);
 		Test.stopTest();
+	}
+
+	@IsTest
+	private static void testRequestedAmountSentAsZeroOnCreate() {
+		grantReturnEmptyList = true;
+		String syncRecordId = [SELECT Id FROM IM_Grant__c LIMIT 1]?.Id;
+		SObject syncRecord = IMUtil.getImGrant(syncRecordId);
+		Test.startTest();
+		Test.setMock(HttpCalloutMock.class, new GrantMockResponseGenerator());
+		Map<String, Object> result = BGiveApiSync.sync(syncRecord, 'IM_Grant__c', new List<String>{ 'id', 'amount_requested_local', 'amount_recommended_local' });
+		Test.stopTest();
+		Assert.isNull(result.get('Errors'), 'Create sync should succeed: ' + result.get('Errors'));
+		Assert.areEqual('POST', grantLastRequestMethod, 'No existing Bgive record should produce a create (POST)');
+		String encodedPair = EncodingUtil.urlEncode('"amount_requested_local":"0"', 'UTF-8');
+		Assert.isTrue(
+			grantLastRequestBody != null && grantLastRequestBody.contains(encodedPair),
+			'Create payload must send amount_requested_local as 0. Body: ' + grantLastRequestBody
+		);
+	}
+
+	@IsTest
+	private static void testRequestedAmountNotSentOnUpdate() {
+		grantReturnEmptyList = false;
+		String syncRecordId = [SELECT Id FROM IM_Grant__c LIMIT 1]?.Id;
+		SObject syncRecord = IMUtil.getImGrant(syncRecordId);
+		Test.startTest();
+		Test.setMock(HttpCalloutMock.class, new GrantMockResponseGenerator());
+		Map<String, Object> result = BGiveApiSync.sync(syncRecord, 'IM_Grant__c', new List<String>{ 'id', 'amount_requested_local', 'amount_recommended_local' });
+		Test.stopTest();
+		Assert.isNull(result.get('Errors'), 'Update sync should succeed: ' + result.get('Errors'));
+		Assert.areEqual('PUT', grantLastRequestMethod, 'Existing Bgive record should produce an update (PUT)');
+		//Assert on the data form param only - the cols param legitimately lists the columns to return
+		String dataParam = grantLastRequestBody.substringAfter('data=');
+		Integer colsIdx = dataParam.indexOf('&cols=');
+		if (colsIdx > -1) {
+			dataParam = dataParam.substring(0, colsIdx);
+		}
+		String encodedRequested = EncodingUtil.urlEncode('amount_requested_local', 'UTF-8');
+		Assert.isFalse(
+			dataParam.contains(encodedRequested),
+			'Update payload must not include amount_requested_local. Data param: ' + dataParam
+		);
+		String encodedRecommended = EncodingUtil.urlEncode('amount_recommended_local', 'UTF-8');
+		Assert.isTrue(
+			dataParam.contains(encodedRecommended),
+			'Update payload must still include amount_recommended_local. Data param: ' + dataParam
+		);
 	}
 
 	@IsTest
