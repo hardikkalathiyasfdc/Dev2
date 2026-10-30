@@ -22,7 +22,10 @@
 	<aura:attribute name="editKey" type="String" default="" />
 	<aura:registerEvent name="changeEvent" type="c:MyTableEvent" />
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
-	<div id="myTable" style="overflow-x: auto; overflow-y: auto; height: 100%">
+	<div aura:id="topScroll" class="topScroll" onscroll="{!c.syncTopScroll}">
+		<div class="topScrollInner"></div>
+	</div>
+	<div aura:id="myTable" id="myTable" class="tableScroll" onscroll="{!c.syncMainScroll}">
 		<aura:if isTrue="{!v.isLoading}">
 			<lightning:spinner alternativeText="Loading" size="medium" />
 		</aura:if>
@@ -33,7 +36,7 @@
 				<thead>
 					<tr class="slds-line-height_reset">
 						<aura:iteration items="{!v.columns}" var="col">
-							<th class="" scope="col"> {!col.label}
+							<th class="stickyTh" scope="col"> {!col.label}
 							</th>
 						</aura:iteration>
 					</tr>

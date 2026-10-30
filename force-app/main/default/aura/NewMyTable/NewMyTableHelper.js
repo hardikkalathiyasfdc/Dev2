@@ -1,4 +1,22 @@
 ({
+  // BRME-4862: match the top-scrollbar width to the table content width so the top bar scrolls the same range.
+  syncTopWidth: function (cmp) {
+    window.setTimeout(
+      $A.getCallback(function () {
+        let main = cmp.find("myTable");
+        let top = cmp.find("topScroll");
+        if (!main || !top || !main.getElement || !top.getElement) {
+          return;
+        }
+        let table = main.getElement().querySelector("table");
+        let inner = top.getElement().querySelector(".topScrollInner");
+        if (table && inner) {
+          inner.style.width = table.scrollWidth + "px";
+        }
+      }),
+      300
+    );
+  },
   // BRME-4862: error cells are editable by default; the clicked read-only cell (editKey)
   // is editable too. Everything else renders as plain text.
   applyEditState: function (cmp) {

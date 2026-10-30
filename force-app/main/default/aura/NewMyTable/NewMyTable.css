@@ -3,6 +3,26 @@
   position: sticky;
   top: 0;
   z-index: 2;
+  background: #f3f2f2;
+}
+
+/* BRME-4862: scroll container keeps header visible; fills wrapper minus the top scrollbar */
+.THIS .tableScroll{
+  overflow-x: auto;
+  overflow-y: auto;
+  height: calc(100% - 18px);
+  max-height: calc(60vh - 18px);
+  position: relative;
+}
+/* BRME-4862: top horizontal scrollbar, synced to the table */
+.THIS .topScroll{
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 16px;
+  margin-bottom: 2px;
+}
+.THIS .topScrollInner{
+  height: 1px;
 }
 
 /* BRME-4862: single-line dividers like the test env grid */
