@@ -22,7 +22,7 @@
 |---|---|---|
 | 1 | `File_Group__c.Private__c` (new CustomField) | Checkbox, default `false`, label `Private`, description BRME-7020 |
 | 2 | `File_Group__c` object-meta | `sharingModel` **Read → Private** |
-| 3 | `sharingRules/File_Group__c.sharingRules-meta.xml` (new) | Two criteria rules: `FileGroup_Non_Private_All_Internal` (`Private__c=false` → **Edit** to `AllInternalUsers`); `FileGroup_Private_Review_Group` (`Private__c=true` → **Edit** to `Highlights_Private_Highlights_Review`). The first rule is **mandatory** — it preserves current read access for Initiatives/Announcements/Budgets/Amendments/non-private highlights, which OWD Private would otherwise remove |
+| 3 | `sharingRules/File_Group__c.sharingRules-meta.xml` (new) | Mirrors the highlight pattern exactly. Two criteria rules: `FileGroup_Non_Private_All_Internal` (`Private__c=false` → **Edit** to `AllInternalUsers`); `FileGroup_Private_Review_Group` (`Private__c=true` → **Edit** to group `Highlights_Private_Highlights_Review`). The first rule is **mandatory** — it preserves current read access for Initiatives/Announcements/Budgets/Amendments/non-private highlights, which OWD Private would otherwise remove |
 | 4 | `HighlightInteractionTriggerHandler.cls` | Sync file-group privacy to the highlight: on `Private__c` change (both directions) and on insert, set child `File_Group__c.Private__c = highlight.Private__c`. Bulk-safe |
 | 5 | Highlight delete → file group | **Cascade delete** file groups when their highlight is deleted (trigger `afterDelete`; the `Highlight__c` lookup is not master-detail so children are orphaned otherwise). Recommended since file groups are 1:1 containers with no independent value — confirm attached-file retention isn't required |
 | 6 | `FileGroupController.cls` | Enforce privacy in SYSTEM_MODE reads: `getFileGroup` — when the resolved group's `Private__c=true`, require the running user to be in `Highlights_Private_Highlights_Review` (FeatureManagement/perm or group-membership check) before returning the id; `getAllFiles` — same gate on `fileGroupId`. Without this, sharing rules don't stop the LWC path |
@@ -35,8 +35,10 @@ Deploy **#1, #3, #7 together, then #2**, or all in one package — but **never O
 
 ## 5. Decisions / answers from user (2026-10-30)
 
+- **General-purpose flag:** `File_Group__c.Private__c` is **not highlight-specific** — it's the shared privacy flag for any object that uses file groups. Highlights set it via the sync automation (#4); Initiatives/Announcements/Budgets/Amendments simply leave it `false` (so their file groups stay shared to all internal users via the first rule). If another object later needs private attachments, it sets `Private__c=true` on its file groups the same way — no sharing-model change needed.
+- Sharing mirrors highlights: `Private=true` → group **Highlights: Private Highlights Review**; `Private=false` → AllInternalUsers.
 - Other consumers: **verified** — Initiative, Announcement, Budget, Amendment. The `Private=false → AllInternalUsers` rule covers them; no functional change intended for them.
-- Backfill: **not needed** — `Private__c` on highlights is brand-new, so no pre-existing private highlights have file groups. Field defaults to `false`.
+- Backfill: **not needed** — `Private__c` on highlights is brand-new; field defaults to `false`.
 - Flip mid-life: **not automatic** — needs change #4 (automation). Sharing recalc on flip is async.
 - Files (ContentDocument): **no separate document-level handling** — container gating (#3 + #6) is sufficient per user.
 
@@ -49,5 +51,6 @@ Deploy **#1, #3, #7 together, then #2**, or all in one package — but **never O
 ## 7. Open questions for you
 
 1. **Delete cascade (#5):** OK to delete the file group when its highlight is deleted, or must attached files be retained (orphan + auto-private instead)?
-2. **Reviewer check in #6:** gate by `Highlights_Metrics_Reviewer` custom permission, or by membership in the `Highlights_Private_Highlights_Review` group? (Field/perm set vs record/group — they are distinct; record privacy should key off the **group**.)
-3. Sign-off on touching shared `File_Group__c` OWD given the Initiative/Announcement/Budget consumers.
+2. Sign-off on touching shared `File_Group__c` OWD given the Initiative/Announcement/Budget consumers.
+
+(Resolved: the controller gate #6 keys record privacy off **group** membership in `Highlights_Private_Highlights_Review`, matching the record-sharing rule — not the permission set.)
