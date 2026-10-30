@@ -19,7 +19,8 @@ HEADERS.forEach((h, i) => { COL[h] = i; });
 
 const SHEET_NAME = 'Sheet1';
 const ORG = 'BRME5632 Org A';
-const CODE = '1';
+// Country-code fields are RESTRICTED picklists; must use a valid entry, not a bare "1".
+const CODE = 'United States(+1)';
 const PHONE = '2125550100';
 
 // Error types
