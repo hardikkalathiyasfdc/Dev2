@@ -5,6 +5,16 @@
   z-index: 2;
 }
 
+/* BRME-4862: single-line dividers like the test env grid */
+.THIS table{
+  border-collapse: collapse;
+}
+/* keep error-cell inputs slim so row height matches read-only rows */
+.THIS td .slds-input{
+  min-height: 22px;
+  padding: 0 6px;
+}
+
 .THIS .stickyTd,
 .THIS.stickyTd {
   position: sticky;
@@ -13,8 +23,8 @@
 
 .THIS td{
   background:white;
-  padding: 4px;
-  border: 1px solid #e5e5e5;
+  padding: 2px 6px;
+  border: 1px solid #dddbda;
 }
 
 .THIS.myThDiv, .THIS .myThDiv{
@@ -47,14 +57,12 @@
   color:black;
 }
 
-/* BRME-4862: read-only cells keep the bordered box the input cells had, so the grid
-   look (cell borders, dividers, spacing) matches the previous all-input version. */
+/* BRME-4862: read-only cells show as plain text within the cell; the bordered box and
+   dividers come from the td, so rows stay slim like the previous all-input grid. */
 .THIS .cellText{
-  border: 1px solid #d8dde6;
-  border-radius: 4px;
-  padding: 6px 8px;
-  min-height: 32px;
-  background: #ffffff;
+  min-height: 20px;
+  line-height: 20px;
+  background: transparent;
   cursor: text;
   white-space: nowrap;
   overflow: hidden;
