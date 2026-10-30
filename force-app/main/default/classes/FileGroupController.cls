@@ -98,10 +98,34 @@ public with sharing class FileGroupController {
 		System.debug('######FileGroupController-getFileGroup-soql: ' + soql);
 		try {
 			File_Group__c fileGroup = Database.query(soql, AccessLevel.SYSTEM_MODE);
+			assertFileGroupAccess(fileGroup.Id);
 			return fileGroup.Id;
 		} catch (Exception e) {
 			BBApps_ErrorHandler.logErrors(e, new BBApps_ErrorCustomFields(ERR_GET_FILEGROUP));
 			throw new AuraHandledException(e.getMessage());
+		}
+	}
+
+	/**
+	 * Description : BRME-7020 - block access to a private file group for users outside the
+	 *               'Highlights: Private Highlights Review' public group. Needed because the file
+	 *               queries here run in SYSTEM_MODE and bypass record sharing.
+	 * Parameters  : fileGroupId Id.
+	 */
+	private static void assertFileGroupAccess(Id fileGroupId) {
+		List<File_Group__c> groups = [SELECT Id, Private__c FROM File_Group__c WHERE Id = :fileGroupId WITH SYSTEM_MODE LIMIT 1];
+		if (groups.isEmpty() || groups[0].Private__c != true) {
+			return;
+		}
+		Boolean isMember = ![
+			SELECT Id FROM GroupMember
+			WHERE Group.DeveloperName = 'Highlights_Private_Highlights_Review'
+			AND UserOrGroupId = :UserInfo.getUserId()
+			WITH SYSTEM_MODE
+			LIMIT 1
+		].isEmpty();
+		if (!isMember) {
+			throw new AuraHandledException('You do not have access to this file group.');
 		}
 	}
 
@@ -113,6 +137,7 @@ public with sharing class FileGroupController {
 	@AuraEnabled
 	public static Id uploadFileLink(String fileGroupId, String fileName, String fileLink) {
 		try {
+			assertFileGroupAccess(fileGroupId);
 			File_Link__c fLink = new File_Link__c();
 			fLink.Name = fileName;
 			fLink.Link_URL__c = fileLink;
@@ -136,6 +161,7 @@ public with sharing class FileGroupController {
 	public static Map<String, List<SObject>> getAllFiles(String fileGroupId) {
 		System.debug('######FileGroupController-getAllFiles-fileGroupId: ' + fileGroupId);
 		try {
+			assertFileGroupAccess(fileGroupId);
 			Map<String, List<SObject>> filesMap = new Map<String, List<SObject>>();
 			List<ContentDocumentLink> fileList = [
 				SELECT

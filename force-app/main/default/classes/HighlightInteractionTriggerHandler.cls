@@ -17,6 +17,8 @@ public without sharing class HighlightInteractionTriggerHandler extends TriggerH
     private Set<Id> cityViewHighlightIds = new Set<Id>();
     private Set<Id> metricHighlightIds = new Set<Id>();
     private Set<Id> participantDescriptionHighlightIds = new Set<Id>();
+    private Set<Id> fileGroupPrivacySyncIds = new Set<Id>();
+    private Set<Id> deletedHighlightIds = new Set<Id>();
 
     private static final Id CITYVIEW_RECORD_TYPE_ID = Schema.SObjectType.Interaction__c.getRecordTypeInfosByDeveloperName()
         	.get(Assets.INTERACTION_RECORDTYPE_ORG_ENGAGEMENT_DEVNAME).getRecordTypeId();
@@ -30,6 +32,8 @@ public without sharing class HighlightInteractionTriggerHandler extends TriggerH
     private static final String ERR_AND_FINALLY = 'HIGHLIGHT_INTERACTION_TRIGGER_AND_FINALLY_FAILED';
     private static final String ERR_PARTICIPANT_DESC_UPDATE = 'INTERACTION_PARTICIPANT_DESC_UPDATE_FAILED';
     private static final String ERR_PARTICIPANT_INTERACTION_UPDATE = 'INTERACTION_PARTICIPANT_INTERACTION_UPDATE_FAILED';
+    private static final String ERR_FILEGROUP_PRIVACY_UPDATE = 'FILEGROUP_PRIVACY_UPDATE_FAILED';
+    private static final String ERR_FILEGROUP_DELETE = 'FILEGROUP_DELETE_FAILED';
 
     public HighlightInteractionTriggerHandler() {
         this(Trigger.old, Trigger.new, (Map<Id, Highlight_Interaction__c>)Trigger.oldMap, (Map<Id, Highlight_Interaction__c>)Trigger.newMap);
@@ -76,6 +80,16 @@ public without sharing class HighlightInteractionTriggerHandler extends TriggerH
         if(isParticipantDescriptionUpdateRequired(newHighlight)) {
             participantDescriptionHighlightIds.add(newHighlight.Id);
         }
+
+        // BRME-7020: keep the child File_Group__c privacy in sync with the highlight (both directions).
+        if(isFieldChanged(newHighlight, 'Private__c')) {
+            fileGroupPrivacySyncIds.add(newHighlight.Id);
+        }
+    }
+
+    public override void afterDelete(SObject so) {
+        // BRME-7020: cascade-delete the 1:1 attachment container when a highlight is deleted.
+        deletedHighlightIds.add(so.Id);
     }
 
     private Boolean isParticipantDescriptionUpdateRequired(Highlight_Interaction__c newHighlight) {
@@ -101,7 +115,9 @@ public without sharing class HighlightInteractionTriggerHandler extends TriggerH
     public override void andFinally() {
         try {
             if (Trigger.isAfter) {
-                if(Trigger.isUpdate) {
+                if(Trigger.isDelete) {
+                    deleteFileGroupsForHighlights(deletedHighlightIds);
+                } else if(Trigger.isUpdate) {
                     if(!participantDescriptionHighlightIds.isEmpty()) {
                         updateParticipantDescriptions();
                     }
@@ -112,6 +128,10 @@ public without sharing class HighlightInteractionTriggerHandler extends TriggerH
                     
                     if(!metricHighlightIds.isEmpty()) {
                         updateLatestMetricValues();
+                    }
+
+                    if(!fileGroupPrivacySyncIds.isEmpty()) {
+                        syncFileGroupPrivacy();
                     }
                 } else if(Trigger.isInsert) {
                     if(!fileGroupsToInsert.isEmpty()) {
@@ -126,6 +146,57 @@ public without sharing class HighlightInteractionTriggerHandler extends TriggerH
         } catch (Exception ex) {
             BBApps_ErrorCustomFields bbAppsError = new BBApps_ErrorCustomFields(ERR_AND_FINALLY);
             BBApps_ErrorHandler.logErrors(ex, bbAppsError);
+        }
+    }
+
+    /**
+    * Description : BRME-7020 - sync File_Group__c.Private__c to the highlight's Private__c (both directions).
+    */
+    private void syncFileGroupPrivacy() {
+        try {
+            Map<Id, Boolean> privateByHighlight = new Map<Id, Boolean>();
+            for (Id highlightId : fileGroupPrivacySyncIds) {
+                privateByHighlight.put(highlightId, (Boolean)newMap.get(highlightId).get('Private__c'));
+            }
+            List<File_Group__c> toUpdate = new List<File_Group__c>();
+            for (File_Group__c fg : [SELECT Id, Highlight__c, Private__c FROM File_Group__c WHERE Highlight__c IN :fileGroupPrivacySyncIds WITH SYSTEM_MODE]) {
+                Boolean isPrivate = privateByHighlight.get(fg.Highlight__c);
+                if (isPrivate != null && fg.Private__c != isPrivate) {
+                    toUpdate.add(new File_Group__c(Id = fg.Id, Private__c = isPrivate));
+                }
+            }
+            if (!toUpdate.isEmpty()) {
+                BBApps_Crud.doUpdateWithHandling(toUpdate, false, new BBApps_ErrorCustomFields(ERR_FILEGROUP_PRIVACY_UPDATE));
+            }
+        } catch (Exception ex) {
+            BBApps_ErrorHandler.logErrors(ex, new BBApps_ErrorCustomFields(ERR_FILEGROUP_PRIVACY_UPDATE));
+        }
+    }
+
+    /**
+    * Description : BRME-7020 - delete the File_Group__c container when its highlight is deleted.
+    */
+    /**
+    * Description : BRME-7020 - delete the File_Group__c container(s) for the given deleted highlights.
+    * Parameters  : highlightIds Set<Id> of deleted highlights.
+    */
+    @TestVisible
+    private static void deleteFileGroupsForHighlights(Set<Id> highlightIds) {
+        if (highlightIds == null || highlightIds.isEmpty()) {
+            return;
+        }
+        try {
+            List<File_Group__c> toDelete = [SELECT Id FROM File_Group__c WHERE Highlight__c IN :highlightIds WITH SYSTEM_MODE];
+            if (!toDelete.isEmpty()) {
+                Database.DeleteResult[] results = Database.delete(toDelete, false, AccessLevel.SYSTEM_MODE);
+                for (Database.DeleteResult r : results) {
+                    if (!r.isSuccess()) {
+                        BBApps_ErrorHandler.logErrors(new DmlException('BRME-7020 file group delete failed: ' + r.getErrors()), new BBApps_ErrorCustomFields(ERR_FILEGROUP_DELETE));
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            BBApps_ErrorHandler.logErrors(ex, new BBApps_ErrorCustomFields(ERR_FILEGROUP_DELETE));
         }
     }
 
@@ -331,7 +402,8 @@ public without sharing class HighlightInteractionTriggerHandler extends TriggerH
             new File_Group__c(
                 Highlight__c  = highlight.Id,
                 Object_Type__c = Assets.HIGHLIGHT,
-                Category__c = Assets.HIGHLIGHT
+                Category__c = Assets.HIGHLIGHT,
+                Private__c = (Boolean)highlight.get('Private__c')
             )
         );
     }

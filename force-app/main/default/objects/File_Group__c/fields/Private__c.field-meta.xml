@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Private__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>BRME-7020: Marks this file group as private. Private file groups are readable/writable only by members of the &apos;Highlights: Private Highlights Review&apos; public group; non-private file groups remain available to all internal users. General-purpose flag — any object using file groups (Highlight, Initiative, Announcement, Budget, Amendment) can set it; highlights set it automatically from Highlight_Interaction__c.Private__c.</description>
+    <label>Private</label>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

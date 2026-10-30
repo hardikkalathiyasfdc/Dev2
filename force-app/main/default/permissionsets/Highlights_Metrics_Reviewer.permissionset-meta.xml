@@ -12,10 +12,17 @@
         <enabled>true</enabled>
         <name>Highlights_Metrics_Reviewer</name>
     </customPermissions>
-    <description>BRME-6981:Reviewer access builds on the Requestor permission set. BRME-7020: adds read/edit on Highlight_Interaction__c.Private__c (private highlights for the Highlights Review team).</description>
+    <description>BRME-6981:Reviewer access builds on the Requestor permission set. BRME-7020: adds
+        read/edit on Highlight_Interaction__c.Private__c (private highlights for the Highlights
+        Review team).</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>Highlight_Interaction__c.Add_As_Contact_Interaction__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>File_Group__c.Private__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -175,6 +182,16 @@
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Highlights &amp; Metrics: Reviewer</label>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>File_Group__c</object>
+        <viewAllFields>false</viewAllFields>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>

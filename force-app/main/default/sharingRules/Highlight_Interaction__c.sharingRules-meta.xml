@@ -3,7 +3,8 @@
     <sharingCriteriaRules>
         <fullName>Highlight_Non_Private_All_Internal</fullName>
         <accessLevel>Edit</accessLevel>
-        <description>BRME-7020: Non-private highlights (Private__c = false) are readable/writable by all internal users.</description>
+        <description>BRME-7020: Non-private highlights (Private__c = false) are readable/writable by
+            all internal users.</description>
         <label>Highlights: Non-Private Read/Write All Internal</label>
         <criteriaItems>
             <field>Private__c</field>
@@ -17,7 +18,8 @@
     <sharingCriteriaRules>
         <fullName>Highlight_Private_Review_Group</fullName>
         <accessLevel>Edit</accessLevel>
-        <description>BRME-7020: Private highlights (Private__c = true) are readable/writable only by members of the &apos;Highlights: Private Highlights Review&apos; public group.</description>
+        <description>BRME-7020: Private highlights (Private__c = true) are readable/writable only by
+            members of the &apos;Highlights: Private Highlights Review&apos; public group.</description>
         <label>Highlights: Private Read/Write Review Group</label>
         <criteriaItems>
             <field>Private__c</field>

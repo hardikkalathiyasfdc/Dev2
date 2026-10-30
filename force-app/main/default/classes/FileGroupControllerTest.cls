@@ -146,4 +146,47 @@ public with sharing class FileGroupControllerTest {
 		FileGroupController.deleteFile(documents[0].Id, '');
 		Test.stopTest();
 	}
+
+	@isTest
+	public static void testPrivateFileGroupBlockedForNonGroupUser() {
+		File_Group__c fg = [SELECT Id FROM File_Group__c WITH SYSTEM_MODE LIMIT 1];
+		fg.Private__c = true;
+		update as system fg;
+
+		User outsider = TestDataFactory.createUser('FG', 'PrivateOutsider', 'Teams User');
+		System.runAs(outsider) {
+			Test.startTest();
+			String result;
+			try {
+				result = FileGroupController.getFileGroup(fg.Id, 'Strategy', 'Highlight_Interaction__c');
+			} catch (Exception e) {
+				result = 'BLOCKED';
+			}
+			Test.stopTest();
+			Assert.areEqual('BLOCKED', result, 'Non-group user should be blocked from a private file group');
+		}
+	}
+
+	@isTest
+	public static void testPrivateFileGroupAllowedForGroupMember() {
+		File_Group__c fg = [SELECT Id FROM File_Group__c WITH SYSTEM_MODE LIMIT 1];
+		fg.Private__c = true;
+		update as system fg;
+
+		User member = TestDataFactory.createUser('FG', 'PrivateMember', 'Teams User');
+		Group g = [SELECT Id FROM Group WHERE DeveloperName = 'Highlights_Private_Highlights_Review' WITH SYSTEM_MODE LIMIT 1];
+		insert as system new GroupMember(GroupId = g.Id, UserOrGroupId = member.Id);
+
+		System.runAs(member) {
+			Test.startTest();
+			String result;
+			try {
+				result = FileGroupController.getAllFiles(fg.Id) != null ? 'OK' : 'OK';
+			} catch (Exception e) {
+				result = 'BLOCKED';
+			}
+			Test.stopTest();
+			Assert.areEqual('OK', result, 'Group member should access a private file group');
+		}
+	}
 }

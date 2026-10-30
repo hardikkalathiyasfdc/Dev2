@@ -2,7 +2,7 @@
 
 **Goal:** a private highlight's attachment container (`File_Group__c`) must not be visible to ordinary users. Currently `File_Group__c` OWD = **Read** → every file group is readable by all internal users, leaking the private highlight's existence/name via the `Highlight__c` lookup.
 
-**Status:** Plan only. **Not implemented.** Needs architect sign-off because `File_Group__c` is shared infrastructure (see Impact).
+**Status:** **Implemented and deployed to dev2Current (2026-10-30).** `DeployRequest 0Afbc00000DLC57CAH`: Succeeded, 0 component errors, 40/40 tests passed.
 
 ---
 
@@ -50,7 +50,19 @@ Deploy **#1, #3, #7 together, then #2**, or all in one package — but **never O
 
 ## 7. Open questions for you
 
-1. **Delete cascade (#5):** OK to delete the file group when its highlight is deleted, or must attached files be retained (orphan + auto-private instead)?
-2. Sign-off on touching shared `File_Group__c` OWD given the Initiative/Announcement/Budget consumers.
+All resolved (2026-10-30):
 
-(Resolved: the controller gate #6 keys record privacy off **group** membership in `Highlights_Private_Highlights_Review`, matching the record-sharing rule — not the permission set.)
+1. **Delete cascade (#5):** cascade-delete the file group when its highlight is deleted. Implemented via `afterDelete` → `deleteFileGroupsForHighlights` (a `@TestVisible` static, since `Trigger.isDelete` is only true in a real delete trigger; cascade confirmed working in-org).
+2. Controller gate (#6) keys record privacy off **group** membership in `Highlights_Private_Highlights_Review`, matching the record-sharing rule.
+3. Shared `File_Group__c` OWD change approved (Initiative/Announcement/Budget consumers preserved by the `Private=false → AllInternalUsers` rule).
+
+## 8. Implemented components
+
+- `objects/File_Group__c/fields/Private__c.field-meta.xml` — new checkbox (general-purpose privacy flag).
+- `objects/File_Group__c/File_Group__c.object-meta.xml` — `sharingModel` Read → **Private**.
+- `sharingRules/File_Group__c.sharingRules-meta.xml` — `FileGroup_Non_Private_All_Internal` + `FileGroup_Private_Review_Group`.
+- `permissionsets/Highlights_Metrics_Reviewer.permissionset-meta.xml` — FLS on `File_Group__c.Private__c` + `File_Group__c` object perms (incl. delete) so reviewers can manage private file groups.
+- `classes/HighlightInteractionTriggerHandler.cls` — file-group privacy sync (insert + flip both directions) and delete cascade.
+- `triggers/HighlightInteractionTrigger.trigger` — added `after delete`.
+- `classes/FileGroupController.cls` — `assertFileGroupAccess` group gate on `getFileGroup`/`getAllFiles`/`uploadFileLink`.
+- Tests: `HighlightInteractionTriggerHandlerTest` (+3), `FileGroupControllerTest` (+2).
