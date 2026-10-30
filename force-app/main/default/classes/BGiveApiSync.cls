@@ -11,8 +11,6 @@
  * Paddy IM-523: Added logic to check whether record is locked in Bgive.
  * Paddy IM-517: Added logic to ensure that all fields marked as "BRM To Bgive Always" are alwasy sent during 
  * 				 the sync process, even if only a singel field is updated.
- * Hardik    : BIM Requested Amount - reset static state at the start of sync() so back-to-back syncs in one
- * 				 transaction do not leak isInsert/performUpdate/data maps between records.
  */
 public with sharing class BGiveApiSync {
 
@@ -66,8 +64,6 @@ public with sharing class BGiveApiSync {
 		Map<String, Object> bgiveRecord = new Map<String, Object>();
 		try {
 			List<String> cols = new List<String>();
-			//BIM Requested Amount: statics are shared across sync() calls in one transaction - reset before each run
-			resetStaticState();
 			syncRecord = record;
 			if (objectName == null) {
 				throw new BGiveApiSyncException('Object api name of sync record is null.');
@@ -118,32 +114,6 @@ public with sharing class BGiveApiSync {
 	public static Map<String, Object> sync(SObject record, String objectName) {
 		return sync(record, objectName, null);
 	}
-
-	/**
-	 * Description : Resets all static state so consecutive sync() calls in the same transaction do not leak
-	 *               flags/data from a prior record (isInsert/performUpdate/data maps are all static).
-	 * Parameters  : None
-	 * Return Type : Void
-	 */
-	private static void resetStaticState() {
-		syncRecord = null;
-		userIds.clear();
-		syncRecordFields.clear();
-		bgiveSyncFieldMapping.clear();
-		picklistValMap.clear();
-		data.clear();
-		bgiveRecordMap.clear();
-		parsedDataJsonMap = new Map<String, Object>();
-		bgiveFieldToUserMap.clear();
-		alwaysSyncFieldsMap.clear();
-		isInsert = false;
-		performUpdate = false;
-		bgiveId = null;
-		bgiveContigId = null;
-		errors = null;
-		apiClassInstance = null;
-	}
-
 	private static void initializeClassInstance(String objectName) {
 		if (objectName == grantObjName) {
 			apiClassInstance = new BGiveApiGrant();

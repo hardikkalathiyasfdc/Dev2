@@ -5,6 +5,7 @@
  * Description : Test Class for BGiveApiSync
  * ChangeLog   : Hardik - BIM Requested Amount: grant mock now routes GET/POST/PUT and captures the request body;
  *               added create/update assertions for amount_requested_local (0 on create, never sent on update).
+ *               NOTE: BGiveApiSync state is static - only ONE sync() call per test method (per object type).
  */
 @IsTest
 public class BGiveApiSyncTest {
