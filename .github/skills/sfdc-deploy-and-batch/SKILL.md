@@ -89,3 +89,13 @@ The GitHub repo is the source of truth — not just for changes we author, but f
   - `force-app/main/default/aura/DITCmp/DITCmp.cmp`
   - `force-app/main/default/aura/DITCmp/DITCmpHelper.js`
 - Applies to both the user-facing summary and the git commit body so anyone can see exactly what changed at a glance.
+
+## 13. Flosum is the real deploy path — leave a handoff brief + test record IDs
+
+The user promotes changes **from Flosum, environment to environment** — the `sf project deploy start` we run against a sandbox is only for validation/verification, not the production path. After our change lands in the target sandbox, the user does further processing in Flosum (commit/promote). So every task that ends with "live in the target sandbox" must close out with a **handoff brief** they can paste into / reference from Flosum:
+
+- **What was deployed**: ticket + one-line intent, then the modified components **one per line** (per §12), with the org alias it landed in (e.g. `dev2Current`).
+- **Verification result**: deploy/validate status (DeployRequest Id), tests run + pass/fail counts, and any dry-run-only caveats.
+- **Test records used for validation**: the exact record IDs + names (e.g. Grant `a0obc000003FE49AAG` / IMGRANT-288227) and what was done to each (pushed to Bgive, amount changed 100k→120k, etc.), so the user can re-check the same records after promoting.
+- **Anything not deployable by metadata / manual steps**: CMDT record changes that must travel with the deployment, permission-set assignments done manually, data setup scripts run, and known org-specific deltas the user should NOT overwrite when promoting.
+- Keep it short — a compact block at the end of the final summary message, not a separate file (unless the user asks for a doc under the ticket folder).
