@@ -99,3 +99,10 @@ The user promotes changes **from Flosum, environment to environment** — the `s
 - **Test records used for validation**: the exact record IDs + names (e.g. Grant `a0obc000003FE49AAG` / IMGRANT-288227) and what was done to each (pushed to Bgive, amount changed 100k→120k, etc.), so the user can re-check the same records after promoting.
 - **Anything not deployable by metadata / manual steps**: CMDT record changes that must travel with the deployment, permission-set assignments done manually, data setup scripts run, and known org-specific deltas the user should NOT overwrite when promoting.
 - Keep it short — a compact block at the end of the final summary message, not a separate file (unless the user asks for a doc under the ticket folder).
+
+## 14. Revert changes that didn't work — fully, at the end of the ticket session
+
+- **If a change doesn't produce the intended result** (verified in the org/browser), **revert it** — don't leave a non-working or half-working attempt in place.
+- **Revert all the way**: undo the change in source AND redeploy so the org returns to the last known-good state (redeploy the prior version, or `git checkout <last-good-commit> -- <files>` then deploy). Don't leave a broken deploy in the org.
+- **Do this when the ticket's session is complete** — i.e. when the changes for that ticket are finished. Before calling a ticket done, confirm the final state works; if any intermediate change along the way didn't work and was superseded, make sure it's fully backed out so the ticket ends clean.
+- **Verify the revert** the same way you verify a deploy — `DeployRequest` (Tooling API) `Status`/`NumberComponentErrors` (see §4), and confirm the behavior in the browser/org. Then commit the revert with a message noting what was rolled back and why.
