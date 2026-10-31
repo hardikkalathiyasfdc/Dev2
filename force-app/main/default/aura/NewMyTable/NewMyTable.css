@@ -44,10 +44,10 @@
   background: #ecebea;
   border: 1px solid #dddbda;
 }
-/* inner spacer must fill the bar's height so the scrollbar track keeps a real, clickable
-   height at any zoom level (a 1px inner collapses/disappears when zoomed out). */
+/* inner spacer: fixed pixel height so the scrollbar track always renders at any zoom
+   (a % height resolves to 0 here at zoom-out, collapsing the track). */
 .THIS .topScrollInner{
-  height: 100%;
+  height: 14px;
 }
 
 /* BRME-4862: single-line dividers like the test env grid */
