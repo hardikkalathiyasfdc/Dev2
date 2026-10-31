@@ -660,47 +660,31 @@
         self.util.showToastError(errMsg);
       });
   },
-  // BRME-4862: collapse identical validation messages into one row each, with an
-  // occurrence count and the first offending value as a sample.
+  // BRME-4862: collapse validation messages into one row per field+message with an
+  // occurrence count. validatePreview now returns one entry per offending cell (label: message),
+  // so counts reflect real row/cell occurrences.
   groupPreviewErrors: function (results) {
     let groups = [];
     let byKey = {};
     for (let i = 0; i < results.length; i++) {
       let text = String(results[i]);
-      // split "Field: message: value" so identical field+message group across values
       let parts = text.split(":");
-      let key = parts.length > 2 ? parts[0] + ":" + parts[1] : text;
-      let sample = parts.length > 2 ? parts.slice(2).join(":").trim() : "";
+      let label = parts[0] ? parts[0].trim() : text;
+      let message = parts.length > 1 ? parts.slice(1).join(":").trim() : "";
+      // group by field label so a field's variants (e.g. "Please Enter the country code" and
+      // "<label> is required") roll up under one row for that field.
+      let key = label;
       if (!byKey[key]) {
-        byKey[key] = { key: key, count: 0, sample: sample };
+        byKey[key] = { key: key, message: message, count: 0 };
         groups.push(byKey[key]);
       }
       byKey[key].count++;
-    }
-    for (let g of groups) {
-      g.display = g.key + " — " + g.count + " row(s)" + (g.sample ? " (e.g. " + g.sample + ")" : "");
-    }
-    return groups;
-  },
-  // BRME-4862: collapse identical validation messages into one row each, with an
-  // occurrence count and the first offending value as a sample.
-  groupPreviewErrors: function (results) {
-    let groups = [];
-    let byKey = {};
-    for (let i = 0; i < results.length; i++) {
-      let text = String(results[i]);
-      // split "Field: message: value" so identical field+message group across values
-      let parts = text.split(":");
-      let key = parts.length > 2 ? parts[0] + ":" + parts[1] : text;
-      let sample = parts.length > 2 ? parts.slice(2).join(":").trim() : "";
-      if (!byKey[key]) {
-        byKey[key] = { key: key, count: 0, sample: sample };
-        groups.push(byKey[key]);
+      if (!byKey[key].message && message) {
+        byKey[key].message = message;
       }
-      byKey[key].count++;
     }
     for (let g of groups) {
-      g.display = g.key + " — " + g.count + " row(s)" + (g.sample ? " (e.g. " + g.sample + ")" : "");
+      g.display = g.key + (g.message ? " — " + g.message : "") + " — " + g.count + " row(s)";
     }
     return groups;
   },

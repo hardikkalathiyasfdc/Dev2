@@ -184,25 +184,25 @@ class ValidateWorker {
     if (!rows || !rows.length) {
       return null;
     }
-    let errors = {};
+    // BRME-4862: return one entry per offending cell (label: message) so the UI can count
+    // occurrences per field/message instead of a deduped set.
+    let errors = [];
 
     for (let i = 0; i < rows.length; i++) {
       let row = rows[i];
-      let hasErrors = false;
       for (let j = 0; j < row.cells.length; j++) {
         let cell = row.cells[j];
         cell.isSticky = false;
         cell.isEdit = false;
-        if (cell.requiredError && cell.requiredError.length) {
-          errors[cell.requiredError] = cell.requiredError;
-        }
         if (cell.isRequired && !cell.value) {
           cell.requiredError = cell.label + " is required";
-          errors[cell.requiredError] = cell.label + " is required";
+        }
+        if (cell.requiredError && cell.requiredError.length) {
+          errors.push(cell.label + ": " + cell.requiredError);
         }
       }
     }
-    return Object.keys(errors);
+    return errors;
   }
 
   validateData(rows) {
