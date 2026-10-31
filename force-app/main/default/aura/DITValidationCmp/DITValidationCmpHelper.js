@@ -645,35 +645,26 @@
   getPreviewColumns: function (colMap, columns) {
     let cols = [];
     this.phoneCountryMap = this.getPhoneCountryMap(columns);
-    // BRME-4862: render only columns the file actually mapped (colMap has a header for the
-    // api). Country-code companions are always kept when their phone column is shown, since
-    // they can carry the "Please Enter the country code" error even if not directly mapped.
-    colMap = colMap || {};
-    let mappedApis = {};
-    for (let api in colMap) {
-      if (colMap[api]) {
-        mappedApis[api] = true;
-      }
-    }
-    let showColumn = {};
-    for (let i = 0; i < columns.length; i++) {
-      let col = columns[i];
-      if (mappedApis[col.api]) {
-        showColumn[col.api] = true;
-      }
-    }
-    // keep country-code column whenever its phone column is shown
-    for (let phoneApi in this.phoneColumns) {
-      if (showColumn[phoneApi]) {
-        showColumn[this.phoneColumns[phoneApi]] = true;
-      }
-    }
+    // BRME-4862: fixed Preview column set per business decision. Keep identification
+    // (First/Last Name) plus the three phone + country-code pairs (country code kept so the
+    // "Please Enter the country code" error cell has a home). Everything else is dropped.
+    let keepApis = {
+      First_Name__c: true,
+      Last_Name__c: true,
+      Organization_Name__c: true,
+      Business_Phone__c: true,
+      Business_Phone_Country_Code__c: true,
+      Cell__c: true,
+      Mobile_Phone_Country_Code__c: true,
+      AdditionalPhone__c: true,
+      AdditionalPhoneCountryCode__c: true
+    };
     let seenMap = {};
     let skipMap = {};
     for (let i = 0; i < columns.length; i++) {
       let col = columns[i];
-      if (!showColumn[col.api]) {
-        continue; // BRME-4862: skip unmapped columns
+      if (!keepApis[col.api]) {
+        continue; // BRME-4862: not in the fixed Preview set
       }
       col.isSticky = this.stickyColumns[col.api];
       seenMap[col.api] = true;
