@@ -28,5 +28,6 @@
 .THIS .myActions .previewErrorCount {
   float: left;
   padding-top: 6px;
+  padding-left: 2%;
   font-weight: 600;
 }

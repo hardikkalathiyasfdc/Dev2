@@ -106,3 +106,11 @@ The user promotes changes **from Flosum, environment to environment** — the `s
 - **Revert all the way**: undo the change in source AND redeploy so the org returns to the last known-good state (redeploy the prior version, or `git checkout <last-good-commit> -- <files>` then deploy). Don't leave a broken deploy in the org.
 - **Do this when the ticket's session is complete** — i.e. when the changes for that ticket are finished. Before calling a ticket done, confirm the final state works; if any intermediate change along the way didn't work and was superseded, make sure it's fully backed out so the ticket ends clean.
 - **Verify the revert** the same way you verify a deploy — `DeployRequest` (Tooling API) `Status`/`NumberComponentErrors` (see §4), and confirm the behavior in the browser/org. Then commit the revert with a message noting what was rolled back and why.
+
+## 15. Test level by change type — styling vs logic
+
+- **Styling-only change** (CSS, markup text/labels, layout with no JS/Apex logic): deploy with `--test-level NoTestRun` — do NOT run specified tests. Faster and there's nothing for tests to break.
+- **Logic change** (JS controller/helper behavior, Apex, validation rules, event wiring, anything that changes behavior/data): deploy with `--test-level RunSpecifiedTests -t <RelevantTest>`.
+- **Mixed** (both styling + logic in the same deploy): treat as logic — run the specified tests.
+- When unsure whether a change is logic, err on the side of running the specified tests.
+- Always confirm the result via `DeployRequest` regardless of test level (see §4).
