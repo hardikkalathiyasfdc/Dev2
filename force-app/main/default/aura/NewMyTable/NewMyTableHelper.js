@@ -13,6 +13,9 @@
         let inner = top.getElement().querySelector(".topScrollInner");
         if (table && inner) {
           inner.style.width = table.scrollWidth + "px";
+          // BRME-4862: set height inline so the scrollbar track always renders at any zoom
+          // (a %-height inner computed to 0 at zoom-out, collapsing the track).
+          inner.style.height = top.getElement().clientHeight + "px";
         }
       }),
       300
