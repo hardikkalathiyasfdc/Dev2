@@ -195,6 +195,8 @@
         cmp.set("v.tableHeight", a.totalHeight);
         cmp.set("v.isLoading", false);
         cmp.set("v.isInit", true);
+        // BRME-4862: table re-rendered wider; re-sync the top scrollbar width.
+        this.syncTopWidth(cmp);
       })
       .catch((msg) => {
         console.log("error");
