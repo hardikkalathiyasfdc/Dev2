@@ -35,15 +35,19 @@
 .THIS.topScroll{
   overflow-x: auto;
   overflow-y: hidden;
-  height: 12px;
+  height: 14px;
+  min-height: 14px;
   width: 100%;
   max-width: 100%;
   min-width: 0;
   box-sizing: border-box;
-  background: #f3f2f2;
+  background: #ecebea;
+  border: 1px solid #dddbda;
 }
+/* inner spacer must fill the bar's height so the scrollbar track keeps a real, clickable
+   height at any zoom level (a 1px inner collapses/disappears when zoomed out). */
 .THIS .topScrollInner{
-  height: 1px;
+  height: 100%;
 }
 
 /* BRME-4862: single-line dividers like the test env grid */
