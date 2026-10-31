@@ -22,7 +22,12 @@
 	<aura:attribute name="editKey" type="String" default="" />
 	<aura:registerEvent name="changeEvent" type="c:MyTableEvent" />
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
-	<div aura:id="myTable" id="myTable" class="tableScroll">
+	<!-- BRME-4862: thin top horizontal scrollbar so users can scroll left/right without
+	     scrolling to the bottom of the tall table. Synced to the main table scroll. -->
+	<div aura:id="topScroll" class="topScroll" onscroll="{!c.syncTopScroll}">
+		<div class="topScrollInner"></div>
+	</div>
+	<div aura:id="myTable" id="myTable" class="tableScroll" onscroll="{!c.syncMainScroll}">
 		<aura:if isTrue="{!v.isLoading}">
 			<lightning:spinner alternativeText="Loading" size="medium" />
 		</aura:if>

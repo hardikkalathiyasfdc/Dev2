@@ -23,13 +23,27 @@
 .THIS.tableScroll{
   overflow-x: auto;
   overflow-y: auto;
-  height: 100%;
-  max-height: 60vh;
+  height: calc(100% - 14px);
+  max-height: calc(60vh - 14px);
   width: 100%;
   max-width: 100%;
   min-width: 0;
   box-sizing: border-box;
   position: relative;
+}
+/* thin top horizontal scrollbar above the header: host carries .topScroll */
+.THIS.topScroll{
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 12px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  background: #f3f2f2;
+}
+.THIS .topScrollInner{
+  height: 1px;
 }
 
 /* BRME-4862: single-line dividers like the test env grid */

@@ -6,6 +6,22 @@
 		cmp.set("v.tableData", data);
 		cmp.set("v.isLoading", false);
 		cmp.set("v.isInit", true);
+		helper.syncTopWidth(cmp);
+	},
+	// BRME-4862: keep the top scrollbar and main table horizontal scroll in sync.
+	syncTopScroll: function (cmp, event, helper) {
+		let top = event.target;
+		let main = cmp.find("myTable");
+		if (main && main.getElement) {
+			main.getElement().scrollLeft = top.scrollLeft;
+		}
+	},
+	syncMainScroll: function (cmp, event, helper) {
+		let main = event.target;
+		let top = cmp.find("topScroll");
+		if (top && top.getElement) {
+			top.getElement().scrollLeft = main.scrollLeft;
+		}
 	},
 	setWidth: function (cmp, event, helper) {
     console.log('set width :::: ');
