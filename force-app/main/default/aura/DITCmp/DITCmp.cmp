@@ -245,7 +245,7 @@
                     <lightning:buttonIcon iconName="utility:close" onclick="{!c.closePreviewError}"
                         alternativeText="close" variant="bare-inverse" class="slds-modal__close" />
                     <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">
-                        Error on validate
+                        Error on Preview
                     </h2>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
