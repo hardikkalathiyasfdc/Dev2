@@ -49,6 +49,18 @@
 .THIS .topScrollInner{
   height: 14px;
 }
+/* BRME-4862: force a visible horizontal track/thumb on the top bar at any zoom level */
+.THIS.topScroll::-webkit-scrollbar{
+  height: 12px;
+}
+.THIS.topScroll::-webkit-scrollbar-track{
+  background: #ecebea;
+}
+.THIS.topScroll::-webkit-scrollbar-thumb{
+  background: #aeaeae;
+  border-radius: 6px;
+  border: 2px solid #ecebea;
+}
 
 /* BRME-4862: single-line dividers like the test env grid */
 .THIS table{
