@@ -36,11 +36,8 @@
         <aura:if isTrue="{!v.isLoading2}">
             <lightning:spinner alternativeText="Loading" size="medium" />
         </aura:if>
-        <!-- BRME-4862: only error rows render; show how many of the total need review -->
+        <!-- BRME-4862: error-row count now lives in the parent action row (DITCmp.myActions) -->
         <aura:if isTrue="{!not(empty(v.previewData))}">
-            <p class="slds-text-color_error slds-m-around_x-small">
-                {!v.errorRowCount + ' row(s) need review. Only rows with errors are shown.'}
-            </p>
            <c:NewMyTable
                        aura:id="myTable"
                        tableId="previewTable"

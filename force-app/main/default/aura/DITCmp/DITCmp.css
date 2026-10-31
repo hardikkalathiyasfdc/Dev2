@@ -24,3 +24,9 @@
   text-align: right;
   padding-right: 2%;
 }
+/* BRME-4862: error-row count sits left within the right-aligned action row */
+.THIS .myActions .previewErrorCount {
+  float: left;
+  padding-top: 6px;
+  font-weight: 600;
+}
