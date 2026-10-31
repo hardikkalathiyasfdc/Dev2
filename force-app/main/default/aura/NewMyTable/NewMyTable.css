@@ -1,3 +1,11 @@
+/* BRME-4862: keep the grid inside the stage — component and scrollers never exceed parent width */
+.THIS {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
 .THIS .stickyTh,
 .THIS.stickyTh {
   position: sticky;
@@ -14,6 +22,9 @@
   overflow-y: auto;
   height: calc(100% - 18px);
   max-height: calc(60vh - 18px);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   position: relative;
 }
 /* BRME-4862: top horizontal scrollbar, synced to the table */
@@ -23,6 +34,9 @@
   height: 16px;
   margin-bottom: 2px;
   border: 1px solid #dddbda;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 .THIS .topScrollInner{
   height: 100%;
