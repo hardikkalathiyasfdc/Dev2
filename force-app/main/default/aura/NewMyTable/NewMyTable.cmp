@@ -31,7 +31,7 @@
 		</aura:if>
 
 		<aura:if isTrue="{!v.isInit}">
-			<table aria-multiselectable="true" class="slds-table slds-table--bordered" role="grid" style="width:100%"
+			<table aria-multiselectable="true" class="slds-table slds-table--bordered previewTable" role="grid"
 				aria-label="MyTable">
 				<thead>
 					<tr class="slds-line-height_reset">

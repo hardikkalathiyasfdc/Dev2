@@ -46,6 +46,13 @@
 .THIS table{
   border-collapse: collapse;
 }
+/* BRME-4862: size the table to its content, not the (zoom-growing) container, so columns
+   keep their natural width and the horizontal scrollbar grows instead of columns sliding right. */
+.THIS .previewTable{
+  width: auto;
+  min-width: 100%;
+  table-layout: auto;
+}
 /* keep error-cell inputs slim so row height matches read-only rows */
 .THIS td .slds-input{
   min-height: 22px;
