@@ -41,12 +41,8 @@
             });
             $A.enqueueAction(action);
           } else {
-            // BRME-4862: no records -> nothing to resolve -> skip Review Errors.
+            // BRME-4862: no records -> nothing to resolve; parent (showContact) gates/skips Review Errors.
             cmp.set("v.unconfirmedRecords", []);
-            let onSkip = cmp.get("v.skipReview");
-            if (typeof onSkip === "function") {
-              $A.getCallback(onSkip)();
-            }
           }
           let params = {
             type: "validate",
@@ -55,20 +51,6 @@
           cmp.set("v.isDataLoaded", true);
           cmp.set("v.isLoading", false);
           cmp.set("v.disabledNext", false);
-          // BRME-4862: after load settles, if nothing to resolve -> skip Review Errors.
-          // Deferred so it runs after setUnconfirmedRecords (which may be async via normalizeOrgNames).
-          window.setTimeout(
-            $A.getCallback(function () {
-              let recs = cmp.get("v.unconfirmedRecords") || [];
-              if (!recs.length) {
-                let onSkip = cmp.get("v.skipReview");
-                if (typeof onSkip === "function") {
-                  $A.getCallback(onSkip)();
-                }
-              }
-            }),
-            400
-          );
         })
       )
       .catch((errMsg) => {
@@ -159,13 +141,8 @@
       }
     }
     cmp.set("v.unconfirmedRecords", unconfirmedRecords);
-    // BRME-4862: nothing to resolve -> invoke the parent-provided callback to skip Review Errors.
-    if (!unconfirmedRecords.length) {
-      let onSkip = cmp.get("v.skipReview");
-      if (typeof onSkip === "function") {
-        $A.getCallback(onSkip)();
-      }
-    }
+    // BRME-4862: report to parent when there's nothing to resolve (parent skips to Compare Potential Duplicates).
+    cmp.set("v.hasNoRecords", !unconfirmedRecords.length);
   },
 
   updateError: function (cmp, fieldChanged, recId) {

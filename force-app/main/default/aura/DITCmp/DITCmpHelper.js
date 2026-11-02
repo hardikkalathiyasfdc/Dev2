@@ -771,36 +771,7 @@
   },
   showContact: function (cmp) {
     cmp.set("v.showPreviewError", false);
-    // BRME-4862: gate Review Errors — if nothing to resolve, go straight to Compare Potential
-    // Duplicates. This removes the child->parent skip callback race.
-    let self = this;
-    cmp.set("v.isLoading", true);
-    self.checkReviewHasRecords(cmp).then(
-      $A.getCallback(function (hasRecords) {
-        if (hasRecords) {
-          cmp.set("v.isLoading", false);
-          cmp.set("v.stage", "unconfirm");
-          return;
-        }
-        // nothing to resolve -> persist + land on Compare Potential Duplicates
-        cmp.set("v.skippedReview", true);
-        self.util
-          .controllerPromise(cmp, "updateStage", {
-            dataRecordId: cmp.get("v.dataLoaderId"),
-            stage: "contact"
-          })
-          .then(
-            $A.getCallback(function () {
-              cmp.set("v.isLoading", false);
-              cmp.set("v.stage", "contact");
-            })
-          )
-          .catch((errMsg) => {
-            cmp.set("v.isLoading", false);
-            self.util.showToastError(errMsg);
-          });
-      })
-    );
+    cmp.set("v.stage", "unconfirm");
   },
   // BRME-4862: returns a Promise resolving to true if Review Errors has any record to resolve.
   checkReviewHasRecords: function (cmp) {

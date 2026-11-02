@@ -167,6 +167,32 @@
   closeDupeModal: function (cmp, event, helper) {
     cmp.set("v.showDupe", false);
   },
+  // BRME-4862: Review Errors reported nothing to resolve -> skip to Compare Potential Duplicates.
+  handleReviewEmpty: function (cmp, event, helper) {
+    if (!cmp.get("v.reviewHasNoRecords")) {
+      return;
+    }
+    if (cmp.get("v.stage") !== "unconfirm") {
+      return;
+    }
+    cmp.set("v.skippedReview", true);
+    cmp.set("v.isLoading", true);
+    helper.util
+      .controllerPromise(cmp, "updateStage", {
+        dataRecordId: cmp.get("v.dataLoaderId"),
+        stage: "contact"
+      })
+      .then(
+        $A.getCallback(function () {
+          cmp.set("v.isLoading", false);
+          cmp.set("v.stage", "contact");
+        })
+      )
+      .catch((errMsg) => {
+        cmp.set("v.isLoading", false);
+        helper.util.showToastError(errMsg);
+      });
+  },
   handleStageClick: function (cmp, event, helper) {
     let stage = event.currentTarget.name;
     if (!stage) {
