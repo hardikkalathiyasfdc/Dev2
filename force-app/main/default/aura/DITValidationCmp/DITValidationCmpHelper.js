@@ -85,8 +85,11 @@
     // BRME-4862: no errors -> skip Preview entirely and advance to Review Errors.
     if (!errorRows.length) {
       cmp.set("v.isLoading", false);
-      let skipEvent = cmp.getEvent("skipPreview");
-      skipEvent.fire();
+      // BRME-4862: invoke the parent-provided callback to skip Preview.
+      let onSkip = cmp.get("v.skipPreview");
+      if (onSkip) {
+        onSkip();
+      }
       return;
     }
     cmp.set("v.previewData", errorRows);

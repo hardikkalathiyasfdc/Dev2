@@ -138,10 +138,12 @@
       }
     }
     cmp.set("v.unconfirmedRecords", unconfirmedRecords);
-    // BRME-4862: nothing to resolve -> tell parent to skip Review Errors and go to Compare Potential Duplicates.
+    // BRME-4862: nothing to resolve -> invoke the parent-provided callback to skip Review Errors.
     if (!unconfirmedRecords.length) {
-      let skipEvent = cmp.getEvent("skipReview");
-      skipEvent.fire();
+      let onSkip = cmp.get("v.skipReview");
+      if (onSkip) {
+        onSkip();
+      }
     }
   },
 

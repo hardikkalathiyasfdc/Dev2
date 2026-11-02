@@ -24,8 +24,8 @@
     <ltng:require scripts="{!$Resource.cmputil}" afterScriptsLoaded="{!c.init}" />
     <aura:attribute name="duplicateAccountsColumns" type="List" default="[]" />
     <aura:attribute name="isSignificantOther" type="Boolean" default="false" />
-    <!-- BRME-4862: notify parent to skip Preview when the file has no errors -->
-    <aura:registerEvent name="skipPreview" type="c:DITSkipPreviewEvent" />
+    <!-- BRME-4862: parent-provided callback invoked to skip Preview when the file has no errors -->
+    <aura:attribute name="skipPreview" type="Aura.Action" />
     <aura:handler
                   name="changeEvent"
                   event="c:MyTableEvent"
