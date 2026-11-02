@@ -42,15 +42,21 @@
 		// BRME-4862: enter edit mode for the clicked read-only cell.
 		let key = event.currentTarget.getAttribute("data-cell");
 		if (key) {
+			let parts = key.split("-");
+			// BRME-4862 perf: O(1) targeted edit-state update, no full-grid loop.
+			helper.applyEditStateForCell(cmp, parts[0], parts[1], true);
 			cmp.set("v.editKey", key);
-			helper.applyEditState(cmp);
 		}
 	},
 	handleInputChange: function (cmp, event, helper) {
 		// BRME-4862: leaving the input returns the cell to read-only (unless it still has an error).
-		cmp.set("v.editKey", "");
-		helper.applyEditState(cmp);
 		let name = event.getSource().get("v.name");
+		if (name) {
+			let bparts = name.split("-");
+			// BRME-4862 perf: O(1) targeted edit-state update on blur.
+			helper.applyEditStateForCell(cmp, bparts[0], bparts[1], false);
+		}
+		cmp.set("v.editKey", "");
 		if (!name) {
 			return;
 		}

@@ -442,10 +442,9 @@
           if (myCell && myCell.requiredError && myCell.requiredError.length) {
             self.setErrors(cmp, previewData, myCell, row, col);
           }
-            previewData[row].cells[col] = myCell;
-          
-            cmp.set("v.previewData", previewData);
-            
+          previewData[row].cells[col] = myCell;
+          // BRME-4862 perf: update only the edited cell's UI; no full-grid re-render.
+          self.updatePreviewCellUI(cmp, row, col, myCell);
           cmp.set("v.isLoading", false);
         })
       )
@@ -542,7 +541,15 @@
   setErrors: function (cmp, previewData, cell, row, col, msg) {
     msg = !msg ? cell.requiredError : msg;
     previewData[row].cells[col] = cell;
-    cmp.set("v.previewData", previewData);
+    // BRME-4862 perf: update only the edited cell's UI; no full-grid re-render.
+    this.updatePreviewCellUI(cmp, row, col, cell);
+  },
+  // BRME-4862 perf: push a single cell's error/state to the grid without re-rendering all rows.
+  updatePreviewCellUI: function (cmp, row, col, cell) {
+    let myTable = cmp.find("myTable");
+    if (myTable && myTable.updateUICell) {
+      myTable.updateUICell(row, col, cell);
+    }
   },
   getCell: function (previewCol, record, result) {
     let cell = JSON.parse(JSON.stringify(previewCol));

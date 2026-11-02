@@ -42,6 +42,27 @@
       }
     }
   },
+  // BRME-4862 perf: set isEditing on a single cell (and clear the previously-edited cell)
+  // instead of looping every row/column on each click/blur.
+  applyEditStateForCell: function (cmp, rowIdx, colIdx, editing) {
+    let data = cmp.get("v.data");
+    if (!data || !data.length) {
+      return;
+    }
+    let prevKey = cmp.get("v.editKey") || "";
+    if (prevKey) {
+      let pr = prevKey.split("-");
+      let prow = data[pr[0]];
+      if (prow && prow.cells && prow.cells[pr[1]]) {
+        let pcell = prow.cells[pr[1]];
+        pcell.isEditing = !!(pcell.requiredError && pcell.requiredError.length);
+      }
+    }
+    let row = data[rowIdx];
+    if (row && row.cells && row.cells[colIdx]) {
+      row.cells[colIdx].isEditing = !!editing;
+    }
+  },
   scroll: function (cmp) {
     let myTableId = cmp.get("v.tableId");
     var header = document.getElementById(myTableId);
