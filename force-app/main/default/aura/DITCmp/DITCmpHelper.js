@@ -772,6 +772,27 @@
       })
     );
   },
+  // BRME-4862: returns a Promise resolving to true if Preview currently has any error rows.
+  checkPreviewHasErrors: function (cmp) {
+    let self = this;
+    return new Promise(
+      $A.getCallback(function (resolve) {
+        self.util
+          .controllerPromise(cmp, "loadPreviewErrorData", {
+            dataLoadId: cmp.get("v.dataLoaderId")
+          })
+          .then(
+            $A.getCallback(function (result) {
+              let recs = (result && result.records) || [];
+              resolve(recs.length > 0);
+            })
+          )
+          .catch(function () {
+            resolve(true); // on error, don't skip — show Preview
+          });
+      })
+    );
+  },
   handlePreviewCellChange: function (cmp, row, cell) {
     let previewData = cmp.get("v.previewData");
     if (

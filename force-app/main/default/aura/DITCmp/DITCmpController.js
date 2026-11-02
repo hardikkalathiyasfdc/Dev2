@@ -63,14 +63,18 @@
       cmp.set("v.isLoading", true);
       helper.checkReviewHasRecords(cmp).then(
         $A.getCallback(function (hasRecords) {
-          cmp.set("v.isLoading", false);
           if (hasRecords) {
+            cmp.set("v.isLoading", false);
             cmp.set("v.stage", "unconfirm");
-          } else if (cmp.get("v.skippedPreview")) {
-            cmp.set("v.stage", "setup");
-          } else {
-            cmp.set("v.stage", "preview");
+            return;
           }
+          // Review Errors empty -> check whether Preview has any error rows right now.
+          helper.checkPreviewHasErrors(cmp).then(
+            $A.getCallback(function (hasPreviewErrors) {
+              cmp.set("v.isLoading", false);
+              cmp.set("v.stage", hasPreviewErrors ? "preview" : "setup");
+            })
+          );
         })
       );
     }
