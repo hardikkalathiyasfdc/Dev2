@@ -44,6 +44,8 @@
     <aura:attribute name="skippedPreview" type="Boolean" default="false" />
     <!-- BRME-4862: Preview error-row count, bound up from DITValidationCmp for the action row -->
     <aura:attribute name="errorRowCount" type="Integer" default="0" />
+    <!-- BRME-4862: true when Review Errors was skipped because there were no records to resolve -->
+    <aura:attribute name="skippedReview" type="Boolean" default="false" />
 
     <!--Contact data-->
     <aura:attribute name="contactList" type="List" default="[]" />
@@ -179,7 +181,7 @@
             <aura:if isTrue="{!v.stage == 'unconfirm'}">
                 <c:DITConfirmRecords unconfirmedRecords="{!v.unconfirmedRecords}" dataLoaderId="{!v.dataLoaderId}"
                     contactList="{!v.contactList}" isLoading="{!v.isLoading}" isStageChange="{!v.isStageChange}"
-                    disabledNext="{!v.disabledNext}"></c:DITConfirmRecords>
+                    disabledNext="{!v.disabledNext}" skipReview="{!c.handleSkipReview}"></c:DITConfirmRecords>
             </aura:if>
             <aura:if isTrue="{!v.stage == 'contact'}">
                 <c:DITStareCompareCmp selectedContact="{!v.contactSelected}" dataLoaderId="{!v.dataLoaderId}"

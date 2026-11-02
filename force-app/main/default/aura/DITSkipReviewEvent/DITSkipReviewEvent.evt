@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT">
+    <!-- BRME-4862: fired by DITConfirmRecords when there are no unconfirmed records to resolve,
+         so the parent DITCmp skips Review Errors and goes straight to Compare Potential Duplicates. -->
+</aura:event>

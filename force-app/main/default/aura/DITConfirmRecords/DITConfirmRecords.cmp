@@ -24,6 +24,8 @@
   <aura:attribute name="unconfirmedRecords" type="List" default="[]" />
   <aura:attribute name="disabledNext" type="Boolean" default="false" />
   <aura:attribute name="isStageChange" type="Boolean" default="false" />
+  <!-- BRME-4862: notify parent to skip Review Errors when there's nothing to resolve -->
+  <aura:registerEvent name="skipReview" type="c:DITSkipReviewEvent" />
   <ltng:require scripts="{!$Resource.cmputil}" afterScriptsLoaded="{!c.init}" />
   <aura:if isTrue="{!v.isLoading}">
     <lightning:spinner alternativeText="Loading" size="medium" />

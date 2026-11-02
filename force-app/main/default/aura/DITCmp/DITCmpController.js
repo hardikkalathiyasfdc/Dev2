@@ -58,7 +58,16 @@
       }
     }
     if (stage == "contact") {
-      cmp.set("v.stage", "unconfirm");
+      // BRME-4862: when Review Errors was skipped (nothing to resolve), Back returns to Preview/Map Columns.
+      if (cmp.get("v.skippedReview")) {
+        if (cmp.get("v.skippedPreview")) {
+          cmp.set("v.stage", "setup");
+        } else {
+          cmp.set("v.stage", "preview");
+        }
+      } else {
+        cmp.set("v.stage", "unconfirm");
+      }
     }
     if (stage == "create") {
       cmp.set("v.stage", "contact");
@@ -157,6 +166,26 @@
         $A.getCallback(function () {
           cmp.set("v.isLoading", false);
           helper.showContact(cmp);
+        })
+      )
+      .catch((errMsg) => {
+        cmp.set("v.isLoading", false);
+        helper.util.showToastError(errMsg);
+      });
+  },
+  // BRME-4862: Review Errors has nothing to resolve -> skip it and go to Compare Potential Duplicates.
+  handleSkipReview: function (cmp, event, helper) {
+    cmp.set("v.skippedReview", true);
+    cmp.set("v.isLoading", true);
+    helper.util
+      .controllerPromise(cmp, "updateStage", {
+        dataRecordId: cmp.get("v.dataLoaderId"),
+        stage: "contact"
+      })
+      .then(
+        $A.getCallback(function () {
+          cmp.set("v.isLoading", false);
+          cmp.set("v.stage", "contact");
         })
       )
       .catch((errMsg) => {
