@@ -55,6 +55,20 @@
           cmp.set("v.isDataLoaded", true);
           cmp.set("v.isLoading", false);
           cmp.set("v.disabledNext", false);
+          // BRME-4862: after load settles, if nothing to resolve -> skip Review Errors.
+          // Deferred so it runs after setUnconfirmedRecords (which may be async via normalizeOrgNames).
+          window.setTimeout(
+            $A.getCallback(function () {
+              let recs = cmp.get("v.unconfirmedRecords") || [];
+              if (!recs.length) {
+                let onSkip = cmp.get("v.skipReview");
+                if (typeof onSkip === "function") {
+                  $A.getCallback(onSkip)();
+                }
+              }
+            }),
+            400
+          );
         })
       )
       .catch((errMsg) => {
