@@ -175,13 +175,13 @@
                 <c:DITValidationCmp dataLoaderId="{!v.dataLoaderId}" excelColumns="{!v.excelColumns}"
                     uploadData="{!v.uploadData}" dataLoad="{!v.dataLoad}" fileName="{!v.fileName}"
                     isLoading="{!v.isLoading}" uploadColumns="{!v.uploadColumns}" previewColumns="{!v.previewColumns}"
-                    previewData="{!v.previewData}" skipPreview="{!c.handleSkipPreview}" errorRowCount="{!v.errorRowCount}"></c:DITValidationCmp>
+                    previewData="{!v.previewData}" errorRowCount="{!v.errorRowCount}"></c:DITValidationCmp>
             </aura:if>
 
             <aura:if isTrue="{!v.stage == 'unconfirm'}">
                 <c:DITConfirmRecords unconfirmedRecords="{!v.unconfirmedRecords}" dataLoaderId="{!v.dataLoaderId}"
                     contactList="{!v.contactList}" isLoading="{!v.isLoading}" isStageChange="{!v.isStageChange}"
-                    disabledNext="{!v.disabledNext}" skipReview="{!c.handleSkipReview}"></c:DITConfirmRecords>
+                    disabledNext="{!v.disabledNext}"></c:DITConfirmRecords>
             </aura:if>
             <aura:if isTrue="{!v.stage == 'contact'}">
                 <c:DITStareCompareCmp selectedContact="{!v.contactSelected}" dataLoaderId="{!v.dataLoaderId}"

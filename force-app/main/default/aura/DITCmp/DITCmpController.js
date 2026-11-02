@@ -164,44 +164,6 @@
   closePreviewError: function (cmp) {
     cmp.set("v.showPreviewError", false);
   },
-  // BRME-4862: Preview reported zero errors -> skip it and go straight to Review Errors.
-  handleSkipPreview: function (cmp, event, helper) {
-    cmp.set("v.skippedPreview", true);
-    cmp.set("v.isLoading", true);
-    let data = { Id: cmp.get("v.dataLoaderId"), Stage__c: "unconfirm" };
-    helper.util
-      .controllerPromise(cmp, "updateData", { data: data })
-      .then(
-        $A.getCallback(function () {
-          cmp.set("v.isLoading", false);
-          helper.showContact(cmp);
-        })
-      )
-      .catch((errMsg) => {
-        cmp.set("v.isLoading", false);
-        helper.util.showToastError(errMsg);
-      });
-  },
-  // BRME-4862: Review Errors has nothing to resolve -> skip it and go to Compare Potential Duplicates.
-  handleSkipReview: function (cmp, event, helper) {
-    cmp.set("v.skippedReview", true);
-    cmp.set("v.isLoading", true);
-    helper.util
-      .controllerPromise(cmp, "updateStage", {
-        dataRecordId: cmp.get("v.dataLoaderId"),
-        stage: "contact"
-      })
-      .then(
-        $A.getCallback(function () {
-          cmp.set("v.isLoading", false);
-          cmp.set("v.stage", "contact");
-        })
-      )
-      .catch((errMsg) => {
-        cmp.set("v.isLoading", false);
-        helper.util.showToastError(errMsg);
-      });
-  },
   closeDupeModal: function (cmp, event, helper) {
     cmp.set("v.showDupe", false);
   },

@@ -626,7 +626,8 @@
             cmp.set("v.stage", "preview");
             return;
           }
-          // clean -> persist unconfirm and land on Review Errors
+          // clean -> persist unconfirm and route through showContact, which gates Review Errors
+          // (skips to Compare Potential Duplicates when there's nothing to resolve).
           cmp.set("v.skippedPreview", true);
           return self.util
             .controllerPromise(cmp, "updateStage", {
@@ -635,8 +636,7 @@
             })
             .then(
               $A.getCallback(function () {
-                cmp.set("v.isLoading", false);
-                cmp.set("v.stage", "unconfirm");
+                self.showContact(cmp);
               })
             );
         })
