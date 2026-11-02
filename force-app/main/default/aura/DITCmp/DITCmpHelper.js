@@ -750,6 +750,28 @@
     cmp.set("v.showPreviewError", false);
     cmp.set("v.stage", "unconfirm");
   },
+  // BRME-4862: returns a Promise resolving to true if Review Errors has any record to resolve.
+  checkReviewHasRecords: function (cmp) {
+    let self = this;
+    return new Promise(
+      $A.getCallback(function (resolve) {
+        self.util
+          .controllerPromise(cmp, "loadPreviewData", {
+            dataLoadId: cmp.get("v.dataLoaderId")
+          })
+          .then(
+            $A.getCallback(function (result) {
+              self.setUnconfirmedRecords(cmp, result);
+              let recs = cmp.get("v.unconfirmedRecords") || [];
+              resolve(recs.length > 0);
+            })
+          )
+          .catch(function () {
+            resolve(true); // on error, don't skip — show Review Errors
+          });
+      })
+    );
+  },
   handlePreviewCellChange: function (cmp, row, cell) {
     let previewData = cmp.get("v.previewData");
     if (

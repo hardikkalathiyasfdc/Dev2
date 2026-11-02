@@ -58,16 +58,21 @@
       }
     }
     if (stage == "contact") {
-      // BRME-4862: when Review Errors was skipped (nothing to resolve), Back returns to Preview/Map Columns.
-      if (cmp.get("v.skippedReview")) {
-        if (cmp.get("v.skippedPreview")) {
-          cmp.set("v.stage", "setup");
-        } else {
-          cmp.set("v.stage", "preview");
-        }
-      } else {
-        cmp.set("v.stage", "unconfirm");
-      }
+      // BRME-4862: going Back should skip Review Errors when it has nothing to resolve,
+      // then skip Preview when it's clean too (land on Map Columns).
+      cmp.set("v.isLoading", true);
+      helper.checkReviewHasRecords(cmp).then(
+        $A.getCallback(function (hasRecords) {
+          cmp.set("v.isLoading", false);
+          if (hasRecords) {
+            cmp.set("v.stage", "unconfirm");
+          } else if (cmp.get("v.skippedPreview")) {
+            cmp.set("v.stage", "setup");
+          } else {
+            cmp.set("v.stage", "preview");
+          }
+        })
+      );
     }
     if (stage == "create") {
       cmp.set("v.stage", "contact");
