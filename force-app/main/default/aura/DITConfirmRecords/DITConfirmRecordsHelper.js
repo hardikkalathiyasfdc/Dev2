@@ -40,6 +40,13 @@
               self.setUnconfirmedRecords(cmp, result, normalizedMap);
             });
             $A.enqueueAction(action);
+          } else {
+            // BRME-4862: no records -> nothing to resolve -> skip Review Errors.
+            cmp.set("v.unconfirmedRecords", []);
+            let onSkip = cmp.get("v.skipReview");
+            if (typeof onSkip === "function") {
+              $A.getCallback(onSkip)();
+            }
           }
           let params = {
             type: "validate",
