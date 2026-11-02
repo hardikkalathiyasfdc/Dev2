@@ -141,8 +141,8 @@
     // BRME-4862: nothing to resolve -> invoke the parent-provided callback to skip Review Errors.
     if (!unconfirmedRecords.length) {
       let onSkip = cmp.get("v.skipReview");
-      if (onSkip) {
-        onSkip();
+      if (typeof onSkip === "function") {
+        $A.getCallback(onSkip)();
       }
     }
   },

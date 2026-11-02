@@ -87,8 +87,8 @@
       cmp.set("v.isLoading", false);
       // BRME-4862: invoke the parent-provided callback to skip Preview.
       let onSkip = cmp.get("v.skipPreview");
-      if (onSkip) {
-        onSkip();
+      if (typeof onSkip === "function") {
+        $A.getCallback(onSkip)();
       }
       return;
     }
