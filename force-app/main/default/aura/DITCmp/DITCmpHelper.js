@@ -614,8 +614,31 @@
       )
       .then(
         $A.getCallback(function (results) {
-          cmp.set("v.isLoading", false);
-          cmp.set("v.stage", "preview");
+          // BRME-4862: check for preview errors right after staging; if clean, skip Preview
+          // entirely and go straight to Review Errors (no blank-Preview flash).
+          return self.checkPreviewHasErrors(cmp);
+        })
+      )
+      .then(
+        $A.getCallback(function (hasErrors) {
+          if (hasErrors) {
+            cmp.set("v.isLoading", false);
+            cmp.set("v.stage", "preview");
+            return;
+          }
+          // clean -> persist unconfirm and land on Review Errors
+          cmp.set("v.skippedPreview", true);
+          return self.util
+            .controllerPromise(cmp, "updateStage", {
+              dataRecordId: cmp.get("v.dataLoaderId"),
+              stage: "unconfirm"
+            })
+            .then(
+              $A.getCallback(function () {
+                cmp.set("v.isLoading", false);
+                cmp.set("v.stage", "unconfirm");
+              })
+            );
         })
       )
       .catch((errMsg) => {
