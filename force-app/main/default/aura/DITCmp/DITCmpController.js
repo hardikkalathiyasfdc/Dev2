@@ -50,12 +50,15 @@
     }
 
     if (stage == "unconfirm") {
-      // BRME-4862: when Preview was skipped (clean file), Back returns to Map Columns.
-      if (cmp.get("v.skippedPreview")) {
-        cmp.set("v.stage", "setup");
-      } else {
-        cmp.set("v.stage", "preview");
-      }
+      // BRME-4862: Back skips Preview when it has no error rows right now (don't rely on the
+      // forward-path skippedPreview flag — the user may have arrived via the stage bar).
+      cmp.set("v.isLoading", true);
+      helper.checkPreviewHasErrors(cmp).then(
+        $A.getCallback(function (hasPreviewErrors) {
+          cmp.set("v.isLoading", false);
+          cmp.set("v.stage", hasPreviewErrors ? "preview" : "setup");
+        })
+      );
     }
     if (stage == "contact") {
       // BRME-4862: going Back should skip Review Errors when it has nothing to resolve,
