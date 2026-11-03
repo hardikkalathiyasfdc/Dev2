@@ -9,6 +9,7 @@ import getFileGroup from '@salesforce/apex/FileGroupController.getFileGroup';
 import uploadFileLink from '@salesforce/apex/FileGroupController.uploadFileLink';
 import getAllFiles from '@salesforce/apex/FileGroupController.getAllFiles';
 import deleteFile from '@salesforce/apex/FileGroupController.deleteFile';
+import canDeleteFiles from '@salesforce/apex/FileGroupController.canDeleteFiles';
 import {getErrorMessages} from 'c/utils';
 
 const COLUMNS = [
@@ -111,6 +112,7 @@ export default class FileGroup extends NavigationMixin(LightningElement) {
 	@api showAddLinks;
 	@api showDeleteButton;
 	@api customPermission;
+	@api deletePermission;
 	@api objectApiName;
 	@api recordId;
 	@api header = 'Files';
@@ -124,6 +126,7 @@ export default class FileGroup extends NavigationMixin(LightningElement) {
 	links;
 	url;
 	displayReadMode = true;
+	canDelete = false;
 	sortBy = 'lastModified';
 	sortDirection;
 	numberOfFiles = 0;
@@ -181,15 +184,39 @@ export default class FileGroup extends NavigationMixin(LightningElement) {
 		}).catch((error) => {
 			console.error('Error in checkFileEditPermission: ', error);
 		});
+
+		//BRME-6989: resolve delete capability independently of edit/read mode
+		if (this.deletePermission) {
+			canDeleteFiles({customPermission: this.deletePermission})
+				.then((result) => {
+					this.canDelete = result === true;
+					this.setColumns();
+				})
+				.catch((error) => {
+					this.canDelete = false;
+					console.error('Error in canDeleteFiles: ', error);
+				});
+		} else {
+			this.setColumns();
+		}
 	}
 
 	applyPermission(result) {
 		console.log('##########applyPermission-result: ' + JSON.stringify(result));
 		this.displayReadMode = result;
 		console.log('##########applyPermission-this.displayReadMode: ' + this.displayReadMode);
-		if (this.displayReadMode) {
-			this.columns = COLUMNSREADONLY;
-		} else if (this.showDeleteButton) {
+		this.setColumns();
+	}
+
+	/*
+    Description: BRME-6989 - build the datatable columns. Delete column is shown only when
+                 the section allows deletion (showDeleteButton) AND the user holds the
+                 deletePermission custom permission. Independent of displayReadMode so BIM
+                 Admins/Super Users can delete even while others are read-only.
+    */
+	setColumns() {
+		const baseColumns = this.displayReadMode ? COLUMNSREADONLY : COLUMNS;
+		if (this.showDeleteButton && this.canDelete) {
 			let deleteColumn = {
 				type: 'button-icon',
 				typeAttributes: {
@@ -200,7 +227,9 @@ export default class FileGroup extends NavigationMixin(LightningElement) {
 				},
 				fixedWidth: 40,
 			};
-			this.columns = [...this.columns, deleteColumn];
+			this.columns = [...baseColumns, deleteColumn];
+		} else {
+			this.columns = baseColumns;
 		}
 	}
 
@@ -417,7 +446,7 @@ export default class FileGroup extends NavigationMixin(LightningElement) {
     Jira Story : IM-41
     */
 	async deleteFile() {
-		deleteFile({recordId: this.rowId, fileType: this.rowType})
+		deleteFile({recordId: this.rowId, fileType: this.rowType, deletePermission: this.deletePermission ?? ''})
 			.then(() => {
 				this.showSuccessToast('File deleted Successfully');
 				this.isFileDelete = false;

@@ -141,10 +141,20 @@ public with sharing class FileGroupControllerTest {
 
 		List<File_Link__c> fl = [SELECT Id, Name, Link_URL__c, File_Group__c FROM File_Link__c WITH SYSTEM_MODE LIMIT 1];
 
-		Test.startTest();
-		FileGroupController.deleteFile(fl[0].Id, 'Link');
-		FileGroupController.deleteFile(documents[0].Id, '');
-		Test.stopTest();
+		//BRME-6989: deleteFile now enforces a delete custom permission. Grant it to a fresh user
+		//(grants apply cleanly for a user that then runs via System.runAs).
+		User delUser = TestDataFactory.createUser('FG', 'DeleteRunner', 'Teams User');
+		PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'File_Group_Edit_Access' WITH SYSTEM_MODE];
+		insert as system new PermissionSetAssignment(AssigneeId = delUser.Id, PermissionSetId = ps.Id);
+		CustomPermission cp = [SELECT Id FROM CustomPermission WHERE DeveloperName = 'IM_Initiative_Final_Docs_Delete' WITH SYSTEM_MODE];
+		insert as system new SetupEntityAccess(ParentId = ps.Id, SetupEntityId = cp.Id);
+
+		System.runAs(delUser) {
+			Test.startTest();
+			FileGroupController.deleteFile(fl[0].Id, 'Link', 'IM_Initiative_Final_Docs_Delete');
+			FileGroupController.deleteFile(documents[0].Id, '', 'IM_Initiative_Final_Docs_Delete');
+			Test.stopTest();
+		}
 	}
 
 	@isTest
@@ -187,6 +197,59 @@ public with sharing class FileGroupControllerTest {
 			}
 			Test.stopTest();
 			Assert.areEqual('OK', result, 'Group member should access a private file group');
+		}
+	}
+
+	@isTest
+	public static void testCanDeleteFilesBlankPermission() {
+		Test.startTest();
+		Boolean canDelete = FileGroupController.canDeleteFiles('');
+		Test.stopTest();
+		Assert.areEqual(false, canDelete, 'Blank delete permission should return false');
+	}
+
+	@isTest
+	public static void testCanDeleteFilesWithoutPermission() {
+		User noPermUser = TestDataFactory.createUser('FG', 'NoDeletePerm', 'Teams User');
+		System.runAs(noPermUser) {
+			Test.startTest();
+			Boolean canDelete = FileGroupController.canDeleteFiles('IM_Initiative_Final_Docs_Delete');
+			Test.stopTest();
+			Assert.areEqual(false, canDelete, 'User without the delete custom permission should not be able to delete');
+		}
+	}
+
+	@isTest
+	public static void testCanDeleteFilesWithPermission() {
+		User permUser = TestDataFactory.createUser('FG', 'DeletePerm', 'Teams User');
+		PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'File_Group_Edit_Access' WITH SYSTEM_MODE];
+		insert as system new PermissionSetAssignment(AssigneeId = permUser.Id, PermissionSetId = ps.Id);
+		CustomPermission cp = [SELECT Id FROM CustomPermission WHERE DeveloperName = 'IM_Initiative_Final_Docs_Delete' WITH SYSTEM_MODE];
+		insert as system new SetupEntityAccess(ParentId = ps.Id, SetupEntityId = cp.Id);
+
+		System.runAs(permUser) {
+			Test.startTest();
+			Boolean canDelete = FileGroupController.canDeleteFiles('IM_Initiative_Final_Docs_Delete');
+			Test.stopTest();
+			Assert.areEqual(true, canDelete, 'User with the delete custom permission should be able to delete');
+		}
+	}
+
+	@isTest
+	public static void testDeleteFileBlockedWithoutPermission() {
+		File_Link__c fl = [SELECT Id FROM File_Link__c WITH SYSTEM_MODE LIMIT 1];
+		User noPermUser = TestDataFactory.createUser('FG', 'NoDeletePerm2', 'Teams User');
+		System.runAs(noPermUser) {
+			Test.startTest();
+			String result;
+			try {
+				FileGroupController.deleteFile(fl.Id, 'Link', 'IM_Initiative_Final_Docs_Delete');
+				result = 'ALLOWED';
+			} catch (Exception e) {
+				result = 'BLOCKED';
+			}
+			Test.stopTest();
+			Assert.areEqual('BLOCKED', result, 'deleteFile should block a user without the delete permission');
 		}
 	}
 }

@@ -97,13 +97,13 @@ Assign `IM: Final Doc Tab Delete Access` to **Kelly Mehlenbacher** (`0054v00000F
 3. **Which Kelly/Sara:** several Kellys (Henning, Mehlenbacher, Sullivan, Larson, Shultz) and Saras (Ginsberg, Singletary, Goggin, Shoener…) exist. Plan assumes **Kelly Mehlenbacher** and **Sara Ginsberg** (both in IM_Admin). Confirm with the requester.
 4. **File link vs file:** confirm delete should cover both uploaded files (`ContentDocument`) and any `File_Link__c` rows in the Final Docs group (Private Docs pattern deletes both).
 
-## Verification
-1. Dry-run deploy + verify via org `DeployRequest` (Tooling API), per deploy workflow.
-2. Run `FileGroupControllerTest` (RunSpecifiedTests) — must pass with the new tests.
-3. On `a0qbc00000HmnW5AAJ` → Final Docs:
-   - As **Kelly/Sara** (with new perm set): delete icon visible → delete `BRME-6989-Test-Budget-Narrative.pdf` → confirm removed from `a0Gbc000009zEIbEAM` (ContentDocumentLink gone).
-   - As a **non-super-user** (no new perm set): no delete icon; Add Files still works as before.
-4. Confirm `Files (n)` count and refresh update after delete.
+## Verification (done)
+
+1. ✅ Dry-run deploy (`0Afbc00000DNx7xCAD`) then real deploy `0Afbc00000DNntOCAT` — **Succeeded**, 6 components, **FileGroupControllerTest 14/14 passing**, 0 errors, `FileGroupController` coverage 79% (verified via org `DeployRequest`, Tooling API).
+2. ✅ New tests pass: `testCanDeleteFilesBlankPermission`, `testCanDeleteFilesWithoutPermission`, `testCanDeleteFilesWithPermission`, `testDeleteFileBlockedWithoutPermission`, plus reworked `testDeleteFile` (grants the delete custom permission).
+3. ✅ Permission set `IM: Final Doc Tab Delete Access` assigned to **Kelly Mehlenbacher** (`0054v00000DyUBGAA3`) and **Sara Ginsberg** (`0056g000002O6LtAAK`) — verified via `PermissionSetAssignment`. (Initially mis-assigned `0054v00000FUkMcAAL` = Sarah Singletary; corrected via [scripts/brme6989-fix-assign.apex](scripts/brme6989-fix-assign.apex).)
+4. ✅ Test data on `a0qbc00000HmnW5AAJ` Final Docs: 2 files in group `a0Gbc000009zEIbEAM`.
+5. ⏳ Manual UI check (handed to user — browser automation blocked by Lightning LWS/ORB on this flexipage): on Final Docs, **Kelly/Sara** see a trash/delete icon on each file row and can delete (confirm modal → row removed, `Files (n)` decrements); a user **without** the permission sees no delete icon and Add Files is unchanged.
 
 ## Out of scope
 - No change to Private Docs delete (already on).

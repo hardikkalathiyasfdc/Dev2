@@ -18,6 +18,8 @@
                 label="Is Deletion Allowed?" required="true" />
             <property name="customPermission" type="String" default=""
                 label="Custom Permission Name" />
+            <property name="deletePermission" type="String" default=""
+                label="Custom Permission Name required to delete files" />
             <property name="header" type="String" default="Files"
                 label="Header" />
         </targetConfig>

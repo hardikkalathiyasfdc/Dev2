@@ -16,6 +16,8 @@ public with sharing class FileGroupController {
 	private static final String ERR_UPLOAD_FILE_LINK = 'FILE_GROUP_CONTROLLER_UPLOAD_FILE_LINK_FAILED';
 	private static final String ERR_GET_ALL_FILES = 'FILE_GROUP_CONTROLLER_GET_ALL_FILES_FAILED';
 	private static final String ERR_DELETE_FILE_METHOD = 'FILE_GROUP_CONTROLLER_DELETE_FILE_METHOD_FAILED';
+	private static final String ERR_CAN_DELETE = 'FILE_GROUP_CONTROLLER_CAN_DELETE_FAILED';
+	private static final String ERR_NO_DELETE_ACCESS = 'You do not have permission to delete this file.';
 
 	/**
 	 * Description : Method to get user permission for the component
@@ -201,13 +203,45 @@ System.debug('######FileGroupController-getAllFiles-fileList: ' + fileList);
 	}
 
 	/**
+	 * Description : BRME-6989 - check whether the running user may delete files in a fileGroup section.
+	 *               True only when a delete-specific custom permission (e.g. IM_Initiative_Final_Docs_Delete)
+	 *               is supplied and granted to the user. Blank permission = no delete.
+	 * Parameters  : customPermission String.
+	 * Return Type : Boolean
+	 */
+	@AuraEnabled(cacheable=true)
+	public static Boolean canDeleteFiles(String customPermission) {
+		try {
+			if (String.isBlank(customPermission)) {
+				return false;
+			}
+			return FeatureManagement.checkPermission(customPermission);
+		} catch (Exception ex) {
+			BBApps_ErrorHandler.logErrors(ex, new BBApps_ErrorCustomFields(ERR_CAN_DELETE));
+			throw new AuraHandledException(ex.getMessage());
+		}
+	}
+
+	/**
+	 * Description : BRME-6989 - enforce delete permission server-side. deleteFile runs in SYSTEM_MODE and
+	 *               previously had no permission gate (UI column visibility only), so block direct calls here.
+	 * Parameters  : deletePermission String.
+	 */
+	private static void assertDeleteAccess(String deletePermission) {
+		if (String.isBlank(deletePermission) || !FeatureManagement.checkPermission(deletePermission)) {
+			throw new AuraHandledException(ERR_NO_DELETE_ACCESS);
+		}
+	}
+
+	/**
 	 * Description : Method to delete Files and file links
-	 * Parameters : recordId String, fileType String
+	 * Parameters : recordId String, fileType String, deletePermission String
 	 * Return Type : void
 	 */
 	@AuraEnabled
-	public static void deleteFile(String recordId, String fileType) {
+	public static void deleteFile(String recordId, String fileType, String deletePermission) {
 		try {
+			assertDeleteAccess(deletePermission);
 			if (fileType == 'Link') {
 				BBApps_Crud.doDelete(
                     [SELECT Id, Name FROM File_Link__c WHERE Id = :recordId WITH SYSTEM_MODE LIMIT 1]

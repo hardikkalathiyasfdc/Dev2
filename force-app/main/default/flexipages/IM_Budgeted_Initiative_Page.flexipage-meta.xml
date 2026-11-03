@@ -2982,6 +2982,10 @@
                     <value>IM_Initiative_Final_Docs_FileGroup</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>deletePermission</name>
+                    <value>IM_Initiative_Final_Docs_Delete</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>showAddFiles</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -2991,7 +2995,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>showDeleteButton</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentName>fileGroup</componentName>
                 <identifier>c_fileGroup4</identifier>
