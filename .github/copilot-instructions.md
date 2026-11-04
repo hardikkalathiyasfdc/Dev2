@@ -17,6 +17,7 @@ Goal: every change must be traceable in git history to the instruction that caus
   - Body: a detailed explanation of WHY the change was made and WHAT the user's instruction was (verbatim or close summary from the session), so `git log` alone answers "what was fixed due to which instruction".
 - Never amend, rebase, or commit unrelated/pre-existing changes unless the user explicitly asks.
 - If the user says to skip the commit for a change, honor that for that change only.
+- **Pre-push quality gate**: for any task that ends in `git commit`/`git push`, load the skill `.github/skills/git-push-checks/SKILL.md` and follow it — group commits, run PMD (`sf scanner run --engine pmd`) on changed Apex + eslint on changed aura/lwc JS, warn-and-fix High/Moderate findings, then push. A warn-only PreToolUse hook (`.github/hooks/pre-push-quality.json`) re-runs the gate on every `git push` and surfaces remaining violations; `SKIP_QUALITY` in the push command bypasses it for that push only.
 
 ## Sandbox deploys: detailed message on every deploy (default behavior)
 

@@ -81,6 +81,7 @@ The GitHub repo is the source of truth — not just for changes we author, but f
 - **Other orgs (e.g. Dev1)**: do NOT push here — ask the user for that org's repo URL first (see `.github/copilot-instructions.md`).
 - **git executable**: not on terminal PATH — use `& "C:\Program Files\Git\cmd\git.exe" ...`.
 - Review the retrieved diff before committing; if it would overwrite something unexpected, STOP and ask.
+- Before pushing (retrieve syncs included), load the `git-push-checks` skill — the pre-push quality gate (PMD on changed Apex, eslint on changed aura/lwc JS, warn-and-fix) applies to retrieve commits too, and a PreToolUse hook re-checks every `git push`.
 
 ## 12. Every deployment message lists modified components (one per line)
 
