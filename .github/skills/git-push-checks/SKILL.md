@@ -1,6 +1,6 @@
 ---
 name: git-push-checks
-description: "Use when: committing, staging, or pushing changes to git (git push, git commit, push changes, BRME commits, pre-push checks, PMD, static analysis, quality gate). Loads the repo commit/push policy plus the pre-push quality gate: runs PMD (sf scanner) on changed Apex and eslint on changed aura/lwc JS, fixes High/Moderate violations before pushing, then commits per task and pushes. A warn-only PreToolUse hook re-checks on every git push and surfaces remaining violations. DO NOT USE FOR: sf deploys to orgs (use sfdc-deploy-and-batch), Flosum promotion."
+description: "Use when: committing, staging, or pushing changes to git (git push, git commit, push changes, BRME commits, pre-push checks, PMD, static analysis, quality gate), or when PMD/scanner/eslint findings need fixing. Loads the repo commit/push policy plus the pre-push quality gate: runs PMD (sf scanner) on changed Apex and eslint on changed aura/lwc JS, AUTO-CORRECTS High/Moderate violations before pushing (and re-corrects any violations the PreToolUse hook reports after a push), then commits per task and pushes. DO NOT USE FOR: sf deploys to orgs (use sfdc-deploy-and-batch), Flosum promotion."
 ---
 
 # Git Push Checks (commit → quality gate → push)
@@ -40,11 +40,23 @@ npx eslint <changed js files>
 
 **LWC changed:** also run related jest: `npx sfdx-lwc-jest -- --bail --findRelatedTests --passWithNoTests`.
 
-### 3. Warn and fix (user's standing instruction: "warn and try to fix")
+### 3. Auto-correct PMD/eslint findings (user's standing instruction: \"warn and try to fix\", extended 2026-11-04: \"the session should auto correct the feedback from the salesforce PMD checks\")
 
-- **Severity 1 (High) and 2 (Moderate) PMD violations + eslint errors**: attempt a safe, focused fix before committing — only for violations on lines the task actually touched. If a fix is risky, large, or touches pre-existing legacy issues, do NOT rewrite: list the violations to the user, say push proceeds warn-only, and ask if they want them addressed.
-- **Severity 3 (Low)**: report counts; fix only trivial ones in touched code. Legacy classes are noisy (NotificationService alone has 65 Low) — never mass-fix.
-- After fixing, re-run the gate once to confirm, then commit.
+When the quality gate (step 2) or the PreToolUse hook reports violations, correct them in-session — do NOT just report and move on. Fix-verify loop:
+
+1. **Triage** the findings:
+   - **Severity 1 (High) + 2 (Moderate) PMD, and eslint errors**: MUST attempt a fix.
+   - **Severity 3 (Low)**: fix only trivial ones in touched code (ApexDoc on new methods, naming, brace style). Never mass-fix legacy noise (NotificationService alone has 65 Low).
+   - Only fix violations on lines the current task actually touched. Pre-existing findings on untouched code: list them and ask — do not silently rewrite someone else's in-progress work.
+2. **Apply focused fixes** with edit tools. Common PMD auto-fixes in this repo:
+   - `FormalParameterNamingConventions` → rename param to `[a-z][a-zA-Z0-9]*` (e.g. `BC` → `bc`).
+   - `OneDeclarationPerLine` → split `Integer a, b;` into two statements.
+   - `EmptyCatchBlock` → add a comment or `BBApps_ErrorHandler.logErrors(ex, ...)` per the class's pattern.
+   - `DML in loop` (`OperationWithLimitsInLoop`) → collect records, single DML outside the loop.
+   - `ApexDoc` missing `@description` → add it on new/changed public/global members.
+   - eslint errors → fix per rule (`no-unused-vars`, quotes, etc.); `npx eslint --fix <file>` handles the auto-fixable ones.
+3. **Re-run the gate on the fixed files** (`sf scanner run` / `npx eslint` again) to confirm the findings cleared and no new ones appeared. If a fix needs behavior changes (complexity, unused code with side effects, risky refactor) — STOP, don't guess: show the user the finding + proposed fix and ask.
+4. **Then commit per task and push** (step 4). If the hook still reports High/Moderate findings on touched files after the push, treat that as the next iteration of this loop — fix and follow-up commit — before calling the task done.
 
 ### 4. Commit per task, then push
 
