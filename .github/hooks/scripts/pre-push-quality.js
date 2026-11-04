@@ -3,7 +3,7 @@
  * Pre-push quality gate (WARN-ONLY - never blocks).
  *
  * Fires PreToolUse on every tool call; bails in <50ms unless the tool input
- * looks like a `git push`. On a push it runs:
+ * looks like a `git push` (single regex, no AI calls). On a push it runs:
  *   - PMD via `sf scanner run --engine pmd` on changed Apex (.cls/.trigger)
  *   - eslint on changed aura/lwc JS
  * across working-tree changes (vs HEAD), unpushed commits (origin/main...HEAD)
@@ -38,7 +38,8 @@ async function main() {
   if (!input) allow();
 
   // Detect git push: `git push`, `& "C:\...\git.exe" push origin main`, `$g push origin`.
-  const isPush = /push\s+origin/i.test(input) || (/git/i.test(input) && /\bpush\b/i.test(input));
+  // One regex, no token-heavy AI involvement - keep this hook cheap.
+  const isPush = /\bgit\b.*\bpush\b/i.test(input) || /\bpush\s+origin\b/i.test(input);
   if (!isPush) allow();
   if (/SKIP_QUALITY/i.test(input)) allow();
 
@@ -68,12 +69,15 @@ async function main() {
   const lines = [];
   const findings = [];
 
-  // --- PMD on changed Apex (one batched scanner run) ---
+  // --- PMD on changed Apex (one batched scanner run via shared runner; auto-picks pmd/apex-ruleset.xml) ---
   if (apex.length) {
     const out = path.join(os.tmpdir(), `pre-push-pmd-${Date.now()}.json`);
-    const args = ['scanner', 'run', '--engine', 'pmd', '--normalize-severity', '--format', 'json', '--outfile', out];
-    for (const f of apex) { args.push('--target', f); }
-    spawnSync('sf', args, { cwd: root, shell: true, timeout: 240000, stdio: 'ignore' });
+    const runner = path.join(root, 'scripts', 'pmd', 'Invoke-PmdScan.ps1');
+    const args = fs.existsSync(runner)
+      ? ['-File', runner, '-Targets', ...apex, '-Format', 'json', '-OutFile', out, '-Quiet']
+      : ['scanner', 'run', '--engine', 'pmd', '--normalize-severity', '--format', 'json', '--outfile', out, ...apex.flatMap((f) => ['--target', f])];
+    const cmd = fs.existsSync(runner) ? 'pwsh' : 'sf';
+    spawnSync(cmd, args, { cwd: root, shell: true, timeout: 240000, stdio: 'ignore' });
     if (fs.existsSync(out)) {
       try {
         const rows = JSON.parse(fs.readFileSync(out, 'utf8'));

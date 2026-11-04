@@ -9,6 +9,7 @@ The quality companion to the git policy in `.github/copilot-instructions.md` (co
 
 ## Environment facts (verified 2026-11-04)
 
+- **This repo is the tooling base.** `.github/` + `scripts/` also live on branch `tooling/skills-base`; merge that into any environment repo (Dev1/Dev2/Test/scratch) so the same skills and push hook follow you when you switch orgs. See `TOOLING-BASE.md`.
 - git is NOT on PATH: use `& "C:\Program Files\Git\cmd\git.exe" ...`.
 - PMD runs via Salesforce Code Analyzer: `sf scanner run` (plugin `@salesforce/sfdx-scanner` v4.6.0). `sf code-analyzer` does NOT exist on this CLI (2.62.6). sf CLI must run **unsandboxed** (EPERM on `C:\`).
 - First scanner run downloads PMD (~30-90s cold start). Batch ALL changed files into ONE `sf scanner run` — never loop per file.
@@ -27,10 +28,10 @@ The quality companion to the git policy in `.github/copilot-instructions.md` (co
 
 Collect changed files (working tree vs `HEAD`, plus unpushed `origin/main...HEAD` when pushing), then:
 
-**Apex changed (`.cls` / `.trigger` under force-app):**
+**Apex changed (`.cls` / `.trigger` under force-app):** use the shared runner (auto-picks `pmd/apex-ruleset.xml` when present, batches all files in one JVM):
 ```powershell
-sf scanner run --engine pmd --normalize-severity --format table `
-  --target "force-app/main/default/classes/Foo.cls" --target "force-app/main/default/classes/Bar.cls"
+pwsh -File scripts/pmd/Scan-ApexChanged.ps1          # all changed Apex (staged+unstaged+untracked+unpushed)
+pwsh -File scripts/pmd/Scan-ApexFile.ps1 -File force-app/main/default/classes/Foo.cls   # single file
 ```
 
 **aura/lwc JS changed:**
@@ -61,7 +62,7 @@ When the quality gate (step 2) or the PreToolUse hook reports violations, correc
 ### 4. Commit per task, then push
 
 - Subject `BRME-XXXX: <summary>` (or short description when no ticket); body = WHY + the user's instruction, compose it yourself. Components one per line (see sfdc-deploy-and-batch §12).
-- Push to `https://github.com/hardikkalathiyasfdc/Dev2` branch `main` without asking (dev2/dev2Current only; other orgs → ask for repo URL first).
+- **Push to the current environment's repo without asking.** Detect it: `git remote get-url origin` (each org track has its own repo — Dev2 pushes to `hardikkalathiyasfdc/Dev2`). If there is no `origin` or the org doesn't match the repo name, STOP and ask for the repo URL.
 
 ### 5. The hook is the safety net
 

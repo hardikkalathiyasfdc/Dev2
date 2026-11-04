@@ -12,6 +12,10 @@
     "test:unit:coverage": "sfdx-lwc-jest --coverage",
     "prettier": "prettier --write \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
     "prettier:verify": "prettier --check \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
+    "pmd:all": "pwsh -File scripts/pmd/Scan-ApexAll.ps1",
+    "pmd:changed": "pwsh -File scripts/pmd/Scan-ApexChanged.ps1",
+    "pmd:file": "pwsh -File scripts/pmd/Scan-ApexFile.ps1",
+    "pmd:report": "pwsh -File scripts/pmd/Export-ApexReport.ps1",
     "prepare": "husky || true",
     "precommit": "lint-staged"
   },

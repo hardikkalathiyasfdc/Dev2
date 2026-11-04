@@ -27,6 +27,9 @@ node_modules/
 # ApexPMD cache
 .pmdCache
 
+# PMD scan reports (generated, keep out of git)
+reports/
+
 # Eslint cache
 .eslintcache
 

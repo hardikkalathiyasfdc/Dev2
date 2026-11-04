@@ -77,7 +77,7 @@ The GitHub repo is the source of truth — not just for changes we author, but f
 
 - **Dated package manifest per retrieve**: keep the `package.xml` used for each retrieve under the ticket folder as `package-<YYYY-MM-DD>.xml` (e.g. `BRME-7020/retrieves/package-2026-10-29.xml`) so we can see what was pulled, when, and why. Don't overwrite a single `package.xml` across retrieves.
 - **Retrieve into source, not only `other-org/`**: `other-org/retrieve-*` is scratch/verification. When the retrieved metadata belongs in the project (a component we own), also place it under `force-app/main/default/...` so it's tracked as real source.
-- **Commit + push on dev2/dev2Current without asking** — remote `https://github.com/hardikkalathiyasfdc/Dev2`, branch `main`. Message subject: `BRME-XXXX: retrieve <components>` (or `chore: org sync retrieve <date>` if no ticket); body: what was retrieved and the org it came from.
+- **Commit + push to the current environment's repo without asking** — remote comes from `git remote get-url origin` (e.g. Dev2 → `hardikkalathiyasfdc/Dev2`). Message subject: `BRME-XXXX: retrieve <components>` (or `chore: org sync retrieve <date>` if no ticket); body: what was retrieved and the org it came from. Each org track has its own repo; if no origin or org/repo mismatch, ask first.
 - **Other orgs (e.g. Dev1)**: do NOT push here — ask the user for that org's repo URL first (see `.github/copilot-instructions.md`).
 - **git executable**: not on terminal PATH — use `& "C:\Program Files\Git\cmd\git.exe" ...`.
 - Review the retrieved diff before committing; if it would overwrite something unexpected, STOP and ask.
