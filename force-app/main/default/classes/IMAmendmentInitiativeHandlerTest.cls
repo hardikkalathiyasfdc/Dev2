@@ -213,11 +213,11 @@ private with sharing class IMAmendmentInitiativeHandlerTest {
         Assert.isFalse(fileGroups.isEmpty(), 
             'File Groups should be inserted in andFinally');
     }
-    /*********
+    
     @isTest
     static void testAndFinallyUpdateProcessesApprovals() {
-        IM_Initiative__c amendmentInitiative = [SELECT Name,Current_Budget__c,Current_Budget__r.Name FROM IM_Initiative__c WHERE Name = 'Test Budgeted Initiative 1.00' LIMIT 1];
-        IM_Budget__c budget = [SELECT Id FROM IM_Budget__c WHERE Name = 'Amendment Budget' LIMIT 1];
+        IM_Initiative__c amendmentInitiative = [SELECT Name,Current_Budget__c,Current_Budget__r.Name FROM IM_Initiative__c WHERE Name = 'Test Budgeted Initiative 1.00' WITH SYSTEM_MODE LIMIT 1];
+        IM_Budget__c budget = [SELECT Id FROM IM_Budget__c WHERE Name = 'Amendment Budget' WITH SYSTEM_MODE LIMIT 1];
 
         amendmentInitiative.Current_Budget__c = budget.Id;
         amendmentInitiative.Approved__c = true;
@@ -236,7 +236,7 @@ private with sharing class IMAmendmentInitiativeHandlerTest {
         
         Assert.isTrue(approvals.size() > 0, 
             'Approvals should be processed in andFinally');
-    }*******/
+    }
     
     @isTest
     static void testAndFinallyCreateProjections() {
