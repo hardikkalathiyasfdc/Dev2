@@ -177,13 +177,10 @@ public with sharing class NotificationService {
                 if(hasTarget) {
                     email.setTargetObjectId(targetObjectId);
                 } else {
-                    email.setToAddresses(recipients.get('toAddresses'));
                     email.setToAddresses(toAddresses);
                     email.setTreatTargetObjectAsRecipient(false);
                 }
 
-                email.setCcAddresses(recipients.get('ccAddresses'));
-                email.setBccAddresses(recipients.get('bccAddresses'));
                 email.setCcAddresses(ccAddresses);
                 email.setBccAddresses(bccAddresses);
     
