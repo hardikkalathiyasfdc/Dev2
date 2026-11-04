@@ -4,7 +4,7 @@ import { notifyRecordUpdateAvailable } from 'lightning/uiRecordApi';
 import { RefreshEvent } from 'lightning/refresh';
 import markReadyForApproval from '@salesforce/apex/IMInitiativeReadyForApprovalController.markReadyForApproval';
 
-export default class InitiativeReadyForApproval extends LightningElement {
+export default class ImInitiativeReadyForApproval extends LightningElement {
     @api recordId;
     isExecuting = false;
 
