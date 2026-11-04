@@ -26,8 +26,10 @@ export default class ImRequestRevision extends LightningElement {
 
     handleConfirm() {
         const form = this.template.querySelector('lightning-record-edit-form');
-        const reasonField = this.template.querySelector('lightning-input-field[field-name="Revisions_Reason__c"]');
-        if (!reasonField.reportValidity()) {
+        // field-name is exposed as a JS property, not a DOM attribute, so match on the fieldName property.
+        const reasonField = Array.from(this.template.querySelectorAll('lightning-input-field'))
+            .find((field) => field.fieldName === 'Revisions_Reason__c');
+        if (!reasonField || !reasonField.reportValidity()) {
             return;
         }
         this.isSaving = true;
