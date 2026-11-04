@@ -11,10 +11,11 @@ The quality companion to the git policy in `.github/copilot-instructions.md` (co
 
 - **This repo is the tooling base.** `.github/` + `scripts/` also live on branch `tooling/skills-base`; merge that into any environment repo (Dev1/Dev2/Test/scratch) so the same skills and push hook follow you when you switch orgs. See `TOOLING-BASE.md`.
 - git is NOT on PATH: use `& "C:\Program Files\Git\cmd\git.exe" ...`.
-- PMD runs via Salesforce Code Analyzer: `sf scanner run` (plugin `@salesforce/sfdx-scanner` v4.6.0). `sf code-analyzer` does NOT exist on this CLI (2.62.6). sf CLI must run **unsandboxed** (EPERM on `C:\`).
-- First scanner run downloads PMD (~30-90s cold start). Batch ALL changed files into ONE `sf scanner run` — never loop per file.
+- PMD runs via **Salesforce Code Analyzer v5** (`sf code-analyzer run`, plugin `code-analyzer` 5.16.0 linked on npm-global CLI 2.150.6); the runner auto-falls back to **v4** (`sf scanner run`, `@salesforce/sfdx-scanner` 4.6.0) on environments without v5. `scripts/pmd/Invoke-PmdScan.ps1` resolves the right `sf` binary (PATH often shadows the newer npm-global CLI with `C:\Program Files\sf` 2.62.6). sf CLI must run **unsandboxed** (EPERM on `C:\`).
+- v5 differences: no `--pmdconfig`/`--engine`/`--normalize-severity` — engine filter is `--rule-selector pmd`, custom rules live in `code-analyzer.yml` at repo root (auto-loaded; `config_root` must be absolute — the runner injects a temp overlay), severity is `severity` 1=Critical..5=Info (hook's sev≤2 gate unchanged), PMD bumped 7.5.0 → 7.26.0.
+- First scanner run downloads PMD (~30-90s cold start). Batch ALL changed files into ONE run — never loop per file.
 - `node_modules` and `.husky` exist; lint-staged (prettier + eslint + related jest) runs on commit via husky.
-- Scanner JSON: array of `{ engine, fileName, violations: [{ line, severity, normalizedSeverity (1=high,2=moderate,3=low), ruleName, category, message }] }`.
+- Report JSON shapes: v5 `{ violations: [{ rule, severity, locations: [{ file, startLine }], primaryLocationIndex, message }] }`; v4 `[{ engine, fileName, violations: [{ line, normalizedSeverity, ruleName, message }] }]`. The hook parses both.
 
 ## Workflow
 
@@ -73,8 +74,8 @@ When the quality gate (step 2) or the PreToolUse hook reports violations, correc
 
 ## Anti-patterns
 
-- Running `sf scanner run` once per file (cold JVM each time — batch targets).
+- Running PMD once per file (cold JVM each time — batch targets).
 - Blocking the push on violations (user chose warn-and-fix, not hard gate).
 - Mass-fixing Low-severity/legacy findings unrelated to the task.
 - Trusting `git status` alone for "changed files" — unpushed committed work only shows via `origin/main...HEAD`.
-- Using `sf code-analyzer` (not installed on this CLI) or PMD standalone (not installed) — `sf scanner run --engine pmd` is the only working PMD path here.
+- Assuming plain `sf` resolves to the v5 CLI — PATH may shadow it; always go through `scripts/pmd/Invoke-PmdScan.ps1` (it resolves the right binary and the v4/v5 command for you).

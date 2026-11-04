@@ -80,14 +80,29 @@ async function main() {
     spawnSync(cmd, args, { cwd: root, shell: true, timeout: 240000, stdio: 'ignore' });
     if (fs.existsSync(out)) {
       try {
-        const rows = JSON.parse(fs.readFileSync(out, 'utf8'));
-        for (const row of rows) {
-          for (const v of row.violations || []) {
+        const data = JSON.parse(fs.readFileSync(out, 'utf8'));
+        if (Array.isArray(data)) {
+          // v4 scanner: [{ engine, fileName, violations: [{ line, normalizedSeverity|severity, ruleName, message }] }]
+          for (const row of data) {
+            for (const v of row.violations || []) {
+              findings.push({
+                file: row.fileName,
+                line: v.line,
+                sev: v.normalizedSeverity != null ? v.normalizedSeverity : v.severity,
+                rule: v.ruleName,
+                msg: String(v.message || '').trim().replace(/\s+/g, ' '),
+              });
+            }
+          }
+        } else {
+          // v5 code-analyzer: { violations: [{ rule, severity (1-5), locations: [{ file, startLine }], primaryLocationIndex, message }] }
+          for (const v of data.violations || []) {
+            const loc = (v.locations || [])[v.primaryLocationIndex != null ? v.primaryLocationIndex : 0] || {};
             findings.push({
-              file: row.fileName,
-              line: v.line,
-              sev: v.normalizedSeverity != null ? v.normalizedSeverity : v.severity,
-              rule: v.ruleName,
+              file: loc.file || '',
+              line: loc.startLine || 0,
+              sev: v.severity, // 1=Critical 2=High 3=Moderate 4=Low 5=Info
+              rule: v.rule,
               msg: String(v.message || '').trim().replace(/\s+/g, ' '),
             });
           }
@@ -122,6 +137,7 @@ async function main() {
   }
 
   const sev = (n) => findings.filter((f) => f.sev === n);
+  // High = sev 1 (v4 High / v5 Critical) + sev 2 (v4 Moderate / v5 High); both gates honor sev<=2.
   const lintErrors = lintIssues.filter((i) => i.error);
   const clean = findings.length === 0 && lintIssues.length === 0;
 
@@ -129,7 +145,7 @@ async function main() {
     allow(`[pre-push quality gate] Clean: PMD on ${apex.length} Apex file(s), eslint on ${js.length} JS file(s) - no violations.`);
   }
 
-  lines.unshift(`[pre-push quality gate] PMD (${apex.length} Apex file(s)): high=${sev(1).length} moderate=${sev(2).length} low=${sev(3).length} | eslint (${js.length} JS file(s)): errors=${lintErrors.length} warnings=${lintIssues.length - lintErrors.length}`);
+  lines.unshift(`[pre-push quality gate] PMD (${apex.length} Apex file(s)): sev1=${sev(1).length} sev2=${sev(2).length} sev3=${sev(3).length} other=${Math.max(0, findings.length - sev(1).length - sev(2).length - sev(3).length)} | eslint (${js.length} JS file(s)): errors=${lintErrors.length} warnings=${lintIssues.length - lintErrors.length}`);
   for (const f of [...sev(1), ...sev(2)].slice(0, MAX_LISTED)) {
     lines.push(`PMD sev${f.sev} ${path.relative(root, f.file)}:${f.line} ${f.rule} - ${f.msg}`.slice(0, 300));
   }

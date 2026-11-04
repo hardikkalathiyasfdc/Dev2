@@ -1,0 +1,14 @@
+# Salesforce Code Analyzer v5 configuration (auto-loaded by `sf code-analyzer run`).
+#
+# Central place for engine/rule customization. All existing Apex suppressions
+# (@SuppressWarnings('PMD.*')) keep working because the `pmd` engine stays enabled.
+# Adjust rules under `engines.pmd` as the team's standards evolve.
+# NOTE: `config_root` is set by the runner (v5.16 requires an absolute path).
+
+engines:
+  pmd:
+    # Keep the PMD engine on for Apex. To reference a custom ruleset XML
+    # (same format as PMD 7.x), add it under custom_rulesets, e.g.:
+    # custom_rulesets:
+    #   - pmd/apex-ruleset.xml
+    disable_engine: false
