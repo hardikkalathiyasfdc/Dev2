@@ -80,6 +80,7 @@ public with sharing class ExportContactsController {
     @AuraEnabled
     public static List<ContactWrapper> getDNCContacts(Id recordId){
         allContacts = processEmailExportList(recordId, 'DNC');
+
         return allContacts;
     }
 
@@ -384,7 +385,6 @@ public with sharing class ExportContactsController {
                 ', (SELECT Id, Tag__r.Name FROM Tags__r ORDER BY Tag__r.Name asc) ' +
                 'FROM Contact ' +
                 'WHERE Id IN :contactIds AND DoNotCall = false ' +
-                //'ORDER BY LASTNAME, FIRSTNAME ASC';
                 'ORDER BY LAST_Preferred_Last_Name__c, FIRSTNAME ASC';
             
             List<Contact> contacts = new List<Contact>();
@@ -549,10 +549,8 @@ public with sharing class ExportContactsController {
     }
     
     public static Contact copyRestrictedFields(Contact con) {
-        System.debug('########ExportContactsController-copyRestrictedFields-con: ' + con);
         // Describe Contact once
         Map<String, SObjectField> fieldMap = Contact.SObjectType.getDescribe().fields.getMap();
-        System.debug('########ExportContactsController-copyRestrictedFields-hasAccess: ' + hasAccess(fieldMap, 'RestrictedLastName__c'));
         // Check if this contact is marked as restricted
         if (con.Restricted__c) {
             // Copy values only if FLS allows
@@ -709,7 +707,7 @@ public with sharing class ExportContactsController {
                     ? contact.Preferred_First_Name__c : contact.FirstName != null ? contact.FirstName : '';
                 this.lastOrPreferredLastName = contact.Preferred_Last_Name__c  != null
                     ? contact.Preferred_Last_Name__c : contact.LastName != null ? contact.LastName : '';
-                this.lastOrPreferredLastName = contact.Last_Preferred_Last_Name__c;
+                //this.lastOrPreferredLastName = contact.Last_Preferred_Last_Name__c;
                 this.significantOther =  contact.Significant_Name__c != null ? contact.Significant_Name__c : '';
                 this.SignificantSalutation = contact.Significant_Other__c!=null && contact.Significant_Other__r.Salutation != null ? contact.Significant_Other__r.Salutation : '';
                 this.SignificantARSalutation = Schema.sObjectType.Contact.fields.Annual_Report_Salutation__c.isAccessible() && contact.Significant_Other__c!=null && contact.Significant_Other__r.Annual_Report_Salutation__c != null ? contact.Significant_Other__r.Annual_Report_Salutation__c  : '';
@@ -1016,20 +1014,18 @@ public with sharing class ExportContactsController {
         } 
     }
     
-    private static void setAssistants(Map<String, Related_Contact__c> relatedContacts, Map<String, Related_Contact__c> assistants) {
-        for (String assist : assistants.keySet()) {
-            relatedContacts.put(assist, assistants.get(assist));
-        }
-    }
-    
     public class ContactRestrictedSort implements Comparator<Contact> {
         public Integer compare(Contact a, Contact b) {
             // Pick which name to use based on condition
-            //String nameA = (a.LastName == '#') ? a.RestrictedLastName__c : a.LAST_Preferred_Last_Name__c;
-            //String nameB = (b.LastName == '#') ? b.RestrictedLastName__c : b.LAST_Preferred_Last_Name__c;
-            
-            String nameA = a.LAST_Preferred_Last_Name__c;
-            String nameB = b.LAST_Preferred_Last_Name__c;
+            // Private contacts store LastName as #; Last_Preferred_Last_Name__c then becomes # when
+        	// Preferred_Last_Name__c is blank, which sorts those rows to the top. Use the real name instead.
+            String nameA =  String.isNotBlank(a.Preferred_Last_Name__c) ? a.Preferred_Last_Name__c 
+                                : a.LastName == Assets.RESTRICTED_ORG_NAME ? a.RestrictedLastName__c 
+                                : String.isNotBlank(a.LastName) ? a.LastName : a.Last_Preferred_Last_Name__c;
+            String nameB =  String.isNotBlank(b.Preferred_Last_Name__c) ? b.Preferred_Last_Name__c 
+                                : b.LastName == Assets.RESTRICTED_ORG_NAME ? b.RestrictedLastName__c 
+                                : String.isNotBlank(b.LastName) ? b.LastName : b.Last_Preferred_Last_Name__c;
+
             // Handle nulls
             if (nameA == null && nameB == null) return 0;
             if (nameA == null) return 1;
