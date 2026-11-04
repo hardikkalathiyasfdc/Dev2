@@ -62,6 +62,7 @@ When the quality gate (step 2) or the PreToolUse hook reports violations, correc
 ### 4. Commit per task, then push
 
 - Subject `BRME-XXXX: <summary>` (or short description when no ticket); body = WHY + the user's instruction, compose it yourself. Components one per line (see sfdc-deploy-and-batch §12).
+- **Deployment context in the commit body**: any commit whose change was validated/deployed gets a `Deploy:` trailer — ticket, org alias, DeployRequest Id(s) + status (real + dry-run), tests run + pass/fail. And update `<BRME-XXXX>/README.md` "Post-deployment" at end of the ticket session (see sfdc-deploy-and-batch §13). `git log` + the ticket folder must be enough to reconstruct context later.
 - **Push to the current environment's repo without asking.** Detect it: `git remote get-url origin` (each org track has its own repo — Dev2 pushes to `hardikkalathiyasfdc/Dev2`). If there is no `origin` or the org doesn't match the repo name, STOP and ask for the repo URL.
 
 ### 5. The hook is the safety net

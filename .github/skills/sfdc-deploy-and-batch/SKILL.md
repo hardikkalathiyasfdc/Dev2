@@ -100,6 +100,7 @@ The user promotes changes **from Flosum, environment to environment** — the `s
 - **Test records used for validation**: the exact record IDs + names (e.g. Grant `a0obc000003FE49AAG` / IMGRANT-288227) and what was done to each (pushed to Bgive, amount changed 100k→120k, etc.), so the user can re-check the same records after promoting.
 - **Anything not deployable by metadata / manual steps**: CMDT record changes that must travel with the deployment, permission-set assignments done manually, data setup scripts run, and known org-specific deltas the user should NOT overwrite when promoting.
 - Keep it short — a compact block at the end of the final summary message, not a separate file (unless the user asks for a doc under the ticket folder).
+- **And persist it**: the same handoff content goes into (a) the commit body `Deploy:` trailer (per `.github/copilot-instructions.md` commit format) and (b) the ticket's `<BRME-XXXX>/README.md` "Post-deployment" section (DeployRequest IDs, org, test counts, test-record IDs, manual/Flosum follow-ups). Future debugging must be able to start from the ticket folder or `git log` without digging through chat history.
 
 ## 14. Revert changes that didn't work — fully, at the end of the ticket session
 
