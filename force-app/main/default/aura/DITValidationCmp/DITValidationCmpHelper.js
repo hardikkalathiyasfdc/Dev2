@@ -82,14 +82,9 @@
     // this catches anything the client validate worker flags on top (lookups, conditional).
     let errorRows = this.filterErrorRows(results.data);
     cmp.set("v.errorRowCount", errorRows.length);
-    // BRME-4862: no errors -> skip Preview entirely and advance to Review Errors.
+    // BRME-4862: no errors -> render nothing; the parent (setupNext) already gates/skips Preview.
     if (!errorRows.length) {
       cmp.set("v.isLoading", false);
-      // BRME-4862: invoke the parent-provided callback to skip Preview.
-      let onSkip = cmp.get("v.skipPreview");
-      if (typeof onSkip === "function") {
-        $A.getCallback(onSkip)();
-      }
       return;
     }
     cmp.set("v.previewData", errorRows);
